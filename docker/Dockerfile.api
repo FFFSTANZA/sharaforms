@@ -1,0 +1,61 @@
+FROM php:8.3-fpm-alpine
+
+ARG APP_VERSION=unknown
+
+RUN apk add --no-cache \
+    libzip \
+    libpng \
+    postgresql-client \
+    libpq \
+    procps \
+    unzip \
+    bash \
+    icu-libs \
+    && rm -rf /var/cache/apk/*
+
+RUN apk add --no-cache --virtual .build-deps \
+    $PHPIZE_DEPS \
+    libzip-dev \
+    libpng-dev \
+    postgresql-dev \
+    oniguruma-dev \
+    icu-dev \
+    && docker-php-ext-configure pgsql \
+    && docker-php-ext-configure gd \
+    && docker-php-ext-install -j$(nproc) \
+    pdo \
+    zip \
+    gd \
+    pgsql \
+    pdo_pgsql \
+    bcmath \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    && apk del .build-deps
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+WORKDIR /usr/share/nginx/html/
+
+COPY api/ .
+RUN composer install --optimize-autoloader --no-interaction \
+    --ignore-platform-req=php \
+    --ignore-platform-req=ext-bcmath \
+    --ignore-platform-req=ext-gd
+
+RUN mkdir -p storage/framework/sessions \
+    storage/framework/views \
+    storage/framework/cache \
+    storage/logs \
+    storage/app/public \
+    bootstrap/cache \
+    && chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
+
+ENV APP_VERSION_DOCKER=dev
+
+COPY docker/php-fpm-entrypoint /usr/local/bin/sharaforms-entrypoint
+RUN chmod a+x /usr/local/bin/*
+
+ENTRYPOINT ["/usr/local/bin/sharaforms-entrypoint"]
+CMD ["php-fpm"]

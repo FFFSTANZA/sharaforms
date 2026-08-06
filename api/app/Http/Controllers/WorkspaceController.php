@@ -1,0 +1,147 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\Workspace\CustomDomainRequest;
+use App\Http\Requests\Workspace\CustomCodeSettingsRequest;
+use App\Http\Requests\Workspace\EmailSettingsRequest;
+use App\Http\Resources\WorkspaceResource;
+use App\Models\User;
+use App\Models\UserWorkspace;
+use App\Models\Workspace;
+use App\Service\Billing\Feature;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class WorkspaceController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function index()
+    {
+        $this->authorize('viewAny', Workspace::class);
+
+        // Eager load users with pivot roles to prevent N+1 queries in WorkspaceResource
+        // Make this query identical to UserController to avoid duplicate database work
+        $user = Auth::user();
+        if ($user instanceof \App\Models\User) {
+            $user->load([
+                'workspaces' => function ($query) {
+                    $query->withPivot('role')->with([
+                        'users' => function ($subQuery) {
+                            $subQuery->withPivot('role');
+                        }
+                    ]);
+                }
+            ]);
+        }
+
+        $workspaces = $user->workspaces;
+
+        return WorkspaceResource::collection($workspaces);
+    }
+
+    public function saveCustomDomain(CustomDomainRequest $request)
+    {
+        $this->authorize('adminAction', $request->workspace);
+        $request->workspace->requireFeature('custom_domain');
+
+        $request->workspace->custom_domains = $request->customDomains;
+        $request->workspace->save();
+
+        return new WorkspaceResource($request->workspace);
+    }
+
+    public function saveEmailSettings(EmailSettingsRequest $request)
+    {
+        $this->authorize('adminAction', $request->workspace);
+        $request->workspace->requireFeature('custom_smtp');
+
+        $request->workspace->update(['settings' => array_merge($request->workspace->settings, ['email_settings' => $request->validated()])]);
+
+        return new WorkspaceResource($request->workspace);
+    }
+
+    public function saveCustomCodeSettings(CustomCodeSettingsRequest $request)
+    {
+        $this->authorize('adminAction', $request->workspace);
+        $request->workspace->requireFeature(Feature::CUSTOM_CODE);
+
+        $validated = $request->validated();
+        $request->workspace->update([
+            'settings' => array_merge($request->workspace->settings ?? [], [
+                'custom_code' => $validated['custom_code'] ?? null,
+                'custom_css' => $validated['custom_css'] ?? null,
+            ]),
+        ]);
+
+        return new WorkspaceResource($request->workspace);
+    }
+
+    public function delete(Workspace $workspace)
+    {
+        $this->authorize('delete', $workspace);
+
+        $id = $workspace->id;
+        $workspace->delete();
+
+        return $this->success([
+            'message' => 'Workspace successfully deleted.',
+            'workspace_id' => $id,
+        ]);
+    }
+
+    public function create(Request $request)
+    {
+        $this->authorize('create', Workspace::class);
+
+        $user   = $request->user();
+
+        $this->validate($request, [
+            'name' => 'required',
+        ]);
+
+        // Create workspace
+        $workspace = Workspace::create([
+            'name' => $request->name,
+            'icon' => ($request->emoji) ? $request->emoji : '',
+        ]);
+
+        // Add relation with user. Use the pivot model so workspace entitlement listeners run.
+        UserWorkspace::create([
+            'workspace_id' => $workspace->id,
+            'user_id' => $user->id,
+            'role' => User::ROLE_ADMIN,
+        ]);
+
+        $workspace->refresh();
+
+        return $this->success([
+            'message' => 'Workspace created.',
+            'workspace_id' => $workspace->id,
+            'workspace' => new WorkspaceResource($workspace),
+        ]);
+    }
+
+    public function update(Request $request, Workspace $workspace)
+    {
+        $this->authorize('update', $workspace);
+
+        $this->validate($request, [
+            'name' => 'required',
+        ]);
+
+        $workspace->update([
+            'name' => $request->name,
+            'icon' => $request->emoji ?? '',
+        ]);
+
+        return $this->success([
+            'message' => 'Workspace updated.',
+            'workspace' => new WorkspaceResource($workspace),
+        ]);
+    }
+}

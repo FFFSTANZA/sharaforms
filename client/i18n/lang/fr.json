@@ -1,0 +1,77 @@
+{
+    "app": {
+        "name": "SharaForms"
+    },
+    "forms": {
+        "buttons": {
+            "submit": "Envoyer",
+            "next": "Suivant",
+            "previous": "Précédent",
+            "re_fill": "Envoyer une autre réponse"
+        },
+        "powered_by": "Développé par",
+        "password_protected": "Ce formulaire est protégé par un mot de passe.",
+        "invalid_password": "Mot de passe invalide.",
+        "password_required": "Mot de passe requis.",
+        "create_form_free": "Créez votre formulaire gratuitement avec SharaForms",
+        "submit": "Envoyer",
+        "wrong_form_structure": "Il y a un problème avec la structure de ce formulaire. Si vous êtes le propriétaire du formulaire, veuillez nous contacter.",
+        "cannot_access_here": "Ce contenu ne peut pas être accessible ici. Cliquez sur le lien ci-dessous pour accéder à ce contenu.",
+        "open_form": "Ouvrir le formulaire",
+        "restricted_to_workspace": "Restreint aux membres de l'espace de travail de Notion. Connectez-vous pour accéder à ce contenu.",
+        "select": {
+            "search": "Rechercher",
+            "searchOrTypeToCreateNew": "Rechercher ou écrivez quelque chose pour créer une nouvelle option",
+            "typeSomethingToAddAnOption": "Écrivez quelque chose pour ajouter une option",
+            "noOptionAvailable": "Aucune option disponible",
+            "create": "Créer"
+        },
+        "fileInput": {
+            "chooseFiles": "Cliquez pour choisir un/des fichier(s) ou déposez-le(s) ici | Cliquez pour choisir un fichier ou déposez-le ici",
+            "sizeLimit": "Taille limite: {count}MB par fichier",
+            "uploadingFile": "Envoi de votre fichier en cours..."
+        },
+        "cameraUpload": {
+            "allowCameraPermission": "Autoriser l'accès à la caméra",
+            "allowCameraPermissionDescription": "Vous devez autoriser l'accès à la caméra avant de pouvoir prendre des photos. Allez dans les paramètres du navigateur pour activer l'accès à la caméra sur cette page.",
+            "gotIt": "J'ai compris !",
+            "cameraDeviceError": "Erreur de caméra",
+            "cameraDeviceErrorDescription": "Une erreur inconnue est survenue lors de la tentative de démarrage du périphérique webcam.",
+            "goBack": "Retour"
+        },
+        "signatureInput": {
+            "uploadFileInstead": "Uploader un fichier à la place",
+            "clear": "Effacer"
+        },
+        "barcodeInput": {
+            "clickToOpenCamera": "Cliquez pour ouvrir la caméra"
+        },
+        "payment": {
+            "amount_to_pay": "Montant à payer",
+            "success": "Paiement réussi",
+            "name_on_card": "Nom sur la carte",
+            "billing_email": "Adresse e-mail de facturation",
+            "payment_disclaimer": "Votre carte de crédit sera débitée lorsque vous cliquerez sur ce bouton. Les paiements sont traités en toute sécurité via Stripe.",
+            "errors": {
+                "missingFormOrProvider": "Slug de formulaire ou ID de fournisseur manquant.",
+                "failedAccountDetails": "Échec de la récupération des détails du compte Stripe.",
+                "setupError": "Une erreur s'est produite lors de la configuration de Stripe.",
+                "systemNotReady": "Le système de paiement n'est pas prêt. Veuillez patienter un moment et réessayer.",
+                "misconfigured": "Système de paiement mal configuré. Veuillez actualiser et réessayer.",
+                "notFullyReady": "Le système de paiement n'est pas tout à fait prêt. Veuillez actualiser et réessayer.",
+                "paymentRequired": "Veuillez effectuer le paiement avant de pouvoir continuer.",
+                "nameRequired": "Le nom du titulaire de la carte est requis.",
+                "emailRequired": "L'adresse e-mail de facturation est requise.",
+                "invalidEmail": "Adresse e-mail de facturation invalide.",
+                "failedIntent": "Échec de la création de l'intention de paiement.",
+                "processingFailed": "Le traitement du paiement a échoué."
+            }
+        },
+        "validation_error": "Erreur de validation",
+        "validation_error_with_count": "Erreur de validation ({count} champs)",
+        "toggle": {
+            "yes": "Oui",
+            "no": "Non"
+        }
+    }
+}

@@ -1,0 +1,77 @@
+{
+    "app": {
+        "name": "SharaForms"
+    },
+    "forms": {
+        "buttons": {
+            "submit": "Odoslať",
+            "next": "Ďalší",
+            "previous": "Predchádzajúci",
+            "re_fill": "Odoslať ďalšiu odpoveď"
+        },
+        "powered_by": "Vytvorené pomocou",
+        "password_protected": "Tento formulár je chránený heslom.",
+        "invalid_password": "Neplatné heslo.",
+        "password_required": "Heslo je povinné.",
+        "create_form_free": "Vytvorte si svoj formulár zadarmo s SharaForms",
+        "submit": "Odoslať",
+        "wrong_form_structure": "Niečo nie je v poriadku so štruktúrou tohto formulára. Ak ste vlastníkom formulára, kontaktujte nás.",
+        "cannot_access_here": "K tomuto obsahu sa tu nedá pristupovať. Kliknite na odkaz nižšie pre prístup.",
+        "open_form": "Otvoriť formulár",
+        "restricted_to_workspace": "Obmedzené pre členov pracovného priestoru Notion. Pre prístup k obsahu sa prihláste.",
+        "select": {
+            "search": "Hľadať",
+            "searchOrTypeToCreateNew": "Hľadajte alebo napíšte pre vytvorenie nového",
+            "typeSomethingToAddAnOption": "Napíšte niečo pre pridanie možnosti",
+            "noOptionAvailable": "Žiadne dostupné možnosti",
+            "create": "Vytvoriť"
+        },
+        "fileInput": {
+            "chooseFiles": "Kliknite pre výber súboru(ov) alebo pretiahnite sem | Kliknite pre výber súboru alebo pretiahnite sem",
+            "sizeLimit": "Limit veľkosti: {count}MB na súbor",
+            "uploadingFile": "Nahrávanie vášho súboru..."
+        },
+        "cameraUpload": {
+            "allowCameraPermission": "Povoliť prístup ku kamere",
+            "allowCameraPermissionDescription": "Pred fotografovaním musíte povoliť prístup ku kamere. Prejdite do nastavení prehliadača a povoľte prístup ku kamere na tejto stránke.",
+            "gotIt": "Rozumiem!",
+            "cameraDeviceError": "Chyba zariadenia kamery",
+            "cameraDeviceErrorDescription": "Pri pokuse o spustenie webkamery sa vyskytla neznáma chyba.",
+            "goBack": "Späť"
+        },
+        "signatureInput": {
+            "uploadFileInstead": "Namiesto toho nahrať súbor",
+            "clear": "Vymazať"
+        },
+        "barcodeInput": {
+            "clickToOpenCamera": "Kliknite pre otvorenie kamery"
+        },
+        "payment": {
+            "amount_to_pay": "Suma na zaplatenie",
+            "success": "Platba úspešná",
+            "name_on_card": "Meno na karte",
+            "billing_email": "Fakturačná e-mailová adresa",
+            "payment_disclaimer": "Vaša kreditná karta bude zaťažená kliknutím na toto tlačidlo. Platby sú bezpečne spracované prostredníctvom Stripe.",
+            "errors": {
+                "missingFormOrProvider": "Chýbajúci slug formulára alebo ID poskytovateľa.",
+                "failedAccountDetails": "Nepodarilo sa získať podrobnosti o účte Stripe.",
+                "setupError": "Počas nastavovania Stripe sa vyskytla chyba.",
+                "systemNotReady": "Platobný systém nie je pripravený. Počkajte chvíľu a skúste to znova.",
+                "misconfigured": "Platobný systém je nesprávne nakonfigurovaný. Obnovte a skúste to znova.",
+                "notFullyReady": "Platobný systém nie je úplne pripravený. Obnovte a skúste to znova.",
+                "paymentRequired": "Pred pokračovaním dokončite platbu.",
+                "nameRequired": "Meno držiteľa karty je povinné.",
+                "emailRequired": "Fakturačná e-mailová adresa je povinná.",
+                "invalidEmail": "Neplatná fakturačná e-mailová adresa.",
+                "failedIntent": "Nepodarilo sa vytvoriť zámer platby.",
+                "processingFailed": "Spracovanie platby zlyhalo."
+            }
+        },
+        "validation_error": "Chyba overenia",
+        "validation_error_with_count": "Chyba overenia ({count} polí)",
+        "toggle": {
+            "yes": "Áno",
+            "no": "Nie"
+        }
+    }
+}

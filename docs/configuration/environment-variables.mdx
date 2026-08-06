@@ -1,0 +1,182 @@
+---
+title: Environment Variables
+description: Detailed guide on configuring environment variables for SharaForms
+---
+
+SharaForms uses two `.env` files for configuration: one for the Laravel backend located in the `api` directory, and one for the Nuxt front-end located in the `client` directory.
+
+## Backend Environment Variables
+
+The following environment variables are used to [configure the Laravel](https://laravel.com/docs/11.x/configuration) application (SharaForms's API).
+
+### Dedicated guides
+
+There are dedicated configuration pages available for more detailed setup instructions on specific topics:
+
+-   [OAuth Integration Setup](../configuration/oauth-setup)
+-   [OIDC SSO Configuration](../configuration/oidc-sso)
+-   [File Storage (S3)](../configuration/aws-s3)
+-   [Email Configuration (SMTP)](../configuration/email-setup)
+-   [Custom Domain](../configuration/custom-domain)
+-   [Subdomain Redirect Configuration](../configuration/subdomain-redirect)
+
+### Configuration Environment Variables
+
+| Variable Name                    | Description                                                                                                                                                                               |
+| -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `H_CAPTCHA_SITE_KEY`             | Site key for hCaptcha integration.                                                                                                                                                        |
+| `H_CAPTCHA_SECRET_KEY`           | Secret key for hCaptcha integration.                                                                                                                                                      |
+| `RE_CAPTCHA_SITE_KEY`            | Site key for reCAPTCHA integration.                                                                                                                                                       |
+| `RE_CAPTCHA_SECRET_KEY`          | Secret key for reCAPTCHA integration.                                                                                                                                                     |
+| `OPEN_AI_API_KEY`                | API key for accessing OpenAI services.                                                                                                                                                    |
+| `UNSPLASH_ACCESS_KEY`            | Access key for Unsplash API.                                                                                                                                                              |
+| `UNSPLASH_SECRET_KEY`            | Secret key for Unsplash API.                                                                                                                                                              |
+| `FRONT_URL`                      | Public facing URL of the front-end.                                                                                                                                                       |
+| `FRONT_API_SECRET`               | Shared secret with the front-end.                                                                                                                                                         |
+| `JWT_TTL`                        | Time to live for JSON Web Tokens (JWT) in minutes. Default: 1440 (24 hours).                                                                                                              |
+| `JWT_REMEMBER_TTL`              | JWT time to live when "Remember me" is checked, in minutes. Default: 10080 (7 days).                                                                                                      |
+| `SESSION_LIFETIME`              | Session lifetime in minutes. Default: 1440 (24 hours).                                                                                                                                    |
+| `JWT_SECRET`                     | Secret key used to sign JWTs.                                                                                                                                                             |
+| `JWT_SKIP_IP_UA_VALIDATION`      | Set to `true` to disable JWT User Agent validation (defaults to `false`). Keep this disabled in production and Docker deployments. For local Docker development, `docker-compose.dev.yml` sets this to `true` automatically. |
+| `PUBLIC_UPLOADS_RATE_LIMIT_PER_MINUTE` | Maximum public upload requests allowed per client IP or authenticated user per route each minute. Defaults to `30`.                                                                 |
+| `PUBLIC_UPLOADS_RATE_LIMIT_PER_HOUR`   | Maximum public upload requests allowed per client IP or authenticated user per route each hour. Defaults to `300`.                                                                  |
+| `OIDC_FORCE_LOGIN`               | When set to `true`, password-based authentication is disabled and users must authenticate via OIDC SSO. See [Force Login Mode](../configuration/oidc-sso#7-force-login-mode) for details. |
+| `CUSTOM_CODE_ENABLE_SELF_HOSTED` | Enables execution of user-provided custom code on self-hosted deployments. Defaults to `false` for safety reasons (XSS etc.).                                                             |
+| `LICENSE_API_ENDPOINT`           | Cloud API endpoint used by self-hosted instances for Enterprise license validation. Defaults to `https://api.sharaforms.com`.                                                                |
+| `LICENSE_CHECKOUT_SUCCESS_URL`   | Cloud checkout success URL used when creating self-hosted Enterprise license Stripe sessions.                                                                                             |
+| `LICENSE_CHECKOUT_CANCEL_URL`    | Cloud checkout cancellation URL used when creating self-hosted Enterprise license Stripe sessions.                                                                                         |
+| `LICENSE_PORTAL_RETURN_URL`      | Return URL used by the Stripe billing portal for self-hosted Enterprise licenses.                                                                                                          |
+
+### Self-hosted Enterprise licensing
+
+Self-hosted Enterprise features are unlocked by activating a license key in the SharaForms UI. Most installations can use the default license API endpoint.
+
+Use the `LICENSE_*` variables only when you need to override checkout, billing portal, or license API URLs for your deployment.
+
+For activation steps and troubleshooting, see [License Activation](../deployment/license-activation).
+
+### OAuth Integration Environment Variables
+
+OAuth integrations enable user authentication and third-party service connections. SharaForms automatically handles OAuth redirect URLs - you don't need to manually configure redirect URIs in your OAuth applications.
+
+<Info>
+    For detailed setup instructions for each OAuth provider, see the [OAuth
+    Integration Setup](../configuration/oauth-setup) guide.
+</Info>
+
+| Variable Name          | Description                                                                                   |
+| ---------------------- | --------------------------------------------------------------------------------------------- |
+| `GOOGLE_CLIENT_ID`     | Client ID for Google OAuth authentication and Google Sheets integration.                      |
+| `GOOGLE_CLIENT_SECRET` | Client secret for Google OAuth authentication and Google Sheets integration.                  |
+| `GOOGLE_FONTS_API_KEY` | API key for accessing Google Fonts (optional).                                                |
+| `STRIPE_CLIENT_ID`     | Client ID for Stripe Connect OAuth integration for payment processing.                        |
+| `STRIPE_CLIENT_SECRET` | Client secret for Stripe Connect OAuth integration.                                           |
+| `TELEGRAM_BOT_TOKEN`   | Authentication token for your Telegram bot notifications (bot ID is extracted automatically). |
+
+### User Options Environment Variables
+
+| Variable Name             | Description                                                                                     |
+| ------------------------- | ----------------------------------------------------------------------------------------------- |
+| `ADMIN_EMAILS`            | Comma-separated list of admin email addresses.                                                  |
+| `TEMPLATE_EDITOR_EMAILS`  | Comma-separated list of template editor emails.                                                 |
+| `EXTRA_PRO_USERS_EMAILS`  | Comma-separated list of extra pro user emails.                                                  |
+| `MODERATOR_EMAILS`        | Comma-separated list of moderator email addresses.                                              |
+| `SHOW_OFFICIAL_TEMPLATES` | Set to `false` to hide official templates from SharaForms's template gallery (defaults to `true`). |
+
+### PHP Configuration Environment Variables
+
+| Variable Name             | Description                                         |
+| ------------------------- | --------------------------------------------------- |
+| `PHP_MEMORY_LIMIT`        | Maximum amount of memory a script may consume.      |
+| `PHP_MAX_EXECUTION_TIME`  | Maximum time in seconds a script is allowed to run. |
+| `PHP_UPLOAD_MAX_FILESIZE` | Maximum size of an uploaded file.                   |
+| `PHP_POST_MAX_SIZE`       | Maximum size of POST data that PHP will accept.     |
+
+These PHP configuration variables are particularly important when handling file uploads and processing large amounts of data. If any of these variables are not set, PHP will use its default values from the php.ini configuration. When using Docker, these values are set in the docker-compose.yml file. For non-Docker installations, you'll need to configure these values in your PHP configuration (php.ini) file.
+
+### Database Configuration Environment Variables
+
+These variables are essential for connecting the Laravel backend to your database.
+
+| Variable Name   | Description                                   |
+| --------------- | --------------------------------------------- |
+| `DB_CONNECTION` | The database driver (e.g., `mysql`, `pgsql`). |
+| `DB_HOST`       | The database server host (e.g., `127.0.0.1`). |
+| `DB_PORT`       | The database server port (e.g., `3306`).      |
+| `DB_DATABASE`   | The name of the database.                     |
+| `DB_USERNAME`   | The username for connecting to the database.  |
+| `DB_PASSWORD`   | The password for the database user.           |
+
+### Anonymous Telemetry
+
+SharaForms tracks usage of its products which helps the team to improve and deliver better software. You can opt-out of this telemetry at any time.
+
+**What data is collected?**
+
+None of your customer data is ever transmitted by SharaForms installation. The telemetry data collected are purely usage statistics of various software features:
+
+- Basic usage metrics (form creation, submissions, workspace creation, user additions)
+- Anonymous instance identifier (UUID)
+- Distribution of forms by type
+- No personally identifiable information (PII)
+- No form content, submission data, or user emails
+
+**How is the data used?**
+
+This data will only be used by SharaForms team for:
+
+- Directly improving the product and identifying the parts of product which are popular
+- Identifying areas with limited usage or where our users get stuck
+- Prioritizing the next set of features to be developed
+
+**When is telemetry active?**
+
+- Production environments (`APP_ENV=production`)
+- Self-hosted deployments (`SELF_HOSTED=true`)
+- Disabled in local/development environments
+
+**How to opt-out:**
+
+Set `SHARAFORMS_ANONYMOUS_TELEMETRY_DISABLED=true` in your environment variables to disable data collection.
+
+## Front-end Environment Variables
+
+| Variable Name                     | Description                                                                                                                                                                                                                                                                                                                                      |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `NUXT_PUBLIC_APP_URL`             | Public facing URL of the Nuxt application.                                                                                                                                                                                                                                                                                                       |
+| `NUXT_PUBLIC_API_BASE`            | Base URL for the Laravel API.                                                                                                                                                                                                                                                                                                                    |
+| `NUXT_PUBLIC_LICENSE_API_ENDPOINT` | Cloud API endpoint used by the self-hosted client to start Enterprise license checkout. Defaults to `https://api.sharaforms.com`.                                                                                                                                                       |
+| `NUXT_PUBLIC_H_CAPTCHA_SITE_KEY`  | Site key for hCaptcha integration on the front-end.                                                                                                                                                                                                                                                                                              |
+| `NUXT_PUBLIC_RE_CAPTCHA_SITE_KEY` | Site key for reCAPTCHA integration on the front-end.                                                                                                                                                                                                                                                                                             |
+| `NUXT_API_SECRET`                 | Shared secret key between Nuxt and Laravel backend.                                                                                                                                                                                                                                                                                              |
+| `NUXT_PUBLIC_ROOT_REDIRECT_URL`   | Permanently redirects users visiting the root path (/), /integrations, or any non-existent (404) page to the specified URL. This effectively "hides" SharaForms's public pages while keeping forms and admin functionality accessible. See [Subdomain Redirect Configuration](../configuration/subdomain-redirect) for detailed setup and examples. |
+
+import CloudVersion from "/snippets/cloud-version.mdx";
+
+<CloudVersion />
+
+## Docker Environment Variables
+
+When running SharaForms with Docker, there are some important considerations for handling environment variables:
+
+### Updating Environment Variables
+
+When changing environment variables in your `.env` files, you need to recreate the containers for the changes to take effect. Simply restarting the containers is not sufficient as Docker only loads environment variables when containers are created.
+
+To apply new environment variable changes:
+
+```bash
+# For a specific service (e.g., ui)
+docker compose down ui
+docker compose up -d ui
+
+# For all services
+docker compose down
+docker compose up -d
+```
+
+<Warning>
+    A simple `docker compose restart` will not reload environment variables from
+    your `.env` files. You must use `down` and `up` commands to recreate the
+    containers.
+</Warning>

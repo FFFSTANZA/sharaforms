@@ -1,0 +1,77 @@
+{
+    "app": {
+        "name": "SharaForms"
+    },
+    "forms": {
+        "buttons": {
+            "submit": "Gönder",
+            "next": "Sonraki",
+            "previous": "Önceki",
+            "re_fill": "Başka bir yanıt gönder"
+        },
+        "powered_by": "Tarafından desteklenmektedir",
+        "password_protected": "Bu form şifre korumalıdır.",
+        "invalid_password": "Geçersiz şifre.",
+        "password_required": "Şifre gerekli.",
+        "create_form_free": "SharaForms ile formunuzu ücretsiz oluşturun",
+        "submit": "Gönder",
+        "wrong_form_structure": "Bu formun yapısında bir sorun var. Form sahibiyseniz, lütfen bizimle iletişime geçin.",
+        "cannot_access_here": "Bu içeriğe buradan erişilemez. Erişmek için aşağıdaki bağlantıya tıklayın.",
+        "open_form": "Formu Aç",
+        "restricted_to_workspace": "Sadece Notion Çalışma Alanı üyeleriyle sınırlıdır. Bu içeriğe erişmek için giriş yapın.",
+        "select": {
+            "search": "Ara",
+            "searchOrTypeToCreateNew": "Ara veya yeni oluşturmak için yaz",
+            "typeSomethingToAddAnOption": "Bir seçenek eklemek için bir şeyl`er yazın",
+            "noOptionAvailable": "Seçenek mevcut değil",
+            "create": "Oluştur"
+        },
+        "fileInput": {
+            "chooseFiles": "Dosyaları seçmek için tıklayın veya buraya sürükleyin | Dosya seçmek için tıklayın veya buraya sürükleyin",
+            "sizeLimit": "Boyut sınırı: dosya başına {count}MB",
+            "uploadingFile": "Dosyanız yükleniyor..."
+        },
+        "cameraUpload": {
+            "allowCameraPermission": "Kamera İznini Ver",
+            "allowCameraPermissionDescription": "Fotoğraf çekmeden önce kamera erişimine izin vermeniz gerekiyor. Bu sayfada kamera iznini etkinleştirmek için tarayıcı ayarlarına gidin.",
+            "gotIt": "Anladım!",
+            "cameraDeviceError": "Kamera Cihazı Hatası",
+            "cameraDeviceErrorDescription": "Webcam cihazını başlatmaya çalışırken bilinmeyen bir hata oluştu.",
+            "goBack": "Geri Dön"
+        },
+        "signatureInput": {
+            "uploadFileInstead": "Bunun yerine dosya yükle",
+            "clear": "Temizle"
+        },
+        "barcodeInput": {
+            "clickToOpenCamera": "Kamera açmak için tıklayın"
+        },
+        "payment": {
+            "amount_to_pay": "Ödenecek tutar",
+            "success": "Ödeme başarılı",
+            "name_on_card": "Kart üzerindeki isim",
+            "billing_email": "Fatura e-posta adresi",
+            "payment_disclaimer": "Bu düğmeye tıkladığınızda kredi kartınızdan ücret alınacaktır. Ödemeler Stripe aracılığıyla güvenli bir şekilde işlenir.",
+            "errors": {
+                "missingFormOrProvider": "Form slug'ı veya sağlayıcı kimliği eksik.",
+                "failedAccountDetails": "Stripe hesap detayları alınamadı.",
+                "setupError": "Stripe kurulumu sırasında bir hata oluştu.",
+                "systemNotReady": "Ödeme sistemi hazır değil. Lütfen bir süre bekleyip tekrar deneyin.",
+                "misconfigured": "Ödeme sistemi yanlış yapılandırılmış. Lütfen yenileyip tekrar deneyin.",
+                "notFullyReady": "Ödeme sistemi tam olarak hazır değil. Lütfen yenileyip tekrar deneyin.",
+                "paymentRequired": "Devam etmeden önce ödemeyi tamamlayın.",
+                "nameRequired": "Kart sahibinin adı gerekli.",
+                "emailRequired": "Fatura e-posta adresi gerekli.",
+                "invalidEmail": "Geçersiz fatura e-posta adresi.",
+                "failedIntent": "Ödeme amacı oluşturulamadı.",
+                "processingFailed": "Ödeme işlemi başarısız oldu."
+            }
+        },
+        "validation_error": "Doğrulama Hatası",
+        "validation_error_with_count": "Doğrulama Hatası ({count} alan)",
+        "toggle": {
+            "yes": "Evet",
+            "no": "Hayır"
+        }
+    }
+} 

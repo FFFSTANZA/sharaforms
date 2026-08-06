@@ -1,0 +1,53 @@
+<?php
+
+namespace App\Http\Controllers;
+
+// Base controller
+use Illuminate\Contracts\Redis\Factory as RedisFactory;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Http\JsonResponse;
+use Throwable;
+
+class HealthCheckController extends Controller
+{
+    public function apiCheck(): JsonResponse
+    {
+        $checks = [
+            'database' => false,
+            'redis' => false,
+        ];
+        $overallStatus = true;
+
+        try {
+            DB::connection()->getPdo();
+            $checks['database'] = true;
+        } catch (Throwable $e) {
+            Log::error('Health check: Database connection failed', ['exception' => $e->getMessage()]);
+            $overallStatus = false;
+        }
+
+        try {
+            /** @var mixed $redisConnection */
+            $redisConnection = app(RedisFactory::class)->connection();
+            $method = 'ping';
+            $redisConnection->{$method}();
+            $checks['redis'] = true;
+        } catch (Throwable $e) {
+            Log::error('Health check: Redis connection failed', ['exception' => $e->getMessage()]);
+            $overallStatus = false;
+        }
+
+        if ($overallStatus) {
+            return response()->json([
+                'status' => 'ok',
+                'dependencies' => $checks,
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'error',
+            'dependencies' => $checks,
+        ], 503);
+    }
+}

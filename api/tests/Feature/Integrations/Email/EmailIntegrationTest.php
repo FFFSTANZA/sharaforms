@@ -1,0 +1,457 @@
+<?php
+
+use App\Models\Integration\FormIntegration;
+use App\Notifications\Forms\FormEmailNotification;
+use Illuminate\Notifications\AnonymousNotifiable;
+use App\Models\PdfTemplate;
+
+test('free user can create one email integration to their own email', function () {
+    $user = $this->actingAsUser();
+    $workspace = $this->createUserWorkspace($user);
+    $form = $this->createForm($user, $workspace);
+
+    // First email integration should succeed with user's own email
+    $response = $this->postJson(route('open.forms.integrations.create', $form), [
+        'integration_id' => 'email',
+        'status' => 'active',
+        'data' => [
+            'send_to' => $user->email,
+            'sender_name' => 'Test Sender',
+            'subject' => 'Test Subject',
+            'email_content' => 'Test Content',
+            'include_submission_data' => true
+        ]
+    ]);
+
+    $response->assertSuccessful();
+    expect(FormIntegration::where('form_id', $form->id)->count())->toBe(1);
+
+    // Second email integration should fail
+    $response = $this->postJson(route('open.forms.integrations.create', $form), [
+        'integration_id' => 'email',
+        'status' => 'active',
+        'data' => [
+            'send_to' => $user->email,
+            'sender_name' => 'Test Sender',
+            'subject' => 'Test Subject',
+            'email_content' => 'Test Content',
+            'include_submission_data' => true
+        ]
+    ]);
+
+    $response->assertStatus(422)
+        ->assertJsonValidationErrors(['data.send_to']);
+});
+
+test('free user cannot send to other email addresses', function () {
+    $user = $this->actingAsUser();
+    $workspace = $this->createUserWorkspace($user);
+    $form = $this->createForm($user, $workspace);
+
+    $response = $this->postJson(route('open.forms.integrations.create', $form), [
+        'integration_id' => 'email',
+        'status' => 'active',
+        'data' => [
+            'send_to' => 'other@example.com',
+            'sender_name' => 'Test Sender',
+            'subject' => 'Test Subject',
+            'email_content' => 'Test Content',
+            'include_submission_data' => true
+        ]
+    ]);
+
+    $response->assertStatus(422)
+        ->assertJsonValidationErrors(['data.send_to']);
+
+    // Check that the error message contains the expected text with user's email
+    $responseData = $response->json();
+    $errorMessage = $responseData['errors']['data.send_to'][0];
+    expect($errorMessage)->toContain('You can only send email notification to your own email address');
+    expect($errorMessage)->toContain($user->email);
+    expect($errorMessage)->toContain('Please upgrade to the Pro plan to send to other email addresses.');
+});
+
+test('pro user can create multiple email integrations', function () {
+    $user = $this->actingAsProUser();
+    $workspace = $this->createUserWorkspace($user);
+    $form = $this->createForm($user, $workspace);
+
+    // First email integration
+    $response = $this->postJson(route('open.forms.integrations.create', $form), [
+        'integration_id' => 'email',
+        'status' => 'active',
+        'data' => [
+            'send_to' => 'test@example.com',
+            'sender_name' => 'Test Sender',
+            'subject' => 'Test Subject',
+            'email_content' => 'Test Content',
+            'include_submission_data' => true
+        ]
+    ]);
+
+    $response->assertSuccessful();
+
+    // Second email integration should also succeed for pro users
+    $response = $this->postJson(route('open.forms.integrations.create', $form), [
+        'integration_id' => 'email',
+        'status' => 'active',
+        'data' => [
+            'send_to' => 'another@example.com',
+            'sender_name' => 'Test Sender',
+            'subject' => 'Test Subject',
+            'email_content' => 'Test Content',
+            'include_submission_data' => true
+        ]
+    ]);
+
+    $response->assertSuccessful();
+    expect(FormIntegration::where('form_id', $form->id)->count())->toBe(2);
+});
+
+test('free user cannot add multiple emails', function () {
+    $user = $this->actingAsUser();
+    $workspace = $this->createUserWorkspace($user);
+    $form = $this->createForm($user, $workspace);
+
+    $response = $this->postJson(route('open.forms.integrations.create', $form), [
+        'integration_id' => 'email',
+        'status' => 'active',
+        'data' => [
+            'send_to' => "test@example.com\nanother@example.com",
+            'sender_name' => 'Test Sender',
+            'subject' => 'Test Subject',
+            'email_content' => 'Test Content',
+            'include_submission_data' => true
+        ]
+    ]);
+
+    $response->assertStatus(422)
+        ->assertJsonValidationErrors(['data.send_to'])
+        ->assertJson([
+            'errors' => [
+                'data.send_to' => ['You can only send to a single email address on the free plan. Please upgrade to the Pro plan to create a new integration.']
+            ]
+        ]);
+});
+
+test('pro user can add multiple emails', function () {
+    $user = $this->actingAsProUser();
+    $workspace = $this->createUserWorkspace($user);
+    $form = $this->createForm($user, $workspace);
+
+    $response = $this->postJson(route('open.forms.integrations.create', $form), [
+        'integration_id' => 'email',
+        'status' => 'active',
+        'data' => [
+            'send_to' => "test@example.com\nanother@example.com\nthird@example.com",
+            'sender_name' => 'Test Sender',
+            'subject' => 'Test Subject',
+            'email_content' => 'Test Content',
+            'include_submission_data' => true
+        ]
+    ]);
+
+    $response->assertSuccessful();
+
+    $integration = FormIntegration::where('form_id', $form->id)->first();
+    expect($integration)->not->toBeNull();
+    expect($integration->data->send_to)->toContain('test@example.com');
+    expect($integration->data->send_to)->toContain('another@example.com');
+    expect($integration->data->send_to)->toContain('third@example.com');
+});
+
+test('pro user cannot attach more than allowed pdf templates', function () {
+    $user = $this->actingAsProUser();
+    $workspace = $this->createUserWorkspace($user);
+    $form = $this->createForm($user, $workspace);
+
+    $templateIds = collect(range(1, 4))->map(function ($i) use ($form) {
+        return PdfTemplate::create([
+            'form_id' => $form->id,
+            'name' => "T{$i}",
+            'filename' => "t{$i}.pdf",
+            'original_filename' => "T{$i}.pdf",
+            'file_path' => "pdf-templates/{$form->id}/t{$i}.pdf",
+            'file_size' => 100,
+            'page_count' => 1,
+        ])->id;
+    })->all();
+
+    $response = $this->postJson(route('open.forms.integrations.create', $form), [
+        'integration_id' => 'email',
+        'status' => 'active',
+        'data' => [
+            'send_to' => 'test@example.com',
+            'sender_name' => 'Test Sender',
+            'subject' => 'Test Subject',
+            'email_content' => 'Test Content',
+            'include_submission_data' => true,
+            'pdf_template_ids' => $templateIds,
+        ],
+    ]);
+
+    $response->assertStatus(422)->assertJsonValidationErrors(['data.pdf_template_ids']);
+});
+
+test('free user can update their single email integration to their own email', function () {
+    $user = $this->actingAsUser();
+    $workspace = $this->createUserWorkspace($user);
+    $form = $this->createForm($user, $workspace);
+
+    // Create initial integration with user's email
+    $response = $this->postJson(route('open.forms.integrations.create', $form), [
+        'integration_id' => 'email',
+        'status' => 'active',
+        'data' => [
+            'send_to' => $user->email,
+            'sender_name' => 'Test Sender',
+            'subject' => 'Test Subject',
+            'email_content' => 'Test Content',
+            'include_submission_data' => true
+        ]
+    ]);
+
+    $response->assertSuccessful();
+    $integrationId = $response->json('form_integration.id');
+
+    // Update the integration - still with user's email
+    $response = $this->putJson(route('open.forms.integrations.update', [$form, $integrationId]), [
+        'integration_id' => 'email',
+        'status' => 'active',
+        'data' => [
+            'send_to' => $user->email,
+            'sender_name' => 'Updated Sender',
+            'subject' => 'Updated Subject',
+            'email_content' => 'Updated Content',
+            'include_submission_data' => true
+        ]
+    ]);
+
+    $response->assertSuccessful();
+
+    $integration = FormIntegration::find($integrationId);
+    expect($integration->data->send_to)->toBe($user->email);
+    expect($integration->data->sender_name)->toBe('Updated Sender');
+});
+
+test('free user cannot update integration to other email addresses', function () {
+    $user = $this->actingAsUser();
+    $workspace = $this->createUserWorkspace($user);
+    $form = $this->createForm($user, $workspace);
+
+    // Create initial integration with user's email
+    $response = $this->postJson(route('open.forms.integrations.create', $form), [
+        'integration_id' => 'email',
+        'status' => 'active',
+        'data' => [
+            'send_to' => $user->email,
+            'sender_name' => 'Test Sender',
+            'subject' => 'Test Subject',
+            'email_content' => 'Test Content',
+            'include_submission_data' => true
+        ]
+    ]);
+
+    $response->assertSuccessful();
+    $integrationId = $response->json('form_integration.id');
+
+    // Try to update to another email address - should fail
+    $response = $this->putJson(route('open.forms.integrations.update', [$form, $integrationId]), [
+        'integration_id' => 'email',
+        'status' => 'active',
+        'data' => [
+            'send_to' => 'other@example.com',
+            'sender_name' => 'Updated Sender',
+            'subject' => 'Updated Subject',
+            'email_content' => 'Updated Content',
+            'include_submission_data' => true
+        ]
+    ]);
+
+    $response->assertStatus(422)
+        ->assertJsonValidationErrors(['data.send_to']);
+
+    // Check that the error message contains the expected text with user's email
+    $responseData = $response->json();
+    $errorMessage = $responseData['errors']['data.send_to'][0];
+    expect($errorMessage)->toContain('You can only send email notification to your own email address');
+    expect($errorMessage)->toContain($user->email);
+    expect($errorMessage)->toContain('Please upgrade to the Pro plan to send to other email addresses.');
+});
+
+
+test('free user can create with email appearance settings but email notification does not use them', function () {
+    $user = $this->actingAsUser();
+    $workspace = $this->createUserWorkspace($user);
+    $form = $this->createForm($user, $workspace);
+
+    $response = $this->postJson(route('open.forms.integrations.create', $form), [
+        'integration_id' => 'email',
+        'status' => 'active',
+        'data' => [
+            'send_to' => $user->email,
+            'sender_name' => 'Test Sender',
+            'subject' => 'Test Subject',
+            'email_content' => 'Test Content',
+            'include_submission_data' => true,
+            'logo_url' => 'https://example.com/logo.png',
+            'font_family' => 'Inter',
+            'font_color' => '#1a1a1a',
+            'outer_background_color' => '#f5f5f5',
+            'inner_background_color' => '#ffffff',
+        ],
+    ]);
+
+    $response->assertSuccessful();
+
+    $integration = FormIntegration::where('form_id', $form->id)->first();
+    expect($integration->data->logo_url)->toBe('https://example.com/logo.png');
+
+    $integrationData = $integration->data;
+    $formData = $this->generateFormSubmissionData($form);
+    $event = new \App\Events\Forms\FormSubmitted($form, $formData);
+    $notification = new \App\Notifications\Forms\FormEmailNotification($event, $integrationData);
+    $mailable = $notification->toMail(new \Illuminate\Notifications\AnonymousNotifiable());
+    $mailData = $mailable->viewData;
+
+    expect($mailData['emailAppearance'])->toBe([]);
+});
+
+test('pro user can create email integration with email appearance settings', function () {
+    $user = $this->actingAsProUser();
+    $workspace = $this->createUserWorkspace($user);
+    $form = $this->createForm($user, $workspace);
+
+    $response = $this->postJson(route('open.forms.integrations.create', $form), [
+        'integration_id' => 'email',
+        'status' => 'active',
+        'data' => [
+            'send_to' => $user->email,
+            'sender_name' => 'Test Sender',
+            'subject' => 'Test Subject',
+            'email_content' => 'Test Content',
+            'include_submission_data' => true,
+            'logo_url' => 'https://example.com/logo.png',
+            'font_family' => 'Inter',
+            'font_color' => '#1a1a1a',
+            'outer_background_color' => '#f5f5f5',
+            'inner_background_color' => '#ffffff',
+        ],
+    ]);
+
+    $response->assertSuccessful();
+
+    $integration = FormIntegration::where('form_id', $form->id)->first();
+    expect($integration)->not->toBeNull();
+    expect($integration->data->logo_url)->toBe('https://example.com/logo.png');
+    expect($integration->data->font_family)->toBe('Inter');
+    expect($integration->data->font_color)->toBe('#1a1a1a');
+    expect($integration->data->outer_background_color)->toBe('#f5f5f5');
+    expect($integration->data->inner_background_color)->toBe('#ffffff');
+});
+
+test('pro user email integration validates appearance settings format', function () {
+    $user = $this->actingAsProUser();
+    $workspace = $this->createUserWorkspace($user);
+    $form = $this->createForm($user, $workspace);
+
+    $response = $this->postJson(route('open.forms.integrations.create', $form), [
+        'integration_id' => 'email',
+        'status' => 'active',
+        'data' => [
+            'send_to' => $user->email,
+            'sender_name' => 'Test Sender',
+            'subject' => 'Test Subject',
+            'email_content' => 'Test Content',
+            'include_submission_data' => true,
+            'logo_url' => 'http://example.com/logo.png',
+            'font_color' => 'invalid-color',
+        ],
+    ]);
+
+    $response->assertStatus(422)
+        ->assertJsonValidationErrors(['data.logo_url'])
+        ->assertJsonValidationErrors(['data.font_color']);
+});
+
+test('pro user can update email integration with email appearance settings', function () {
+    $user = $this->actingAsProUser();
+    $workspace = $this->createUserWorkspace($user);
+    $form = $this->createForm($user, $workspace);
+
+    $response = $this->postJson(route('open.forms.integrations.create', $form), [
+        'integration_id' => 'email',
+        'status' => 'active',
+        'data' => [
+            'send_to' => $user->email,
+            'sender_name' => 'Test Sender',
+            'subject' => 'Test Subject',
+            'email_content' => 'Test Content',
+            'include_submission_data' => true,
+        ],
+    ]);
+
+    $response->assertSuccessful();
+    $integrationId = $response->json('form_integration.id');
+
+    $response = $this->putJson(route('open.forms.integrations.update', [$form, $integrationId]), [
+        'integration_id' => 'email',
+        'status' => 'active',
+        'data' => [
+            'send_to' => $user->email,
+            'sender_name' => 'Test Sender',
+            'subject' => 'Test Subject',
+            'email_content' => 'Test Content',
+            'include_submission_data' => true,
+            'logo_url' => 'https://example.com/updated-logo.png',
+            'font_family' => 'Open Sans',
+            'font_color' => '#333333',
+            'outer_background_color' => '#e0e0e0',
+            'inner_background_color' => '#fafafa',
+        ],
+    ]);
+
+    $response->assertSuccessful();
+
+    $integration = FormIntegration::find($integrationId);
+    expect($integration->data->logo_url)->toBe('https://example.com/updated-logo.png');
+    expect($integration->data->font_family)->toBe('Open Sans');
+    expect($integration->data->font_color)->toBe('#333333');
+    expect($integration->data->outer_background_color)->toBe('#e0e0e0');
+    expect($integration->data->inner_background_color)->toBe('#fafafa');
+});
+
+test('email notification escapes submission html while keeping generated links clickable', function () {
+    $user = $this->actingAsProUser();
+    $workspace = $this->createUserWorkspace($user);
+    $form = $this->createForm($user, $workspace);
+
+    $textField = collect($form->properties)->firstWhere('name', 'Name');
+    $urlField = collect($form->properties)->firstWhere('name', 'URL');
+
+    $submissionData = [
+        $textField['id'] => 'normal <b>bold</b> <img src="https://evil.test/pixel.png">',
+        $urlField['id'] => 'https://example.com/path',
+    ];
+
+    $integrationData = (object) [
+        'sender_name' => 'Test Sender',
+        'subject' => 'Test Subject',
+        'email_content' => '<p>Body: <span mention="true" mention-field-id="' . $textField['id'] . '"></span></p>',
+        'include_submission_data' => true,
+    ];
+
+    $notification = new FormEmailNotification(
+        new \App\Events\Forms\FormSubmitted($form, $submissionData),
+        $integrationData
+    );
+
+    $html = (string) $notification->toMail(new AnonymousNotifiable())->render();
+
+    expect($html)->toContain('normal &lt;b&gt;bold&lt;/b&gt;');
+    expect($html)->toContain('evil.test/pixel.png');
+    expect($html)->not->toContain('normal <b>bold</b>');
+    expect($html)->not->toContain('<img src="https://evil.test/pixel.png">');
+    expect($html)->toContain('href="https://example.com/path"');
+    expect($html)->toContain('>https://example.com/path<');
+});

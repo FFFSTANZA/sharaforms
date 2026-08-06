@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Models\Integration;
+
+use App\Integrations\Handlers\ZapierIntegration;
+use App\Models\Forms\Form;
+use App\Service\Security\PublicWebhookUrl;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class FormZapierWebhook extends Model
+{
+    use HasFactory;
+    use SoftDeletes;
+
+    protected $table = 'form_zapier_webhooks';
+
+    protected $fillable = [
+        'form_id',
+        'hook_url',
+    ];
+
+    /**
+     * Relationships
+     */
+    public function form()
+    {
+        return $this->belongsTo(Form::class);
+    }
+
+    public function triggerHook(array $data)
+    {
+        PublicWebhookUrl::assertSafe($this->hook_url);
+
+        Http::throw()->withOptions(PublicWebhookUrl::requestOptions($this->hook_url))->post(
+            $this->hook_url,
+            ZapierIntegration::formatWebhookData($this->form, $data)
+        );
+    }
+}

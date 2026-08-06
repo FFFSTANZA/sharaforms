@@ -1,0 +1,77 @@
+{
+    "app": {
+        "name": "SharaForms"
+    },
+    "forms": {
+        "buttons": {
+            "submit": "送信",
+            "next": "次へ",
+            "previous": "前へ",
+            "re_fill": "別の回答を送信"
+        },
+        "powered_by": "開発者",
+        "password_protected": "このフォームはパスワードで保護されています。",
+        "invalid_password": "無効なパスワード。",
+        "password_required": "パスワードが必要です。",
+        "create_form_free": "SharaForms で無料でフォームを作成",
+        "submit": "送信",
+        "wrong_form_structure": "このフォームの構造に問題があります。フォームの所有者であれば、お問い合わせください。",
+        "cannot_access_here": "このコンテンツはここでアクセスできません。下のリンクをクリックしてアクセスしてください。",
+        "open_form": "フォームを開く",
+        "restricted_to_workspace": "Notion ワークスペースのメンバーに限定されています。このコンテンツにアクセスするにはログインしてください。",
+        "select": {
+            "search": "検索",
+            "searchOrTypeToCreateNew": "検索または新規作成",
+            "typeSomethingToAddAnOption": "オプションを追加するには何かを書いてください",
+            "noOptionAvailable": "オプションがありません",
+            "create": "作成"
+        },
+        "fileInput": {
+            "chooseFiles": "クリックしてファイルを選択するか、ここにドロップしてください | クリックしてファイルを選択するか、ここにドロップしてください",
+            "sizeLimit": "サイズ制限：ファイルあたり{count}MB",
+            "uploadingFile": "ファイルをアップロード中..."
+        },
+        "cameraUpload": {
+            "allowCameraPermission": "カメラへのアクセスを許可",
+            "allowCameraPermissionDescription": "写真を撮影する前にカメラへのアクセスを許可する必要があります。ブラウザの設定でこのページのカメラアクセスを有効にしてください。",
+            "gotIt": "了解しました！",
+            "cameraDeviceError": "カメラエラー",
+            "cameraDeviceErrorDescription": "ウェブカメラデバイスの起動時に不明なエラーが発生しました。",
+            "goBack": "戻る"
+        },
+        "signatureInput": {
+            "uploadFileInstead": "代わりにファイルをアップロード",
+            "clear": "クリア"
+        },
+        "barcodeInput": {
+            "clickToOpenCamera": "クリックしてカメラを開く"
+        },
+        "payment": {
+            "amount_to_pay": "支払額",
+            "success": "支払い成功",
+            "name_on_card": "カード名義",
+            "billing_email": "請求先メールアドレス",
+            "payment_disclaimer": "このボタンをクリックすると、クレジットカードに請求されます。支払いはStripeを通じて安全に処理されます。",
+            "errors": {
+                "missingFormOrProvider": "フォームのスラッグまたはプロバイダーIDがありません。",
+                "failedAccountDetails": "Stripeアカウントの詳細を取得できませんでした。",
+                "setupError": "Stripeのセットアップ中にエラーが発生しました。",
+                "systemNotReady": "決済システムが準備できていません。しばらく待ってからもう一度お試しください。",
+                "misconfigured": "決済システムが正しく設定されていません。更新してもう一度お試しください。",
+                "notFullyReady": "決済システムが完全に準備できていません。更新してもう一度お試しください。",
+                "paymentRequired": "続行する前に支払いを完了してください。",
+                "nameRequired": "カード名義人が必要です。",
+                "emailRequired": "請求先メールアドレスが必要です。",
+                "invalidEmail": "無効な請求先メールアドレスです。",
+                "failedIntent": "支払いインテントを作成できませんでした。",
+                "processingFailed": "支払処理に失敗しました。"
+            }
+        },
+        "validation_error": "検証エラー",
+        "validation_error_with_count": "検証エラー（{count}フィールド）",
+        "toggle": {
+            "yes": "はい",
+            "no": "いいえ"
+        }
+    }
+} 

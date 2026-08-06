@@ -1,0 +1,54 @@
+# SharaForms
+> Forms that calculate. Not just collect. Beautiful, highly customizable forms with unlimited responses, built-in formulas, conditional logic, signatures, computed fields, and dynamic document generation — all in one free platform.
+
+For full product reference see: /llms.txt
+For complete technical reference see: /llms-full.txt
+
+## Quick facts
+- Website: https://sharaforms.com
+- Free plan: unlimited forms and submissions
+- Key differentiator: built-in formula/calculation engine for dynamic pricing, quotes, scoring
+- Self-hosting: available with Enterprise plan
+
+## Key URLs
+- Home: https://sharaforms.com
+- Pricing: https://sharaforms.com/pricing
+- Docs: https://docs.sharaforms.com
+- Help: https://help.sharaforms.com
+- API: https://docs.sharaforms.com/api-reference/introduction
+- Status: https://status.sharaforms.com
+
+## Core features
+- No-code visual form builder
+- AI form generation from text prompt
+- Conditional logic and multi-page forms
+- Built-in formulas and calculations
+- File uploads and signature capture
+- PDF generation and dynamic documents
+- Webhooks, Zapier, Slack, Discord integrations
+- REST API
+- Custom domains and branding controls
+- SSO/SAML (Enterprise)
+- Self-hosting (Enterprise)
+
+## Form Templates
+Ready-to-use form templates are available at https://sharaforms.com/templates. Every template has its own dedicated page at https://sharaforms.com/templates/{slug} with a live preview, a detailed description, and an FAQ.
+
+All templates are free to copy, fully customizable, and require no code. Like every SharaForms form, a template supports unlimited submissions, built-in formulas and calculated fields, conditional logic, signatures, and dynamic document generation — "forms that calculate, not just collect."
+
+Template taxonomy:
+
+- **Types** (46): https://sharaforms.com/templates/types/{slug} — e.g. order_forms, registration_forms, event_registration_forms, contact_forms, survey_templates, application_forms, quiz_forms, donation_forms, booking_forms, lead_generation_forms.
+- **Industries** (26): https://sharaforms.com/templates/industries/{slug} — e.g. business_forms, healthcare_forms, education_forms, ecommerce_forms, real_estate_forms, customer_service_forms, human_resources_forms.
+
+Popular template pages:
+- Contact form: https://sharaforms.com/templates/contact-form-template
+- Job application form: https://sharaforms.com/templates/job-application-form-template
+- Event registration form: https://sharaforms.com/templates/event-registration-template
+- Customer feedback survey: https://sharaforms.com/templates/customer-feedback-survey-template
+- Donation form: https://sharaforms.com/templates/donation-form-template
+- Appointment booking form: https://sharaforms.com/templates/appointment-booking-form-template
+- Quiz form: https://sharaforms.com/templates/quiz-form-template
+- Order form: https://sharaforms.com/templates/online-order-form-template
+
+Free, no-code, unlimited submissions on every template.

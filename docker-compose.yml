@@ -1,0 +1,153 @@
+---
+services:
+  api: &api-environment
+    image: sharaforms/api:latest
+    container_name: sharaforms-api
+    volumes: &api-environment-volumes
+      - sharaforms_storage:/usr/share/nginx/html/storage:rw
+    environment: &api-env
+      APP_ENV: production
+      # Database settings
+      DB_HOST: pgbouncer
+      DB_PORT: 6432
+      REDIS_HOST: redis
+      DB_DATABASE: ${DB_DATABASE:-forge}
+      DB_USERNAME: ${DB_USERNAME:-forge}
+      DB_PASSWORD: ${DB_PASSWORD:-forge}
+      DB_CONNECTION: ${DB_CONNECTION:-pgsql}
+      # PHP Configuration
+      PHP_MEMORY_LIMIT: "1G"
+      PHP_MAX_EXECUTION_TIME: "600"
+      PHP_UPLOAD_MAX_FILESIZE: "64M"
+      PHP_POST_MAX_SIZE: "64M"
+    env_file:
+      - ./api/.env
+    depends_on:
+      db:
+        condition: service_healthy
+      pgbouncer:
+        condition: service_started
+      redis:
+        condition: service_healthy # Depend on redis being healthy too
+    healthcheck:
+      test: ["CMD-SHELL", "php /usr/share/nginx/html/artisan about || exit 1"]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+      start_period: 60s
+
+  api-worker:
+    <<: *api-environment
+    container_name: sharaforms-api-worker
+    command: ["php", "artisan", "horizon"]
+    environment:
+      <<: *api-env
+      APP_ENV: production
+    healthcheck:
+      test:
+        ["CMD-SHELL", "pgrep -f 'php artisan horizon' > /dev/null || exit 1"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  api-scheduler:
+    <<: *api-environment
+    container_name: sharaforms-api-scheduler
+    command: ["php", "artisan", "schedule:work"]
+    environment:
+      <<: *api-env
+      APP_ENV: production
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "php /usr/share/nginx/html/artisan app:scheduler-status --mode=check --max-minutes=3 || exit 1",
+        ]
+      interval: 60s
+      timeout: 30s
+      retries: 3
+      start_period: 70s # Allow time for first scheduled run and cache write
+
+  ui:
+    image: sharaforms/ui:latest
+    container_name: sharaforms-ui
+    env_file:
+      - ./client/.env
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test:
+        ["CMD-SHELL", "wget --spider -q http://localhost:3000/login || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 45s
+
+  redis:
+    image: redis:7
+    container_name: sharaforms-redis
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      interval: 30s
+      timeout: 5s
+
+  db:
+    image: postgres:16
+    container_name: sharaforms-db
+    environment:
+      POSTGRES_DB: ${DB_DATABASE:-forge}
+      POSTGRES_USER: ${DB_USERNAME:-forge}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-forge}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-forge}"]
+      interval: 30s
+      timeout: 5s
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  pgbouncer:
+    image: edoburu/pgbouncer:1.24.1-p1
+    container_name: sharaforms-pgbouncer
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: ${DB_USERNAME:-forge}
+      DB_PASSWORD: ${DB_PASSWORD:-forge}
+      DB_NAME: ${DB_DATABASE:-forge}
+      POOL_MODE: transaction
+      MAX_CLIENT_CONN: 200
+      DEFAULT_POOL_SIZE: 25
+      AUTH_TYPE: scram-sha-256
+    depends_on:
+      db:
+        condition: service_healthy
+
+  ingress:
+    image: nginx:1
+    container_name: sharaforms-ingress
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/templates/default.conf.template
+    ports:
+      - 80:80
+    environment:
+      - NGINX_MAX_BODY_SIZE=64m
+    depends_on:
+      api:
+        condition: service_started
+      ui:
+        condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "nginx -t && curl -f http://localhost/ || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  postgres-data:
+  sharaforms_storage:
+  redis-data:

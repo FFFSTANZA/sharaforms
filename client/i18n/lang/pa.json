@@ -1,0 +1,77 @@
+{
+    "app": {
+        "name": "SharaForms"
+    },
+    "forms": {
+        "buttons": {
+            "submit": "ਜਮ੍ਹਾਂ ਕਰੋ",
+            "next": "ਅਗਲਾ",
+            "previous": "ਪਿਛਲਾ",
+            "re_fill": "ਇੱਕ ਹੋਰ ਜਵਾਬ ਜਮ੍ਹਾਂ ਕਰੋ"
+        },
+        "powered_by": "ਦੁਆਰਾ ਸੰਚਾਲਿਤ",
+        "password_protected": "ਇਹ ਫਾਰਮ ਪਾਸਵਰਡ ਦੁਆਰਾ ਸੁਰੱਖਿਅਤ ਹੈ।",
+        "invalid_password": "ਗਲਤ ਪਾਸਵਰਡ।",
+        "password_required": "ਪਾਸਵਰਡ ਲੋੜੀਂਦਾ ਹੈ।",
+        "create_form_free": "SharaForms ਨਾਲ ਆਪਣਾ ਫਾਰਮ ਮੁਫ਼ਤ ਬਣਾਓ",
+        "submit": "ਜਮ੍ਹਾਂ ਕਰੋ",
+        "wrong_form_structure": "ਇਸ ਫਾਰਮ ਦੀ ਬਣਤਰ ਵਿੱਚ ਕੁਝ ਗਲਤ ਹੈ। ਜੇ ਤੁਸੀਂ ਫਾਰਮ ਦੇ ਮਾਲਕ ਹੋ ਤਾਂ ਕਿਰਪਾ ਕਰਕੇ ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੋ।",
+        "cannot_access_here": "ਇਸ ਸਮੱਗਰੀ ਤੱਕ ਇੱਥੇ ਪਹੁੰਚ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕਦੀ। ਇਸ ਤੱਕ ਪਹੁੰਚ ਕਰਨ ਲਈ ਹੇਠਾਂ ਦਿੱਤੇ ਲਿੰਕ 'ਤੇ ਕਲਿੱਕ ਕਰੋ।",
+        "open_form": "ਫਾਰਮ ਖੋਲ੍ਹੋ",
+        "restricted_to_workspace": "Notion ਵਰਕਸਪੇਸ ਦੇ ਮੈਂਬਰਾਂ ਤੱਕ ਸੀਮਿਤ। ਇਸ ਸਮੱਗਰੀ ਤੱਕ ਪਹੁੰਚ ਕਰਨ ਲਈ ਲੌਗਇਨ ਕਰੋ।",
+        "select": {
+            "search": "ਖੋਜ",
+            "searchOrTypeToCreateNew": "ਖੋਜੋ ਜਾਂ ਨਵਾਂ ਬਣਾਉਣ ਲਈ ਟਾਈਪ ਕਰੋ",
+            "typeSomethingToAddAnOption": "ਇੱਕ ਵਿਕਲਪ ਜੋੜਨ ਲਈ ਕੁਝ ਟਾਈਪ ਕਰੋ",
+            "noOptionAvailable": "ਕੋਈ ਵਿਕਲਪ ਉਪਲਬਧ ਨਹੀਂ",
+            "create": "ਬਣਾਓ"
+        },
+        "fileInput": {
+            "chooseFiles": "ਫਾਈਲ(ਾਂ) ਚੁਣਨ ਲਈ ਕਲਿੱਕ ਕਰੋ ਜਾਂ ਇੱਥੇ ਖਿੱਚੋ | ਫਾਈਲ ਚੁਣਨ ਲਈ ਕਲਿੱਕ ਕਰੋ ਜਾਂ ਇੱਥੇ ਖਿੱਚੋ",
+            "sizeLimit": "ਸਾਈਜ਼ ਸੀਮਾ: ਪ੍ਰਤੀ ਫਾਈਲ {count}MB",
+            "uploadingFile": "ਤੁਹਾਡੀ ਫਾਈਲ ਅਪਲੋਡ ਹੋ ਰਹੀ ਹੈ..."
+        },
+        "cameraUpload": {
+            "allowCameraPermission": "ਕੈਮਰਾ ਇਜਾਜ਼ਤ ਦਿਓ",
+            "allowCameraPermissionDescription": "ਤਸਵੀਰਾਂ ਲੈਣ ਤੋਂ ਪਹਿਲਾਂ ਤੁਹਾਨੂੰ ਕੈਮਰੇ ਦੀ ਇਜਾਜ਼ਤ ਦੇਣੀ ਹੋਵੇਗੀ। ਇਸ ਪੇਜ 'ਤੇ ਕੈਮਰਾ ਇਜਾਜ਼ਤ ਨੂੰ ਸਮਰੱਥ ਕਰਨ ਲਈ ਬ੍ਰਾਊਜ਼ਰ ਸੈਟਿੰਗਾਂ 'ਤੇ ਜਾਓ।",
+            "gotIt": "ਸਮਝ ਗਿਆ!",
+            "cameraDeviceError": "ਕੈਮਰਾ ਡਿਵਾਈਸ ਤਰੁੱਟੀ",
+            "cameraDeviceErrorDescription": "ਵੈਬਕੈਮ ਡਿਵਾਈਸ ਨੂੰ ਚਾਲੂ ਕਰਨ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰਦੇ ਸਮੇਂ ਇੱਕ ਅਣਜਾਣ ਤਰੁੱਟੀ ਹੋਈ।",
+            "goBack": "ਵਾਪਸ ਜਾਓ"
+        },
+        "signatureInput": {
+            "uploadFileInstead": "ਇਸ ਦੀ ਬਜਾਏ ਫਾਈਲ ਅਪਲੋਡ ਕਰੋ",
+            "clear": "ਸਾਫ਼ ਕਰੋ"
+        },
+        "barcodeInput": {
+            "clickToOpenCamera": "ਕਲਿੱਕ ਕਰੋ ਕੈਮਰਾ ਖੋਲਣ ਲਈ"
+        },
+        "payment": {
+            "amount_to_pay": "ਭੁਗਤਾਨ ਕਰਨ ਦੀ ਰਕਮ",
+            "success": "ਭੁਗਤਾਨ ਸਫਲ",
+            "name_on_card": "ਕਾਰਡ 'ਤੇ ਨਾਮ",
+            "billing_email": "ਬਿਲਿੰਗ ਈਮੇਲ ਪਤਾ",
+            "payment_disclaimer": "ਇਸ ਬਟਨ 'ਤੇ ਕਲਿੱਕ ਕਰਨ 'ਤੇ ਤੁਹਾਡੇ ਕ੍ਰੈਡਿਟ ਕਾਰਡ ਤੋਂ ਚਾਰਜ ਲਿਆ ਜਾਵੇਗਾ। ਭੁਗਤਾਨ Stripe ਰਾਹੀਂ ਸੁਰੱਖਿਅਤ ਢੰਗ ਨਾਲ ਪ੍ਰੋਸੈਸ ਕੀਤੇ ਜਾਂਦੇ ਹਨ।",
+            "errors": {
+                "missingFormOrProvider": "ਫਾਰਮ ਸਲੱਗ ਜਾਂ ਪ੍ਰਦਾਤਾ ਆਈਡੀ ਗੁੰਮ ਹੈ।",
+                "failedAccountDetails": "Stripe ਖਾਤੇ ਦੇ ਵੇਰਵੇ ਪ੍ਰਾਪਤ ਕਰਨ ਵਿੱਚ ਅਸਫਲ।",
+                "setupError": "Stripe ਸੈੱਟਅੱਪ ਦੌਰਾਨ ਇੱਕ ਗਲਤੀ ਹੋਈ।",
+                "systemNotReady": "ਭੁਗਤਾਨ ਸਿਸਟਮ ਤਿਆਰ ਨਹੀਂ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਇੱਕ ਪਲ ਉਡੀਕ ਕਰੋ ਅਤੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
+                "misconfigured": "ਭੁਗਤਾਨ ਸਿਸਟਮ ਗਲਤ ਸੰਰਚਨਾ ਕੀਤਾ ਗਿਆ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਤਾਜ਼ਾ ਕਰੋ ਅਤੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
+                "notFullyReady": "ਭੁਗਤਾਨ ਸਿਸਟਮ ਪੂਰੀ ਤਰ੍ਹਾਂ ਤਿਆਰ ਨਹੀਂ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਤਾਜ਼ਾ ਕਰੋ ਅਤੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
+                "paymentRequired": "ਅੱਗੇ ਵਧਣ ਤੋਂ ਪਹਿਲਾਂ ਭੁਗਤਾਨ ਪੂਰਾ ਕਰੋ।",
+                "nameRequired": "ਕਾਰਡ ਧਾਰਕ ਦਾ ਨਾਮ ਲੋੜੀਂਦਾ ਹੈ।",
+                "emailRequired": "ਬਿਲਿੰਗ ਈਮੇਲ ਪਤਾ ਲੋੜੀਂਦਾ ਹੈ।",
+                "invalidEmail": "ਅਵੈਧ ਬਿਲਿੰਗ ਈਮੇਲ ਪਤਾ।",
+                "failedIntent": "ਭੁਗਤਾਨ ਇਰਾਦਾ ਬਣਾਉਣ ਵਿੱਚ ਅਸਫਲ।",
+                "processingFailed": "ਭੁਗਤਾਨ ਪ੍ਰਕਿਰਿਆ ਅਸਫਲ ਰਹੀ।"
+            }
+        },
+        "validation_error": "ਪ੍ਰਮਾਣਿਕਤਾ ਗਲਤੀ",
+        "validation_error_with_count": "ਪ੍ਰਮਾਣਿਕਤਾ ਗਲਤੀ ({count} ਖੇਤਰ)",
+        "toggle": {
+            "yes": "ਹਾਂ",
+            "no": "ਨਹੀਂ"
+        }
+    }
+} 

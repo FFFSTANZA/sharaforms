@@ -1,0 +1,77 @@
+{
+    "app": {
+        "name": "SharaForms"
+    },
+    "forms": {
+        "buttons": {
+            "submit": "Submit",
+            "next": "Next",
+            "previous": "Previous",
+            "re_fill": "Submit another response"
+        },
+        "powered_by": "Powered by",
+        "password_protected": "This form is protected by a password.",
+        "invalid_password": "Invalid password.",
+        "password_required": "Password is required.",
+        "create_form_free": "Create your form for free with SharaForms",
+        "submit": "Submit",
+        "wrong_form_structure": "Something is wrong with this form structure. If you're the form owner please contact us.",
+        "cannot_access_here": "This content cannot be accessed here. Click the link below to access it.",
+        "open_form": "Open Form",
+        "restricted_to_workspace": "Restricted to members of the Notion Workspace. Login to access this content.",
+        "select": {
+            "search": "Search",
+            "searchOrTypeToCreateNew": "Search or type to create new",
+            "typeSomethingToAddAnOption": "Type something to add an option",
+            "noOptionAvailable": "No option available",
+            "create": "Create"
+        },
+        "fileInput": {
+            "chooseFiles": "Click to choose file(s) or drag here | Click to choose a file or drag here",
+            "sizeLimit": "Size limit: {count}MB per file",
+            "uploadingFile": "Uploading your file..."
+        },
+        "cameraUpload": {
+            "allowCameraPermission": "Allow Camera Permission",
+            "allowCameraPermissionDescription": "You need to allow camera permission before you can take pictures. Go to browser settings to enable camera permission on this page.",
+            "gotIt": "Got it!",
+            "cameraDeviceError": "Camera Device Error",
+            "cameraDeviceErrorDescription": "An unknown error occurred when trying to start Webcam device.",
+            "goBack": "Go back"
+        },
+        "signatureInput": {
+            "uploadFileInstead": "Upload file instead",
+            "clear": "Clear"
+        },
+        "barcodeInput": {
+            "clickToOpenCamera": "Click to open a camera"
+        },
+        "payment": {
+            "amount_to_pay": "Amount to pay",
+            "success": "Payment successful",
+            "name_on_card": "Name on card",
+            "billing_email": "Billing email address",
+            "payment_disclaimer": "Your credit card will be charged upon clicking this button. Payments are securely processed through Stripe.",
+            "errors": {
+                "missingFormOrProvider": "Missing form slug or provider ID.",
+                "failedAccountDetails": "Failed to get Stripe account details.",
+                "setupError": "An error occurred during Stripe setup.",
+                "systemNotReady": "Payment system not ready. Please wait a moment and try again.",
+                "misconfigured": "Payment system misconfigured. Please refresh and try again.",
+                "notFullyReady": "Payment system not fully ready. Please refresh and try again.",
+                "paymentRequired": "Complete the payment before you can proceed.",
+                "nameRequired": "Card holder name is required.",
+                "emailRequired": "Billing email address is required.",
+                "invalidEmail": "Invalid billing email address.",
+                "failedIntent": "Failed to create payment intent.",
+                "processingFailed": "Payment processing failed."
+            }
+        },
+        "validation_error": "Validation Error",
+        "validation_error_with_count": "Validation Error ({count} fields)",
+        "toggle": {
+            "yes": "Yes",
+            "no": "No"
+        }
+    }
+} 

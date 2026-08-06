@@ -1,0 +1,32 @@
+.idea/*
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+.DS_Store
+public/.DS_Store
+*.DS_Store
+docker-compose.override.yml
+/.make.*
+
+# Environment files
+.env
+api/.env
+client/.env
+.env.*
+api/.env.*
+client/.env.*
+!.env.example
+!api/.env.example
+!client/.env.example
+
+# Google Cloud credentials
+keys/
+
+# Local key storage (API keys, secrets)
+keys.txt
+
+# Nuxt build backup
+client/.nuxt-root-bak/
+# gcloud CLI tarball
+google-cloud-cli-linux-x86_64.tar.gz

@@ -1,0 +1,47 @@
+id: 34225
+name: SharaForms
+ignore:
+  - storage/clockwork
+  - storage/logs
+  - client
+  - .git
+  - integrations
+  - docker
+environments:
+  api-production:
+    warm: 5
+    memory: 4096
+    cli-memory: 4096
+    cli-timeout: 900
+    queue-memory: 4096
+    queue-timeout: 900
+    runtime: "php-8.3:al2023-arm"
+    storage: sharaforms-prod
+    database: SharaForms
+    domain: api.sharaforms.com
+    build:
+      - "COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev"
+      - "php artisan optimize"
+      - "php artisan disposable:update"
+    deploy:
+      - "php artisan migrate --force"
+    firewall:
+      rate-limit: 1000
+    timeout: 60
+  api-staging:
+    memory: 1024
+    cli-memory: 512
+    cli-timeout: 900
+    runtime: "php-8.3:al2023-arm"
+    storage: sharaforms-staging
+    database: SharaForms
+    domain: api.stg.sharaforms.com
+    build:
+      - "COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev"
+      - "php artisan optimize"
+      - "php artisan disposable:update"
+    deploy:
+      - "php artisan migrate --force"
+    firewall:
+      rate-limit: 1000
+    timeout: 60

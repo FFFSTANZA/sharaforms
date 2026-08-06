@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /forms/create
+Disallow: /forms/*/edit
+Disallow: /forms/*/pdf-editor
+Disallow: /forms/*/show
+Disallow: /home
+Disallow: /login
+Disallow: /password
+Disallow: /redirect/
+Disallow: /register
+Disallow: /self-hosted/checkout/
+Disallow: /setup
+Disallow: /subscriptions/
+Disallow: /templates/my-templates
+
+Sitemap: https://sharaforms.com/sitemap.xml
+LLMs: /llms.txt
+LLMs-full: /llms-full.txt
+AI: /ai.txt

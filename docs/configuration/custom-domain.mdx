@@ -1,0 +1,27 @@
+---
+title: Using your own domain 
+description: Setting up a custom domain for SharaForms
+---
+
+This page explains how to configure a custom domain for your SharaForms instance.
+
+<Info>
+    This guide covers the instance-wide domain for your self-hosted SharaForms
+    deployment. Workspace or form-level custom domains are configured
+    separately inside SharaForms and are not the same as the instance URL.
+</Info>
+
+## Custom Domain Setup
+
+To use a custom domain (or subdomain)with SharaForms:
+
+1. Purchase a domain (if needed) 
+2. Configure DNS records to point to your SharaForms instance
+3. Update SharaForms configuration:
+   - Set `APP_URL` in `.env`
+   - Set `NUXT_PUBLIC_APP_URL` and `NUXT_PUBLIC_API_BASE` in `client/.env`
+4. Secure with SSL certificate
+
+import CloudVersion from "/snippets/cloud-version.mdx";
+
+<CloudVersion/>

@@ -1,0 +1,77 @@
+{
+    "app": {
+        "name": "SharaForms"
+    },
+    "forms": {
+        "buttons": {
+            "submit": "Enviar",
+            "next": "Siguiente",
+            "previous": "Anterior",
+            "re_fill": "Enviar otra respuesta"
+        },
+        "powered_by": "Desarrollado por",
+        "password_protected": "Este formulario está protegido por contraseña.",
+        "invalid_password": "Contraseña inválida.",
+        "password_required": "Se requiere contraseña.",
+        "create_form_free": "Crea tu formulario gratis con SharaForms",
+        "submit": "Enviar",
+        "wrong_form_structure": "Hay un problema con la estructura de este formulario. Si eres el propietario del formulario, contáctanos.",
+        "cannot_access_here": "No se puede acceder a este contenido aquí. Haz clic en el enlace de abajo para acceder.",
+        "open_form": "Abrir Formulario",
+        "restricted_to_workspace": "Restringido a miembros del espacio de trabajo de Notion. Inicia sesión para acceder a este contenido.",
+        "select": {
+            "search": "Buscar",
+            "searchOrTypeToCreateNew": "Buscar o escribir para crear nuevo",
+            "typeSomethingToAddAnOption": "Escribe algo para agregar una opción",
+            "noOptionAvailable": "No hay opciones disponibles",
+            "create": "Crear"
+        },
+        "fileInput": {
+            "chooseFiles": "Haga clic para elegir archivo(s) o suéltelo(s) aquí | Haga clic para elegir un archivo o suéltelo aquí",
+            "sizeLimit": "Tamaño límite: {count}MB por archivo",
+            "uploadingFile": "Subiendo su archivo..."
+        },
+        "cameraUpload": {
+            "allowCameraPermission": "Permitir acceso a la cámara",
+            "allowCameraPermissionDescription": "Debe permitir el acceso a la cámara antes de poder tomar fotos. Vaya a la configuración del navegador para habilitar el acceso a la cámara en esta página.",
+            "gotIt": "¡Entendido!",
+            "cameraDeviceError": "Error de cámara",
+            "cameraDeviceErrorDescription": "Se produjo un error desconocido al intentar iniciar el dispositivo de la cámara web.",
+            "goBack": "Volver"
+        },
+        "signatureInput": {
+            "uploadFileInstead": "Subir un archivo en su lugar",
+            "clear": "Borrar"
+        },
+        "barcodeInput": {
+            "clickToOpenCamera": "Haga clic para abrir la cámara"
+        },
+        "payment": {
+            "amount_to_pay": "Cantidad a pagar",
+            "success": "Pago realizado con éxito",
+            "name_on_card": "Nombre en la tarjeta",
+            "billing_email": "Correo electrónico de facturación",
+            "payment_disclaimer": "Se cargará a su tarjeta de crédito al hacer clic en este botón. Los pagos se procesan de forma segura a través de Stripe.",
+            "errors": {
+                "missingFormOrProvider": "Falta el slug del formulario o el ID del proveedor.",
+                "failedAccountDetails": "No se pudieron obtener los detalles de la cuenta de Stripe.",
+                "setupError": "Ocurrió un error durante la configuración de Stripe.",
+                "systemNotReady": "El sistema de pago no está listo. Por favor, espere un momento y vuelva a intentarlo.",
+                "misconfigured": "Sistema de pago mal configurado. Por favor, actualice y vuelva a intentarlo.",
+                "notFullyReady": "El sistema de pago no está completamente listo. Por favor, actualice y vuelva a intentarlo.",
+                "paymentRequired": "Complete el pago antes de poder continuar.",
+                "nameRequired": "El nombre del titular de la tarjeta es obligatorio.",
+                "emailRequired": "La dirección de correo electrónico de facturación es obligatoria.",
+                "invalidEmail": "La dirección de correo electrónico de facturación no es válida.",
+                "failedIntent": "Error al crear la intención de pago.",
+                "processingFailed": "El procesamiento del pago ha fallado."
+            }
+        },
+        "validation_error": "Error de validación",
+        "validation_error_with_count": "Error de validación ({count} campos)",
+        "toggle": {
+            "yes": "Sí",
+            "no": "No"
+        }
+    }
+} 

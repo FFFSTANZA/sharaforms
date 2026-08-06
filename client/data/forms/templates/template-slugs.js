@@ -1,0 +1,67 @@
+// Canonical list of seeded template slugs. This is the single client-side
+// source of truth for the template catalog: sitemap generation and the
+// TemplatesSlider fallback both consume this list, and it is kept in sync
+// with api/database/seeders/TemplateSeeder.php.
+export const TEMPLATE_SLUGS = [
+  'contact-form-template',
+  'event-registration-template',
+  'customer-feedback-survey-template',
+  'job-application-form-template',
+  'appointment-booking-form-template',
+  'online-order-form-template',
+  'donation-form-template',
+  'lead-generation-form-template',
+  'patient-intake-form-template',
+  'real-estate-inquiry-form-template',
+  'course-enrollment-form-template',
+  'rsvp-form-template',
+  'file-upload-form-template',
+  'consent-form-template',
+  'questionnaire-template',
+  'abstract-submission-form-template',
+  'audit-form-template',
+  'award-nomination-form-template',
+  'calculation-form-template',
+  'checklist-form-template',
+  'content-submission-form-template',
+  'employee-evaluation-form-template',
+  'inspection-form-template',
+  'interview-form-template',
+  'legal-intake-form-template',
+  'membership-application-form-template',
+  'petition-form-template',
+  'poll-form-template',
+  'quiz-form-template',
+  'quote-request-form-template',
+  'recommendation-form-template',
+  'incident-report-form-template',
+  'reservation-form-template',
+  'sponsorship-application-form-template',
+  'subscription-form-template',
+  'summer-camp-registration-form-template',
+  'telecommuting-agreement-form-template',
+  'asset-tracking-form-template',
+  'voting-form-template',
+  'wedding-rsvp-form-template',
+  'volunteer-signup-form-template',
+  'alumni-registration-form-template',
+  'pet-adoption-application-form-template',
+  'bank-account-opening-form-template',
+  'insurance-claim-form-template',
+  'photography-booking-form-template',
+  'seo-audit-request-form-template',
+  'sports-team-registration-form-template',
+  'gaming-tournament-registration-form-template',
+  'service-request-form-template',
+]
+
+// Templates relevant to the /industry (financial services) landing page.
+// Filtered by industry in the slider when the API is available; used directly
+// as the SSR-safe fallback when it is not.
+export const FINANCIAL_TEMPLATE_SLUGS = [
+  'bank-account-opening-form-template',
+  'insurance-claim-form-template',
+  'calculation-form-template',
+  'audit-form-template',
+  'incident-report-form-template',
+]

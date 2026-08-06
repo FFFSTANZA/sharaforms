@@ -1,0 +1,77 @@
+{
+    "app": {
+        "name": "SharaForms"
+    },
+    "forms": {
+        "buttons": {
+            "submit": "Enviar",
+            "next": "Següent",
+            "previous": "Anterior",
+            "re_fill": "Enviar una altra resposta"
+        },
+        "powered_by": "Desenvolupat per",
+        "password_protected": "Aquest formulari està protegit amb contrasenya.",
+        "invalid_password": "Contrasenya no vàlida.",
+        "password_required": "Es requereix contrasenya.",
+        "create_form_free": "Crea el teu formulari gratuïtament amb SharaForms",
+        "submit": "Enviar",
+        "wrong_form_structure": "Hi ha alguna cosa malament amb l'estructura d'aquest formulari. Si ets el propietari del formulari, contacta amb nosaltres.",
+        "cannot_access_here": "No es pot accedir a aquest contingut aquí. Fes clic a l'enllaç de sota per accedir-hi.",
+        "open_form": "Obrir formulari",
+        "restricted_to_workspace": "Restringit als membres de l'Espai de Treball de Notion. Inicia sessió per accedir a aquest contingut.",
+        "select": {
+            "search": "Cercar",
+            "searchOrTypeToCreateNew": "Cerca o escriu per crear nou",
+            "typeSomethingToAddAnOption": "Escriu alguna cosa per afegir una opció",
+            "noOptionAvailable": "No hi ha opcions disponibles",
+            "create": "Crear"
+        },
+        "fileInput": {
+            "chooseFiles": "Fes clic per triar arxiu(s) o arrossega aquí | Fes clic per triar un arxiu o arrossega aquí",
+            "sizeLimit": "Límit de mida: {count}MB per arxiu",
+            "uploadingFile": "Pujant el teu arxiu..."
+        },
+        "cameraUpload": {
+            "allowCameraPermission": "Permet l'accés a la càmera",
+            "allowCameraPermissionDescription": "Has de permetre l'accés a la càmera abans de poder fer fotos. Ves a la configuració del navegador per activar el permís de la càmera en aquesta pàgina.",
+            "gotIt": "Entès!",
+            "cameraDeviceError": "Error del dispositiu de càmera",
+            "cameraDeviceErrorDescription": "S'ha produït un error desconegut en intentar iniciar el dispositiu de webcam.",
+            "goBack": "Tornar"
+        },
+        "signatureInput": {
+            "uploadFileInstead": "Pujar arxiu en lloc seu",
+            "clear": "Netejar"
+        },
+        "barcodeInput": {
+            "clickToOpenCamera": "Fes clic per obrir la càmera"
+        },
+        "payment": {
+            "amount_to_pay": "Quantitat a pagar",
+            "success": "Pagament realitzat amb èxit",
+            "name_on_card": "Nom a la targeta",
+            "billing_email": "Adreça de correu electrònic de facturació",
+            "payment_disclaimer": "Se us cobrarà a la targeta de crèdit en fer clic en aquest botó. Els pagaments es processen de forma segura a través de Stripe.",
+            "errors": {
+                "missingFormOrProvider": "Falta l'slug del formulari o l'ID del proveïdor.",
+                "failedAccountDetails": "No s'han pogut obtenir els detalls del compte de Stripe.",
+                "setupError": "S'ha produït un error durant la configuració de Stripe.",
+                "systemNotReady": "El sistema de pagament no està llest. Espereu un moment i torneu-ho a provar.",
+                "misconfigured": "El sistema de pagament està mal configurat. Actualitzeu i torneu-ho a provar.",
+                "notFullyReady": "El sistema de pagament no està completament llest. Actualitzeu i torneu-ho a provar.",
+                "paymentRequired": "Completeu el pagament abans de poder continuar.",
+                "nameRequired": "El nom del titular de la targeta és obligatori.",
+                "emailRequired": "L'adreça de correu electrònic de facturació és obligatòria.",
+                "invalidEmail": "Adreça de correu electrònic de facturació no vàlida.",
+                "failedIntent": "No s'ha pogut crear la intenció de pagament.",
+                "processingFailed": "El processament del pagament ha fallat."
+            }
+        },
+        "validation_error": "Error de validació",
+        "validation_error_with_count": "Error de validació ({count} camps)",
+        "toggle": {
+            "yes": "Sí",
+            "no": "No"
+        }
+    }
+} 

@@ -1,0 +1,245 @@
+import { useSubdomainRedirect } from '~/composables/useSubdomainRedirect'
+
+const nonIndexablePathPatterns = [
+  /^\/admin(?:\/|$)/,
+  /^\/forms\/create(?:\/|$)/,
+  /^\/forms\/[^/]+\/(?:edit|pdf-editor|show)(?:\/|$)/,
+  /^\/home(?:\/|$)/,
+  /^\/login(?:\/|$)/,
+  /^\/password(?:\/|$)/,
+  /^\/redirect(?:\/|$)/,
+  /^\/register(?:\/|$)/,
+  /^\/self-hosted\/checkout(?:\/|$)/,
+  /^\/setup(?:\/|$)/,
+  /^\/subscriptions(?:\/|$)/,
+  /^\/templates\/my-templates(?:\/|$)/,
+]
+
+export const useOpnSeoMeta = (meta, alwaysEnabled = false) => {
+  const { shouldRedirect } = useSubdomainRedirect()
+  const route = useRoute()
+  const canonicalBaseUrl = resolveCanonicalBaseUrl()
+  const { locale } = useI18n()
+
+  if (!alwaysEnabled && shouldRedirect()) {
+    return
+  }
+
+  const seoMeta = { ...meta }
+  delete seoMeta.canonical
+
+  useHead(() => {
+    const canonicalUrl = resolveCanonicalUrl(meta.canonical, route, canonicalBaseUrl)
+    const robots = resolveRobots(seoMeta.robots, route)
+    const pageSchema = shouldAddPageSchema(robots, canonicalUrl)
+      ? buildPageSchema({
+          title: resolveMetaValue(seoMeta.title),
+          description: resolveMetaValue(seoMeta.description),
+          canonicalUrl,
+          canonicalBaseUrl,
+          route,
+          speakable: seoMeta.speakable,
+          breadcrumbs: seoMeta.breadcrumbs,
+          locale: locale.value || 'en-US',
+        })
+      : null
+
+    return {
+      link: canonicalUrl
+        ? [
+            {
+              key: 'canonical',
+              rel: 'canonical',
+              href: canonicalUrl,
+            },
+          ]
+        : [],
+      script: pageSchema
+        ? [
+            {
+              key: `seo-page-schema:${route.path}`,
+              type: 'application/ld+json',
+              textContent: JSON.stringify(pageSchema),
+            },
+          ]
+        : [],
+    }
+  })
+
+  return useSeoMeta({
+    applicationName: 'SharaForms',
+    author: 'SharaForms',
+    category: 'software',
+    ogSiteName: 'SharaForms',
+    ogType: 'website',
+    ogUrl: () => resolveCanonicalUrl(meta.canonical, route, canonicalBaseUrl),
+    twitterCard: 'summary_large_image',
+    twitterSite: '@sharaforms',
+    ...(seoMeta.title
+      ? {
+          ogTitle: seoMeta.title,
+          twitterTitle: seoMeta.title,
+        }
+      : {}),
+    ...(seoMeta.description
+      ? {
+          ogDescription: seoMeta.description,
+          twitterDescription: seoMeta.description,
+        }
+      : {}),
+    ...(seoMeta.ogImage
+      ? {
+          ogImageAlt: seoMeta.title || 'SharaForms',
+          ogImageWidth: 1200,
+          ogImageHeight: 800,
+          twitterImageAlt: seoMeta.title || 'SharaForms',
+          twitterImage: seoMeta.ogImage,
+        }
+      : {}),
+    ...seoMeta,
+    robots: () => resolveRobots(seoMeta.robots, route),
+  })
+}
+
+function resolveRobots (robots, route) {
+  const resolvedRobots = resolveMetaValue(robots)
+  if (resolvedRobots) {
+    return resolvedRobots
+  }
+
+  return isNonIndexablePath(route.path)
+    ? 'noindex, nofollow'
+    : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+}
+
+function resolveCanonicalUrl (canonical, route, canonicalBaseUrl) {
+  const resolvedCanonical = resolveMetaValue(canonical)
+  if (resolvedCanonical === false) {
+    return null
+  }
+
+  if (typeof resolvedCanonical === 'string' && resolvedCanonical) {
+    return normalizeCanonicalUrl(resolvedCanonical, canonicalBaseUrl)
+  }
+
+  return joinCanonicalUrl(canonicalBaseUrl, route.path)
+}
+
+function resolveCanonicalBaseUrl () {
+  const configuredAppUrl = useRuntimeConfig().public.appUrl
+  if (configuredAppUrl && configuredAppUrl !== '/') {
+    return configuredAppUrl
+  }
+
+  if (import.meta.server) {
+    const event = useRequestEvent()
+    const forwardedHost = event?.node.req.headers['x-forwarded-host']
+    const host = forwardedHost || event?.node.req.headers.host
+    const protocol = event?.node.req.headers['x-forwarded-proto'] || 'https'
+
+    return host ? `${protocol}://${host}` : ''
+  }
+
+  return import.meta.client ? window.location.origin : ''
+}
+
+function shouldAddPageSchema (robots, canonicalUrl) {
+  if (!canonicalUrl) {
+    return false
+  }
+
+  return !(robots && robots.includes('noindex'))
+}
+
+function buildPageSchema ({ title, description, canonicalUrl, canonicalBaseUrl, route, speakable, breadcrumbs, locale }) {
+  const baseUrl = canonicalBaseUrl.replace(/\/+$/, '')
+
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': getPageSchemaType(route.path),
+    '@id': `${canonicalUrl}#webpage`,
+    url: canonicalUrl,
+    name: title || 'SharaForms',
+    description,
+    keywords: getPageKeywords(route.path),
+    inLanguage: locale || 'en-US',
+    isPartOf: {
+      '@id': `${baseUrl}/#website`,
+    },
+    about: {
+      '@id': `${baseUrl}/#software`,
+    },
+    publisher: {
+      '@id': `${baseUrl}/#organization`,
+    },
+  }
+
+  if (speakable) {
+    schema.speakable = {
+      '@type': 'SpeakableSpecification',
+      cssSelector: speakable,
+    }
+  }
+
+  if (breadcrumbs) {
+    schema.breadcrumb = {
+      '@type': 'BreadcrumbList',
+      '@id': `${canonicalUrl}#breadcrumb`,
+      itemListElement: breadcrumbs.map((item, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: item.name,
+        ...(item.item ? { item: item.item } : {}),
+      })),
+    }
+  }
+
+  return schema
+}
+
+function getPageSchemaType (path) {
+  if (path === '/integrations' || path === '/templates' || path === '/industry' || path === '/comparisons') {
+    return 'CollectionPage'
+  }
+
+  return 'WebPage'
+}
+
+function getPageKeywords (path) {
+  if (path === '/pricing') {
+    return 'free form builder pricing, unlimited forms, unlimited submissions pricing, free online forms, calculated forms pricing'
+  }
+
+  if (path === '/ai-form-builder') {
+    return 'ai form builder, free ai form builder, unlimited forms, calculated forms, online forms with formulas'
+  }
+
+  return 'free form builder, unlimited forms, unlimited submissions, calculated forms, formula forms, online forms'
+}
+
+function normalizeCanonicalUrl (url, canonicalBaseUrl) {
+  if (/^https?:\/\//.test(url)) {
+    return url
+  }
+
+  return joinCanonicalUrl(canonicalBaseUrl, url)
+}
+
+function joinCanonicalUrl (baseUrl, path) {
+  if (!baseUrl) {
+    return null
+  }
+
+  const normalizedBaseUrl = baseUrl.replace(/\/+$/, '')
+  const normalizedPath = path === '/' ? '/' : `/${path.replace(/^\/+|\/+$/g, '')}`
+
+  return `${normalizedBaseUrl}${normalizedPath}`
+}
+
+function isNonIndexablePath (path) {
+  return nonIndexablePathPatterns.some((pattern) => pattern.test(path))
+}
+
+function resolveMetaValue (value) {
+  return typeof value === 'function' ? value() : value
+}

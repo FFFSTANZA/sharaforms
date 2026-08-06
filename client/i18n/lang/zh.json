@@ -1,0 +1,77 @@
+{
+    "app": {
+        "name": "SharaForms"
+    },
+    "forms": {
+        "buttons": {
+            "submit": "提交",
+            "next": "下一个",
+            "previous": "上一个",
+            "re_fill": "提交另一个回复"
+        },
+        "powered_by": "开发者",
+        "password_protected": "此表单受密码保护。",
+        "invalid_password": "无效密码。",
+        "password_required": "密码是必需的。",
+        "create_form_free": "免费使用 SharaForms 创建表单",
+        "submit": "提交",
+        "wrong_form_structure": "此表单的结构有问题。如果您是表单所有者，请与我们联系。",
+        "cannot_access_here": "此内容无法在此访问。点击下面的链接访问。",
+        "open_form": "打开表单",
+        "restricted_to_workspace": "仅限 Notion 工作区成员访问。请登录以访问此内容。",
+        "select": {
+            "search": "搜索",
+            "searchOrTypeToCreateNew": "搜索或输入以创建新",
+            "typeSomethingToAddAnOption": "输入一些东西以添加选项",
+            "noOptionAvailable": "没有选项可用",
+            "create": "创建"
+        },
+        "fileInput": {
+            "chooseFiles": "点击选择文件或将文件拖放到此处 | 点击选择文件或将文件拖放到此处",
+            "sizeLimit": "大小限制：每个文件 {count}MB",
+            "uploadingFile": "正在上传您的文件..."
+        },
+        "cameraUpload": {
+            "allowCameraPermission": "允许访问相机",
+            "allowCameraPermissionDescription": "在拍照之前，您需要允许访问相机。请转到浏览器设置以启用此页面的相机访问权限。",
+            "gotIt": "明白了！",
+            "cameraDeviceError": "相机错误",
+            "cameraDeviceErrorDescription": "尝试启动网络摄像头设备时发生未知错误。",
+            "goBack": "返回"
+        },
+        "signatureInput": {
+            "uploadFileInstead": "改为上传文件",
+            "clear": "清除"
+        },
+        "barcodeInput": {
+            "clickToOpenCamera": "点击打开相机"
+        },
+        "payment": {
+            "amount_to_pay": "支付金额",
+            "success": "支付成功",
+            "name_on_card": "卡上姓名",
+            "billing_email": "账单邮箱地址",
+            "payment_disclaimer": "点击此按钮后，将从您的信用卡中扣款。付款通过 Stripe 安全处理。",
+            "errors": {
+                "missingFormOrProvider": "缺少表单 slug 或提供商 ID。",
+                "failedAccountDetails": "无法获取 Stripe 帐户详细信息。",
+                "setupError": "Stripe 设置期间发生错误。",
+                "systemNotReady": "支付系统尚未准备好。请稍候再试。",
+                "misconfigured": "支付系统配置错误。请刷新后重试。",
+                "notFullyReady": "支付系统尚未完全准备好。请刷新后重试。",
+                "paymentRequired": "请先完成付款，然后再继续。",
+                "nameRequired": "持卡人姓名是必需的。",
+                "emailRequired": "账单邮箱地址是必需的。",
+                "invalidEmail": "无效的账单邮箱地址。",
+                "failedIntent": "创建支付意图失败。",
+                "processingFailed": "支付处理失败。"
+            }
+        },
+        "validation_error": "验证错误",
+        "validation_error_with_count": "验证错误 ({count} 个字段)",
+        "toggle": {
+            "yes": "是",
+            "no": "否"
+        }
+    }
+} 

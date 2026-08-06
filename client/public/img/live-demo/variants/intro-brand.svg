@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1254 1254" width="1254" height="1254">
+  <defs>
+    <linearGradient id="bg" x1="15%" y1="12%" x2="82%" y2="88%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="62%" stop-color="#fbfaff"/>
+      <stop offset="100%" stop-color="#f4f8ff"/>
+    </linearGradient>
+    <radialGradient id="violetGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.24"/>
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blueGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="pinkGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ef5da8" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#ef5da8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="orb1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#bca7ff"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="orb2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8fd0ff"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+    <linearGradient id="orb3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f7b1d4"/>
+      <stop offset="100%" stop-color="#ef5da8"/>
+    </linearGradient>
+    <linearGradient id="orb4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffc39e"/>
+      <stop offset="100%" stop-color="#ff8a5b"/>
+    </linearGradient>
+    <filter id="blur-xl" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="70"/>
+    </filter>
+  </defs>
+
+  <rect width="1254" height="1254" fill="url(#bg)"/>
+
+  <g filter="url(#blur-xl)">
+    <circle cx="268" cy="258" r="170" fill="url(#blueGlow)"/>
+    <circle cx="1004" cy="234" r="146" fill="url(#pinkGlow)"/>
+    <circle cx="942" cy="950" r="182" fill="url(#violetGlow)"/>
+    <circle cx="290" cy="984" r="154" fill="url(#pinkGlow)" opacity="0.6"/>
+  </g>
+
+  <g opacity="0.9">
+    <circle cx="364" cy="888" r="148" fill="url(#orb2)" opacity="0.72"/>
+    <circle cx="862" cy="374" r="106" fill="url(#orb3)" opacity="0.68"/>
+    <circle cx="926" cy="814" r="132" fill="url(#orb1)" opacity="0.74"/>
+    <circle cx="522" cy="1038" r="96" fill="url(#orb4)" opacity="0.7"/>
+  </g>
+
+
+</svg>

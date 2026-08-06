@@ -1,0 +1,126 @@
+<template>
+  <div class="relative px-4 py-8 sm:px-8 sm:py-10 overflow-hidden">
+    <div
+      class="pointer-events-none absolute left-1/2 top-8 h-[21.75rem] w-full max-w-full -translate-x-1/2 rounded-full bg-pink-100/70 blur-3xl sm:w-[72rem] sm:max-w-[145%]"
+      aria-hidden="true"
+    ></div>
+
+    <div class="relative z-10 mx-auto max-w-266">
+      <div class="grid gap-6 lg:grid-cols-3">
+        <div
+          v-for="item in testimonials"
+          :key="item.name"
+          class="relative rounded-3xl border border-gray-200 bg-white p-6 sm:p-8 shadow-sm flex flex-col justify-between"
+        >
+          <div
+            :class="item.accentClass"
+            class="absolute left-0 top-10 h-10 w-0.5 rounded-r-full"
+            aria-hidden="true"
+          ></div>
+          <div class="text-2xl leading-8 font-medium text-gray-950">
+            “{{ item.quote }}”
+          </div>
+
+          <div class="mt-10 flex items-center gap-4">
+            <div
+              :class="item.avatarClass"
+              class="flex h-10 w-10 items-center justify-center rounded-full ring-1"
+            >
+              <span
+                :class="item.avatarTextClass"
+                class="text-sm leading-7 tracking-[-1.1%] font-medium"
+              >
+                {{ getInitials(item.name) }}
+              </span>
+            </div>
+            <div>
+              <div class="flex items-baseline justify-between gap-3">
+                <div
+                  class="text-base leading-7 tracking-[-1.1%] font-medium text-gray-950"
+                >
+                  {{ item.name }}
+                </div>
+                <span
+                  class="shrink-0 text-sm leading-7 tracking-[-0.6%] font-medium text-gray-600 whitespace-nowrap"
+                >
+                  {{ item.date }}
+                </span>
+              </div>
+              <div
+                class="mt-1 text-sm leading-5 tracking-[-0.6%] font-medium text-gray-600"
+              >
+                <div class="flex items-center gap-0.5">
+                  <UIcon
+                    v-for="starIndex in item.rating"
+                    :key="`${item.name}-star-${starIndex}`"
+                    name="i-lucide-star"
+                    class="h-4 w-4 text-amber-400"
+                  />
+                </div>
+                <div class="mt-0.5 text-xs leading-5 text-gray-400">
+                  {{ item.role }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</template>
+
+<script setup>
+const testimonials = [
+  {
+    quote:
+      "Since switching our lead capture to SharaForms, qualified leads jumped 40% and our team stopped hunting for submissions in three different tools.",
+    name: "kristelle F.",
+    role: "Marketing Ops Lead",
+    rating: 5,
+    date: "Mar 2026",
+    accentClass: "bg-blue-600",
+    avatarClass: "bg-blue-50 ring-blue-100",
+    avatarTextClass: "text-blue-700",
+  },
+  {
+    quote:
+      "We rolled out our client intake form in a single afternoon instead of a two-week build. It paid for itself before the first invoice.",
+    name: "Alexandre N.",
+    role: "Product Engineer",
+    rating: 5,
+    date: "Nov 2025",
+    accentClass: "bg-emerald-600",
+    avatarClass: "bg-emerald-50 ring-emerald-100",
+    avatarTextClass: "text-emerald-700",
+  },
+  {
+    quote:
+      "Our conversion rate on signups went up 25% once we moved the flow into Focused mode. Customers finish in half the time, so fewer drop off midway.",
+    name: "Axel A.",
+    role: "Founder, SaaS startup",
+    rating: 5,
+    date: "Oct 2025",
+    accentClass: "bg-violet-600",
+    avatarClass: "bg-violet-50 ring-violet-100",
+    avatarTextClass: "text-violet-700",
+  },
+]
+
+function getInitials(name) {
+  const parts = (name || "")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+
+  if (parts.length === 0) {
+    return "??"
+  }
+
+  if (parts.length === 1) {
+    return parts[0].slice(0, 2).toUpperCase()
+  }
+
+  return `${parts[0].charAt(0)}${parts[parts.length - 1].charAt(0)}`.toUpperCase()
+}
+</script>

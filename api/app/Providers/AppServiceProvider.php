@@ -1,0 +1,123 @@
+<?php
+
+namespace App\Providers;
+
+use App\Models\Billing\Subscription;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\ServiceProvider;
+use RuntimeException;
+
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        if (config('filesystems.default') === 'local') {
+            Storage::disk('local')->buildTemporaryUrlsUsing(function ($path, $expiration, $options) {
+                return URL::temporarySignedRoute(
+                    'local.temp',
+                    $expiration,
+                    array_merge($options, ['path' => $path])
+                );
+            });
+        }
+
+        JsonResource::withoutWrapping();
+        if ($this->app->environment('testing')) {
+            $this->ensureSafeTestingDatabase();
+            Schema::defaultStringLength(191);
+        }
+
+        Validator::includeUnvalidatedArrayKeys();
+
+        Event::listen(function (\SocialiteProviders\Manager\SocialiteWasCalled $event) {
+            $event->extendSocialite('stripe', \SocialiteProviders\Stripe\Provider::class);
+        });
+
+        // Route model bindings for performance optimization
+        Route::bind('workspace', function ($value) {
+            return \App\Models\Workspace::with([
+                'users' => fn ($q) => $q->withPivot('role')
+            ])->findOrFail((int) $value);
+        });
+
+        Route::bind('form', function ($value) {
+            // Support both numeric ID and slug resolution (compact, common part outside ternary)
+            $query = \App\Models\Forms\Form::query();
+            // Signed file downloads only need the form id for storage path — skip eager loads.
+            $route = request()->route();
+            if (! $route?->named('open.forms.submissions.file')) {
+                $query->with(['workspace.users' => fn ($q) => $q->withPivot('role')]);
+            }
+            return is_numeric($value)
+                ? $query->findOrFail((int) $value)
+                : $query->where('slug', $value)->firstOrFail();
+        });
+
+        Route::bind('user', function ($value) {
+            return \App\Models\User::findOrFail((int) $value);
+        });
+
+        // OIDC connection binding - load with workspace relationship for policy checks
+        Route::bind('connection', function ($value) {
+            return \App\Enterprise\Oidc\Models\IdentityConnection::with('workspace')
+                ->findOrFail((int) $value);
+        });
+    }
+
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        // OAuth Services
+        $this->app->singleton(\App\Service\OAuth\OAuthContextService::class);
+        $this->app->singleton(\App\Service\OAuth\OAuthInviteService::class);
+        $this->app->singleton(\App\Service\OAuth\OAuthUserDataService::class);
+        $this->app->singleton(\App\Service\OAuth\OAuthFlowOrchestrator::class);
+
+        // Plan Service (singleton for caching efficiency)
+        $this->app->singleton(\App\Service\Plan\PlanService::class);
+    }
+
+    private function ensureSafeTestingDatabase(): void
+    {
+        $connectionName = config('database.default');
+        $connections = config('database.connections', []);
+        $connection = $connections[$connectionName] ?? null;
+
+        if (!is_array($connection)) {
+            throw new RuntimeException('Missing database configuration for the active test connection.');
+        }
+
+        $driver = strtolower((string) ($connection['driver'] ?? ''));
+        $url = strtolower((string) ($connection['url'] ?? ''));
+        $database = strtolower((string) ($connection['database'] ?? ''));
+
+        if ($driver !== 'sqlite') {
+            throw new RuntimeException('Only sqlite is allowed while testing.');
+        }
+
+        $isInMemoryDatabase = $database === ':memory:';
+        $isTestingDatabase = str_contains($database, 'test');
+        $isSafeUrl = $url === '';
+
+        if ($isSafeUrl && ($isInMemoryDatabase || $isTestingDatabase)) {
+            return;
+        }
+
+        throw new RuntimeException('Unsafe testing sqlite configuration detected.');
+    }
+}

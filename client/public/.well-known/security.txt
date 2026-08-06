@@ -1,0 +1,14 @@
+# Security contact for SharaForms
+# https://sharaforms.com
+
+Contact: mailto:security@sharaforms.com
+Contact: https://sharaforms.com/.well-known/security.txt
+
+Preferred-Languages: en, hi
+
+# Policy
+# We take security vulnerabilities seriously.
+# Please report any findings to security@sharaforms.com.
+# We aim to acknowledge reports within 48 hours.
+
+# This file is based on https://securitytxt.org/
