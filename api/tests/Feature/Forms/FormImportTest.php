@@ -81,6 +81,52 @@ it('rejects unauthenticated Google Forms import requests', function () {
     ])->assertStatus(401);
 });
 
+it('returns the importer exception message with a 422', function () {
+    $this->postJson(route('open.forms.import'), [
+        'source' => 'typeform',
+        'import_data' => ['url' => 'https://example.typeform.com/no-form-id-here'],
+    ])
+        ->assertStatus(422)
+        ->assertJsonPath('type', 'error')
+        ->assertJsonPath('message', 'Could not extract form ID from Typeform URL. Expected format: https://yourname.typeform.com/to/FORM_ID');
+});
+
+it('returns a generic 500 when the importer fails unexpectedly', function () {
+    $this->mock(\App\Service\FormImport\FormImportService::class, function ($mock) {
+        $mock->shouldReceive('import')
+            ->once()
+            ->andThrow(new \RuntimeException('exploded'));
+    });
+
+    $this->postJson(route('open.forms.import'), [
+        'source' => 'typeform',
+        'import_data' => ['url' => 'https://example.typeform.com/to/abc123'],
+    ])
+        ->assertStatus(500)
+        ->assertJsonPath('type', 'error')
+        ->assertJsonPath('message', 'An unexpected error occurred while importing the form. Please try again.');
+});
+
+it('rejects import with a malformed URL', function () {
+    $this->postJson(route('open.forms.import'), [
+        'source' => 'typeform',
+        'import_data' => ['url' => 'not-a-url'],
+    ])
+        ->assertStatus(422)
+        ->assertJsonValidationErrors('import_data.url');
+});
+
+it('requires an oauth_provider_id when importing from Google Forms', function () {
+    $this->createUser();
+
+    $this->postJson(route('open.forms.import'), [
+        'source' => 'google_forms',
+        'import_data' => ['url' => 'https://docs.google.com/forms/d/1abc123/edit'],
+    ])
+        ->assertStatus(422)
+        ->assertJsonPath('message', 'Please select an account to import from.');
+});
+
 // ---------------------------------------------------------------------------
 // Typeform importer
 // ---------------------------------------------------------------------------

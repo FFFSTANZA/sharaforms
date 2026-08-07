@@ -76,7 +76,7 @@ export default {
       
       const text = encodeURIComponent(`Check out this form: ${this.form.title}`)
       const url = encodeURIComponent(this.shareUrl)
-      window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank')
+      window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank')
     },
 
     shareOnLinkedIn() {

@@ -9,7 +9,7 @@ We generally support the latest release series and the `main` branch. Security f
 ## Reporting a Vulnerability
 
 -   Please do not open public GitHub issues for security reports.
--   Email [security@sharaforms.com](mailto:security@sharaforms.com?subject=Security%20Vulnerability%20Report%20for%20SharaForms&body=Please%20describe%20the%20vulnerability%20in%20detail%20including%20affected%20version%2C%20steps%20to%20reproduce%2C%20impact%2C%20and%20any%20suggested%20mitigations.) with details.
+-   Email [support@sharaforms.com](mailto:support@sharaforms.com?subject=Security%20Vulnerability%20Report%20for%20SharaForms&body=Please%20describe%20the%20vulnerability%20in%20detail%20including%20affected%20version%2C%20steps%20to%20reproduce%2C%20impact%2C%20and%20any%20suggested%20mitigations.) with details.
 
 When reporting, include as much information as possible:
 

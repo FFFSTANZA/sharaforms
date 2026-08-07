@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Webhook;
 
 use App\Http\Controllers\Controller;
-use App\Jobs\Billing\RemoveWorkspaceGuests;
+use App\Models\Billing\Subscription;
 use App\Models\User;
 use App\Service\Billing\DodoPaymentsService;
 use Illuminate\Http\Request;
@@ -26,18 +26,31 @@ class DodoPaymentsController extends Controller
             return response()->json(['message' => 'Invalid signature.'], 401);
         }
 
-        if ($webhookId && !Cache::add('dodo_webhook:' . $webhookId, true, now()->addDay())) {
-            return response()->json(['received' => true]);
-        }
-
         $event = json_decode($payload, true);
         if (!is_array($event)) {
             return response()->json(['message' => 'Invalid payload.'], 400);
         }
 
+        if ($webhookId && Cache::has('dodo_webhook:' . $webhookId)) {
+            return response()->json(['received' => true]);
+        }
+
         $eventType = $event['type'] ?? null;
         if (is_string($eventType) && str_starts_with($eventType, 'subscription.')) {
-            $this->syncSubscription($eventType, $event['data'] ?? []);
+            try {
+                $this->syncSubscription($eventType, $event['data'] ?? []);
+            } catch (\RuntimeException $e) {
+                Log::error('Failed to process Dodo subscription webhook.', [
+                    'event_type' => $eventType,
+                    'error' => $e->getMessage(),
+                ]);
+
+                return response()->json(['message' => 'Webhook could not be processed.'], 400);
+            }
+        }
+
+        if ($webhookId) {
+            Cache::add('dodo_webhook:' . $webhookId, true, now()->addDay());
         }
 
         return response()->json(['received' => true]);
@@ -68,34 +81,54 @@ class DodoPaymentsController extends Controller
                 'customer_email' => $customerEmail,
             ]);
 
-            return;
+            throw new \RuntimeException('Unable to resolve user for Dodo subscription webhook.');
         }
 
         if ($customerId && $user->stripe_id !== $customerId) {
+            if (filled($user->stripe_id)) {
+                Log::warning('Dodo webhook re-attributed a subscription to a different Dodo customer ID.', [
+                    'user_id' => $user->id,
+                    'previous_customer_id' => $user->stripe_id,
+                    'new_customer_id' => $customerId,
+                ]);
+            }
+
             $user->forceFill([
                 'stripe_id' => $customerId,
             ])->save();
         }
 
-        $subscription = $user->subscriptions()->firstOrNew([
+        $subscription = Subscription::query()->firstOrNew([
             'stripe_id' => $subscriptionId,
         ]);
 
         $newStatus = $this->resolveStatus($eventType, $data, $subscription->stripe_status);
 
+        if (!$subscription->exists
+            && in_array($newStatus, ['trialing', 'active', 'on_hold'], true)
+            && $this->userHasActiveSubscription($user, $subscriptionId)) {
+            Log::warning('Ignoring Dodo webhook that would create a duplicate active subscription.', [
+                'event_type' => $eventType,
+                'subscription_id' => $subscriptionId,
+                'user_id' => $user->id,
+            ]);
+
+            return;
+        }
+
+        $trialEndsAt = in_array($newStatus, ['trialing', 'active'], true)
+            ? $this->resolveTrialEndsAt($data)?->toIso8601String()
+            : null;
+
         $this->dodoPaymentsService->syncSubscription(
             $subscription,
             array_merge($data, [
                 'status' => $newStatus,
-                'trial_ends_at' => $this->resolveTrialEndsAt($data)?->toIso8601String(),
+                'trial_ends_at' => $trialEndsAt,
                 'ends_at' => $this->resolveEndsAt($data)?->toIso8601String(),
             ]),
             $user,
         );
-
-        if (!$subscription->valid()) {
-            RemoveWorkspaceGuests::dispatch($user);
-        }
     }
 
     private function resolveUser(?string $customerId, ?string $email): ?User
@@ -114,11 +147,19 @@ class DodoPaymentsController extends Controller
         return null;
     }
 
+    private function userHasActiveSubscription(User $user, string $subscriptionId): bool
+    {
+        return $user->subscriptions()
+            ->where('stripe_id', '!=', $subscriptionId)
+            ->whereIn('stripe_status', ['trialing', 'active', 'on_hold'])
+            ->exists();
+    }
+
     private function resolveStatus(string $eventType, array $data, ?string $currentStatus = null): string
     {
         $resolvedStatus = $data['status']
             ?? match ($eventType) {
-                'subscription.active', 'subscription.renewed', 'subscription.plan_changed', 'subscription.updated' => 'active',
+                'subscription.created', 'subscription.activated', 'subscription.active', 'subscription.renewed', 'subscription.plan_changed', 'subscription.updated' => 'active',
                 'subscription.cancelled' => 'cancelled',
                 'subscription.failed' => 'failed',
                 'subscription.expired' => 'expired',
@@ -140,6 +181,11 @@ class DodoPaymentsController extends Controller
 
     private function resolveTrialEndsAt(array $data): ?Carbon
     {
+        $explicitTrialEndsAt = $data['trial_ends_at'] ?? null;
+        if (is_string($explicitTrialEndsAt) && $explicitTrialEndsAt !== '') {
+            return Carbon::parse($explicitTrialEndsAt);
+        }
+
         $trialDays = (int) ($data['trial_period_days'] ?? 0);
         $previousBillingDate = $data['previous_billing_date'] ?? $data['created_at'] ?? null;
 

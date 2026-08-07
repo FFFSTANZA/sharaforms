@@ -10,6 +10,8 @@ it('creates a dodo checkout session for new subscriptions', function () {
     $this->actingAsUser($user);
 
     $service = \Mockery::mock(DodoPaymentsService::class);
+    $service->shouldReceive('isFullyConfigured')
+        ->andReturn(true);
     $service->shouldReceive('getCheckoutUrl')
         ->once()
         ->withArgs(function ($authedUser, $plan, $interval, $options) use ($user) {

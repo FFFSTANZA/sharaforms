@@ -10,7 +10,7 @@ use App\Service\Billing\Data\BillingState;
 
 class BillingStateResolver
 {
-    private const ACTIVE_STATUSES = ['trialing', 'active'];
+    private const ACTIVE_STATUSES = ['trialing', 'active', 'on_hold'];
 
     public function __construct(protected PlanOverrideResolver $planOverrideResolver)
     {

@@ -6,6 +6,10 @@ use App\Service\AI\Prompts\Integration\CheckSpamEmailIntegrationPrompt;
 
 uses(\Tests\TestCase::class);
 
+beforeEach(function () {
+    config()->set('services.ai.providers.openai.api_key', 'test-key');
+});
+
 it('treats default forms with only hidden, disabled, or display blocks as dummy forms', function () {
     $form = (new Form())->forceFill([
         'title' => 'Contact Form',

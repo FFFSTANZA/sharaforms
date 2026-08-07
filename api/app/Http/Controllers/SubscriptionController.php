@@ -10,6 +10,7 @@ use App\Service\BillingHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class SubscriptionController extends Controller
 {
@@ -32,8 +33,8 @@ class SubscriptionController extends Controller
     public function checkout($pricing, $plan)
     {
         $user = Auth::user();
-        $lockKey = "subscription_checkout:{$user->id}:{$pricing}";
-        $checkoutLock = Cache::lock($lockKey, 15);
+        $lockKey = "subscription_checkout:{$user->id}";
+        $checkoutLock = Cache::lock($lockKey, 30);
 
         if (!$checkoutLock->get()) {
             return $this->error([
@@ -62,11 +63,26 @@ class SubscriptionController extends Controller
                 ]);
             }
 
-            return $this->success([
-                'checkout_url' => $this->dodoPaymentsService->getCheckoutUrl($user, $pricing, $plan, [
+            try {
+                $checkoutUrl = $this->dodoPaymentsService->getCheckoutUrl($user, $pricing, $plan, [
                     'return_url' => front_url('/subscriptions/success'),
                     'cancel_url' => front_url('/subscriptions/error'),
-                ]),
+                ]);
+            } catch (\Throwable $e) {
+                Log::warning('Unable to create Dodo checkout session.', [
+                    'user_id' => $user->id,
+                    'pricing' => $pricing,
+                    'plan' => $plan,
+                    'error' => $e->getMessage(),
+                ]);
+
+                return $this->error([
+                    'message' => 'Billing is not configured yet. Please try again later.',
+                ], 503);
+            }
+
+            return $this->success([
+                'checkout_url' => $checkoutUrl,
             ]);
         } finally {
             $checkoutLock->release();
@@ -76,10 +92,31 @@ class SubscriptionController extends Controller
     public function updateCustomerDetails(UpdateCustomerDetailsRequest $request)
     {
         $user = Auth::user();
-        $customerId = $this->dodoPaymentsService->updateCustomer($user, $request->email, $request->name);
-        $user->forceFill([
-            'stripe_id' => $customerId,
-        ])->save();
+        $customerLock = Cache::lock("subscription_update_customer:{$user->id}", 30);
+
+        if (!$customerLock->get()) {
+            return $this->error([
+                'message' => 'Billing details update is already in progress. Please retry in a few seconds.',
+            ], 429);
+        }
+
+        try {
+            $customerId = $this->dodoPaymentsService->updateCustomer($user, $request->email, $request->name);
+            $user->forceFill([
+                'stripe_id' => $customerId,
+            ])->save();
+        } catch (\Throwable $e) {
+            Log::warning('Unable to update Dodo billing details.', [
+                'user_id' => $user->id,
+                'error' => $e->getMessage(),
+            ]);
+
+            return $this->error([
+                'message' => 'Failed to save billing details. Please try again or contact support.',
+            ], 503);
+        } finally {
+            $customerLock->release();
+        }
 
         return $this->success([
             'message' => 'Details saved.',
@@ -94,8 +131,21 @@ class SubscriptionController extends Controller
             ]);
         }
 
+        try {
+            $portalUrl = $this->dodoPaymentsService->createCustomerPortalUrl(Auth::user(), front_url('/home'));
+        } catch (\Throwable $e) {
+            Log::warning('Unable to access Dodo billing portal.', [
+                'user_id' => Auth::user()->id,
+                'error' => $e->getMessage(),
+            ]);
+
+            return $this->error([
+                'message' => 'Unable to access billing portal. Please try again or contact support.',
+            ], 503);
+        }
+
         return $this->success([
-            'portal_url' => $this->dodoPaymentsService->createCustomerPortalUrl(Auth::user(), front_url('/home')),
+            'portal_url' => $portalUrl,
         ]);
     }
 
@@ -124,15 +174,32 @@ class SubscriptionController extends Controller
             ]);
         }
 
+        $changePlanLock = Cache::lock("subscription_change_plan:{$user->id}", 30);
+        if (!$changePlanLock->get()) {
+            return $this->error([
+                'message' => 'A plan change is already in progress. Please retry in a few seconds.',
+            ], 429);
+        }
+
         try {
             $subscriptionData = $this->dodoPaymentsService->changePlan($subscription, $targetPlan, $targetInterval);
             $this->dodoPaymentsService->syncSubscription($subscription, $subscriptionData);
 
             $user->flushCache();
         } catch (\Exception $e) {
-            return $this->error([
-                'message' => $e->getMessage() ?: 'Failed to change plan. Please try again or contact support.',
+            Log::warning('Failed to change subscription plan.', [
+                'user_id' => $user->id,
+                'subscription_id' => $subscription->stripe_id,
+                'plan' => $targetPlan,
+                'interval' => $targetInterval,
+                'error' => $e->getMessage(),
             ]);
+
+            return $this->error([
+                'message' => 'Failed to change plan. Please try again or contact support.',
+            ]);
+        } finally {
+            $changePlanLock->release();
         }
 
         return $this->success([
@@ -172,6 +239,13 @@ class SubscriptionController extends Controller
             ]);
         }
 
+        $changePlanLock = Cache::lock("subscription_change_plan:{$user->id}", 30);
+        if (!$changePlanLock->get()) {
+            return $this->error([
+                "message" => "A plan change is already in progress. Please retry in a few seconds.",
+            ], 429);
+        }
+
         try {
             $subscription = $this->billingStateResolver->resolveActiveSubscription($user);
             if (!$subscription) {
@@ -184,11 +258,21 @@ class SubscriptionController extends Controller
             $subscriptionData = $this->dodoPaymentsService->changePlan($subscription, $subscriptionType, 'yearly');
             $this->dodoPaymentsService->syncSubscription($subscription, $subscriptionData);
 
+            $user->flushCache();
             $workspace->flushWithOwners();
         } catch (\Exception $e) {
-            return $this->error([
-                "message" => $e?->getMessage() ?? "Failed to upgrade the subscription to yearly plan.",
+            Log::warning('Unable to upgrade subscription to yearly plan.', [
+                'user_id' => $user->id,
+                'subscription_id' => $subscription->stripe_id ?? null,
+                'workspace_id' => $workspace->id,
+                'error' => $e->getMessage(),
             ]);
+
+            return $this->error([
+                "message" => "Failed to upgrade the subscription to yearly plan. Please try again or contact support.",
+            ]);
+        } finally {
+            $changePlanLock->release();
         }
 
         return $this->success(['message' => 'Congratulations! Your plan has been upgraded to yearly.']);

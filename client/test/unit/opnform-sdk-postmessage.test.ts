@@ -47,7 +47,7 @@ function simulateHandshakeAck(window: Window, iframe: HTMLIFrameElement, formSlu
 
 function createSdkWindow() {
   const dom = new JSDOM(
-    '<!doctype html><html><body><iframe id="demo" src="https://embedder.example.test/"></iframe></body></html>',
+    '<!doctype html><html><body><iframe id="demo" src="https://embedder.example.test/forms/demo"></iframe></body></html>',
     {
       url: 'https://embedder.example.test/',
       runScripts: 'outside-only',
@@ -81,7 +81,7 @@ describe('SharaForms public SDK postMessage security', () => {
         formSlug: 'demo',
         payload: { data: { forged: true } },
       },
-      origin: 'https://embedder.example.test/',
+      origin: 'https://embedder.example.test',
       source: window,
     }))
 
@@ -100,7 +100,7 @@ describe('SharaForms public SDK postMessage security', () => {
         formSlug: 'demo',
         payload: { data: { trusted: true } },
       },
-      origin: 'https://embedder.example.test/',
+      origin: 'https://embedder.example.test',
       source: iframe.contentWindow,
     }))
 
@@ -121,13 +121,13 @@ describe('SharaForms public SDK postMessage security', () => {
         formSlug: 'demo',
         _sdkToken: expect.any(String),
       }),
-      'https://embedder.example.test/',
+      'https://embedder.example.test',
     )
   })
 
   it('sends a handshake when discovering an existing iframe', () => {
     const dom = new JSDOM(
-      '<!doctype html><html><body><iframe id="demo" src="https://embedder.example.test/"></iframe></body></html>',
+      '<!doctype html><html><body><iframe id="demo" src="https://embedder.example.test/forms/demo"></iframe></body></html>',
       {
         url: 'https://embedder.example.test/',
         runScripts: 'outside-only',
@@ -146,9 +146,9 @@ describe('SharaForms public SDK postMessage security', () => {
         type: 'sharaforms:handshake',
         formSlug: 'demo',
         _sdkToken: expect.any(String),
-        parentOrigin: 'https://embedder.example.test/',
+        parentOrigin: 'https://embedder.example.test',
       }),
-      'https://embedder.example.test/',
+      'https://embedder.example.test',
     )
   })
 
@@ -157,7 +157,7 @@ describe('SharaForms public SDK postMessage security', () => {
 
     try {
       const dom = new JSDOM(
-        '<!doctype html><html><body><iframe id="demo" src="https://embedder.example.test/"></iframe></body></html>',
+        '<!doctype html><html><body><iframe id="demo" src="https://embedder.example.test/forms/demo"></iframe></body></html>',
         {
           url: 'https://embedder.example.test/',
           runScripts: 'outside-only',
@@ -178,7 +178,7 @@ describe('SharaForms public SDK postMessage security', () => {
           type: 'sharaforms:handshake',
           formSlug: 'demo',
         }),
-        'https://embedder.example.test/',
+        'https://embedder.example.test',
       )
     } finally {
       vi.useRealTimers()
@@ -209,7 +209,7 @@ describe('SharaForms public SDK postMessage security', () => {
         type: 'sharaforms:command',
         _sdkToken: expect.any(String),
       }),
-      'https://embedder.example.test/',
+      'https://embedder.example.test',
     )
   })
 
@@ -217,7 +217,7 @@ describe('SharaForms public SDK postMessage security', () => {
     vi.useFakeTimers()
 
     const dom = new JSDOM(
-      '<!doctype html><html><body><iframe id="demo" src="https://embedder.example.test/"></iframe></body></html>',
+      '<!doctype html><html><body><iframe id="demo" src="https://embedder.example.test/forms/demo"></iframe></body></html>',
       {
         url: 'https://embedder.example.test/',
         runScripts: 'outside-only',

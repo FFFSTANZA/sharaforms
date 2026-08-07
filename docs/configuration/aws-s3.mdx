@@ -1,9 +1,9 @@
 ---
-title: AWS S3 Configuration
+title: File Storage (S3, Cloudflare R2)
 description: SharaForms & File uploads
 ---
 
-SharaForms uses [Laravel's filesystem](https://laravel.com/docs/master/filesystem), which provides a powerful abstraction layer for various file storage systems. While AWS S3 is a popular choice, SharaForms supports both local storage and S3-compatible services.
+SharaForms uses [Laravel's filesystem](https://laravel.com/docs/master/filesystem), which provides a powerful abstraction layer for various file storage systems. While AWS S3 is a popular choice, SharaForms supports both local storage and S3-compatible services — including [Cloudflare R2](https://developers.cloudflare.com/r2/), which is the recommended default for self-hosted deployments.
 
 <Info>
     This guide covers instance-wide file storage configuration for your
@@ -12,11 +12,45 @@ SharaForms uses [Laravel's filesystem](https://laravel.com/docs/master/filesyste
     Storage](/deployment/enterprise-features/external-storage).
 </Info>
 
-1. Create an S3 bucket in your AWS account (or use an equivalent service).
+## Cloudflare R2 (recommended)
+
+1. Create an R2 bucket (e.g. `sharaforms`) in your Cloudflare account.
+
+2. Create an R2 API token (Cloudflare dashboard → **R2** → **Manage R2 API Tokens**) with read + write access to the bucket. Set `.env.example` values in your installation's env file (`api/.env.docker` for the Docker deploy):
+
+   - `R2_ACCESS_KEY_ID`: Access key ID
+   - `R2_SECRET_ACCESS_KEY`: Secret access key
+   - `R2_DEFAULT_REGION=auto`
+   - `R2_BUCKET`: Your bucket name
+   - `R2_ENDPOINT=https://<ACCOUNT_ID>.r2.cloudflarestorage.com`
+   - `R2_URL`: Optional public bucket URL (e.g. `https://pub-<ID>.r2.dev`)
+
+3. Configure CORS for the bucket, with the following under "Cross-origin resource sharing (CORS)":
+
+    ```json
+    [
+        {
+            "AllowedHeaders": ["*"],
+            "AllowedMethods": ["PUT", "POST", "GET", "DELETE"],
+            "AllowedOrigins": ["https://your-domain.com"],
+            "ExposeHeaders": ["ETag"]
+        }
+    ]
+    ```
+
+4. Set `FILESYSTEM_DRIVER=r2` in `api/.env`.
+
+5. Optional: separate backup bucket. Set `BACKUP_DISK=r2-backups` and `R2_BACKUP_BUCKET` (default `sharaforms-backups`) to keep database backups in a dedicated R2 bucket.
+
+## AWS S3
+
+SharaForms also supports plain AWS S3:
+
+1. Create an S3 bucket in your AWS account.
 
 2. Create an IAM user with access to this bucket. Ensure the user has the necessary permissions to read from and write to the bucket.
 
-3. Configure CORS for the S3 bucket permissions,  by adding the following under "Cross-origin resource sharing (CORS)":
+3. Configure CORS for the S3 bucket permissions, by adding the following under "Cross-origin resource sharing (CORS)":
     ```json
     [
         {
@@ -28,7 +62,7 @@ SharaForms uses [Laravel's filesystem](https://laravel.com/docs/master/filesyste
     ]
     ```
 
-4. Set the following environment variables in your SharaForms installation (`api/.env`):
+4. Set `FILESYSTEM_DRIVER=s3` and the following environment variables in your SharaForms installation (`api/.env`):
    - `AWS_ACCESS_KEY_ID`: Your IAM user's access key ID
    - `AWS_SECRET_ACCESS_KEY`: Your IAM user's secret access key
    - `AWS_DEFAULT_REGION`: The AWS region where your S3 bucket is located

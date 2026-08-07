@@ -8,8 +8,8 @@ import {
 } from '../../lib/sdk/sdkBridgeMessaging.js'
 
 const FORM_SLUG = 'demo'
-const PARENT_ORIGIN = 'https://attacker.example.test'
-const FORM_ORIGIN = 'https://attacker.example.test'
+const PARENT_ORIGIN = 'https://example-parent.test'
+const FORM_ORIGIN = 'https://form-iframe.test'
 
 function installIframeWindow(dom: JSDOM, search = '') {
   const { window } = dom

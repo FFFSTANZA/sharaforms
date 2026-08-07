@@ -19,7 +19,7 @@ class IsNotSubscribed
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user() && $this->billingStateResolver->hasActivePaidSubscription($request->user())) {
+        if ($request->user() && (!pricing_enabled() || $this->billingStateResolver->hasActivePaidSubscription($request->user()))) {
             // This user is a paying customer...
             if ($request->expectsJson()) {
                 return response([

@@ -20,13 +20,13 @@
     <server name="DB_DATABASE" value=":memory:"/>
     <server name="DB_FOREIGN_KEYS" value="(false)"/>
     <server name="MAIL_MAILER" value="log"/>
-    <server name="MAIL_FROM_ADDRESS" value="notifications@notionforms.io"/>
-    <server name="MAIL_FROM_NAME" value="NotionForms"/>
+    <server name="MAIL_FROM_ADDRESS" value="support@sharaforms.com"/>
+    <server name="MAIL_FROM_NAME" value="SharaForms"/>
     <server name="QUEUE_CONNECTION" value="sync"/>
     <server name="FILESYSTEM_DISK" value="local"/>
     <server name="SESSION_DRIVER" value="array"/>
     <server name="SELF_HOSTED" value="false"/>
-    <server name="TEMPLATE_EDITOR_EMAILS" value="admin@sharaforms.com"/>
+    <server name="TEMPLATE_EDITOR_EMAILS" value="support@sharaforms.com"/>
     <server name="JWT_SECRET" value="9K6whOetAFaokQgSIdbMQZuJuDV5uS2Y"/>
     <server name="STRIPE_KEY" value="TEST_KEY"/>
     <server name="STRIPE_SECRET" value="TEST_SECRET"/>

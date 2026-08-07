@@ -124,7 +124,7 @@
 
             <p class="mt-3 text-sm leading-6 text-neutral-700">
               For privacy requests or questions about this policy, contact us at
-              <a href="mailto:contact@sharaforms.com" class="font-medium text-neutral-950 underline">contact@sharaforms.com</a>
+              <a href="mailto:support@sharaforms.com" class="font-medium text-neutral-950 underline">support@sharaforms.com</a>
               or use our
               <a :href="sharaformsConfig.links.help_url" target="_blank" rel="noopener noreferrer" class="font-medium text-neutral-950 underline">Help Center</a>.
             </p>
@@ -167,7 +167,7 @@ const overviewCards = [
   },
   {
     title: "Primary contact",
-    value: "contact@sharaforms.com",
+    value: "support@sharaforms.com",
   },
 ]
 
@@ -266,7 +266,7 @@ const policySections = [
     title: "11. Changes to This Policy and Contact Information",
     paragraphs: [
       "We may update this Privacy Policy from time to time to reflect product changes, legal developments, or operational updates. The current version will be posted on this page with its effective date. If a change materially affects how we handle personal data, we may also provide additional notice through the product, by email, or through other reasonable means.",
-      "Questions, requests, or concerns about this policy can be sent to contact@sharaforms.com or raised through the support options available inside the product and our Help Center.",
+      "Questions, requests, or concerns about this policy can be sent to support@sharaforms.com or raised through the support options available inside the product and our Help Center.",
     ],
   },
 ]

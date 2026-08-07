@@ -124,7 +124,7 @@
 
             <p class="mt-3 text-sm leading-6 text-neutral-700">
               Reach us at
-              <a href="mailto:contact@sharaforms.com" class="font-medium text-neutral-950 underline">contact@sharaforms.com</a>
+              <a href="mailto:support@sharaforms.com" class="font-medium text-neutral-950 underline">support@sharaforms.com</a>
               or through the
               <a :href="sharaformsConfig.links.help_url" target="_blank" rel="noopener noreferrer" class="font-medium text-neutral-950 underline">Help Center</a>.
             </p>
@@ -167,7 +167,7 @@ const overviewCards = [
   },
   {
     title: "Primary contact",
-    value: "contact@sharaforms.com",
+    value: "support@sharaforms.com",
   },
 ]
 
@@ -264,7 +264,7 @@ const termSections = [
     title: "11. General Terms",
     paragraphs: [
       "We may update these Terms of Use from time to time. The latest version posted on this page will control from its effective date. Continued use of SharaForms after an update becomes effective means you accept the revised terms.",
-      "If any part of these terms is found unenforceable, the remaining parts will remain in effect to the fullest extent permitted by law. Our failure to enforce any provision is not a waiver of that provision. Questions about these terms may be sent to contact@sharaforms.com or raised through our Help Center.",
+      "If any part of these terms is found unenforceable, the remaining parts will remain in effect to the fullest extent permitted by law. Our failure to enforce any provision is not a waiver of that provision. Questions about these terms may be sent to support@sharaforms.com or raised through our Help Center.",
     ],
   },
 ]

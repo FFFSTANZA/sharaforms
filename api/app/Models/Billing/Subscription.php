@@ -13,7 +13,16 @@ class Subscription extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'user_id',
+        'type',
+        'stripe_id',
+        'stripe_status',
+        'stripe_price',
+        'quantity',
+        'trial_ends_at',
+        'ends_at',
+    ];
 
     protected $dispatchesEvents = [
         'created' => SubscriptionCreated::class,
@@ -35,7 +44,7 @@ class Subscription extends Model
 
     public function valid(): bool
     {
-        return $this->active() || $this->onTrial() || $this->onGracePeriod();
+        return $this->active() || $this->onTrial() || $this->onGracePeriod() || $this->onHold() || $this->pastDue() || $this->paused();
     }
 
     public function active(): bool
@@ -43,9 +52,26 @@ class Subscription extends Model
         return $this->stripe_status === 'active';
     }
 
+    public function onHold(): bool
+    {
+        return $this->stripe_status === 'on_hold';
+    }
+
+    public function pastDue(): bool
+    {
+        return $this->stripe_status === 'past_due';
+    }
+
+    public function paused(): bool
+    {
+        return $this->stripe_status === 'paused';
+    }
+
     public function onTrial(): bool
     {
-        return $this->trial_ends_at && $this->trial_ends_at->isFuture();
+        return in_array($this->stripe_status, ['trialing', 'active'], true)
+            && $this->trial_ends_at
+            && $this->trial_ends_at->isFuture();
     }
 
     public function onGracePeriod(): bool

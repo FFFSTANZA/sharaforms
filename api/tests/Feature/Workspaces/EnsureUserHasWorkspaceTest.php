@@ -122,6 +122,8 @@ test('user leaving one workspace when they have others does not create default o
 
 // Tests for RemoveWorkspaceGuests job
 test('removing guest from last workspace via job creates a default one', function () {
+    $this->enablePricing();
+
     // Arrange: Guest user with one workspace (the one they'll be removed from), Admin user
     $admin = User::factory()->create();
     $workspace = Workspace::factory()->create();
@@ -152,6 +154,8 @@ test('removing guest from last workspace via job creates a default one', functio
 });
 
 test('removing guest from one workspace when they have others via job does not create default one', function () {
+    $this->enablePricing();
+
     // Arrange: Guest user with two workspaces, Admin user
     $admin = User::factory()->create();
     $workspaceToRemoveFrom = Workspace::factory()->create();

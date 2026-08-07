@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\Billing\WorkspaceUsersUpdated;
 use App\Models\UserInvite;
 use App\Traits\EnsureUserHasWorkspace;
 use Illuminate\Http\Request;
@@ -54,7 +53,6 @@ class WorkspaceUserController extends Controller
         ], false);
         $workspace->flushWithOwners();
         $user->flush();
-        WorkspaceUsersUpdated::dispatch($workspace);
 
         return $this->success([
             'message' => 'User has been successfully added to workspace.'
@@ -121,7 +119,6 @@ class WorkspaceUserController extends Controller
         $workspace->flushWithOwners();
         $user->flush();
         $this->ensureUserHasWorkspace($user);
-        WorkspaceUsersUpdated::dispatch($workspace);
 
         return $this->success([
             'message' => 'User removed from workspace successfully.'

@@ -70,7 +70,7 @@ describe('User Tier Detection', function () {
     });
 
     it('returns enterprise when pricing is disabled', function () {
-        config()->set('cashier.key', null);
+        config()->set('dodo.api_key', null);
         $user = $this->createUser();
         $tier = $this->planService->getUserTier($user);
         expect($tier)->toBe('enterprise');

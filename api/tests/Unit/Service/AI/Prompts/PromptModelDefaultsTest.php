@@ -4,6 +4,8 @@ use App\Service\AI\Prompts\Prompt;
 use App\Service\AI\AiProviderManager;
 use App\Service\OpenAi\GptCompleter;
 
+uses(\Tests\TestCase::class);
+
 it('uses the current mini model as the base prompt model', function () {
     $defaults = (new ReflectionClass(Prompt::class))->getDefaultProperties();
 

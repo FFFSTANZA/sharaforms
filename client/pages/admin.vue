@@ -173,7 +173,6 @@ const router = useRouter()
 
 const userInfo = ref(null)
 const userPlan = ref('free')
-const billingProviderLabel = 'Billing customer'
 const isDodoBillingCustomer = true
 const fetchUserForm = useForm({
   identifier: ''

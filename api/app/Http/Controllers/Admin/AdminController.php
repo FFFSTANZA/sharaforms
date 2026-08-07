@@ -8,6 +8,7 @@ use App\Jobs\Template\GenerateTemplateJob;
 use App\Models\Billing\Subscription;
 use App\Models\Forms\Form;
 use App\Models\User;
+use App\Service\Billing\DodoPaymentsService;
 use App\Service\UserActionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -138,15 +139,34 @@ class AdminController extends Controller
             ], 404);
         }
 
-        if ($subscription && !in_array($subscription->stripe_status, ['active', 'trialing'])) {
+        if ($subscription && !in_array($subscription->stripe_status, ['active', 'trialing', 'on_hold', 'paused'])) {
             return $this->error([
-                "message" => "The subscription is not active or trialing."
+                "message" => "The subscription is not active, trialing, on hold or paused. "
             ]);
         }
 
-        return $this->error([
-            'message' => 'Subscriptions should be cancelled from the billing portal.',
-        ], 422);
+        try {
+            app(DodoPaymentsService::class)->cancelSubscription($subscription);
+        } catch (\Throwable $e) {
+            Log::warning('Failed to cancel subscription.', [
+                'user_id' => $user->id,
+                'subscription_id' => $subscription->stripe_id,
+                'error' => $e->getMessage(),
+            ]);
+
+            return $this->error([
+                'message' => 'Failed to cancel subscription. Please try again or contact support.',
+            ], 502);
+        }
+
+        self::log('Cancelled subscription', [
+            'user_id' => $user->id,
+            'subscription_id' => $subscription->stripe_id,
+        ]);
+
+        return $this->success([
+            'message' => 'Subscription has been cancelled. It will end at the next billing date.',
+        ]);
     }
 
     public function sendPasswordResetEmail(Request $request)

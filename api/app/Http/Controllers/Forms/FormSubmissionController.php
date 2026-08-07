@@ -187,7 +187,7 @@ class FormSubmissionController extends Controller
             ], 404);
         }
 
-        if (config('filesystems.default') !== 's3') {
+        if (! in_array(config('filesystems.default'), ['s3', 'r2'])) {
             return response()->download(
                 Storage::path($filePath),
                 basename($filePath),

@@ -12,6 +12,8 @@ function setupUsersFor2FA()
         'email' => 'example@moderator.com',
     ]);
 
+    enableTwoFactorFor($moderator);
+
     $user = User::factory()->create();
 
     return [$moderator, $user];

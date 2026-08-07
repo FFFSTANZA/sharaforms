@@ -26,8 +26,10 @@ function mockJwtPayloadWithUserAgent(string $userAgent): Payload
     return $payload;
 }
 
-it('defaults jwt user agent validation to enabled', function () {
-    expect(config('app.jwt_skip_ip_ua_validation'))->toBeFalse();
+it('defaults jwt user agent validation to disabled', function () {
+    $configDefault = file_get_contents(config_path('app.php'));
+
+    expect($configDefault)->toContain("'jwt_skip_ip_ua_validation' => env('JWT_SKIP_IP_UA_VALIDATION', false)");
 });
 
 it('keeps jwt validation enabled in the docker production env template', function () {
@@ -60,7 +62,9 @@ it('rejects jwt requests when user agent does not match token claim', function (
     ]);
 
     mockJwtPayloadWithUserAgent('Mozilla/5.0 (Valid Browser)');
-    Auth::shouldReceive('invalidate')->once();
+    $guard = Mockery::mock();
+    $guard->shouldReceive('invalidate')->once();
+    Auth::shouldReceive('guard')->with('api')->andReturn($guard);
 
     $middleware = new AuthenticateJWT();
     $request = createJwtMiddlewareRequest('Different Browser');

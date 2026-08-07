@@ -15,6 +15,10 @@ function setupUsers()
         'email' => 'example@moderator.com',
     ]);
 
+    $secret = $moderator->createTwoFactorAuth();
+    $code = $secret->makeCode();
+    $moderator->confirmTwoFactorAuth($code);
+
     $user = User::factory()->create();
 
     // Create workspace for user

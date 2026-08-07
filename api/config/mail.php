@@ -95,7 +95,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'contact@sharaforms.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'support@sharaforms.com'),
         'name' => env('MAIL_FROM_NAME', 'SharaForms'),
     ],
 

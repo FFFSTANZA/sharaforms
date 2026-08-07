@@ -33,6 +33,10 @@ class PlanService
      */
     public function getUserTier(User $user): string
     {
+        if (!pricing_enabled()) {
+            return self::TIER_ENTERPRISE;
+        }
+
         // Use same caching pattern as existing is_subscribed attribute
         return $user->remember('plan_tier', self::CACHE_TTL, function () use ($user): string {
             return $this->computeUserTier($user);

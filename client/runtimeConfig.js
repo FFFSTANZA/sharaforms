@@ -13,6 +13,7 @@ export default {
     posthogKey: process.env.NUXT_PUBLIC_POSTHOG_KEY || null,
     posthogHost: process.env.NUXT_PUBLIC_POSTHOG_HOST || null,
     crispWebsiteId: process.env.NUXT_PUBLIC_CRISP_WEBSITE_ID || null,
+    googleAnalyticsCode: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_CODE || null,
     rootRedirectUrl: process.env.NUXT_PUBLIC_ROOT_REDIRECT_URL || null,
     
     featureBaseOrganization: process.env.NUXT_PUBLIC_FEATURE_BASE_ORGANISATION || null,

@@ -132,6 +132,7 @@ it('treats business subscriptions as active for middleware and checkout blocking
 });
 
 it('blocks checkout when a user already has an active subscription', function () {
+    $this->enablePricing();
     $user = $this->createUser();
     createDefaultSubscriptionForTest($user, 'active');
     $this->actingAsUser($user);
@@ -148,12 +149,13 @@ it('blocks checkout when a user already has an active subscription', function ()
 });
 
 it('blocks checkout while another checkout creation is already in progress', function () {
+    $this->enablePricing();
     $user = $this->createUser();
     $this->actingAsUser($user);
 
     $lock = Cache::lock(
-        'subscription_checkout:' . $user->id . ':pro',
-        15
+        'subscription_checkout:' . $user->id,
+        30
     );
     expect($lock->get())->toBeTrue();
 

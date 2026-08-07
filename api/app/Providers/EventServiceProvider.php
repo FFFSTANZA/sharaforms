@@ -14,6 +14,7 @@ use App\Events\Models\FormIntegrationsEventCreated;
 use App\Events\Models\UserWorkspaceCreated;
 use App\Listeners\Billing\HandleSubscriptionCreated;
 use App\Listeners\Billing\RemoveWorkspaceGuestsIfNeeded;
+use App\Listeners\Billing\RevertBrandingOnSubscriptionEnd;
 use App\Listeners\Forms\FormCreationConfirmation;
 use App\Listeners\Forms\FormIntegrationCreatedHandler;
 use App\Listeners\Forms\FormIntegrationsEventListener;
@@ -62,7 +63,8 @@ class EventServiceProvider extends ServiceProvider
             HandleSubscriptionCreated::class,
         ],
         SubscriptionUpdated::class => [
-            RemoveWorkspaceGuestsIfNeeded::class
+            RemoveWorkspaceGuestsIfNeeded::class,
+            RevertBrandingOnSubscriptionEnd::class,
         ],
 
     ];

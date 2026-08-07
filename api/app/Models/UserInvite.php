@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Jobs\Billing\WorkspaceUsersUpdated;
 use App\Mail\UserInvitationEmail;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -82,7 +81,6 @@ class UserInvite extends Model
         // Refresh the model to reflect the updated status
         $this->refresh();
 
-        WorkspaceUsersUpdated::dispatch($this->workspace);
         return $this;
     }
 

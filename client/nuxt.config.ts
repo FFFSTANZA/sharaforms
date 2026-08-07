@@ -23,6 +23,7 @@ export default defineNuxtConfig({
       '@nuxtjs/i18n',
       '@nuxt/icon', 
       '@zadigetvoltaire/nuxt-gtm',
+      'nuxt-gtag',
   ],
 
   // Skip plugin initialization during tests
@@ -87,7 +88,21 @@ export default defineNuxtConfig({
   sourcemap: { client: 'hidden' },
 
   gtag: {
+      // Defer loading gtag.js until the visitor grants analytics consent.
+      // See plugins/google-analytics.client.js.
+      initMode: 'manual',
       id: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_CODE,
+      initCommands: [
+          // Queued before the config command so the initial page view fires
+          // with analytics consent granted. Safe because gtag.js only loads
+          // after the visitor accepts analytics tracking (initMode: 'manual').
+          ['consent', 'update', {
+              analytics_storage: 'granted',
+          }],
+      ],
+      config: {
+          anonymize_ip: true,
+      },
   },
 
   ui: {

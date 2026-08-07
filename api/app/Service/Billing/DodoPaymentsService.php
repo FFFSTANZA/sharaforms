@@ -14,6 +14,8 @@ use Illuminate\Support\Str;
 
 class DodoPaymentsService
 {
+    private const WEBHOOK_TOLERANCE_SECONDS = 300;
+
     public function isEnabled(): bool
     {
         return filled(config('dodo.api_key'));
@@ -151,6 +153,44 @@ class DodoPaymentsService
         ];
     }
 
+    public function getPayments(User $user, int $limit = 25): array
+    {
+        if (!$this->userHasDodoCustomer($user)) {
+            return [];
+        }
+
+        $response = $this->request()->get('/payments' . $this->buildQuery([
+            'customer_id' => $user->stripe_id,
+            'page_size' => $limit,
+            'page_number' => 0,
+        ]));
+
+        $this->throwIfFailed($response, 'Unable to load payment history.');
+
+        $items = $response->json('items');
+        if (!is_array($items)) {
+            return [];
+        }
+
+        return array_map(function (array $payment): array {
+            $customer = $payment['customer'] ?? [];
+
+            return [
+                'id' => (string) ($payment['payment_id'] ?? ''),
+                'amount_paid' => (int) ($payment['total_amount'] ?? 0),
+                'name' => (string) ($customer['name'] ?? ''),
+                'status' => (string) ($payment['status'] ?? ''),
+                'creation_date' => (string) ($payment['created_at'] ?? ''),
+                'payment_id' => (string) ($payment['payment_id'] ?? ''),
+                'amount' => (int) ($payment['amount'] ?? $payment['total_amount'] ?? 0),
+                'currency' => (string) ($payment['currency'] ?? ''),
+                'created_at' => (string) ($payment['created_at'] ?? ''),
+                'subscription_id' => isset($payment['subscription_id']) ? (string) $payment['subscription_id'] : null,
+                'invoice_url' => isset($payment['invoice_url']) ? (string) $payment['invoice_url'] : null,
+            ];
+        }, $items);
+    }
+
     public function changePlan(Subscription $subscription, string $plan, string $interval): array
     {
         $productId = $this->getProductId($plan, $interval);
@@ -200,8 +240,12 @@ class DodoPaymentsService
         $resolvedUser = $user ?? $subscription->user;
         $productId = $data['product_id'] ?? $subscription->stripe_price;
         $status = $data['status'] ?? $subscription->stripe_status ?? 'active';
-        $trialEndsAt = $this->parseDate($data['trial_ends_at'] ?? null) ?? $this->resolveTrialEndsAt($data);
-        $endsAt = $this->parseDate($data['ends_at'] ?? null) ?? $this->resolveEndsAt($data);
+        $trialEndsAt = array_key_exists('trial_ends_at', $data)
+            ? $this->parseDate($data['trial_ends_at'] ?? null)
+            : $this->resolveTrialEndsAt($data);
+        $endsAt = array_key_exists('ends_at', $data)
+            ? $this->parseDate($data['ends_at'] ?? null)
+            : $this->resolveEndsAt($data);
 
         if ($productId && $this->getIntervalByProductId($productId) === null) {
             Log::warning('Dodo subscription referenced an unknown product ID.', [
@@ -249,12 +293,6 @@ class DodoPaymentsService
             }
         }
 
-        if ($productId) {
-            Log::warning('Unable to map Dodo product ID to interval.', [
-                'product_id' => $productId,
-            ]);
-        }
-
         return null;
     }
 
@@ -263,14 +301,31 @@ class DodoPaymentsService
         return filled($user->stripe_id);
     }
 
+    public function cancelSubscription(Subscription $subscription): void
+    {
+        if (!$this->userHasDodoCustomer($subscription->user)) {
+            return;
+        }
+
+        $response = $this->request()->patch('/subscriptions/' . $subscription->stripe_id, [
+            'cancel_at_next_billing_date' => true,
+        ]);
+
+        $this->throwIfFailed($response, 'Unable to cancel subscription.');
+    }
+
     public function verifyWebhook(string $payload, array $headers): bool
     {
         $webhookId = Arr::first($headers['webhook-id'] ?? []);
         $webhookTimestamp = Arr::first($headers['webhook-timestamp'] ?? []);
         $webhookSignature = Arr::first($headers['webhook-signature'] ?? []);
-        $secret = (string) config('dodo.webhook_key');
+        $secret = $this->webhookSigningKey();
 
         if (!$webhookId || !$webhookTimestamp || !$webhookSignature || $secret === '') {
+            return false;
+        }
+
+        if (!$this->isTimestampWithinTolerance($webhookTimestamp)) {
             return false;
         }
 
@@ -286,6 +341,34 @@ class DodoPaymentsService
         }
 
         return false;
+    }
+
+        private function webhookSigningKey(): string
+    {
+        $secret = (string) config('dodo.webhook_key');
+
+        if (Str::startsWith($secret, 'whsec_')) {
+            $decoded = base64_decode(substr($secret, 6), true);
+
+            if (is_string($decoded) && $decoded !== '') {
+                return $decoded;
+            }
+        }
+
+        return $secret;
+    }
+
+    private function isTimestampWithinTolerance(string $timestamp): bool
+    {
+        if (!ctype_digit($timestamp)) {
+            return false;
+        }
+
+        $now = time();
+        $timestamp = (int) $timestamp;
+
+        return $timestamp >= $now - self::WEBHOOK_TOLERANCE_SECONDS
+            && $timestamp <= $now + self::WEBHOOK_TOLERANCE_SECONDS;
     }
 
     private function getProductId(string $plan, string $interval): string
@@ -341,11 +424,19 @@ class DodoPaymentsService
 
     private function parseSignatures(string $header): array
     {
-        return collect(explode(' ', str_replace(',', ' ', $header)))
+        return collect(explode(' ', $header))
             ->flatMap(function (string $part) {
                 $trimmed = trim($part);
                 if ($trimmed === '') {
                     return [];
+                }
+
+                if (Str::contains($trimmed, ',')) {
+                    return collect(explode(',', $trimmed))
+                        ->map(fn (string $segment) => trim($segment))
+                        ->filter(fn (string $segment) => $segment !== '' && !preg_match('/^v\d+$/i', $segment))
+                        ->values()
+                        ->all();
                 }
 
                 return [Str::contains($trimmed, '=') ? trim(Str::after($trimmed, '=')) : $trimmed];

@@ -147,7 +147,6 @@ function getTrackingProperties(item) {
 
 function getButtonProps(item) {
   // Create a copy of the item without the onClick handler
-  // eslint-disable-next-line no-unused-vars
   const { onClick, ...buttonProps } = item
   return buttonProps
 }

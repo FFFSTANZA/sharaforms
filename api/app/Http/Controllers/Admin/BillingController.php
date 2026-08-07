@@ -82,7 +82,7 @@ class BillingController extends Controller
         }
 
         return $this->success([
-            'payments' => collect(),
+            'payments' => $this->dodoPaymentsService->getPayments($user),
         ]);
     }
 }

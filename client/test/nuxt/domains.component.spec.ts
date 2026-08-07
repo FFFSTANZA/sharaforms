@@ -178,7 +178,7 @@ describe('Domains Component - Domain Validation Regex', () => {
 
   describe('Input cleaning - domain extraction logic', () => {
     it('extracts clean domain from URL with protocol', () => {
-      const url = 'https://test.co.uk/some/path'
+      const url = 'https://example.com/some/path'
       const cleanedDomain = url
         .replace(/^https?:\/\//i, '')
         .split('/')[0]

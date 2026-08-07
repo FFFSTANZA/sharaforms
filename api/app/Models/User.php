@@ -9,8 +9,10 @@ use App\Models\Traits\CachesAttributes;
 use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
 use App\Service\Billing\BillingStateResolver;
+use App\Service\Billing\DodoPaymentsService;
 use App\Service\Billing\PlanAccessService;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -412,6 +414,21 @@ class User extends Authenticatable implements JWTSubject, CachableAttributes, Tw
             // Delete all OAuth providers for this user
             $user->oauthProviders()->delete();
 
+            // Cancel all Dodo subscriptions before deleting the rows
+            $dodoPaymentsService = app(DodoPaymentsService::class);
+            foreach ($user->subscriptions()->get() as $subscription) {
+                try {
+                    $dodoPaymentsService->cancelSubscription($subscription);
+                } catch (\Throwable $e) {
+                    Log::warning('Failed to cancel Dodo subscription during account deletion.', [
+                        'user_id' => $user->id,
+                        'subscription_id' => $subscription->stripe_id,
+                        'error' => $e->getMessage(),
+                    ]);
+                }
+            }
+            $user->subscriptions()->delete();
+
             // Remove user's workspace if he's the only one with this workspace
             foreach ($user->workspaces as $workspace) {
                 if ($workspace->users()->count() == 1) {
@@ -428,7 +445,8 @@ class User extends Authenticatable implements JWTSubject, CachableAttributes, Tw
         return $query->whereHas('subscriptions', function (Builder $query): void {
             $query->where(function (Builder $q): void {
                 $q->where('stripe_status', 'trialing')
-                    ->orWhere('stripe_status', 'active');
+                    ->orWhere('stripe_status', 'active')
+                    ->orWhere('stripe_status', 'on_hold');
             });
         });
     }

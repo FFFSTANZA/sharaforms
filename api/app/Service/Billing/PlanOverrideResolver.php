@@ -6,7 +6,7 @@ use App\Models\Workspace;
 
 class PlanOverrideResolver
 {
-    private const ACTIVE_STATUSES = ['trialing', 'active'];
+    private const ACTIVE_STATUSES = ['trialing', 'active', 'on_hold'];
 
     private array $effectiveOverridesCache = [];
 
