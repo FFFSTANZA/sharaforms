@@ -7,7 +7,6 @@ use App\Service\OpenAi\Utils\JsonFixer;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use OpenAI\Client;
-use OpenAI\Exceptions\ErrorException;
 
 /**
  * Handles a GPT completion prompt with or without insert tag.
@@ -126,8 +125,16 @@ class GptCompleter
 
             try {
                 $newPayload = (new JsonFixer())->fix($payload);
+                $decoded = json_decode($newPayload, true);
 
-                return json_decode($newPayload, true);
+                if (is_array($decoded)) {
+                    return $decoded;
+                }
+
+                $exception = new \RuntimeException('AI returned an empty or non-object JSON response.');
+                Log::warning('AI returned invalid JSON, retrying:');
+                Log::warning($payload);
+                $this->queryCompletion();
             } catch (\Aws\Exception\InvalidJsonException $e) {
                 $exception = $e;
                 Log::warning('Invalid JSON, retrying:');
@@ -135,7 +142,8 @@ class GptCompleter
                 $this->queryCompletion();
             }
         }
-        throw $exception;
+
+        throw $exception ?? new \RuntimeException('Failed to parse AI response as JSON after multiple attempts.');
     }
 
     public function getHtml(): string
@@ -235,7 +243,7 @@ class GptCompleter
                 $this->captureTokenUsage($response->usage ?? null);
                 $this->result = $response->choices[0]->message->content;
                 return $this;
-            } catch (ErrorException $errorException) {
+            } catch (\Throwable $errorException) {
                 $lastError = $errorException;
                 Log::warning("AI provider error, retrying: {$errorException->getMessage()}");
                 $attempt++;
@@ -247,8 +255,6 @@ class GptCompleter
 
     protected function queryStreamedCompletion(): self
     {
-        Log::debug('AI provider query: ' . json_encode($this->completionInput));
-
         $attempt = 1;
         $lastError = null;
 
@@ -266,7 +272,7 @@ class GptCompleter
                 }
 
                 return $this;
-            } catch (ErrorException $errorException) {
+            } catch (\Throwable $errorException) {
                 $lastError = $errorException;
                 Log::warning("AI provider stream error, retrying: {$errorException->getMessage()}");
                 $attempt++;

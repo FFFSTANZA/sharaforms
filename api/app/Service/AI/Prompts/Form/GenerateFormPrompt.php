@@ -31,6 +31,9 @@ class GenerateFormPrompt extends Prompt
 
         Available field types (mode-aware):
         {allowedFieldTypesList}
+
+        Field JSON contract — follow this exactly:
+        {fieldContract}
         
         HTML formatting for nf-text:
         - Headers: <h1>, <h2> for section titles and subtitles
@@ -42,6 +45,9 @@ class GenerateFormPrompt extends Prompt
         Use these HTML tags to create well-structured and visually appealing form content.
         
         {widthGuidance}
+
+        Layout and design principles:
+        {layoutGuidance}
         
         If the form is too long, you can paginate it by adding one or multiple page breaks (nf-page-break).
         
@@ -104,34 +110,34 @@ class GenerateFormPrompt extends Prompt
                 'description' => 'Array of form fields and elements',
                 'items' => [
                     'anyOf' => [
-                        ['$ref' => '#/definitions/textProperty'],
-                        ['$ref' => '#/definitions/richTextProperty'],
-                        ['$ref' => '#/definitions/dateProperty'],
-                        ['$ref' => '#/definitions/urlProperty'],
-                        ['$ref' => '#/definitions/phoneNumberProperty'],
-                        ['$ref' => '#/definitions/emailProperty'],
-                        ['$ref' => '#/definitions/checkboxProperty'],
-                        ['$ref' => '#/definitions/selectProperty'],
-                        ['$ref' => '#/definitions/multiSelectProperty'],
-                        ['$ref' => '#/definitions/matrixProperty'],
-                        ['$ref' => '#/definitions/numberProperty'],
-                        ['$ref' => '#/definitions/ratingProperty'],
-                        ['$ref' => '#/definitions/scaleProperty'],
-                        ['$ref' => '#/definitions/sliderProperty'],
-                        ['$ref' => '#/definitions/filesProperty'],
-                        ['$ref' => '#/definitions/signatureProperty'],
-                        ['$ref' => '#/definitions/barcodeProperty'],
-                        ['$ref' => '#/definitions/nfTextProperty'],
-                        ['$ref' => '#/definitions/nfPageBreakProperty'],
-                        ['$ref' => '#/definitions/nfDividerProperty'],
-                        ['$ref' => '#/definitions/nfImageProperty'],
-                        ['$ref' => '#/definitions/nfVideoProperty'],
-                        ['$ref' => '#/definitions/nfCodeProperty']
+                        ['$ref' => '#/$defs/textProperty'],
+                        ['$ref' => '#/$defs/richTextProperty'],
+                        ['$ref' => '#/$defs/dateProperty'],
+                        ['$ref' => '#/$defs/urlProperty'],
+                        ['$ref' => '#/$defs/phoneNumberProperty'],
+                        ['$ref' => '#/$defs/emailProperty'],
+                        ['$ref' => '#/$defs/checkboxProperty'],
+                        ['$ref' => '#/$defs/selectProperty'],
+                        ['$ref' => '#/$defs/multiSelectProperty'],
+                        ['$ref' => '#/$defs/matrixProperty'],
+                        ['$ref' => '#/$defs/numberProperty'],
+                        ['$ref' => '#/$defs/ratingProperty'],
+                        ['$ref' => '#/$defs/scaleProperty'],
+                        ['$ref' => '#/$defs/sliderProperty'],
+                        ['$ref' => '#/$defs/filesProperty'],
+                        ['$ref' => '#/$defs/signatureProperty'],
+                        ['$ref' => '#/$defs/barcodeProperty'],
+                        ['$ref' => '#/$defs/nfTextProperty'],
+                        ['$ref' => '#/$defs/nfPageBreakProperty'],
+                        ['$ref' => '#/$defs/nfDividerProperty'],
+                        ['$ref' => '#/$defs/nfImageProperty'],
+                        ['$ref' => '#/$defs/nfVideoProperty'],
+                        ['$ref' => '#/$defs/nfCodeProperty']
                     ]
                 ]
             ]
         ],
-        'definitions' => FormFieldSchemas::FIELD_TYPE_DEFINITIONS
+        '$defs' => FormFieldSchemas::FIELD_TYPE_DEFINITIONS
     ];
 
     public function __construct(
@@ -165,6 +171,9 @@ class GenerateFormPrompt extends Prompt
      */
     public function processOutput(array $formData): array
     {
+        // Normalize model-invented keys onto the app contract before anything else.
+        $formData = FormSchemaNormalizer::normalizeFormData($formData);
+
         if (isset($formData['properties']) && is_array($formData['properties'])) {
             $formData['properties'] = FormFieldSchemas::processFields($formData['properties']);
         }
@@ -191,11 +200,13 @@ class GenerateFormPrompt extends Prompt
 
         $widthGuidance = $rules['mode'] === PresentationRules::MODE_FOCUSED
             ? 'In focused mode, do not use width options. Each step contains a single full-width question.'
-            : 'Field width options:\n- width: "full" (default, takes entire width)\n- width: "1/2" (takes half width)\n- width: "1/3" (takes a third of the width)\n- width: "2/3" (takes two thirds of the width)\n- width: "1/4" (takes a quarter of the width)\n- width: "3/4" (takes three quarters of the width)\nFields with width less than "full" may share a row when room allows.';
+            : "Field width options:\n- width: \"full\" (default, takes entire width)\n- width: \"1/2\" (takes half width)\n- width: \"1/3\" (takes a third of the width)\n- width: \"2/3\" (takes two thirds of the width)\n- width: \"1/4\" (takes a quarter of the width)\n- width: \"3/4\" (takes three quarters of the width)\nFields with width less than \"full\" may share a row when room allows.";
 
         $vars['{modeConstraints}'] = $modeConstraints;
         $vars['{widthGuidance}'] = $widthGuidance;
         $vars['{allowedFieldTypesList}'] = $this->formatAllowedTypes($rules['allowedFieldTypes']);
+        $vars['{fieldContract}'] = PresentationRules::buildFieldContract();
+        $vars['{layoutGuidance}'] = PresentationRules::buildLayoutGuidance($rules['mode']);
         return $vars;
     }
 

@@ -101,3 +101,64 @@ it('appends streamed content even when the chunk also includes a role and captur
         ->and($completer->getInputTokens())->toBe(7)
         ->and($completer->getOutputTokens())->toBe(5);
 });
+
+it('strips json fences before decoding', function () {
+    $completer = new class('gpt-5.4-mini', 'test-key') extends GptCompleter {
+        public function __construct(string $model, ?string $apiKey = null, int $retries = 2)
+        {
+            parent::__construct($model, $apiKey, $retries);
+            $this->result = "```json\n{\"ok\": true}\n```";
+        }
+    };
+
+    expect($completer->getArray())->toBe(['ok' => true]);
+});
+
+it('retries when the model returns null instead of an object', function () {
+    $completer = new class('gpt-5.4-mini', 'test-key') extends GptCompleter {
+        public int $queries = 0;
+
+        public function __construct(string $model, ?string $apiKey, int $retries = 2)
+        {
+            parent::__construct($model, $apiKey, $retries);
+            $this->result = 'null';
+        }
+
+        protected function queryCompletion(): self
+        {
+            $this->queries++;
+            $this->result = $this->queries === 1
+                ? '{"ok": true}'
+                : '{"still": "broken"}';
+
+            return $this;
+        }
+    };
+
+    expect($completer->getArray())->toBe(['ok' => true])
+        ->and($completer->queries)->toBe(1);
+});
+
+it('throws after retries are exhausted on a non-object response', function () {
+    $completer = new class('gpt-5.4-mini', 'test-key') extends GptCompleter {
+        public int $queries = 0;
+
+        public function __construct(string $model, ?string $apiKey, int $retries = 1)
+        {
+            parent::__construct($model, $apiKey, $retries);
+            $this->result = 'null';
+        }
+
+        protected function queryCompletion(): self
+        {
+            $this->queries++;
+            $this->result = 'null';
+
+            return $this;
+        }
+    };
+
+    expect(fn () => $completer->getArray())->toThrow(RuntimeException::class, 'AI returned an empty or non-object JSON response.')
+        ->and($completer->queries)->toBe(1);
+});
+

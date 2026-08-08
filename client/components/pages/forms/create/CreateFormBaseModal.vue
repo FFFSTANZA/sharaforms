@@ -482,14 +482,33 @@ const generateForm = () => {
     })
 }
 
-const fetchGeneratedForm = (generationId) => {
+const fetchGeneratedForm = (generationId, attempt = 0) => {
   // check every 4 seconds if form is generated
   setTimeout(() => {
+    if (attempt >= 45) {
+      // ~3 minutes cap so an unresponsive job cannot poll forever
+      useAlert().error("AI generation is taking too long, please try again.")
+      currentStep.value = 2
+      loading.value = false
+      resetGenerationProgress()
+      return
+    }
+
     formsApi.ai.get(generationId)
       .then((data) => {
         if (data.ai_form_completion.status === "completed") {
+          let generated = null
+          try {
+            generated = JSON.parse(data.ai_form_completion.result)
+          } catch (e) {
+            console.error("Invalid AI generation result:", e)
+            useAlert().error("AI generated an invalid response, please try again.")
+            currentStep.value = 2
+            loading.value = false
+            resetGenerationProgress()
+            return
+          }
           useAlert().success(data.message)
-          const generated = JSON.parse(data.ai_form_completion.result)
           // Apply seeding based on user's style choice in the modal
           if (selectedStyle.value === 'focused') {
             seedFocusedFirstBlockImage(generated)
@@ -504,7 +523,7 @@ const fetchGeneratedForm = (generationId) => {
           loading.value = false
           resetGenerationProgress()
         } else {
-          fetchGeneratedForm(generationId)
+          fetchGeneratedForm(generationId, attempt + 1)
         }
       })
       .catch((error) => {

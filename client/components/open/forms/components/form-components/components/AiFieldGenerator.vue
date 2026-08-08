@@ -68,15 +68,20 @@ const aiFields = useForm({
   current_form_structure: null
 })
 
+const buildCurrentFormStructure = () => {
+  if(!form.value) return null
+  return {
+    'title': form.value.title,
+    'properties': (form.value.properties || []).map(property => ({
+      'name': property.name,
+      'type': property.type
+    }))
+  }
+}
+
 onMounted(() => {
   if(form.value) {
-    aiFields.current_form_structure = {
-        'title': form.value.title,
-        'properties': form.value.properties.map(property => ({
-          'name': property.name,
-          'type': property.type
-        }))
-      }
+    aiFields.current_form_structure = buildCurrentFormStructure()
   }
 })
 
@@ -87,12 +92,13 @@ const handleGenerate = () => {
     useAlert().warning('Please describe the fields you want to add with AI.')
     return
   }
-    
+
   loading.value = true
   aiRequestId.value = null
   const presentationStyle = form.value?.presentation_style || 'classic'
   formsApi.ai.generateFields({
-    ...aiFields.data(),
+    fields_prompt: aiFields.fields_prompt,
+    current_form_structure: buildCurrentFormStructure(),
     generation_params: { presentation_style: presentationStyle }
   }).then(data => {
     aiRequestId.value = data.ai_form_completion_id
@@ -104,45 +110,54 @@ const handleGenerate = () => {
   })
 }
 
-const fetchGeneratedForm = (generationId) => {
+const MAX_POLL_ATTEMPTS = 45 // ~3 minutes with 4s intervals
+
+const fetchGeneratedForm = (generationId, attempt = 0) => {
   // If aiRequestId is null, it means we cancelled the request
   if (!aiRequestId.value) {
     loading.value = false
     return
   }
 
-  const checkFormStatus = () => {
-    // If aiRequestId is null, it means we cancelled the request
-    if (!aiRequestId.value) {
-      loading.value = false
-      return
-    }
-
-    formsApi.ai.get(generationId).then(data => {
-      if (data.ai_form_completion.status === 'completed') {
-        // Only proceed if we haven't cancelled
-        if (aiRequestId.value) {
-          workingFormStore.addGeneratedFields(JSON.parse(data.ai_form_completion.result))
-        }
-        loading.value = false
-        isPopoverOpen.value = false
-        useAlert().success('New field(s) added successfully.')
-        aiFields.fields_prompt = ''
-      } else if (data.ai_form_completion.status === 'failed') {
-        useAlert().error('Something went wrong, please try again.')
-        loading.value = false
-      } else {
-        // Call itself again after 4 seconds if form is not yet ready
-        setTimeout(checkFormStatus, 4000)
-      }
-    }).catch(error => {
-      console.error(error)
-      useAlert().error(error.response?.data?.message)
-      loading.value = false
-    })
+  if (attempt >= MAX_POLL_ATTEMPTS) {
+    useAlert().error('AI generation is taking too long, please try again.')
+    loading.value = false
+    aiRequestId.value = null
+    return
   }
 
-  // Call the function immediately
-  checkFormStatus()
+  formsApi.ai.get(generationId).then(data => {
+    if (!aiRequestId.value) return
+    const completion = data.ai_form_completion
+    if (completion.status === 'completed') {
+      let fields = []
+      try {
+        fields = JSON.parse(completion.result)
+      } catch (e) {
+        console.error('Invalid AI generation result:', e)
+        useAlert().error('AI generated an invalid response, please try again.')
+        loading.value = false
+        aiRequestId.value = null
+        return
+      }
+      workingFormStore.addGeneratedFields(Array.isArray(fields) ? fields : [])
+      loading.value = false
+      isPopoverOpen.value = false
+      useAlert().success('New field(s) added successfully.')
+      aiFields.fields_prompt = ''
+    } else if (completion.status === 'failed') {
+      useAlert().error('Something went wrong, please try again.')
+      loading.value = false
+      aiRequestId.value = null
+    } else {
+      // Call itself again after 4 seconds if form is not yet ready
+      setTimeout(() => fetchGeneratedForm(generationId, attempt + 1), 4000)
+    }
+  }).catch(error => {
+    console.error(error)
+    useAlert().error(error.response?.data?.message)
+    loading.value = false
+    aiRequestId.value = null
+  })
 }
 </script> 

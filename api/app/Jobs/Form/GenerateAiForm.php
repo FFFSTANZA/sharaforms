@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class GenerateAiForm implements ShouldQueue
 {
@@ -16,6 +17,12 @@ class GenerateAiForm implements ShouldQueue
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
+
+    public int $tries = 3;
+
+    public int $timeout = 240;
+
+    public array $backoff = [15, 60];
 
     /**
      * Create a new job instance.
@@ -37,33 +44,34 @@ class GenerateAiForm implements ShouldQueue
             'status' => AiFormCompletion::STATUS_PROCESSING,
         ]);
 
-        try {
-            // Use the static run method to execute the prompt with params
-            $params = $this->completion->generation_params ?? [];
-            $formData = GenerateFormPrompt::run($this->completion->form_prompt, $params);
+        $prompt = new GenerateFormPrompt(
+            $this->completion->form_prompt,
+            $this->completion->generation_params ?? []
+        );
+        $formData = $prompt->execute();
 
-            $this->completion->update([
-                'status' => AiFormCompletion::STATUS_COMPLETED,
-                'result' => $formData
-            ]);
-        } catch (\Exception $e) {
-            $this->onError($e);
-        }
+        $this->completion->update([
+            'status' => AiFormCompletion::STATUS_COMPLETED,
+            'result' => $formData,
+            'error' => null,
+            'input_tokens' => $prompt->getCompleter()->getInputTokens(),
+            'output_tokens' => $prompt->getCompleter()->getOutputTokens(),
+        ]);
     }
 
     /**
-     * Handle a job failure.
+     * Handle a job failure after all retries have been exhausted.
      */
     public function failed(\Throwable $exception): void
     {
-        $this->onError($exception);
-    }
+        Log::error('AI form generation failed permanently.', [
+            'ai_form_completion_id' => $this->completion->id,
+            'exception' => $exception,
+        ]);
 
-    private function onError(\Throwable $e)
-    {
         $this->completion->update([
             'status' => AiFormCompletion::STATUS_FAILED,
-            'error' => $e->getMessage(),
+            'error' => 'AI generation failed. Please try again later.',
         ]);
     }
 }

@@ -147,6 +147,18 @@ class RouteServiceProvider extends ServiceProvider
             ];
         });
 
+        // AI form generation endpoints: 4 requests per minute per IP (guests included)
+        RateLimiter::for('ai-generate', function (Request $request) {
+            $identifier = $request->user()
+                ? 'user:' . $request->user()->getAuthIdentifier()
+                : 'ip:' . $request->ip();
+
+            return [
+                Limit::perMinute(4)->by('ai-generate:minute:' . $identifier),
+                Limit::perHour(40)->by('ai-generate:hour:' . $identifier),
+            ];
+        });
+
         RateLimiter::for('form-submissions', function (Request $request) {
             $form = $request->route('form');
             $formIdentifier = $form instanceof Model

@@ -63,7 +63,7 @@ class FormFieldSchemas
             'properties' => [
                 'options' => [
                     'type' => 'array',
-                    'items' => ['$ref' => '#/definitions/option'],
+                    'items' => ['$ref' => '#/$defs/option'],
                     'description' => 'Options for select fields'
                 ]
             ]
@@ -94,7 +94,7 @@ class FormFieldSchemas
                     'type' => 'boolean',
                     'description' => 'Whether to show the character limit (default: false)'
                 ],
-                'core' => ['$ref' => '#/definitions/baseProperty'],
+                'core' => ['$ref' => '#/$defs/baseProperty'],
             ]
         ],
         'richTextProperty' => [
@@ -107,7 +107,7 @@ class FormFieldSchemas
                     'type' => ['integer', 'string'],
                     'description' => 'Maximum character limit for rich text fields (default: 1000)'
                 ],
-                'core' => ['$ref' => '#/definitions/baseProperty'],
+                'core' => ['$ref' => '#/$defs/baseProperty'],
             ]
         ],
         'dateProperty' => [
@@ -116,7 +116,7 @@ class FormFieldSchemas
             'additionalProperties' => false,
             'properties' => [
                 'type' => ['type' => 'string', 'enum' => ['date']],
-                'core' => ['$ref' => '#/definitions/baseProperty'],
+                'core' => ['$ref' => '#/$defs/baseProperty'],
                 'with_time' => [
                     'type' => 'boolean',
                     'description' => 'Whether to include time selection with the date (default: false)',
@@ -129,7 +129,7 @@ class FormFieldSchemas
             'additionalProperties' => false,
             'properties' => [
                 'type' => ['type' => 'string', 'enum' => ['url']],
-                'core' => ['$ref' => '#/definitions/baseProperty'],
+                'core' => ['$ref' => '#/$defs/baseProperty'],
                 'max_char_limit' => [
                     'type' => ['integer', 'string'],
                     'description' => 'Maximum character limit for URL fields (default: 500)'
@@ -142,7 +142,7 @@ class FormFieldSchemas
             'additionalProperties' => false,
             'properties' => [
                 'type' => ['type' => 'string', 'enum' => ['phone_number']],
-                'core' => ['$ref' => '#/definitions/baseProperty'],
+                'core' => ['$ref' => '#/$defs/baseProperty'],
             ]
         ],
         'emailProperty' => [
@@ -151,7 +151,7 @@ class FormFieldSchemas
             'additionalProperties' => false,
             'properties' => [
                 'type' => ['type' => 'string', 'enum' => ['email']],
-                'core' => ['$ref' => '#/definitions/baseProperty'],
+                'core' => ['$ref' => '#/$defs/baseProperty'],
                 'max_char_limit' => [
                     'type' => ['integer', 'string'],
                     'description' => 'Maximum character limit for email fields (default: 320)'
@@ -164,7 +164,7 @@ class FormFieldSchemas
             'additionalProperties' => false,
             'properties' => [
                 'type' => ['type' => 'string', 'enum' => ['checkbox']],
-                'core' => ['$ref' => '#/definitions/baseProperty'],
+                'core' => ['$ref' => '#/$defs/baseProperty'],
                 'use_toggle_switch' => [
                     'type' => 'boolean',
                     'description' => 'Whether to display the checkbox as a toggle switch (default: false)',
@@ -177,8 +177,8 @@ class FormFieldSchemas
             'additionalProperties' => false,
             'properties' => [
                 'type' => ['type' => 'string', 'enum' => ['select']],
-                'core' => ['$ref' => '#/definitions/baseProperty'],
-                'select' => ['$ref' => '#/definitions/selectOptions'],
+                'core' => ['$ref' => '#/$defs/baseProperty'],
+                'select' => ['$ref' => '#/$defs/selectOptions'],
                 'without_dropdown' => [
                     'type' => 'boolean',
                     'description' => 'Whether to display select options as radio buttons instead of a dropdown. Recommended for small choices (<5 options) (default: false)',
@@ -191,8 +191,8 @@ class FormFieldSchemas
             'additionalProperties' => false,
             'properties' => [
                 'type' => ['type' => 'string', 'enum' => ['multi_select']],
-                'core' => ['$ref' => '#/definitions/baseProperty'],
-                'multi_select' => ['$ref' => '#/definitions/selectOptions'],
+                'core' => ['$ref' => '#/$defs/baseProperty'],
+                'multi_select' => ['$ref' => '#/$defs/selectOptions'],
                 'without_dropdown' => [
                     'type' => 'boolean',
                     'description' => 'Whether to display multi-select options as checkboxes instead of a dropdown. Recommended for small choices (<5 options) (default: false)',
@@ -205,7 +205,7 @@ class FormFieldSchemas
             'additionalProperties' => false,
             'properties' => [
                 'type' => ['type' => 'string', 'enum' => ['matrix']],
-                'core' => ['$ref' => '#/definitions/baseProperty'],
+                'core' => ['$ref' => '#/$defs/baseProperty'],
                 'rows' => [
                     'type' => 'array',
                     'items' => ['type' => 'string'],
@@ -224,7 +224,7 @@ class FormFieldSchemas
             'additionalProperties' => false,
             'properties' => [
                 'type' => ['type' => 'string', 'enum' => ['number']],
-                'core' => ['$ref' => '#/definitions/baseProperty'],
+                'core' => ['$ref' => '#/$defs/baseProperty'],
             ]
         ],
         'ratingProperty' => [
@@ -233,7 +233,7 @@ class FormFieldSchemas
             'additionalProperties' => false,
             'properties' => [
                 'type' => ['type' => 'string', 'enum' => ['rating']],
-                'core' => ['$ref' => '#/definitions/baseProperty'],
+                'core' => ['$ref' => '#/$defs/baseProperty'],
                 'rating_max_value' => [
                     'type' => 'integer',
                     'description' => 'Maximum rating for rating fields (default: 5)'
@@ -246,7 +246,7 @@ class FormFieldSchemas
             'additionalProperties' => false,
             'properties' => [
                 'type' => ['type' => 'string', 'enum' => ['scale']],
-                'core' => ['$ref' => '#/definitions/baseProperty'],
+                'core' => ['$ref' => '#/$defs/baseProperty'],
                 'scale_min_value' => [
                     'type' => 'integer',
                     'description' => 'Minimum value for scale fields (default: 1)'
@@ -267,7 +267,7 @@ class FormFieldSchemas
             'additionalProperties' => false,
             'properties' => [
                 'type' => ['type' => 'string', 'enum' => ['slider']],
-                'core' => ['$ref' => '#/definitions/baseProperty'],
+                'core' => ['$ref' => '#/$defs/baseProperty'],
                 'slider_min_value' => [
                     'type' => 'integer',
                     'description' => 'Minimum value for slider fields (default: 0)'
@@ -288,7 +288,7 @@ class FormFieldSchemas
             'additionalProperties' => false,
             'properties' => [
                 'type' => ['type' => 'string', 'enum' => ['files']],
-                'core' => ['$ref' => '#/definitions/baseProperty'],
+                'core' => ['$ref' => '#/$defs/baseProperty'],
             ]
         ],
         'signatureProperty' => [
@@ -297,7 +297,7 @@ class FormFieldSchemas
             'additionalProperties' => false,
             'properties' => [
                 'type' => ['type' => 'string', 'enum' => ['signature']],
-                'core' => ['$ref' => '#/definitions/baseProperty'],
+                'core' => ['$ref' => '#/$defs/baseProperty'],
             ]
         ],
         'barcodeProperty' => [
@@ -306,7 +306,7 @@ class FormFieldSchemas
             'additionalProperties' => false,
             'properties' => [
                 'type' => ['type' => 'string', 'enum' => ['barcode']],
-                'core' => ['$ref' => '#/definitions/baseProperty'],
+                'core' => ['$ref' => '#/$defs/baseProperty'],
                 'decoders' => [
                     'type' => 'array',
                     'items' => ['type' => 'string'],
@@ -320,7 +320,7 @@ class FormFieldSchemas
             'additionalProperties' => false,
             'properties' => [
                 'type' => ['type' => 'string', 'enum' => ['nf-text']],
-                'core' => ['$ref' => '#/definitions/baseProperty'],
+                'core' => ['$ref' => '#/$defs/baseProperty'],
                 'content' => [
                     'type' => 'string',
                     'description' => 'HTML content for text elements. Supports headers (<h1>, <h2>), formatting (<b>, <i>, <u>, <s>), links (<a>), lists (<ul>, <ol>), colors (<span style="color: #hexcode">), and paragraphs (<p>). Example: "<h1>Form Title</h1><p>Please fill out this form.</p>"'
@@ -333,7 +333,7 @@ class FormFieldSchemas
             'additionalProperties' => false,
             'properties' => [
                 'type' => ['type' => 'string', 'enum' => ['nf-page-break']],
-                'core' => ['$ref' => '#/definitions/baseProperty'],
+                'core' => ['$ref' => '#/$defs/baseProperty'],
                 'next_btn_text' => [
                     'type' => 'string',
                     'description' => 'Text for the next button in page breaks (default: "Next")'
@@ -350,7 +350,7 @@ class FormFieldSchemas
             'additionalProperties' => false,
             'properties' => [
                 'type' => ['type' => 'string', 'enum' => ['nf-divider']],
-                'core' => ['$ref' => '#/definitions/baseProperty'],
+                'core' => ['$ref' => '#/$defs/baseProperty'],
             ]
         ],
         'nfImageProperty' => [
@@ -359,7 +359,7 @@ class FormFieldSchemas
             'additionalProperties' => false,
             'properties' => [
                 'type' => ['type' => 'string', 'enum' => ['nf-image']],
-                'core' => ['$ref' => '#/definitions/baseProperty'],
+                'core' => ['$ref' => '#/$defs/baseProperty'],
             ]
         ],
         'nfVideoProperty' => [
@@ -368,7 +368,7 @@ class FormFieldSchemas
             'additionalProperties' => false,
             'properties' => [
                 'type' => ['type' => 'string', 'enum' => ['nf-video']],
-                'core' => ['$ref' => '#/definitions/baseProperty'],
+                'core' => ['$ref' => '#/$defs/baseProperty'],
             ]
         ],
         'nfCodeProperty' => [
@@ -377,7 +377,7 @@ class FormFieldSchemas
             'additionalProperties' => false,
             'properties' => [
                 'type' => ['type' => 'string', 'enum' => ['nf-code']],
-                'core' => ['$ref' => '#/definitions/baseProperty'],
+                'core' => ['$ref' => '#/$defs/baseProperty'],
             ]
         ]
     ];

@@ -32,3 +32,8 @@ docker-compose.override.yml
 /.make.*
 /storage/app/stripe-export-datasets/*
 !/storage/app/stripe-export-datasets/.gitignore
+
+# Stray scratch file left next to the API app directory
+/groo
+/groq
+/groo

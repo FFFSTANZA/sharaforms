@@ -27,15 +27,19 @@ class GenerateFormFieldsPrompt extends Prompt
         Existing Fields: {existingFields}
         </current_form_context>
         
-        Return an array of field objects that fit the context and complement the existing form structure. Consider the form's purpose and existing fields when generating new fields.
+        Return a single JSON object with exactly one key: "properties" — an array of field objects that fit the context and complement the existing form structure. Consider the form's purpose and existing fields when generating new fields. Do NOT wrap the array in any other object and do NOT add form-level keys (no "title", "re_fillable", "submit_button_text", ...).
 
         Presentation mode and constraints:
         {modeConstraints}
 
         Available field types (mode-aware):
         {allowedFieldTypesList}
+
+        Field JSON contract — the "properties" value must follow this exactly:
+        {fieldContract}
+
         
-        HTML formatting for nf-text:
+        HTML formatting for nf-text blocks:
         - Headers: <h1>, <h2> for section titles and subtitles
         - Text formatting: <b> or <strong> for bold, <i> or <em> for italic, <u> for underline, <s> for strikethrough
         - Links: <a href="url">link text</a> for hyperlinks
@@ -43,10 +47,9 @@ class GenerateFormFieldsPrompt extends Prompt
         - Colors: <span style="color: #hexcode">colored text</span> for colored text
         - Paragraphs: <p>paragraph text</p> for text blocks with spacing
         Use these HTML tags to create well-structured and visually appealing form content.
-        
-        {widthGuidance}
-        
+
         Field generation guidelines:
+        - Generate only the fields needed - do not repeat fields already present in the existing form context
         - Choose the most appropriate field type based on the data being collected
         - Consider the existing form context and avoid duplicating fields
         - Use logical field names that clearly describe the data being collected
@@ -57,7 +60,7 @@ class GenerateFormFieldsPrompt extends Prompt
         - For number fields, consider if rating, scale, or slider would be more appropriate
         - For rich text fields, consider if multi-line, matrix, or barcode input would be useful
         
-        Return an array of field objects that:
+        The generated fields should:
         - Match the field description requirements
         - Complement the existing form structure
         - Use appropriate field types and configurations
@@ -78,28 +81,34 @@ class GenerateFormFieldsPrompt extends Prompt
                 'description' => 'Array of form fields and elements',
                 'items' => [
                     'anyOf' => [
-                        ['$ref' => '#/definitions/textProperty'],
-                        ['$ref' => '#/definitions/richTextProperty'],
-                        ['$ref' => '#/definitions/dateProperty'],
-                        ['$ref' => '#/definitions/urlProperty'],
-                        ['$ref' => '#/definitions/phoneNumberProperty'],
-                        ['$ref' => '#/definitions/emailProperty'],
-                        ['$ref' => '#/definitions/checkboxProperty'],
-                        ['$ref' => '#/definitions/selectProperty'],
-                        ['$ref' => '#/definitions/multiSelectProperty'],
-                        ['$ref' => '#/definitions/numberProperty'],
-                        ['$ref' => '#/definitions/filesProperty'],
-                        ['$ref' => '#/definitions/nfTextProperty'],
-                        ['$ref' => '#/definitions/nfPageBreakProperty'],
-                        ['$ref' => '#/definitions/nfDividerProperty'],
-                        ['$ref' => '#/definitions/nfImageProperty'],
-                        ['$ref' => '#/definitions/nfVideoProperty'],
-                        ['$ref' => '#/definitions/nfCodeProperty']
+                        ['$ref' => '#/$defs/textProperty'],
+                        ['$ref' => '#/$defs/richTextProperty'],
+                        ['$ref' => '#/$defs/dateProperty'],
+                        ['$ref' => '#/$defs/urlProperty'],
+                        ['$ref' => '#/$defs/phoneNumberProperty'],
+                        ['$ref' => '#/$defs/emailProperty'],
+                        ['$ref' => '#/$defs/checkboxProperty'],
+                        ['$ref' => '#/$defs/selectProperty'],
+                        ['$ref' => '#/$defs/multiSelectProperty'],
+                        ['$ref' => '#/$defs/matrixProperty'],
+                        ['$ref' => '#/$defs/numberProperty'],
+                        ['$ref' => '#/$defs/ratingProperty'],
+                        ['$ref' => '#/$defs/scaleProperty'],
+                        ['$ref' => '#/$defs/sliderProperty'],
+                        ['$ref' => '#/$defs/filesProperty'],
+                        ['$ref' => '#/$defs/signatureProperty'],
+                        ['$ref' => '#/$defs/barcodeProperty'],
+                        ['$ref' => '#/$defs/nfTextProperty'],
+                        ['$ref' => '#/$defs/nfPageBreakProperty'],
+                        ['$ref' => '#/$defs/nfDividerProperty'],
+                        ['$ref' => '#/$defs/nfImageProperty'],
+                        ['$ref' => '#/$defs/nfVideoProperty'],
+                        ['$ref' => '#/$defs/nfCodeProperty']
                     ]
                 ]
             ]
         ],
-        'definitions' => FormFieldSchemas::FIELD_TYPE_DEFINITIONS
+        '$defs' => FormFieldSchemas::FIELD_TYPE_DEFINITIONS
     ];
 
     public function __construct(
@@ -143,11 +152,63 @@ class GenerateFormFieldsPrompt extends Prompt
         $rules = PresentationRules::buildContext($this->params);
         $variables['{modeConstraints}'] = $rules['constraintsText'];
         $variables['{widthGuidance}'] = $rules['mode'] === PresentationRules::MODE_FOCUSED
-            ? 'In focused mode, do not use width options. Each step contains a single full-width question.'
-            : 'Field width options:\n- width: "full" (default)\n- width: "1/2"\n- width: "1/3"\n- width: "2/3"\n- width: "1/4"\n- width: "3/4"\nFields can share rows when room allows.';
+            ? "In focused mode, do not use width options. Each step contains a single full-width question."
+            : "Field width options:\n- width: \"full\" (default)\n- width: \"1/2\"\n- width: \"1/3\"\n- width: \"2/3\"\n- width: \"1/4\"\n- width: \"3/4\"\nFields can share rows when room allows.";
         $variables['{allowedFieldTypesList}'] = $this->formatAllowedTypes($rules['allowedFieldTypes']);
+        $variables['{fieldContract}'] = $this->buildFieldsContract();
+        $variables['{layoutGuidance}'] = PresentationRules::buildLayoutGuidance($rules['mode']);
 
         return $variables;
+    }
+
+    /**
+     * The top-level contract for the fields endpoint: a wrapper object whose
+     * only key is "properties" (providers without schema enforcement follow
+     * this literal shape).
+     */
+    private function buildFieldsContract(): string
+    {
+        return <<<'EOD'
+        {
+          "properties": [
+            {
+              "type": "text",
+              "name": "Full name",
+              "help": "So we can address you personally.",
+              "placeholder": "Jane Doe",
+              "hidden": false,
+              "required": true,
+              "width": "1/2",
+              "multi_lines": false,
+              "generates_uuid": false,
+              "max_char_limit": 500,
+              "hide_field_name": false,
+              "show_char_limit": false
+            },
+            {
+              "type": "select",
+              "name": "How did you hear about us?",
+              "help": "",
+              "placeholder": "",
+              "hidden": false,
+              "required": true,
+              "width": "full",
+              "without_dropdown": true,
+              "select": { "options": [ { "name": "Search engine", "id": "search-engine" }, { "name": "Social media", "id": "social-media" } ] }
+            },
+            {
+              "type": "checkbox",
+              "name": "Subscribe to newsletter",
+              "help": "",
+              "placeholder": "",
+              "hidden": false,
+              "required": false,
+              "width": "full",
+              "use_toggle_switch": false
+            }
+          ]
+        }
+        EOD;
     }
 
     private function formatAllowedTypes(array $types): string
@@ -209,7 +270,11 @@ class GenerateFormFieldsPrompt extends Prompt
      */
     public function processOutput(array $formFields): array
     {
-        $properties = $formFields['properties'] ?? [];
+        // Models without schema enforcement may return a bare array of
+        // properties instead of the {"properties": [...]} wrapper.
+        $properties = array_is_list($formFields) ? $formFields : ($formFields['properties'] ?? []);
+        // Normalize model-invented keys onto the app contract before anything else.
+        $properties = FormSchemaNormalizer::normalizeFields($properties);
         $processedFields = FormFieldSchemas::processFields($properties);
 
         // Optimize fields for focused mode

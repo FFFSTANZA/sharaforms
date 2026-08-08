@@ -8,8 +8,8 @@ export function useFormAI() {
       queryFn: () => formsApi.ai.get(generationId, options),
       enabled: !!generationId,
       refetchInterval: (data) => {
-        // Poll if generation is in progress
-        return data?.status === 'processing' ? 2000 : false
+        // Poll while generation is in progress; stop once it finishes or fails.
+        return data?.ai_form_completion?.status === 'processing' ? 2000 : false
       },
       ...options
     })

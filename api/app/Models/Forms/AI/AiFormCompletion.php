@@ -22,6 +22,7 @@ class AiFormCompletion extends Model
     protected $table = 'ai_form_completions';
 
     protected $fillable = [
+        'user_id',
         'form_prompt',
         'status',
         'result',
@@ -30,6 +31,8 @@ class AiFormCompletion extends Model
         'type',
         'context',
         'generation_params',
+        'input_tokens',
+        'output_tokens',
     ];
 
     protected $attributes = [
@@ -42,7 +45,14 @@ class AiFormCompletion extends Model
         return [
             'context' => 'array',
             'generation_params' => 'array',
+            'input_tokens' => 'integer',
+            'output_tokens' => 'integer',
         ];
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
     }
 
     protected static function booted()
@@ -50,7 +60,7 @@ class AiFormCompletion extends Model
         // Dispatch completion job on creation
         static::created(function (self $completion) {
             if ($completion->type === self::TYPE_FORM) {
-                GenerateAIForm::dispatch($completion);
+                GenerateAiForm::dispatch($completion);
             } elseif ($completion->type === self::TYPE_FIELDS) {
                 GenerateAiFormFields::dispatch($completion);
             }
