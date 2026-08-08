@@ -96,6 +96,15 @@ jobs:
     needs: [build-api, build-ui]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      - name: Sync compose file to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          source: "docker-compose.yml"
+          target: /home/ubuntu/sf-docker
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.2.0
         with:
