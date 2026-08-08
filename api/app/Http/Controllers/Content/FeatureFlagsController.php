@@ -18,7 +18,7 @@ class FeatureFlagsController extends Controller
             'custom_domains' => config('custom-domains.enabled', false),
             'ai_features' => AiProviderManager::hasAvailableProvider(),
             'billing' => [
-                'enabled' => !empty(config('cashier.key')) && !empty(config('cashier.secret')),
+                'enabled' => pricing_enabled(),
                 'stripe_publishable_key' => config('cashier.key'),
             ],
             'storage' => [
