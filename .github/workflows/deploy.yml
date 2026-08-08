@@ -1,0 +1,109 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  lint:
+    name: PHP Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+      - name: php -l on all files
+        run: |
+          set -o pipefail
+          find api -name '*.php' -not -path '*/vendor/*' -print0 | \
+            xargs -0 -n1 -P4 php -l | grep -v '^No syntax errors detected' || true
+
+  build-api:
+    name: Build + Push API image
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile.api
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/sharaforms/api:latest
+            ghcr.io/${{ github.repository_owner }}/sharaforms/api:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  build-ui:
+    name: Build + Push UI image
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile.client
+          push: true
+          build-args: |
+            NUXT_PUBLIC_APP_URL=${{ secrets.NUXT_PUBLIC_APP_URL }}
+            NUXT_PUBLIC_API_BASE=${{ secrets.NUXT_PUBLIC_API_BASE }}
+            NUXT_PRIVATE_API_BASE=${{ secrets.NUXT_PRIVATE_API_BASE }}
+            NUXT_PUBLIC_ENV=${{ secrets.NUXT_PUBLIC_ENV }}
+            NUXT_API_SECRET=${{ secrets.NUXT_API_SECRET }}
+            NUXT_PUBLIC_LICENSE_API_ENDPOINT=${{ secrets.NUXT_PUBLIC_LICENSE_API_ENDPOINT }}
+            NUXT_PUBLIC_H_CAPTCHA_SITE_KEY=${{ secrets.NUXT_PUBLIC_H_CAPTCHA_SITE_KEY }}
+            NUXT_PUBLIC_RE_CAPTCHA_SITE_KEY=${{ secrets.NUXT_PUBLIC_RE_CAPTCHA_SITE_KEY }}
+            NUXT_PUBLIC_ROOT_REDIRECT_URL=${{ secrets.NUXT_PUBLIC_ROOT_REDIRECT_URL }}
+            NUXT_PUBLIC_PRIVACY_POLICY_PAGE_ID=${{ secrets.NUXT_PUBLIC_PRIVACY_POLICY_PAGE_ID }}
+            NUXT_PUBLIC_TERMS_CONDITIONS_PAGE_ID=${{ secrets.NUXT_PUBLIC_TERMS_CONDITIONS_PAGE_ID }}
+            NUXT_PUBLIC_GOOGLE_ANALYTICS_CODE=${{ secrets.NUXT_PUBLIC_GOOGLE_ANALYTICS_CODE }}
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/sharaforms/ui:latest
+            ghcr.io/${{ github.repository_owner }}/sharaforms/ui:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy:
+    name: Deploy to VPS
+    needs: [build-api, build-ui]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/sf-docker
+            echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ secrets.GHCR_USER }} --password-stdin
+            docker compose pull
+            docker compose up -d --remove-orphans
+            docker logout ghcr.io
+            sleep 30
+            docker compose ps --format "table {{.Name}}\t{{.Status}}"
+            curl -sf -o /dev/null http://localhost/ && echo "INGRESS OK" || echo "INGRESS CHECK FAILED"

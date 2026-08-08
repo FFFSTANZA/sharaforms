@@ -1,7 +1,7 @@
 ---
 services:
   api: &api-environment
-    image: sharaforms/api:latest
+    image: ghcr.io/fffstanza/sharaforms/api:latest
     container_name: sharaforms-api
     volumes: &api-environment-volumes
       - sharaforms_storage:/usr/share/nginx/html/storage:rw
@@ -67,7 +67,7 @@ services:
       start_period: 15s
 
   ui:
-    image: sharaforms/ui:latest
+    image: ghcr.io/fffstanza/sharaforms/ui:latest
     container_name: sharaforms-ui
     env_file:
       - ./client/.env
