@@ -180,32 +180,43 @@ class Form extends Model implements CachableAttributes, VersionableNestedDiff
         'analytics',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'properties' => 'array',
-            'computed_variables' => 'array',
-            'database_fields_update' => 'array',
-            'opens_at' => 'datetime',
-            'schedule' => 'array',
-            'embed_type' => 'string',
-            'embed_settings' => 'array',
-            'closes_at' => 'datetime',
-            'tags' => 'array',
-            'removed_properties' => 'array',
-            'seo_meta' => 'object',
-            'cover_settings' => 'array',
-            'translations' => 'array',
-            'enable_partial_submissions' => 'boolean',
-            'enable_ip_tracking' => 'boolean',
-            'auto_save' => 'boolean',
-            'pdf_download_enabled' => 'boolean',
-            'clear_empty_fields_on_update' => 'boolean',
-            'presentation_style' => 'string',
-            'settings' => 'array',
-            'analytics' => 'array',
-        ];
-    }
+     protected function casts(): array
+     {
+         return [
+             'auto_focus' => 'boolean',
+             'can_be_indexed' => 'boolean',
+             'confetti_on_submission' => 'boolean',
+             'editable_submissions' => 'boolean',
+             'properties' => 'array',
+             'computed_variables' => 'array',
+             'database_fields_update' => 'array',
+             'opens_at' => 'datetime',
+             'schedule' => 'array',
+             'embed_type' => 'string',
+             'embed_settings' => 'array',
+             'closes_at' => 'datetime',
+             'tags' => 'array',
+             'removed_properties' => 'array',
+             'seo_meta' => 'object',
+             'cover_settings' => 'array',
+             'translations' => 'array',
+             'layout_rtl' => 'boolean',
+             're_fillable' => 'boolean',
+             'show_progress_bar' => 'boolean',
+             'no_branding' => 'boolean',
+             'transparent_background' => 'boolean',
+             'uppercase_labels' => 'boolean',
+             'use_captcha' => 'boolean',
+             'enable_partial_submissions' => 'boolean',
+             'enable_ip_tracking' => 'boolean',
+             'auto_save' => 'boolean',
+             'pdf_download_enabled' => 'boolean',
+             'clear_empty_fields_on_update' => 'boolean',
+             'presentation_style' => 'string',
+             'settings' => 'array',
+             'analytics' => 'array',
+         ];
+     }
 
     protected $appends = [
         'share_url',

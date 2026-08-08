@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Billing\Subscription;
+use Illuminate\Database\Connection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
@@ -22,6 +23,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // PostgreSQL has a real boolean type; use a connection class that binds
+        // PHP booleans as 'true'/'false' literals instead of Laravel's default
+        // ints (0/1) which PostgreSQL rejects on boolean columns.
+        Connection::resolverFor('pgsql', function ($connection, $database, $prefix, $config) {
+            return new \App\Database\PostgresBooleanConnection($connection, $database, $prefix, $config);
+        });
+
         if (config('filesystems.default') === 'local') {
             Storage::disk('local')->buildTemporaryUrlsUsing(function ($path, $expiration, $options) {
                 return URL::temporarySignedRoute(
