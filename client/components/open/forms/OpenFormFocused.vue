@@ -46,8 +46,29 @@
         </div>
       </template>
       <component v-else :is="currentLayoutComponent" v-bind="currentLayoutProps" :key="currentIndex">
-        <div class="relative">
+        <div
+          class="relative"
+          :class="[
+            isAdminPreview ? 'group/focusedfield cursor-pointer rounded-md border-dashed border border-transparent box-border transition-colors hover:border-neutral-200 hover:bg-neutral-100/50 dark:hover:border-blue-900 dark:hover:bg-blue-950' : '',
+            beingEdited ? 'bg-blue-50 hover:!bg-blue-50 dark:bg-neutral-700! dark:hover:bg-neutral-700! rounded-md' : ''
+          ]"
+          @click="setFieldAsSelected"
+          @dblclick="editFieldOptions"
+        >
           <BlockRenderer :block="currentBlock" :form-manager="formManager" @input-filled="onInputFilled" />
+          <div
+            v-if="isAdminPreview"
+            class="absolute top-1 right-1 z-20 hidden group-hover/focusedfield:flex items-center"
+          >
+            <div
+              aria-label="Settings"
+              role="button"
+              class="flex items-center justify-center w-6 h-6 rounded-md bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 shadow-sm cursor-pointer text-neutral-400 hover:text-neutral-600 dark:text-neutral-500 dark:hover:text-neutral-300 transition-colors"
+              @click.stop.prevent="editFieldOptions"
+            >
+              <Icon name="i-lucide-settings" class="w-4 h-4" />
+            </div>
+          </div>
         </div>
         <div v-if="!props.formManager?.state.isSubmitted" class="mt-2 flex gap-2" :class="[getFieldAlignClasses(currentBlock), {'flex-col justify-normal! items-center': isLast &&form.use_captcha}]">
           <slot name="submit-btn" v-if="isLast" :loading="isProcessing">
@@ -109,6 +130,7 @@ import CaptchaWrapper from '~/components/forms/heavy/components/CaptchaWrapper.v
 import { FormMode } from '~/lib/forms/FormModeStrategy.js'
 import { useFormImagePreloader } from '~/composables/forms/useFormImagePreloader.js'
 import PoweredBy from '~/components/pages/forms/show/PoweredBy.vue'
+import { useWorkingFormStore } from '~/stores/working_form'
 
 const props = defineProps({
   formManager: { type: Object, required: true }
@@ -135,6 +157,26 @@ const currentMedia = computed(() => currentBlock.value?.image || null)
 const isLast = computed(() => structure?.value?.isLastPage?.value ?? false)
 const isProcessing = computed(() => props.formManager.state.isProcessing)
 const hasPaymentBlock = computed(() => structure.value?.currentPageHasPaymentBlock?.value ?? false)
+
+// Admin preview affordances (editor only) - mirror OpenFormField behavior
+const workingFormStore = useWorkingFormStore()
+const isAdminPreview = computed(() => props.formManager?.strategy?.value?.admin?.showAdminControls || false)
+const beingEdited = computed(() => {
+  if (!isAdminPreview.value || !workingFormStore.showEditFieldSidebar) return false
+  if (!currentBlock.value) return false
+  return workingFormStore.objectToIndex(currentBlock.value) === workingFormStore.selectedFieldIndex
+})
+
+function setFieldAsSelected() {
+  if (!isAdminPreview.value || !workingFormStore.showEditFieldSidebar) return
+  if (!currentBlock.value) return
+  workingFormStore.openSettingsForField(currentBlock.value)
+}
+
+function editFieldOptions() {
+  if (!isAdminPreview.value || !currentBlock.value) return
+  workingFormStore.openSettingsForField(currentBlock.value, true)
+}
 
 // Reserved for future gating if focused renderer wants to branch
 // const isSubmitted = computed(() => !!props.formManager?.state.isSubmitted)

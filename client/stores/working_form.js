@@ -108,7 +108,15 @@ export const useWorkingFormStore = defineStore("working_form", {
     openSettingsForField(field, triggerBounce = false) {
       const targetIndex = this.objectToIndex(field)
       const previousIndex = this.selectedFieldIndex
-      
+
+      // Field no longer exists (e.g. removed while editing) - close the sidebar
+      if (targetIndex === -1) {
+        this.selectedFieldIndex = null
+        this.showEditFieldSidebar = false
+        this.showAddFieldSidebar = false
+        return
+      }
+
       // Check if sidebar is already open for the same field and bounce is requested
       if (triggerBounce && this.showEditFieldSidebar && targetIndex === previousIndex) {
         this.triggerSidebarBounce()
@@ -329,6 +337,16 @@ export const useWorkingFormStore = defineStore("working_form", {
         const newProps = [...this.content.properties]
         newProps.splice(index, 1)
         this.setProperties(newProps)
+
+        // Close the edit sidebar when the field being edited is removed,
+        // and keep the selection pointing at the same field when a field
+        // above the selection is removed.
+        if (this.selectedFieldIndex === index) {
+          this.selectedFieldIndex = null
+          this.showEditFieldSidebar = false
+        } else if (this.selectedFieldIndex !== null && this.selectedFieldIndex > index) {
+          this.selectedFieldIndex = this.selectedFieldIndex - 1
+        }
       }
     },
     moveField(oldIndex, newIndex) {

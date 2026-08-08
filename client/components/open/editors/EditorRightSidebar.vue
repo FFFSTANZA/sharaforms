@@ -1,5 +1,5 @@
 <template>
-  <transition @leave="(el, done) => sidebarMotion?.leave(done)">
+  <transition @leave="handleLeave">
     <div
       v-if="show"
       ref="elementRef"
@@ -28,7 +28,7 @@
 
 <script setup>
 import { slideRight, useMotion } from '@vueuse/motion'
-import { watch, computed } from 'vue'
+import { watch, computed, nextTick } from 'vue'
 import { useResizable } from '~/composables/components/useResizable'
 import ResizeHandle from '@/components/global/ResizeHandle.vue'
 
@@ -66,15 +66,32 @@ const sidebarMotion = ref(null)
 // Enable resizing only when prop is true and breakpoint allows it
 const isResizable = computed(() => props.resizable && isResizableBase.value)
 
-// Watch for show prop changes (existing functionality)  
+// Guarantee the transition completes even if the motion instance is missing
+// or the animation fails, so the sidebar element is always removed from the DOM.
+function handleLeave(_el, done) {
+  try {
+    if (sidebarMotion.value?.leave) {
+      sidebarMotion.value.leave(done)
+      return
+    }
+  } catch (error) {
+    console.error('Sidebar leave animation failed', error)
+  }
+  done()
+}
+
+// Watch for show prop changes (existing functionality)
 watch(
   () => props.show,
   (newVal) => {
     if (newVal) {
       nextTick(() => {
-        sidebarMotion.value = useMotion(elementRef.value, slideRight)
+        if (elementRef.value) {
+          sidebarMotion.value = useMotion(elementRef.value, slideRight)
+        }
       })
     }
   },
+  { immediate: true },
 )
 </script>

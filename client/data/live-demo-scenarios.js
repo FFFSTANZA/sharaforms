@@ -46,10 +46,6 @@ function withSlideMedia(field, media, layout = "right-split", extra = {}) {
   }
 }
 
-export function getLiveDemoMediaPreloads() {
-  return [...new Set(Object.values(LIVE_DEMO_MEDIA))]
-}
-
 function mention(id, name, fallback = "") {
   return `<span mention="true" mention-field-id="${id}" mention-field-name="${name}" mention-fallback="${fallback}" contenteditable="false">${name}</span>`
 }

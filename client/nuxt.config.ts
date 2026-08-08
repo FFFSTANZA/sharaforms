@@ -158,10 +158,14 @@ export default defineNuxtConfig({
       clientBundle: {
           icons: [
               'ix:mandatory',
+              'simple-icons:slack',
+              'heroicons:megaphone',
+              'heroicons:map',
+              'heroicons:question-mark-circle',
           ],
           includeCustomCollections: true,
           scan: {
-              globInclude: ['**/*.vue', '**/*.json'],
+              globInclude: ['**/*.vue', '**/*.js', '**/*.json'],
           },
       },
     },

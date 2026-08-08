@@ -112,6 +112,18 @@
               />
             </UTooltip>
             <UTooltip
+              text="Settings"
+              arrow
+            >
+              <UButton
+                icon="i-lucide-settings"
+                color="neutral"
+                variant="outline"
+                size="sm"
+                @click.stop="handleSettingsCurrent"
+              />
+            </UTooltip>
+            <UTooltip
               text="Duplicate"
               arrow
             >
@@ -386,6 +398,11 @@ function handleAddBlock() {
 function handleDuplicateCurrent() {
   const index = getAbsoluteIndexFromVisiblePage(currentSlideIndex.value)
   workingFormStore.duplicateField(index)
+}
+
+function handleSettingsCurrent() {
+  const index = getAbsoluteIndexFromVisiblePage(currentSlideIndex.value)
+  workingFormStore.openSettingsForField(index, true)
 }
 
 function handleDeleteCurrent() {

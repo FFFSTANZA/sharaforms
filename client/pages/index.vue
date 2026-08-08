@@ -44,14 +44,6 @@
                 label="Create a free form"
                 class="premium-primary-button px-5 py-3 rounded-xl text-[15px] leading-7 tracking-[-1.1%] font-semibold text-white"
               />
-              <UButton
-                v-if="useFeatureFlag('billing.enabled')"
-                size="lg"
-                variant="outline"
-                :to="{ name: 'pricing' }"
-                label="View Pricing"
-                class="rounded-xl border border-white/18 bg-white/6 px-5 py-3 text-[15px] leading-7 tracking-[-1.1%] font-medium text-white/80 shadow-[0_12px_32px_-20px_rgba(0,0,0,0.3)] transition-all duration-300 hover:bg-white/10 hover:text-white hover:border-white/25"
-              />
             </div>
 
           </div>
@@ -102,7 +94,7 @@ useOpnSeoMeta({
   title: "Free Form Builder with Unlimited Forms, Submissions, and Built-In Calculations",
   description:
     "SharaForms is a free form builder with unlimited forms and submissions, built-in calculations, conditional logic, dynamic documents, and integrations for teams that need forms that do more than collect.",
-  ogImage: "/img/social-share-preview.png",
+  ogImage: "/share-preview.png",
   keywords: "free form builder, unlimited forms, unlimited submissions, calculated forms, formula forms, online calculator forms, dynamic forms",
   speakable: ["h1", ".marketing-page > section:first-child p"],
   breadcrumbs: [

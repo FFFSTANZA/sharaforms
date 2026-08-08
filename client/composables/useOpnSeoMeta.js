@@ -28,6 +28,11 @@ export const useOpnSeoMeta = (meta, alwaysEnabled = false) => {
   const seoMeta = { ...meta }
   delete seoMeta.canonical
 
+  // Social scrapers require absolute URLs for og:image / twitter:image.
+  // Extract it before spreading so the resolved absolute value wins.
+  const rawOgImage = seoMeta.ogImage
+  delete seoMeta.ogImage
+
   useHead(() => {
     const canonicalUrl = resolveCanonicalUrl(meta.canonical, route, canonicalBaseUrl)
     const robots = resolveRobots(seoMeta.robots, route)
@@ -87,13 +92,14 @@ export const useOpnSeoMeta = (meta, alwaysEnabled = false) => {
           twitterDescription: seoMeta.description,
         }
       : {}),
-    ...(seoMeta.ogImage
+    ...(rawOgImage
       ? {
+          ogImage: () => resolveOgImageUrl(rawOgImage, canonicalBaseUrl),
           ogImageAlt: seoMeta.title || 'SharaForms',
-          ogImageWidth: 1200,
-          ogImageHeight: 800,
+          ogImageWidth: 1536,
+          ogImageHeight: 1024,
           twitterImageAlt: seoMeta.title || 'SharaForms',
-          twitterImage: seoMeta.ogImage,
+          twitterImage: () => resolveOgImageUrl(rawOgImage, canonicalBaseUrl),
         }
       : {}),
     ...seoMeta,
@@ -242,4 +248,22 @@ function isNonIndexablePath (path) {
 
 function resolveMetaValue (value) {
   return typeof value === 'function' ? value() : value
+}
+
+function resolveOgImageUrl (ogImage, canonicalBaseUrl) {
+  const resolved = resolveMetaValue(ogImage)
+  if (!resolved) {
+    return null
+  }
+
+  if (/^https?:\/\//.test(resolved) || resolved.startsWith('//')) {
+    return resolved
+  }
+
+  if (!canonicalBaseUrl) {
+    return resolved
+  }
+
+  const normalizedBaseUrl = canonicalBaseUrl.replace(/\/+$/, '')
+  return `${normalizedBaseUrl}${resolved.startsWith('/') ? resolved : `/${resolved}`}`
 }

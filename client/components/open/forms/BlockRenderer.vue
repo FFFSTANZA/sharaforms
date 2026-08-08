@@ -136,9 +136,10 @@ const componentInfo = computed(() => {
   if (field.type === 'text' && field.multi_lines) componentName = 'TextAreaInput'
   else if (field.type === 'text' && field.input_mask) componentName = 'MaskInput'
   else if (field.type === 'url' && field.file_upload) componentName = 'FileInput'
+  // Explicit per-field choice: no dropdown -> flat list of options, regardless of presentation style
+  else if (['select','multi_select'].includes(field.type) && field.without_dropdown) componentName = 'FlatSelectInput'
   // In focused mode, use FocusedSelectorInput by default unless explicitly disabled
   else if (['select','multi_select'].includes(field.type) && form.value.presentation_style === 'focused' && field.use_focused_selector !== false) componentName = 'FocusedSelectorInput'
-  else if (['select','multi_select'].includes(field.type) && field.without_dropdown) componentName = 'FlatSelectInput'
   // In focused mode, use FocusedToggleInput by default unless explicitly disabled
   else if (field.type === 'checkbox' && form.value.presentation_style === 'focused' && field.use_focused_toggle !== false) componentName = 'FocusedToggleInput'
   else if (field.type === 'checkbox' && field.use_toggle_switch) componentName = 'ToggleSwitchInput'

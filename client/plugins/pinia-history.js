@@ -1,4 +1,4 @@
-import {computed, reactive} from 'vue'
+import {computed, reactive, nextTick} from 'vue'
 import debounce from 'debounce'
 import {hash} from "~/lib/utils.js"
 
@@ -42,16 +42,58 @@ function mergeOptions(options) {
  * @returns {Object} Filtered state object
  */
 function filterState(state, ignoreKeys) {
-  if (!ignoreKeys || ignoreKeys.length === 0) {
+  const keysToIgnore = ignoreKeys ?? []
+  if (keysToIgnore.length === 0) {
     return state
   }
   
   const filteredState = { ...state }
-  ignoreKeys.forEach(key => {
+  keysToIgnore.forEach(key => {
     delete filteredState[key]
   })
   
   return filteredState
+}
+
+/**
+ * State keys that are pure UI state and should not create undo/redo
+ * snapshots (sidebar open/close, field selection, bounce animation...).
+ */
+const UI_ONLY_KEYS = new Set([
+  'selectedFieldIndex',
+  'showEditFieldSidebar',
+  'showAddFieldSidebar',
+  'sidebarBounce',
+  'activeTab',
+  'draggingNewBlock',
+])
+
+/**
+ * True when a mutation only touched UI-only keys (nothing to snapshot).
+ * @param {import('pinia').SubscriptionCallbackMutation} mutation
+ * @returns {boolean}
+ */
+function isUiOnlyMutation(mutation) {
+  if (mutation.type === 'direct') {
+    const rawEvents = Array.isArray(mutation.events)
+      ? mutation.events
+      : mutation.events
+        ? [mutation.events]
+        : []
+    const keys = rawEvents
+      .map((event) => event.key)
+      .filter((key) => key !== undefined)
+    if (keys.length === 0) {
+      // No usable event keys - fall back to tracking.
+      return false
+    }
+    return keys.every((key) => UI_ONLY_KEYS.has(key))
+  }
+  if (mutation.type === 'patch object') {
+    const keys = Object.keys(mutation.payload)
+    return keys.length > 0 && keys.every((key) => UI_ONLY_KEYS.has(key))
+  }
+  return false
 }
 
 /**
@@ -68,29 +110,35 @@ const PiniaHistory = (context) => {
   const mergedOptions = mergeOptions(history)
   const {max, persistent, persistentStrategy, ignoreKeys} = mergedOptions
 
+  const effectiveIgnoreKeys = [...new Set([...(ignoreKeys ?? []), ...UI_ONLY_KEYS])]
+  const filterForHistory = (state) => filterState(state, effectiveIgnoreKeys)
+
+  const initialState = JSON.stringify(filterForHistory(store.$state))
   const $history = reactive({
     max,
     persistent,
     persistentStrategy,
     done: [],
     undone: [],
-    current: JSON.stringify(filterState(store.$state, ignoreKeys)),
+    current: initialState,
+    currentHash: hash(initialState),
     trigger: true,
   })
 
   const debouncedStoreUpdate = debounce((state) => {
-    const filteredState = filterState(state, ignoreKeys)
-    const currentStateHash = hash($history.current)
-    const newStateHash = hash(JSON.stringify(filteredState))
-    
-    if (currentStateHash === newStateHash) { // Not a real change here
+    const filteredState = filterForHistory(state)
+    const serialized = JSON.stringify(filteredState)
+    const newStateHash = hash(serialized)
+
+    if ($history.currentHash === newStateHash) { // Not a real change here
       return
     }
     if ($history.done.length >= max) $history.done.shift() // Remove oldest state if needed
 
     $history.done.push($history.current)
     $history.undone = [] // Clear redo history on new action
-    $history.current = JSON.stringify(filteredState)
+    $history.current = serialized
+    $history.currentHash = newStateHash
 
     if (persistent) {
       persistentStrategy.set(store, 'undo', $history.done)
@@ -119,6 +167,7 @@ const PiniaHistory = (context) => {
     store.$patch(stateToRestore)
     nextTick(() => {
       $history.current = state
+      $history.currentHash = hash(state)
       $history.trigger = true
       if (persistent) {
         persistentStrategy.set(store, 'undo', $history.done)
@@ -145,6 +194,7 @@ const PiniaHistory = (context) => {
     store.$patch(stateToRestore)
     nextTick(() => {
       $history.current = state
+      $history.currentHash = hash(state)
       $history.trigger = true
       if (persistent) {
         persistentStrategy.set(store, 'undo', $history.done)
@@ -163,12 +213,14 @@ const PiniaHistory = (context) => {
   }
 
   store.$subscribe((mutation, state) => {
-    if ($history.trigger) {
+    if ($history.trigger && !isUiOnlyMutation(mutation)) {
       debouncedStoreUpdate(state)
     }
   })
 
 }
+
+export { PiniaHistory }
 
 export default defineNuxtPlugin(nuxtApp => {
   if (!nuxtApp?.$pinia) {

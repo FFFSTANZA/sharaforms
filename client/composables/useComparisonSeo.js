@@ -5,7 +5,7 @@ export function useComparisonSeo({ competitorName, summary }) {
     title: `SharaForms vs ${competitorName}: Free Alternative with Unlimited Forms`,
     description: `${normalizedSummary} Compare free plans, pricing, and features side by side. SharaForms gives teams unlimited forms and submissions, built-in calculations, workflow-ready logic, dynamic PDFs, and a generous free tier.`,
     ogType: 'article',
-    ogImage: '/img/social-share-preview.png',
+    ogImage: '/share-preview.png',
     speakable: ['h1', '.comparison-bottom-line', 'p'],
     breadcrumbs: [
       { name: "Home", item: "/" },

@@ -41,6 +41,7 @@
               ' !border-blue-400 border-b-2': element.type === 'nf-page-break',
               'bg-blue-50 dark:bg-neutral-700': isBeingEdited(index),
             }"
+            @click="selectField(element)"
           >
             <div
               v-if="element"
@@ -71,7 +72,7 @@
                     'text-neutral-300 hover:text-blue-500 md:group-hover:flex': !element.hidden,
                     'text-neutral-300 hover:text-neutral-500 md:flex': element.hidden,
                   }"
-                  @click="toggleHidden(element)"
+                  @click.stop="toggleHidden(element)"
                 >
                   <template v-if="!element.hidden">
                     <Icon
@@ -98,7 +99,7 @@
                     'md:group-hover:flex text-neutral-300 hover:text-red-500': !element.required,
                     'md:flex text-red-500': element.required,
                   }"
-                  @click="toggleRequired(element)"
+                  @click.stop="toggleRequired(element)"
                 >
                   <div
                     class="h-6 text-center text-3xl font-bold text-inherit -mt-0.5"
@@ -110,7 +111,7 @@
               <UTooltip arrow text="Open settings">
                 <button
                   class="cursor-pointer rounded-sm p-1 transition-colors hover:bg-blue-100 text-neutral-300 hover:text-blue-500 flex items-center justify-center field-settings-button"
-                  @click="editOptions(index)"
+                  @click.stop="editOptions(index)"
                 >
                   <Icon
                     name="lucide:settings"
@@ -187,6 +188,9 @@ export default {
     },
     editOptions (index) {
       this.workingFormStore.openSettingsForField(index)
+    },
+    selectField (field) {
+      this.workingFormStore.openSettingsForField(field)
     },
     onChangeName (field, newName) {
       field.name = newName

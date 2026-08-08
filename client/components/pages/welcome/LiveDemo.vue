@@ -65,19 +65,7 @@
 <script setup>
 import LiveDemoForm from "~/components/pages/welcome/LiveDemoForm.vue"
 import { useIsAuthenticated } from "~/composables/useAuthFlow"
-import {
-  getLiveDemoMediaPreloads,
-  getLiveDemoScenario,
-} from "~/data/live-demo-scenarios.js"
-
-useHead({
-  link: getLiveDemoMediaPreloads().map((href) => ({
-    rel: "preload",
-    href,
-    as: "image",
-    type: "image/webp",
-  })),
-})
+import { getLiveDemoScenario } from "~/data/live-demo-scenarios.js"
 
 const props = defineProps({
   variant: {
@@ -103,6 +91,23 @@ const scenario = computed(() =>
     importSource: props.importSource,
   }),
 )
+
+const mediaPreloads = computed(() => {
+  const urls = new Set()
+  for (const field of scenario.value.form.properties) {
+    if (field?.image?.url) {
+      urls.add(field.image.url)
+    }
+  }
+  return [...urls].map((href) => ({
+    rel: "preload",
+    href,
+    as: "image",
+    type: href.endsWith(".svg") ? "image/svg+xml" : "image/webp",
+  }))
+})
+
+useHead(() => ({ link: mediaPreloads.value }))
 
 const primaryCtaTo = computed(() => ({
   name: authenticated.value ? "forms-create" : "forms-create-guest",

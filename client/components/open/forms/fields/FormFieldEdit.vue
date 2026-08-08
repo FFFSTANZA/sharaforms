@@ -199,7 +199,18 @@ const useFieldTypeChange = () => {
 
 const { getChangeTypeOptions } = useFieldTypeChange()
 
+// Prevent destructive keyboard shortcuts from firing while the user is
+// typing inside an input/textarea/contenteditable (e.g. Ctrl+Backspace
+// deleting the current field while editing its name).
+function isEditableFocused() {
+  const el = document.activeElement
+  if (!el) return false
+  const tag = el.tagName
+  return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || el.isContentEditable
+}
+
 function removeBlock() {
+  if (isEditableFocused()) return
   workingFormStore.removeField(field.value)
 }
 
@@ -223,7 +234,10 @@ const dropdownItems = computed(() => {
       label: 'Duplicate',
       icon: 'i-lucide-copy',
       kbds: ['meta', 'd'],
-      onClick: () => workingFormStore.duplicateField(field.value)
+      onClick: () => {
+        if (isEditableFocused()) return
+        workingFormStore.duplicateField(field.value)
+      }
     }]
   ]
 

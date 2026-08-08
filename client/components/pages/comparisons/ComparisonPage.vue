@@ -245,7 +245,7 @@
             </div>
 
             <div class="col-span-12 md:col-span-4 pb-8">
-              <div class="h-20 flex items-center justify-center gap-2">
+              <div class="h-32 flex items-center justify-center gap-2">
                 <Icon :name="competitorIcon" :class="competitorIconClass" class="h-8 w-8" />
                 <div class="brand-text-strong text-lg font-semibold">
                   {{ competitorName }}
