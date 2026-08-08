@@ -21,6 +21,7 @@ services:
       JWT_SKIP_IP_UA_VALIDATION: "true"
       # Database settings
       DB_HOST: db
+      DB_PORT: 5432
       DB_DATABASE: ${DB_DATABASE:-forge}
       DB_USERNAME: ${DB_USERNAME:-forge}
       DB_PASSWORD: ${DB_PASSWORD:-forge}

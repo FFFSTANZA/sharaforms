@@ -156,3 +156,55 @@ Dodo (Svix/Standard Webhooks) treats the `whsec_...` secret as **base64-encoded 
 - **The signing key is `whsec_<base64>` — decode, don't hash the ASCII string.** Any future sim/tool must use the decoded key, or it will "pass" while real Dodo deliveries 401 (symmetric wrongness).
 - Dodo test-mode webhook endpoints listed via `GET https://test.dodopayments.com/webhooks`; signing key via `GET /webhooks/{id}/secret`.
 - Debug-signature tooling: `/tmp/opencode/nginx_probe.py` (self-signed probe to the live tunnel).
+
+## Session: 2026-08-09 — Form Boolean Casts Fix + Dev DB Wipe Incident (Recovery Notes)
+
+### Root cause fixed: "Error saving form" 500 on PostgreSQL
+- `api/app/Models/Forms/Form.php` `casts()` was missing 11 boolean casts → raw ints hit the query builder.
+- Laravel `Connection::prepareBindings()` converts PHP bools to `(int)`; with `PDO::ATTR_EMULATE_PREPARES => true` (`api/config/database.php:80`, required for pgbouncer), PDO interpolates `false` as unquoted `0` → pgsql `SQLSTATE[42804]` "column is of type boolean but expression is of type integer" (and `42883` for morph varchar FKs).
+- **Fix:** new `api/app/Database/PostgresBooleanConnection.php` (extends `Illuminate\Database\PostgresConnection`) overrides `prepareBindings()`: bool→`'true'`/`'false'`, int/float→`(string)`, null passthrough, then `parent::prepareBindings()`. Registered in `AppServiceProvider::boot()` via `Connection::resolverFor('pgsql', ...)`. Emulated prepares stay; stringified quoted literals coerce correctly in pgsql.
+- Added the 11 casts: `auto_focus`, `can_be_indexed`, `confetti_on_submission`, `editable_submissions`, `layout_rtl`, `re_fillable`, `show_progress_bar`, `no_branding`, `transparent_background`, `uppercase_labels`, `use_captcha`.
+- Verified: full-payload POST `/open/forms` → 200, PUT flip → 200, DB shows `t`/`f`, version row created, public answer POST → 200.
+
+### ⚠️ Dev DB wipe incident — test-run hazard (READ BEFORE RUNNING PEST IN THE COMPOSE STACK)
+- **What happened:** running `php artisan test` batches via `docker exec` ran `migrate:fresh` on the REAL pgsql DB — all users/workspaces/forms/subscriptions wiped (migrations table 105, all tables empty).
+- **Mechanism:** `tests/TestCase.php` uses `RefreshDatabase`; `ensureSafeTestingDatabase()` guard (`AppServiceProvider.php:103`, throws for non-sqlite in `'testing'` env) did **not** fire because `app()->environment()` resolved `local`, not `testing`. With `bootstrap/cache/config.php` present (baked at container start), Laravel's `LoadEnvironmentVariables` bootstrap step early-returns on `configurationIsCached()`, so `detectEnvironment()` is skipped and `APP_ENV=testing` (via `-e`) never binds; `env()` falls back to the container's `APP_ENV=local`. Cached config supplies `database.default=pgsql` → RefreshDatabase wipes the real DB. phpunit.xml's sqlite `:memory:` is likewise bypassed by the cache.
+- **MANDATORY pre-test procedure (never skip):**
+  ```bash
+  docker exec -u www-data sharaforms-api php artisan config:clear   # deletes bootstrap/cache/config.php
+  docker exec -u www-data sharaforms-api php artisan test --filter=...
+  ```
+  Run `config:clear` before EVERY pest batch; re-run it if the container is restarted (entrypoint re-bakes config). Never run `migrate:fresh`/`RefreshDatabase`-based suites against the live stack without first confirming `config('database.default') === 'sqlite'` (`php artisan tinker --execute='echo config("database.default");'`).
+- **Recovery (idempotent):** `docker exec sharaforms-api php artisan db:seed --class=E2ETestSeeder --force` → creates E2E User (`e2e@example.test` / `Abcd@1234`) + workspace, linked as admin. Login is `POST /login` (NOT `/open/login`), returns `{"token": ...}`.
+- API payload notes for manual E2E: create form requires `visibility, language, theme, presentation_style, width, size, border_radius, dark_mode, color` enums from `Form::*` consts (`classic|focused`, `centered|full`, `sm|md|lg`, `none|small|full`, `auto|light|dark`, `default|simple|notion|minimal|transparent`); `properties` must be an array of `{id, name, type}` objects; update via PUT (PATCH unsupported); answer route is `POST /forms/{slug}/answer` (no `open/` prefix), captcha-gated when `use_captcha=true`.
+
+## Session: 2026-08-09 (later) — Cloudflare Free-Tier Setup + Nameserver Switch (LIVE)
+
+### Summary
+sharaforms.com now runs behind Cloudflare (Free plan). Zone was created from scratch (account had zero zones), all 14 Hostinger DNS records replicated, speed settings enabled, static-asset Cache Rule deployed, nameservers switched at the registry, zone activated, and everything verified live (200s, CF-RAY, Brotli, HTTP/3, cache HITs, mail records intact).
+
+### Cloudflare zone (Tech@sharaforms.com account `e204d931f9f06be1b78a23645888f629`)
+- Zone: `sharaforms.com`, id `2d2b921706d44c632d0bf7210bfe5cf7`, Free plan, status **active**, NS `rene.ns.cloudflare.com` + `teresa.ns.cloudflare.com` (was `aurora/nebula.dns-parking.com`).
+- Origin: Hostinger web hosting A `@` → `135.148.41.180` (hosting NOT visible in Hostinger websites API; verified via curl). Valid Let's Encrypt cert → SSL mode **Full (strict)**.
+
+### What's enabled (all free tier)
+- Zone settings: `http3:on`, `brotli:on`, `early_hints:on`, `polish:lossless`, `0rtt:on`, `tls_1_3:on`, `ssl:strict`, `automatic_https_rewrites:on`, `always_use_https:on`.
+- Tiered Cache: `PATCH /zones/{id}/argo/tiered_caching` + smart tiered `PATCH /zones/{id}/cache/tiered_cache_smart_topology_enable` — both on.
+- **Cache Rule** (ruleset id `fb74b84843e64331bb5acaaa2fa0c6d6`, phase `http_request_cache_settings` entrypoint): static assets (`.webp .png .jpg .jpeg .svg .gif .avif .ico .js .css .woff .woff2 .ttf .eot .mp4 .webm`) on sharaforms.com/www → `set_cache_settings`, `cache:true`, `edge_ttl {mode: override_origin, default: 2592000, status_code_ttl: [{404,60}]}`, `browser_ttl {mode: override_origin, default: 2592000}`. **HTML deliberately NOT cached** (app/dashboard shares the domain; no Worker used).
+- DNS: A `@` 135.148.41.180 (id `3d58fb1f6e1e8247dd917de11054632d`), CNAME www (id `2c7d33131daaf97de253e4abf19bb373`) proxied; all MX/SPF/DKIM (`resend._domainkey`, `hostingermail-a/b/c._domainkey`)/DMARC/autodiscover/autoconfig **unproxied** to protect Hostinger email (order `OR5ba589e7659bf94fa2a0777de621`, Starter Business Email). Verified post-switch: MX `@` mx1(5)/mx2(10) hostinger.com, MX `send` 10 feedback-smtp.us-east-1.amazonses.com, SPF both, DKIM key, DMARC p=none all resolve identically.
+
+### API gotchas (rulesets)
+- `edge_ttl` with `mode: "override_origin"` **requires `default`** (seconds) — omitting it errors `20107: default cannot be empty in override_origin mode`.
+- `status_code_ttl` entries are `{status_code, value}` (or `status_code_range {from,to}` + `value`) — set them on top of `default`.
+- `browser_ttl` same shape (`mode` + `default`).
+- `tiered_cache` is NOT a zone setting (error 1006); correct path `/zones/{id}/argo/tiered_caching` (wrong sub-path errors 7003). `cache_level` setting PATCH rejected with 1007 — leave at `aggressive` (default).
+
+### Verification (live)
+- `Server: cloudflare`, `CF-RAY: ...-SIN`, `alt-svc: h3=":443"` on responses; Brotli `content-encoding: br` with `Accept-Encoding: br`.
+- favicon.ico & `/_nuxt/*.css` → `cf-cache-status: HIT` (2nd fetch), `cache-control: max-age=2592000`, `age` increments. HTML → `cf-cache-status: DYNAMIC` (intended).
+- Apex + www both HTTP 200 via CF edge (172.67.194.105 / 104.21.20.208).
+- Local resolver still cached old NS up to TTL; use `dig @8.8.8.8` for authoritative post-switch checks (registry updated within ~1 min; zone went active ~7 min after switch).
+
+### Notes for future deploys
+- New content (hero button, comparison table, icons, LiveDemo preloads) will serve instantly for HTML (DYNAMIC), but cached static assets hold 30d — bump asset names (Nuxt does via hashed `/_nuxt/*` filenames) or purge `https://api.cloudflare.com/client/v4/zones/{zone}/purge_cache` (purge everything or by URL) after deploys.
+- Hostinger domain is locked + privacy protected; NS update API accepted the change without unlocking.
