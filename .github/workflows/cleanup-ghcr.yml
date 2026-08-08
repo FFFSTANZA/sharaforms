@@ -1,0 +1,56 @@
+name: cleanup-ghcr
+on:
+  schedule:
+    - cron: '15 3 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Delete stale :sha tags and untagged versions from ghcr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          KEEP_SHA_TAGS=10
+
+          for pkg in sharaforms-api sharaforms-ui; do
+            echo "== ${pkg} =="
+            page=1
+            : > /tmp/versions.jsonl
+            while :; do
+              body="$(gh api "/users/${GH_REPO%/*}/packages/container/${pkg}/versions?per_page=100&page=${page}" | jq -c '.[]')"
+              [ -z "$body" ] && break
+              echo "$body" >> /tmp/versions.jsonl
+              page=$((page + 1))
+              [ "$(wc -l < /tmp/versions.jsonl)" -gt 300 ] && break
+            done
+
+            sha_kept=0
+            while IFS= read -r line; do
+              vid="$(echo "$line" | jq -r '.id')"
+              tags="$(echo "$line" | jq -r '.metadata.container.tags[]?' | sort)"
+              is_latest="$(echo "$tags" | grep -qx 'latest' && echo 1 || echo 0)"
+              sha_only="$(echo "$tags" | grep -qxE '^[0-9a-f]{40}$' && echo 1 || echo 0)"
+              if [ "$is_latest" = 1 ]; then
+                echo "keep: $vid (latest)"
+              elif [ "$sha_only" = 1 ] && [ "$sha_kept" -lt "$KEEP_SHA_TAGS" ]; then
+                sha_kept=$((sha_kept + 1))
+                echo "keep: $vid (recent sha)"
+              else
+                echo "delete: $vid"
+                curl -fsS -X DELETE \
+                  -H "Authorization: Bearer ${GH_TOKEN}" \
+                  -H "Accept: application/vnd.github+json" \
+                  "https://api.github.com/users/${GH_REPO%/*}/packages/container/${pkg}/versions/${vid}"
+              fi
+            done < /tmp/versions.jsonl
+            echo "kept $sha_kept sha-tagged versions for ${pkg}"
+          done
