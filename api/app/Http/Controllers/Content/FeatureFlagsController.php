@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Content;
 
+use App\Models\User;
 use App\Service\AI\AiProviderManager;
 use App\Http\Controllers\Controller;
 
@@ -9,9 +10,11 @@ class FeatureFlagsController extends Controller
 {
     public function index()
     {
+        $selfHosted = (bool) config('app.self_hosted', false);
+
         $featureFlags = [
-            'self_hosted' => false,
-            'setup_required' => false,
+            'self_hosted' => $selfHosted,
+            'setup_required' => $selfHosted && !User::exists(),
             'custom_domains' => config('custom-domains.enabled', false),
             'ai_features' => AiProviderManager::hasAvailableProvider(),
             'billing' => [

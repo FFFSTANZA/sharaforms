@@ -184,7 +184,7 @@ return [
                 'balanceCooldown' => 3,
             ],
             'mailcoach-general' => [
-                'connection' => 'default',
+                'connection' => 'redis',
                 'queue' => ['mailcoach', 'mailcoach-feedback', 'send-mail', 'send-automation-mail'],
                 'balance' => 'auto',
                 'processes' => 10,
@@ -192,7 +192,7 @@ return [
                 'timeout' => 60 * 60,
             ],
             'mailcoach-heavy' => [
-                'connection' => 'default',
+                'connection' => 'redis',
                 'queue' => ['send-campaign'],
                 'balance' => 'auto',
                 'processes' => 3,
@@ -206,7 +206,7 @@ return [
                 'maxProcesses' => 3,
             ],
             'mailcoach-general' => [
-                'connection' => 'default',
+                'connection' => 'redis',
                 'queue' => ['mailcoach', 'mailcoach-feedback', 'send-mail', 'send-automation-mail'],
                 'balance' => 'auto',
                 'processes' => 10,
@@ -214,7 +214,7 @@ return [
                 'timeout' => 60 * 60,
             ],
             'mailcoach-heavy' => [
-                'connection' => 'default',
+                'connection' => 'redis',
                 'queue' => ['send-campaign'],
                 'balance' => 'auto',
                 'processes' => 3,

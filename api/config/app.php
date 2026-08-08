@@ -69,6 +69,8 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
+    'self_hosted' => env('APP_SELF_HOSTED', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application Client (Nuxt Front-end)
