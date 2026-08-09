@@ -102,26 +102,27 @@ useOpnSeoMeta({
   ],
 })
 
-const homepageAggregateRatingSchema = {
+const homepageSoftwareSchema = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
   "@id": `${useRuntimeConfig().public.appUrl.replace(/\/+$/, '')}/#software`,
   name: "SharaForms",
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.9",
-    ratingCount: "10000",
-    bestRating: "5",
-    reviewCount: "1200",
+  applicationCategory: "BusinessApplication",
+  operatingSystem: "Web",
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
+    description: "Free form builder with unlimited forms and submissions",
   },
 }
 
 useHead({
   script: [
     {
-      key: "homepage-aggregate-rating",
+      key: "homepage-software",
       type: "application/ld+json",
-      textContent: JSON.stringify(homepageAggregateRatingSchema),
+      textContent: JSON.stringify(homepageSoftwareSchema),
     },
   ],
 })
