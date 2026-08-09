@@ -124,7 +124,9 @@ jobs:
             echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ secrets.GHCR_USER }} --password-stdin
             docker compose pull
             docker compose up -d --remove-orphans
+            docker restart sharaforms-ingress
             docker logout ghcr.io
             sleep 30
             docker compose ps --format "table {{.Name}}\t{{.Status}}"
             curl -sf -o /dev/null http://localhost/ && echo "INGRESS OK" || echo "INGRESS CHECK FAILED"
+            curl -sf -o /dev/null http://localhost/api/content/plans && echo "API OK" || echo "API CHECK FAILED"
