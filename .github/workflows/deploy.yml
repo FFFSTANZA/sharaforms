@@ -140,3 +140,9 @@ jobs:
             --data '{"purge_everything":true}' \
             -o /dev/null \
             && echo "CLOUDFLARE CACHE PURGED" || (echo "PURGE FAILED - static assets may be stale for up to 30d"; exit 1)
+      - name: Pre-warm marketing HTML cache (link previews)
+        run: |
+          for p in "/" "/pricing" "/enterprise" "/ai-form-builder" "/comparisons" "/industry" "/integrations" "/templates" "/privacy-policy" "/terms-conditions" "/report-abuse" "/sharaforms-vs-jotform"; do
+            curl -sf -o /dev/null "https://sharaforms.com$p" || echo "warm failed: $p"
+          done
+          echo "MARKETING HTML PRE-WARMED"

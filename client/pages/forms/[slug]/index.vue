@@ -243,13 +243,16 @@ useOpnSeoMeta({
     if (pageMeta.value.page_description) {
       return pageMeta.value.page_description
     }
-    return null
+    return 'Fill out this form and submit your response. Created with SharaForms.'
   },
   ogImage: () => {
     if (pageMeta.value.page_thumbnail) {
       return pageMeta.value.page_thumbnail
     }
-    return (form.value && form.value?.cover_picture) ? form.value?.cover_picture : null
+    if (form.value && form.value?.cover_picture) {
+      return form.value.cover_picture
+    }
+    return '/share-preview.png'
   },
   robots: () => {
     return (form.value && form.value?.can_be_indexed) ? null : 'noindex, nofollow'
