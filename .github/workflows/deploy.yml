@@ -130,3 +130,13 @@ jobs:
             docker compose ps --format "table {{.Name}}\t{{.Status}}"
             curl -sf -o /dev/null http://localhost/ && echo "INGRESS OK" || echo "INGRESS CHECK FAILED"
             curl -sf -o /dev/null http://localhost/api/content/plans && echo "API OK" || echo "API CHECK FAILED"
+      - name: Purge Cloudflare cache
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+        run: |
+          curl -sf -X POST "https://api.cloudflare.com/client/v4/zones/2d2b921706d44c632d0bf7210bfe5cf7/purge_cache" \
+            -H "Authorization: Bearer $CF_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}' \
+            -o /dev/null \
+            && echo "CLOUDFLARE CACHE PURGED" || (echo "PURGE FAILED - static assets may be stale for up to 30d"; exit 1)
