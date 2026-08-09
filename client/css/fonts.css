@@ -35,8 +35,7 @@
 
 @font-face {
     font-family: "euclid-circular-b";
-    src:
-        url("/fonts/euclid-circular-b/Euclid-Circular-B-Regular.ttf"),
+    src: url("/fonts/euclid-circular-b/Euclid-Circular-B-Regular.ttf")
         format("truetype");
     font-weight: 400; /* Font weight = 400 */
     font-display: swap;
@@ -46,7 +45,7 @@
 @font-face {
     font-family: "euclid-circular-b";
     src: url("/fonts/euclid-circular-b/Euclid-Circular-B-Medium.ttf")
-        format("truetype") format("truetype");
+        format("truetype");
     font-weight: 500; /* Font weight = 500 */
     font-display: swap;
     font-style: normal;
