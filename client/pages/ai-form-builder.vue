@@ -611,7 +611,7 @@ useOpnSeoMeta({
   title: "Free AI Form Builder for Calculated Forms",
   description:
     "Turn prompts into production-ready forms with SharaForms AI Builder, then publish on a free plan with unlimited forms and submissions, formulas, and workflow-ready fields.",
-  ogImage: "/share-preview.png",
+  ogImage: "/share-preview.jpg",
   keywords: "free ai form builder, ai form builder, unlimited forms, calculated forms, forms with formulas, unlimited submissions",
   speakable: ["h1", ".marketing-page > section:first-child p"],
   breadcrumbs: [
@@ -637,7 +637,7 @@ const aiVideoSchema = computed(() => {
     '@id': `${siteUrl}/ai-form-builder#video`,
     name: 'SharaForms AI Form Builder Demo',
     description: 'See how SharaForms AI Builder turns a prompt into a production-ready form with calculations, conditional logic, and dynamic fields.',
-    thumbnailUrl: `${siteUrl}/share-preview.png`,
+    thumbnailUrl: `${siteUrl}/share-preview.jpg`,
     contentUrl: `${siteUrl}/video/sharaforms-ai.mp4`,
     embedUrl: `${siteUrl}/ai-form-builder`,
     uploadDate: '2025-06-01',

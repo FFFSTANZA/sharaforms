@@ -252,7 +252,7 @@ useOpnSeoMeta({
     if (form.value && form.value?.cover_picture) {
       return form.value.cover_picture
     }
-    return '/share-preview.png'
+    return '/share-preview.jpg'
   },
   robots: () => {
     return (form.value && form.value?.can_be_indexed) ? null : 'noindex, nofollow'

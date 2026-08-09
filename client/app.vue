@@ -47,7 +47,7 @@ useOpnSeoMeta({
   title: "Free Form Builder with Unlimited Forms and Submissions",
   description:
     "SharaForms is a free form builder with unlimited forms and submissions, built-in formulas, dynamic documents, and powerful integrations for teams that need more than basic forms.",
-  ogImage: "/share-preview.png",
+  ogImage: "/share-preview.jpg",
   robots: () => {
     return config.public.env === "production" ? null : "noindex, nofollow"
   },
@@ -108,7 +108,7 @@ const globalStructuredData = computed(() => {
         applicationSubCategory: "Online Form Builder",
         operatingSystem: "Web",
         url: `${baseUrl}/`,
-        image: `${baseUrl}/share-preview.png`,
+        image: `${baseUrl}/share-preview.jpg`,
         description:
           "A powerful form builder with a generous free tier, unlimited forms and submissions, built-in formulas, calculated forms, conditional logic, PDFs, signatures, and integrations.",
         keywords: "free form builder, unlimited forms, unlimited submissions, calculated forms, formula forms, online calculator forms, dynamic forms, survey builder, no-code forms, conditional logic forms, workflow automation, lead generation forms, order forms, registration forms",
@@ -132,7 +132,7 @@ const globalStructuredData = computed(() => {
           "File uploads and signature capture",
           "Custom domains and branding controls",
         ],
-        screenshot: `${baseUrl}/share-preview.png`,
+        screenshot: `${baseUrl}/share-preview.jpg`,
         provider: {
           "@id": `${baseUrl}/#organization`,
         },

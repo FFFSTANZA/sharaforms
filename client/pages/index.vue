@@ -94,7 +94,7 @@ useOpnSeoMeta({
   title: "Free Form Builder with Unlimited Forms, Submissions, and Built-In Calculations",
   description:
     "SharaForms is a free form builder with unlimited forms and submissions, built-in calculations, conditional logic, dynamic documents, and integrations for teams that need forms that do more than collect.",
-  ogImage: "/share-preview.png",
+  ogImage: "/share-preview.jpg",
   keywords: "free form builder, unlimited forms, unlimited submissions, calculated forms, formula forms, online calculator forms, dynamic forms",
   speakable: ["h1", ".marketing-page > section:first-child p"],
   breadcrumbs: [

@@ -96,8 +96,8 @@ export const useOpnSeoMeta = (meta, alwaysEnabled = false) => {
       ? {
           ogImage: () => resolveOgImageUrl(rawOgImage, canonicalBaseUrl),
           ogImageAlt: seoMeta.title || 'SharaForms',
-          ogImageWidth: 1536,
-          ogImageHeight: 1024,
+          ogImageWidth: 1200,
+          ogImageHeight: 630,
           twitterImageAlt: seoMeta.title || 'SharaForms',
           twitterImage: () => resolveOgImageUrl(rawOgImage, canonicalBaseUrl),
         }

@@ -430,7 +430,7 @@ useOpnSeoMeta(
   computed(() => ({
     title: template.value?.name,
     description: template.value?.short_description,
-    ogImage: template.value?.image_url || "/share-preview.png",
+    ogImage: template.value?.image_url || "/share-preview.jpg",
     speakable: ["h1", "p"],
     keywords: () => buildTemplateKeywords(),
   })),

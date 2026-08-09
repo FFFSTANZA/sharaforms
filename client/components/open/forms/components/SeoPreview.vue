@@ -59,7 +59,7 @@ const previewImage = computed(() => {
   if (props.form?.cover_picture) {
     return props.form.cover_picture
   }
-  return '/share-preview.png'
+  return '/share-preview.jpg'
 })
 
 const previewTitle = computed(() => {

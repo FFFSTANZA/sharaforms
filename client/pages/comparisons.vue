@@ -105,7 +105,7 @@ definePageMeta({
 useOpnSeoMeta({
   title: "SharaForms Alternatives: Compare vs Typeform, Jotform, Google Forms & More",
   description: "Side-by-side comparisons of SharaForms with Typeform, Jotform, Google Forms, Tally, Fillout, HeyForm, Youform, Formbricks, Form.io, and 123FormBuilder. Free plans, pricing, and features compared.",
-  ogImage: '/share-preview.png',
+  ogImage: '/share-preview.jpg',
   breadcrumbs: [
     { name: "Home", item: "/" },
     { name: "Alternatives & Comparisons" },

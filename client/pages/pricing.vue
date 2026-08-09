@@ -111,7 +111,7 @@ useOpnSeoMeta({
   title: "Free Plan and Pricing for Calculated Forms",
   description:
     "Explore SharaForms pricing, including a generous free plan with unlimited forms and submissions, plus paid tiers for branding, advanced collaboration, and larger team workflows.",
-  ogImage: "/share-preview.png",
+  ogImage: "/share-preview.jpg",
   keywords: "free form builder pricing, unlimited forms, unlimited submissions pricing, free online forms, calculated forms pricing, free forms with formulas",
   speakable: [".faq-answer p", "h1"],
   breadcrumbs: [
