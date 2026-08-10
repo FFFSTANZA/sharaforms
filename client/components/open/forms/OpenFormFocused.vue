@@ -1,14 +1,22 @@
 <template>
   <form ref="formElement" v-if="form" @submit.prevent="" class="@container w-full relative overflow-hidden flex flex-col min-h-full" :style="focusedFormStyle">
     <!-- Fixed fullscreen background from form cover -->
-    <div v-if="form.cover_picture" class="absolute inset-0 pointer-events-none">
+    <div v-if="showBrandingMedia && form.cover_picture" class="absolute inset-0 pointer-events-none">
       <BlockMediaLayout :image="coverMedia" alt="Form cover image" />
     </div>
 
-    <!-- Fixed logo in top-left -->
-    <div v-if="form.logo_picture" class="absolute top-10 left-10 z-20">
-      <img :src="form.logo_picture" :alt="form.seo_meta?.site_name ? `${form.seo_meta.site_name} logo` : 'Form logo'" class="size-8 md:size-16 object-contain">
-    </div>
+    <!-- Persistent brand header (Typeform-style): logo stays put across every screen, content scrolls beneath it -->
+    <header
+      v-if="showBrandingMedia && form.logo_picture"
+      class="relative z-20 shrink-0 flex items-center px-6 pt-6 pb-2 pointer-events-none"
+      :style="{ direction: form?.layout_rtl ? 'rtl' : 'ltr' }"
+    >
+      <img
+        :src="form.logo_picture"
+        :alt="form.seo_meta?.site_name ? `${form.seo_meta.site_name} logo` : 'Form logo'"
+        class="h-8 md:h-10 max-w-[12rem] md:max-w-[240px] w-auto object-contain"
+      >
+    </header>
 
     <!-- Progressbar -->
     <FormProgressbar :form-manager="formManager" />
@@ -316,6 +324,13 @@ const slots = useSlots()
 
 // Branding gating from strategy; defaults to true when not present
 const showBranding = computed(() => props.formManager?.strategy?.value?.display?.showBranding ?? true)
+
+// Hide logo/cover in READ_ONLY and EDIT modes (mirrors classic OpenForm.vue)
+const showBrandingMedia = computed(() => {
+  const mode = props.formManager?.mode?.value
+  if (mode === FormMode.READ_ONLY || mode === FormMode.EDIT) return false
+  return !!(form.value && (form.value.logo_picture || form.value.cover_picture))
+})
 
 // Focused arrows logic and gating
 const showArrowsSetting = computed(() => (form.value?.settings?.navigation_arrows !== false))

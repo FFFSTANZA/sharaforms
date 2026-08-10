@@ -57,6 +57,7 @@
       </div>
     </div>
     <div
+      v-if="isAdminPreview"
       class="absolute -right-5 top-0 h-full w-5 flex-col items-center justify-center"
       :class="showControls ? 'flex' : 'hidden'"
       @mouseenter="onControlsEnter"
