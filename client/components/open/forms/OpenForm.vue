@@ -94,8 +94,19 @@
 
       <!--  Submit, Next and previous buttons  -->
       <div v-if="shouldDisplayForm" class="flex flex-wrap justify-center w-full">
+        <!-- Previous -->
+        <editable-form-button
+          v-if="isAdminPreview && formPageIndex>0 && previousFieldsPageBreak"
+          :form="form"
+          editable
+          native-type="button"
+          class="mt-2 px-8 mx-1"
+          :model-value="previousFieldsPageBreak?.previous_btn_text"
+          :placeholder="$t('forms.buttons.previous')"
+          @update:model-value="previousFieldsPageBreak.previous_btn_text = $event"
+        />
         <open-form-button
-          v-if="formPageIndex>0 && previousFieldsPageBreak"
+          v-else-if="formPageIndex>0 && previousFieldsPageBreak"
           native-type="button"
           :form="form"
           class="mt-2 px-8 mx-1"
@@ -106,7 +117,17 @@
 
         <template v-if="isLastPage">
           <slot name="submit-btn" :loading="isProcessing">
+            <editable-form-button
+              v-if="isAdminPreview"
+              :form="form"
+              editable
+              :model-value="form.submit_button_text"
+              :placeholder="$t('forms.buttons.submit')"
+              :loading="isProcessing"
+              @update:model-value="form.submit_button_text = $event"
+            />
             <open-form-button
+            v-else
               :form="form"
               class="mt-2 px-8 mx-1"
               :loading="isProcessing"
@@ -116,8 +137,19 @@
             </open-form-button>
           </slot>
         </template>
+        <!-- Next -->
+        <editable-form-button
+          v-if="isAdminPreview && !isLastPage && currentFieldsPageBreak"
+          :form="form"
+          editable
+          native-type="button"
+          class="mt-2 px-8 mx-1"
+          :model-value="currentFieldsPageBreak?.next_btn_text"
+          :placeholder="$t('forms.buttons.next')"
+          @update:model-value="currentFieldsPageBreak.next_btn_text = $event"
+        />
         <open-form-button
-          v-else-if="currentFieldsPageBreak"
+          v-else-if="!isLastPage && currentFieldsPageBreak"
           native-type="button"
           :form="form"
           class="mt-2 px-8 mx-1"
@@ -158,6 +190,7 @@
 <script setup>
 import { VueDraggable } from 'vue-draggable-plus'
 import OpenFormButton from './OpenFormButton.vue'
+import EditableFormButton from './EditableFormButton.vue'
 import BlockMediaLayout from './components/BlockMediaLayout.vue'
 import CaptchaWrapper from '~/components/forms/heavy/components/CaptchaWrapper.vue'
 import OpenFormField from './OpenFormField.vue'
@@ -206,6 +239,7 @@ const previousFieldsPageBreak = computed(() => structure.value?.previousPageBrea
 
 const allowDragging = computed(() => strategy.value.admin.allowDragging)
 const draggingNewBlock = computed(() => workingFormStore.draggingNewBlock)
+const isAdminPreview = computed(() => strategy.value?.admin?.showAdminControls || false)
 
 const handlePreviousClick = () => {
   props.formManager.previousPage()
