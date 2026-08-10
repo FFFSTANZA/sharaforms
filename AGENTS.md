@@ -208,3 +208,61 @@ sharaforms.com now runs behind Cloudflare (Free plan). Zone was created from scr
 ### Notes for future deploys
 - New content (hero button, comparison table, icons, LiveDemo preloads) will serve instantly for HTML (DYNAMIC), but cached static assets hold 30d — bump asset names (Nuxt does via hashed `/_nuxt/*` filenames) or purge `https://api.cloudflare.com/client/v4/zones/{zone}/purge_cache` (purge everything or by URL) after deploys.
 - Hostinger domain is locked + privacy protected; NS update API accepted the change without unlocking.
+
+## Session: 2026-08-09 (evening) — WhatsApp OG Preview Fix: 93KB share image + dims
+
+### Root cause of "still no preview" (2nd round)
+The default og:image `/share-preview.png` was **1,459,757 bytes (1.46MB)**, 1536×1024 — WhatsApp's crawler commonly drops preview images >~300KB and prefers 1.91:1 aspect (1200×630). Homepage + form pages emitted correct tags but the image itself was too heavy.
+
+### Fix (commit 3b6c19f, deploy run 31319414886)
+- **New image `client/public/share-preview.jpg`** (1200×630, 92,941 B): center-cropped the 1536×1024 design to 1.91:1, resized LANCZOS, JPEG q82. PNG was a dead end — gradient design needs 256 colors; even 1024×537 PNG quantized = 320KB > 300KB limit. JPEG q82 = 93KB, visually fine.
+- **Deleted `share-preview.png`**, sed-swapped all 12 references (`app.vue` ×3 incl. JSON-LD, `index/pricing/comparisons/ai-form-builder/templates/[slug]/forms/[slug]` pages, `useComparisonSeo.js`, `SeoPreview.vue`).
+- **`useOpnSeoMeta.js:99-100`**: `ogImageWidth/Height` 1536/1024 → **1200/630** (single source of truth — only place dims were hardcoded).
+- Deploy pipeline auto-purges + pre-warms; first post-purge fetch is slow (13.9s one-off), steady state 0.45s TTFB HIT.
+
+### Verification (prod, WhatsApp UA)
+- `/share-preview.jpg`: 200, image/jpeg, 92,941 B.
+- Homepage og: `og:image` = https://sharaforms.com/share-preview.jpg, width 1200, height 630.
+- **Form page end-to-end** (temp form inserted via SQL, verified, deleted): og:title from form, og:description fallback "Fill out this form and submit your response. Created with SharaForms.", og:image absolute, og:image:width 1200, robots index; 0.87s TTFB / 2.1s total — inside WhatsApp's ~10s budget.
+
+### Gotchas
+- `api.sharaforms.com` does **not resolve** (never in DNS) — the API is same-origin: `NUXT_PUBLIC_API_BASE=/api` → `https://sharaforms.com/api`. Programmatic `/api/register` is blocked by reCAPTCHA (`g-recaptcha-response` required) + `hear_about_us`/`agree_terms`/`password_confirmation`.
+- **DB form creation shortcut** (no auth needed): `INSERT INTO forms (workspace_id, title, slug, properties, can_be_indexed, visibility, created_at, updated_at, creator_id) VALUES (1, ..., '[{"id":1,"name":"Name","type":"text"}]'::json, true, 'public', now(), now(), 1)` — user 1 = fffstanza@gmail.com, workspace 1. `workspaces` has **no** creator_id column (forms.creator_id → users.id); the earlier `WITH w AS (...)` join against workspaces.creator_id fails. Prod forms count after cleanup: 2 (user's own forms now exist).
+- **WhatsApp caches link previews per URL for ~2 weeks** — same URL pasted repeatedly reuses the cached (failed) preview. User must re-test with the same URL (may still show old) or a fresh variant (`/forms/slug?v=1` or trailing slash) to force a new fetch.
+
+## Session: 2026-08-09 (night) — api.sharaforms.com (DNS + cert + ingress) + Euclid @font-face Fix
+
+### api.sharaforms.com — API host now live (commit 59a0399)
+- **DNS**: Cloudflare zone `sharaforms.com` (id `2d2b921706d44c632d0bf7210bfe5cf7`): created A record `api` → `135.148.41.180` (id `0c41f2985f0e42100b2e02d6d0515d7e`), proxied true (orange cloud). Same CF IPs as the apex (104.21.20.208 / 172.67.194.105); verify with `dig @8.8.8.8 api.sharaforms.com` (local resolver lags behind CF propagation).
+- **TLS**: New ACME cert via dehydrated — `/etc/dehydrated/certs/api.sharaforms.com/{privkey,chain}.pem`, issued 2026-08-09, SAN `api.sharaforms.com`, expires 2026-11-07, hook line added in `/etc/dehydrated/domains.txt` (next renewal reuses the same hook). Cert works with Cloudflare **Full (strict)** (ssl_verify_result=0 direct).
+- **Ingress** (`docker/nginx.conf`): new `server` block `server_name api.sharaforms.com` on 443 (after the catch-all so it wins SNI). No `location` match (`location /` → `try_files $uri $uri/ /index.php?$query_string;`) → Laravel runs on **unprefixed** URIs: `https://api.sharaforms.com/content/plans` (NOT `/api/...`; the main-host `/api` prefix is stripped by a map, so a `location /api/` proxy would double-prefix). Proxy-real-ip / TLS bits copied from the main 443 block. `docker compose restart` (NOT `up -d` — nginx reload not enough to rebind 443 SNI; `up -d` would rebuild the whole stack) → live **200 via CF**.
+- **Backend gap (flag)**: `GET /licenses/create` → 404 — no license-checkout controller/route exists yet; any frontend call to `https://api.sharaforms.com/licenses/create` will 404. Feature not built.
+- **CORS**: `CORS_ALLOWED_ORIGINS=https://sharaforms.com` (docker-compose env) — same-origin client works today; cross-origin from the app to the api host is pre-configured.
+
+### Euclid font bug → "preloaded ... was not used within a few seconds" warning (commit 59a0399)
+- Root cause: two broken `@font-face` `src` descriptors in `client/css/fonts.css`:
+  1. Regular: `src: url("...Regular.ttf"), format("truetype");` — `format()` misplaced **outside** the `url()` (must be `url(...) format("truetype")`). A bare `format()` source is invalid → the 400-weight @font-face had **no valid src** → font never applied.
+  2. Medium: `url("...Medium.ttf") format("truetype") format("truetype");` — double `format()` after one `url()` (only one optional `format()` allowed per CSS Fonts 4).
+- Impact: `font-family: euclid-circular-b, sans-serif !important` (app.css:394) silently fell back to sans-serif, and Vite's auto-preload of `Euclid-Circular-B-Regular.ttf` was never consumed → browser warning.
+- **Fix**: both `src` rewritten to `url(...) format("truetype");`. After deploy the Euclid family should render and the preload warning disappear.
+
+### Deploy verification
+- Run 31321089762 (59a0399) — pipeline: client lint → api+client image build → hostinger deploy → CF purge + warm. Verify Euclid renders + no preload warning + api.sharaforms.com still 200 after the API image rebuild.
+
+## Session: 2026-08-09 (late night) — reCAPTCHA Blank Widget: Enterprise Key Domain Allowlist Fix
+
+### Symptom
+/register showed a blank white area where the reCAPTCHA widget should be (console: no captcha error; prior manual submit → 422 complete_captcha).
+
+### Root cause
+The site key `6LchaXYtAAAAAB7XCUuvkv2UXWEutnbD3DTaotry` IS a real reCAPTCHA Enterprise key (project `sharaforms`/775268936981, displayName SharaForms-web-checkbox, created 2026-08-05 via gcloud — keys.txt was correct; the "6Lc = classic" prefix heuristic is NOT reliable). But its `webSettings.allowedDomains` was **["localhost"] only** → enterprise.js refuses to render the widget on any other hostname → blank. Frontend (enterprise.js + grecaptcha.enterprise.render) and backend (projects.assessments) were already correct.
+
+### Fix (no code/env/deploy changes)
+- PATCH `https://recaptchaenterprise.googleapis.com/v1/projects/775268936981/keys/6LchaXYt...?updateMask=webSettings` → `allowedDomains: [localhost, sharaforms.com, www.sharaforms.com]`, keep `allowAllDomains:false`, `integrationType:CHECKBOX`, `challengeSecurityPreference:BALANCE`.
+- Verified backend path with fake-token assessment: 200, `tokenProperties.valid=false`, `invalidReason=MALFORMED` (key recognized; a real solved token will validate).
+- keys.txt updated (Allowed domains line + fix note). Local browser test needs a hard refresh; GCP key-setting changes propagate within minutes.
+
+### Gotchas
+- `GET /projects/{id}/keys` requires OAuth2 (gcloud auth print-access-token) — API keys are rejected ("API keys are not supported by this API").
+- Prefix-based key-type detection (6Lc vs 6Le) is folklore — always list keys via the API to know the truth.
+- reCAPTCHA Enterprise domain allowlist is enforced at render time client-side; wrong domains = silent blank widget (no console error).
