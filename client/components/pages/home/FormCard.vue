@@ -1,48 +1,91 @@
 <template>
-  <div class="p-4 flex gap-2 group items-center relative border rounded-lg shadow-xs hover:bg-neutral-100 transition-all cursor-pointer">
-    <!-- Title -->
-    <div class="flex-grow items-center truncate relative">
-      <span class="font-semibold text-neutral-900 dark:text-white">{{ form.title }}</span>
+  <div
+    class="group relative flex items-center gap-3 sm:gap-4 rounded-xl border border-neutral-200 bg-white p-3 sm:p-4 shadow-xs transition-all duration-150 hover:border-blue-300/70 hover:shadow-md hover:shadow-neutral-200/60 cursor-pointer"
+  >
+    <!-- Type icon tile -->
+    <div
+      :class="iconTileClass"
+      class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg"
+    >
+      <UIcon :name="iconName" class="h-5 w-5" />
     </div>
-    
+
+    <!-- Title + slug + tags -->
+    <div class="min-w-0 flex-1">
+      <span
+        class="block truncate text-sm font-semibold text-neutral-900 dark:text-white"
+      >
+        {{ form.title }}
+      </span>
+      <div class="mt-1 flex items-center gap-1.5 text-xs text-neutral-400">
+        <span class="truncate">{{ form.slug }}</span>
+        <template v-if="form.tags?.length">
+          <span class="text-neutral-300">·</span>
+          <span class="flex flex-wrap items-center gap-1">
+            <UBadge
+              v-for="tag in form.tags"
+              :key="tag"
+              color="neutral"
+              variant="subtle"
+              size="xs"
+              class="capitalize"
+            >
+              {{ tag }}
+            </UBadge>
+          </span>
+        </template>
+      </div>
+    </div>
+
     <!-- Stats and Menu -->
-    <div class="flex items-center gap-4 relative text-sm text-neutral-500">
+    <div class="flex shrink-0 items-center gap-3 sm:gap-4 text-sm text-neutral-500">
       <!-- Status Badges -->
-      <FormStatusBadges class="hidden md:block" :form="form" :with-tags="false" size="sm" />
-      
+      <FormStatusBadges
+        :form="form"
+        :with-tags="false"
+        size="xs"
+        class="hidden md:flex"
+      />
+
       <!-- Last Updated -->
-      <span class="hidden lg:inline text-xs whitespace-nowrap" title="Last updated">Updated {{ form.last_edited_human }}</span>
+      <span
+        class="hidden lg:inline text-xs whitespace-nowrap text-neutral-400"
+        title="Last updated"
+      >
+        Updated {{ form.last_edited_human }}
+      </span>
 
       <!-- Views -->
       <UTooltip :text="`${formatNumberWithCommas(form.views_count)} views`">
-        <div class="flex items-center gap-1" title="Form views">
+        <div class="flex items-center gap-1.5" title="Form views">
           <UIcon name="i-tabler:eye" class="h-3.5 w-3.5 text-neutral-400" />
-          <span class="text-neutral-500">{{ formatNumber(form.views_count) }}</span>
+          <span class="text-xs text-neutral-500">{{ formatNumber(form.views_count) }}</span>
         </div>
       </UTooltip>
-      
+
       <!-- Submissions -->
       <UTooltip :text="`${formatNumberWithCommas(form.submissions_count)} submissions`">
-        <div class="flex items-center gap-1" title="Form submissions">
+        <div class="flex items-center gap-1.5" title="Form submissions">
           <UIcon name="i-heroicons:document-text" class="h-3.5 w-3.5 text-neutral-400" />
-          <span class="text-neutral-500">{{ formatNumber(form.submissions_count) }}</span>
+          <span class="text-xs text-neutral-500">{{ formatNumber(form.submissions_count) }}</span>
         </div>
       </UTooltip>
 
       <!-- Quick Actions (visible on hover) -->
       <div
-        class="hidden group-hover:flex items-center gap-2.5 z-20 relative"
+        class="hidden group-hover:flex items-center gap-1 z-20 relative"
         @click.stop
       >
-        <div class="w-px h-4 bg-neutral-300" />
+        <div class="w-px h-4 bg-neutral-300 mx-0.5" />
         <UTooltip text="Copy link">
           <UButton
             icon="i-heroicons:link"
             color="neutral"
             variant="ghost"
             size="2xs"
+            square
             :ui="{ leadingIcon: 'h-3.5 w-3.5' }"
-            class="text-neutral-400 hover:text-neutral-500 hover:bg-neutral-200"
+            class="text-neutral-400 hover:text-neutral-600 hover:bg-neutral-200"
             @click.stop="copyLink"
           />
         </UTooltip>
@@ -52,28 +95,29 @@
             color="neutral"
             variant="ghost"
             size="2xs"
+            square
             :ui="{ leadingIcon: 'h-3.5 w-3.5' }"
-            class="text-neutral-400 hover:text-neutral-500 hover:bg-neutral-200"
+            class="text-neutral-400 hover:text-neutral-600 hover:bg-neutral-200"
             @click.stop="previewForm"
           />
         </UTooltip>
         <UTooltip
-          text="Duplicate"
-          :text-loading="isDuplicating ? 'Duplicating...' : undefined"
+          :text="isDuplicating ? 'Duplicating...' : 'Duplicate'"
         >
           <UButton
             icon="i-heroicons:document-duplicate"
             color="neutral"
             variant="ghost"
             size="2xs"
+            square
             :ui="{ leadingIcon: 'h-3.5 w-3.5' }"
-            class="text-neutral-400 hover:text-neutral-500 hover:bg-neutral-200"
+            class="text-neutral-400 hover:text-neutral-600 hover:bg-neutral-200"
             :loading="isDuplicating"
             @click.stop="duplicateForm"
           />
         </UTooltip>
       </div>
-      
+
       <!-- Extra Menu -->
       <div class="relative z-20">
         <ExtraMenu :form="form" :is-main-page="true" portal="#home-portals">
@@ -83,8 +127,9 @@
               variant="ghost"
               icon="i-heroicons:ellipsis-horizontal"
               size="2xs"
+              square
               :ui="{ leadingIcon: 'h-3.5 w-3.5' }"
-              class="text-neutral-400 hover:text-neutral-500 hover:bg-neutral-200"
+              class="text-neutral-400 hover:text-neutral-600 hover:bg-neutral-200"
               :loading="loading"
             />
           </template>
@@ -95,7 +140,7 @@
     <!-- Link overlay covering entire card -->
     <NuxtLink
       :to="{name:'forms-slug-show-submissions', params: {slug:form.slug}}"
-      class="absolute inset-0 z-10"
+      class="absolute inset-0 z-10 rounded-xl"
     />
   </div>
 </template>
@@ -117,6 +162,25 @@ const router = useRouter()
 const { duplicate } = useForms()
 const duplicateFormMutation = duplicate()
 const isDuplicating = computed(() => duplicateFormMutation.isPending.value)
+
+const isClosed = computed(
+  () =>
+    props.form.visibility === "closed" ||
+    props.form.is_closed ||
+    props.form.max_number_of_submissions_reached,
+)
+
+const iconName = computed(() => {
+  if (props.form.visibility === "draft") return "i-lucide-square-pen"
+  if (isClosed.value) return "i-lucide-lock-keyhole"
+  return "i-lucide-clipboard-list"
+})
+
+const iconTileClass = computed(() => {
+  if (props.form.visibility === "draft") return "bg-amber-50 text-amber-600"
+  if (isClosed.value) return "bg-neutral-100 text-neutral-500"
+  return "bg-blue-50 text-blue-600"
+})
 
 const copyLink = () => {
   if (props.form.visibility === 'draft') {
@@ -146,4 +210,4 @@ const duplicateForm = () => {
     useAlert().error(error.data?.message || "Failed to duplicate form")
   })
 }
-</script> 
+</script>

@@ -1,30 +1,24 @@
 <template>
-  <div class="p-4 flex gap-2 group items-center relative border rounded-lg shadow-xs">
-    <!-- Title Skeleton -->
-    <div class="flex-grow items-center truncate relative">
-      <USkeleton class="h-5 w-2/5" />
-    </div>
-    
-    <!-- Stats and Menu Skeleton -->
-    <div class="flex items-center gap-4 relative text-sm">
-      <!-- Last Updated Skeleton -->
-      <USkeleton class="h-4 w-24 hidden md:inline" />
-      <USkeleton class="h-4 w-2 hidden md:inline" />
+  <div
+    class="flex items-center gap-3 sm:gap-4 rounded-xl border border-neutral-200 bg-white p-3 sm:p-4 shadow-xs"
+  >
+    <!-- Icon tile skeleton -->
+    <USkeleton class="h-10 w-10 shrink-0 rounded-lg" />
 
-      <!-- Views Skeleton -->
-      <div class="flex items-center gap-1">
-        <USkeleton class="h-5 w-5" />
-        <USkeleton class="h-4 w-6" />
-      </div>
-      
-      <!-- Submissions Skeleton -->
-      <div class="flex items-center gap-1">
-        <USkeleton class="h-5 w-5" />
-        <USkeleton class="h-4 w-6" />
-      </div>
-      
-      <!-- Extra Menu Skeleton -->
-      <USkeleton class="h-8 w-8" />
+    <!-- Title + slug skeleton -->
+    <div class="min-w-0 flex-1 space-y-2">
+      <USkeleton class="h-4 w-2/5" />
+      <USkeleton class="h-3 w-1/3" />
     </div>
+
+    <!-- Stats skeleton -->
+    <div class="hidden md:flex items-center gap-3">
+      <USkeleton class="h-4 w-16" />
+      <USkeleton class="h-4 w-8" />
+      <USkeleton class="h-4 w-8" />
+    </div>
+
+    <!-- Menu skeleton -->
+    <USkeleton class="h-6 w-6 shrink-0" />
   </div>
-</template> 
+</template>
