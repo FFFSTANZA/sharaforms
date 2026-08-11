@@ -81,23 +81,23 @@
         <div v-if="!props.formManager?.state.isSubmitted" class="mt-2 flex gap-2" :class="[getFieldAlignClasses(currentBlock), {'flex-col justify-normal! items-center': isLast &&form.use_captcha}]">
           <!-- Previous (visible from the 2nd page onward, inline-editable in admin preview) -->
           <editable-form-button
-            v-if="isAdminPreview && canGoPrev"
+            v-if="isAdminPreview && canGoPrev && previousFieldsPageBreak"
             :form="form"
             editable
             native-type="button"
             class="mt-0.5 px-6"
-            :model-value="form?.translations?.focused_previous_button_text"
+            :model-value="previousFieldsPageBreak?.previous_btn_text || form?.translations?.focused_previous_button_text"
             :placeholder="$t('forms.buttons.previous')"
-            @update:model-value="updateFocusedTranslation('focused_previous_button_text', $event)"
+            @update:model-value="previousFieldsPageBreak.previous_btn_text = $event"
           />
           <open-form-button
-            v-else-if="canGoPrev"
+            v-else-if="canGoPrev && previousFieldsPageBreak"
             native-type="button"
             :form="form"
             class="mt-0.5 px-6"
             @click.stop="goPrev"
           >
-            {{ form?.translations?.focused_previous_button_text || $t('forms.buttons.previous') }}
+            {{ previousFieldsPageBreak?.previous_btn_text || form?.translations?.focused_previous_button_text || $t('forms.buttons.previous') }}
           </open-form-button>
 
           <slot name="submit-btn" v-if="isLast" :loading="isProcessing">
@@ -124,24 +124,24 @@
           </slot>
           <!-- Next (inline-editable in admin preview) -->
           <editable-form-button
-            v-if="isAdminPreview && !isLast"
+            v-if="isAdminPreview && !isLast && currentFieldsPageBreak"
             :form="form"
             editable
             native-type="button"
             class="mt-0.5 px-6"
-            :model-value="form?.translations?.focused_next_button_text"
+            :model-value="currentFieldsPageBreak?.next_btn_text || form?.translations?.focused_next_button_text"
             :placeholder="$t('forms.buttons.next')"
-            @update:model-value="updateFocusedTranslation('focused_next_button_text', $event)"
+            @update:model-value="currentFieldsPageBreak.next_btn_text = $event"
           />
           <open-form-button
-            v-else-if="!isLast"
+            v-else-if="!isLast && currentFieldsPageBreak"
             native-type="button"
             :form="form"
             class="mt-0.5 px-6"
             :loading="isProcessing"
             @click.stop="handleNextClick"
           >
-            {{ form?.translations?.focused_next_button_text || $t('forms.buttons.next') }}
+            {{ currentFieldsPageBreak?.next_btn_text || form?.translations?.focused_next_button_text || $t('forms.buttons.next') }}
           </open-form-button>
         </div>
         <div v-if="hasPaymentBlock" class="mt-2">
@@ -215,6 +215,13 @@ const currentMedia = computed(() => currentBlock.value?.image || null)
 const isLast = computed(() => structure?.value?.isLastPage?.value ?? false)
 const isProcessing = computed(() => props.formManager.state.isProcessing)
 const hasPaymentBlock = computed(() => structure.value?.currentPageHasPaymentBlock?.value ?? false)
+
+// The page-break field ending the current / previous page. Its per-page
+// next_btn_text / previous_btn_text override the form-wide focused_*_button_text
+// translations, so inline editing of a Next/Previous button only ever affects
+// that single button (the settings panel remains the global default).
+const currentFieldsPageBreak = computed(() => structure.value?.currentPageBreak?.value ?? null)
+const previousFieldsPageBreak = computed(() => structure.value?.previousPageBreak?.value ?? null)
 
 // Admin preview affordances (editor only) - mirror OpenFormField behavior
 const workingFormStore = useWorkingFormStore()
