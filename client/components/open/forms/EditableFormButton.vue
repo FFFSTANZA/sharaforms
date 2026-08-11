@@ -42,7 +42,7 @@
       @keydown.enter.prevent="commit"
       @keydown.esc.prevent="handleEscape"
       @blur="commit"
-    >{{ draft }}</div>
+    ></div>
   </span>
 </template>
 
@@ -114,6 +114,10 @@ const startEdit = () => {
   nextTick(() => {
     const el = editor.value
     if (!el) return
+    // Seed the editor content imperatively instead of interpolating `{{ draft }}`
+    // into the contenteditable. Vue patching an interpolated text node on every
+    // keystroke resets the caret (letters then appear to type backwards).
+    el.textContent = draft.value
     el.focus()
     const range = document.createRange()
     range.selectNodeContents(el)

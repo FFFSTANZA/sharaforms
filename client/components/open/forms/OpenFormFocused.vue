@@ -106,10 +106,10 @@
               v-if="isAdminPreview"
               :form="form"
               editable
-              :model-value="form.submit_button_text"
+              :model-value="form?.translations?.focused_submit_button_text || form.submit_button_text"
               :placeholder="$t('forms.buttons.submit')"
               :loading="isProcessing"
-              @update:model-value="form.submit_button_text = $event"
+              @update:model-value="updateFocusedTranslation('focused_submit_button_text', $event)"
             />
             <open-form-button
               v-else
@@ -119,7 +119,7 @@
               :loading="isProcessing"
               @click.prevent.stop="handleSubmitClick"
             >
-              {{ form.submit_button_text || $t('forms.buttons.submit') }}
+              {{ form?.translations?.focused_submit_button_text || form.submit_button_text || $t('forms.buttons.submit') }}
             </open-form-button>
           </slot>
           <!-- Next (inline-editable in admin preview) -->

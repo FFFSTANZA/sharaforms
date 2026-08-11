@@ -42,6 +42,22 @@ describe('EditableFormButton', () => {
     expect(editor.text()).toBe('Submit')
   })
 
+  it('seeds the editor text imperatively so Vue does not re-render typed content', async () => {
+    // Regression guard: the contenteditable must not contain an interpolated
+    // `{{ draft }}` binding. Patching an interpolated text node on every input
+    // event resets the caret and makes letters type in the wrong direction.
+    const wrapper = mountButton()
+    const editor = await startEditing(wrapper)
+
+    // The editor content is a single plain text node (seeded once, browser-owned)
+    expect(editor.element.childNodes.length).toBe(1)
+
+    // Typing (DOM mutation + input event) must leave the editor text untouched by Vue
+    editor.element.textContent = 'Send now'
+    await editor.trigger('input')
+    expect(editor.element.textContent).toBe('Send now')
+  })
+
   it('commits the typed label on blur so edits are saved', async () => {
     const wrapper = mountButton()
     const editor = await startEditing(wrapper)

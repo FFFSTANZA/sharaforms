@@ -121,10 +121,10 @@
               v-if="isAdminPreview"
               :form="form"
               editable
-              :model-value="form.submit_button_text"
+              :model-value="form?.translations?.classic_submit_button_text || form.submit_button_text"
               :placeholder="$t('forms.buttons.submit')"
               :loading="isProcessing"
-              @update:model-value="form.submit_button_text = $event"
+              @update:model-value="updateClassicTranslation('classic_submit_button_text', $event)"
             />
             <open-form-button
             v-else
@@ -133,7 +133,7 @@
               :loading="isProcessing"
               @click.prevent="emit('submit')"
             >
-              {{ form.submit_button_text || $t('forms.buttons.submit') }}
+              {{ form?.translations?.classic_submit_button_text || form.submit_button_text || $t('forms.buttons.submit') }}
             </open-form-button>
           </slot>
         </template>
@@ -240,6 +240,17 @@ const previousFieldsPageBreak = computed(() => structure.value?.previousPageBrea
 const allowDragging = computed(() => strategy.value.admin.allowDragging)
 const draggingNewBlock = computed(() => workingFormStore.draggingNewBlock)
 const isAdminPreview = computed(() => strategy.value?.admin?.showAdminControls || false)
+
+// Admin preview: write the classic page submit button label into its own
+// translation key (mirrors updateFocusedTranslation), so editing the label in
+// the classic "page" preview stays page-specific and never touches the focused
+// card label or the form-wide default.
+const updateClassicTranslation = (key, val) => {
+  const current = form.value?.translations && typeof form.value.translations === 'object' && !Array.isArray(form.value.translations)
+    ? form.value.translations
+    : {}
+  form.value.translations = { ...current, [key]: val }
+}
 
 const handlePreviousClick = () => {
   props.formManager.previousPage()

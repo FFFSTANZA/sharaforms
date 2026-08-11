@@ -12,10 +12,20 @@
 
       <div class="flex flex-wrap items-end gap-4">
         <TextInput
-          name="submit_button_text"
-          :form="form"
+          v-if="!isFocused"
+          v-model="classicSubmitText"
+          name="classic_submit_button_text"
           class="max-w-xs"
           label="Submit button text"
+          :placeholder="$t('forms.buttons.submit')"
+        />
+        <TextInput
+          v-else
+          v-model="focusedSubmitText"
+          name="focused_submit_button_text"
+          class="max-w-xs"
+          label="Submit button text"
+          :placeholder="$t('forms.buttons.submit')"
         />
         <TextInput
           v-if="isFocused"
@@ -396,6 +406,32 @@ const focusedPreviousText = computed({
     const current = form.value?.translations && typeof form.value.translations === 'object' ? form.value.translations : {}
     // Replace the entire translations object to avoid setting into a readonly proxy
     form.value.translations = { ...current, focused_previous_button_text: val }
+  }
+})
+
+const classicSubmitText = computed({
+  get() {
+    // Fall back to the form-wide label so a classic-page form without its own
+    // submit label still shows one; once edited it becomes page-specific.
+    return form.value?.translations?.classic_submit_button_text || form.value?.submit_button_text || ''
+  },
+  set(val) {
+    const current = form.value?.translations && typeof form.value.translations === 'object' ? form.value.translations : {}
+    // Replace the entire translations object to avoid setting into a readonly proxy
+    form.value.translations = { ...current, classic_submit_button_text: val }
+  }
+})
+
+const focusedSubmitText = computed({
+  get() {
+    // Fall back to the form-wide label so a focused form without its own
+    // submit label still shows one; once edited it becomes card-specific.
+    return form.value?.translations?.focused_submit_button_text || form.value?.submit_button_text || ''
+  },
+  set(val) {
+    const current = form.value?.translations && typeof form.value.translations === 'object' ? form.value.translations : {}
+    // Replace the entire translations object to avoid setting into a readonly proxy
+    form.value.translations = { ...current, focused_submit_button_text: val }
   }
 })
 </script>
