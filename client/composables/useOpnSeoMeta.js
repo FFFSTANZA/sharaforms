@@ -25,7 +25,9 @@ export const useOpnSeoMeta = (meta, alwaysEnabled = false) => {
     return
   }
 
-  const seoMeta = { ...meta }
+  // `meta` may be a ComputedRef/Getter (e.g. templates/[slug].vue passes one);
+  // unref() resolves it to its current value so the spread preserves the fields.
+  const seoMeta = { ...unref(meta) }
   delete seoMeta.canonical
 
   // Social scrapers require absolute URLs for og:image / twitter:image.
@@ -34,7 +36,7 @@ export const useOpnSeoMeta = (meta, alwaysEnabled = false) => {
   delete seoMeta.ogImage
 
   useHead(() => {
-    const canonicalUrl = resolveCanonicalUrl(meta.canonical, route, canonicalBaseUrl)
+    const canonicalUrl = resolveCanonicalUrl(seoMeta.canonical, route, canonicalBaseUrl)
     const robots = resolveRobots(seoMeta.robots, route)
     const pageSchema = shouldAddPageSchema(robots, canonicalUrl)
       ? buildPageSchema({
@@ -77,7 +79,7 @@ export const useOpnSeoMeta = (meta, alwaysEnabled = false) => {
     category: 'software',
     ogSiteName: 'SharaForms',
     ogType: 'website',
-    ogUrl: () => resolveCanonicalUrl(meta.canonical, route, canonicalBaseUrl),
+    ogUrl: () => resolveCanonicalUrl(seoMeta.canonical, route, canonicalBaseUrl),
     twitterCard: 'summary_large_image',
     twitterSite: '@sharaforms',
     ...(seoMeta.title
