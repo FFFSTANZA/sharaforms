@@ -176,6 +176,11 @@ const { register: registerMutationFactory } = useAuth()
 const router = useRouter()
 const route = useRoute()
 
+const AUTH_COOKIE_NAME = "sharaforms_token"
+const LEGACY_AUTH_COOKIE_NAME = "token"
+const ADMIN_AUTH_COOKIE_NAME = "sharaforms_admin_token"
+const LEGACY_ADMIN_AUTH_COOKIE_NAME = "admin_token"
+
 const registerMutation = registerMutationFactory()
 
 // Reactive data
@@ -228,8 +233,8 @@ onMounted(() => {
   const windowMessage = useWindowMessage(WindowMessageTypes.LOGIN_COMPLETE)
   
   // Listen for login complete messages
-  windowMessage.listen(() => {
-    redirect()
+  windowMessage.listen((event) => {
+    handleLoginComplete(event)
   })
 
   // Set appsumo license
@@ -254,6 +259,38 @@ onMounted(() => {
     form.hear_about_us = 'setup'
   }
 })
+
+/**
+ * Handle a `login-complete` message from the OAuth popup. The popup wrote fresh
+ * auth cookies, so the store is re-initialized before routing. Brand-new accounts
+ * (non-invite) get a welcome alert and are routed to /forms/create.
+ */
+const handleLoginComplete = (event) => {
+  const isNewUser = event?.payload?.new_user === true
+
+  // The popup wrote fresh auth cookies in this origin; register them in the store
+  const authStore = useAuthStore()
+  authStore.initStore(
+    useCookie(AUTH_COOKIE_NAME).value ?? useCookie(LEGACY_AUTH_COOKIE_NAME).value,
+    useCookie(ADMIN_AUTH_COOKIE_NAME).value ?? useCookie(LEGACY_ADMIN_AUTH_COOKIE_NAME).value
+  )
+
+  if (props.isQuick) {
+    // Quick flows are completed by QuickRegister (modal close + after-login message)
+    const afterLoginMessage = useWindowMessage(WindowMessageTypes.AFTER_LOGIN)
+    afterLoginMessage.send(window)
+    return
+  }
+
+  const isInvite = !!form.invite_token
+  if (isNewUser && !isInvite) {
+    useAlert().success({ title: "Welcome to SharaForms 👋", description: "Time to create your first form!" })
+    redirect()
+    return
+  }
+
+  redirect()
+}
 
 // Methods
 const register = () => {

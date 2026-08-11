@@ -14,8 +14,8 @@ For complete technical reference see: /llms-full.txt
 - Home: https://sharaforms.com
 - Pricing: https://sharaforms.com/pricing
 - Docs: https://docs.sharaforms.com
-- Help: https://help.sharaforms.com
-- API: https://docs.sharaforms.com/api-reference/introduction
+- Help: https://sharaforms.com/forms/support-form-1zr4yc
+- API: https://docs.sharaforms.com/
 - Status: https://status.sharaforms.com
 
 ## Core features

@@ -7,6 +7,7 @@ use App\Http\Requests\FormStatsRequest;
 use App\Models\Forms\FormSubmission;
 use App\Models\Workspace;
 use App\Service\Billing\PlanAccessService;
+use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -26,19 +27,47 @@ class FormStatsController extends Controller
         $this->ensureFormBelongsToWorkspace($form, $workspace);
         $this->authorize('view', $form);
 
-        $formStats = $form->statistics()->whereBetween('date', [$request->date_from, $request->date_to])->get();
+        $dateFrom = Carbon::parse($request->date_from)->startOfDay();
+        $dateTo = Carbon::parse($request->date_to)->endOfDay();
+        $today = Carbon::today();
+
+        $statisticsByDate = $form->statistics()
+            ->whereBetween('date', [$request->date_from, $request->date_to])
+            ->get()
+            ->keyBy('date');
+
+        $submissionsByDay = $form->submissions()
+            ->whereBetween('created_at', [$dateFrom, $dateTo])
+            ->whereIn('status', [FormSubmission::STATUS_COMPLETED, FormSubmission::STATUS_PARTIAL])
+            ->selectRaw('DATE(created_at) as date, status, COUNT(*) as count')
+            ->groupByRaw('DATE(created_at), status')
+            ->get();
+
+        $todayInRange = $today->between($dateFrom, $dateTo);
+        $todayViews = $todayInRange
+            ? $form->views()->whereDate('created_at', $today->toDateString())->count()
+            : 0;
+
         $periodStats = ['views' => [], 'submissions' => [], 'partial_submissions' => []];
+
         foreach (CarbonPeriod::create($request->date_from, $request->date_to) as $dateObj) {
             $date = $dateObj->format('d-m-Y');
+            $dateKey = $dateObj->toDateString();
 
-            $statisticData = $formStats->where('date', $dateObj->format('Y-m-d'))->first();
-            $periodStats['views'][$date] = $statisticData->data['views'] ?? 0;
-            $periodStats['submissions'][$date] = $form->submissions()->whereDate('created_at', $dateObj)->where('status', FormSubmission::STATUS_COMPLETED)->count();
-            $periodStats['partial_submissions'][$date] = $form->submissions()->whereDate('created_at', $dateObj)->where('status', FormSubmission::STATUS_PARTIAL)->count();
+            $statisticData = $statisticsByDate->get($dateKey);
+            $periodStats['views'][$date] = $statisticData ? (int) ($statisticData->data['views'] ?? 0) : 0;
+            $periodStats['submissions'][$date] = 0;
+            $periodStats['partial_submissions'][$date] = 0;
 
-            if ($dateObj->toDateString() === now()->toDateString()) {
-                $periodStats['views'][$date] += $form->views()->count();
+            if ($dateKey === $today->toDateString()) {
+                $periodStats['views'][$date] += $todayViews;
             }
+        }
+
+        foreach ($submissionsByDay as $row) {
+            $date = Carbon::parse($row->date)->format('d-m-Y');
+            $key = $row->status === FormSubmission::STATUS_COMPLETED ? 'submissions' : 'partial_submissions';
+            $periodStats[$key][$date] = (int) $row->count;
         }
 
         return $periodStats;

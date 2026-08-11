@@ -77,13 +77,15 @@
 </template>
 
 <script setup>
+import sharaformsConfig from "~/sharaforms.config.js"
+
 const auth = useAuth()
 const { data: user } = auth.user()
 
 const refreshBillingStatus = () => auth.invalidateUser()
 
 const openSupport = () => {
-  useCrisp().openAndShowChat('I need help managing my billing or subscription.')
+  window.location.href = `mailto:${sharaformsConfig.links.contact_email}`
 }
 
 </script> 

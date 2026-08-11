@@ -2,12 +2,6 @@ import sharaformsConfig from "~/sharaforms.config.js"
 
 export const useSharedNavigation = () => {
   const appStore = useAppStore()
-  const crisp = useCrisp()
-  
-  const isSelfHosted = computed(() => useFeatureFlag('self_hosted'))
-  const featurebaseLoaded = computed(() => {
-    return import.meta.client && window.Featurebase
-  })
 
   // Check for new changes in changelog
   const hasNewChanges = computed(() => {
@@ -96,24 +90,12 @@ export const useSharedNavigation = () => {
           to: sharaformsConfig.links.roadmap,
           target: '_blank'
         }),
-        (featurebaseLoaded.value ? createNavItem({
+        createNavItem({
           label: 'Feature Requests',
-          icon: 'i-heroicons:light-bulb', 
-          onClick: () => {
-            window.postMessage({
-                target: 'FeaturebaseWidget',
-                data: { 
-                  action: 'openFeedbackWidget',
-                  setBoard: 'feature-requests', // optional - preselect a board
-                }
-            })
-          }
-        }):  createNavItem({
-          label: 'Feature Requests',
-          icon: 'i-heroicons:light-bulb', 
+          icon: 'i-heroicons:light-bulb',
           to: sharaformsConfig.links.feature_requests,
           target: '_blank'
-        }))
+        })
       ]
     },
     // Help section
@@ -132,11 +114,11 @@ export const useSharedNavigation = () => {
           to: sharaformsConfig.links.api_docs,
           target: '_blank'
         }),
-        ...(isSelfHosted.value || !crisp ? [] : [createNavItem({
+        createNavItem({
           label: 'Contact Support',
-          icon: 'i-heroicons:chat-bubble-left-right',
-          onClick: () => crisp.openChat()
-        })])
+          icon: 'i-heroicons:envelope',
+          onClick: () => { window.location.href = `mailto:${sharaformsConfig.links.contact_email}` }
+        })
       ]
     }
   ])

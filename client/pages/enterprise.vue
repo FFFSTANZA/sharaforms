@@ -860,6 +860,6 @@ useHead({
 const finalCtaProofs = ["SSO/SAML", "India hosting", "Self-hosting support"]
 
 const contactUs = () => {
-  useCrisp().openAndShowChat()
+  window.location.href = `mailto:${sharaformsConfig.links.contact_email}`
 }
 </script>

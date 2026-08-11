@@ -25,6 +25,14 @@
           label="Next button text"
           :placeholder="$t('forms.buttons.next')"
         />
+        <TextInput
+          v-if="isFocused"
+          v-model="focusedPreviousText"
+          name="focused_previous_button_text"
+          class="max-w-xs"
+          label="Previous button text"
+          :placeholder="$t('forms.buttons.previous')"
+        />
       </div>
       <ToggleSwitchInput
         name="auto_save"
@@ -377,6 +385,17 @@ const focusedNextText = computed({
     const current = form.value?.translations && typeof form.value.translations === 'object' ? form.value.translations : {}
     // Replace the entire translations object to avoid setting into a readonly proxy
     form.value.translations = { ...current, focused_next_button_text: val }
+  }
+})
+
+const focusedPreviousText = computed({
+  get() {
+    return form.value?.translations?.focused_previous_button_text || ''
+  },
+  set(val) {
+    const current = form.value?.translations && typeof form.value.translations === 'object' ? form.value.translations : {}
+    // Replace the entire translations object to avoid setting into a readonly proxy
+    form.value.translations = { ...current, focused_previous_button_text: val }
   }
 })
 </script>

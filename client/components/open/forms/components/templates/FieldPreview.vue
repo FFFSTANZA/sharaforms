@@ -10,7 +10,12 @@
       <svg viewBox="0 0 340 28"><rect x="0" y="4" width="18" height="18" rx="3" :fill="palette.color" opacity="0.15" :stroke="palette.color" stroke-width="1.5"/><path d="M5 13l3 3 5-5" :stroke="palette.color" fill="none" stroke-width="1.5"/><text x="24" y="18" font-size="11" :fill="palette.text" font-family="system-ui">{{ field.title || field.name || 'Option' }}</text></svg>
     </div>
     <div v-else-if="field.type === 'rating'" class="field-visual rating-visual">
-      <svg viewBox="0 0 340 28"><circle cx="24" cy="14" r="9" :fill="palette.color" opacity="0.2"/><circle cx="50" cy="14" r="9" :fill="palette.color" opacity="0.2"/><circle cx="76" cy="14" r="9" :fill="palette.color" opacity="0.2"/><circle cx="102" cy="14" r="9" :fill="palette.color" opacity="0.2"/><circle cx="128" cy="14" r="9" :fill="palette.color" opacity="0.2"/></svg>
+      <svg viewBox="0 0 340 30">
+        <defs>
+          <path id="sf-star" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+        </defs>
+        <use v-for="(x, idx) in [26, 54, 82, 110, 138]" :key="idx" href="#sf-star" :transform="`translate(${x} 15) scale(0.85) translate(-12 -11.5)`" :fill="idx < 3 ? palette.color : 'none'" :stroke="idx < 3 ? palette.color : palette.border" :stroke-width="idx < 3 ? 0 : 1.4" :opacity="idx < 3 ? 0.95 : 0.8"/>
+      </svg>
     </div>
     <div v-else-if="field.type === 'scale'" class="field-visual scale-visual">
       <svg viewBox="0 0 340 28"><rect x="0" y="13" width="340" height="2" rx="1" :fill="palette.border"/><circle cx="30" cy="14" r="6" :fill="palette.color" opacity="0.3"/><circle cx="80" cy="14" r="6" :fill="palette.color" opacity="0.3"/><circle cx="130" cy="14" r="6" :fill="palette.color" opacity="0.3"/><circle cx="180" cy="14" r="6" :fill="palette.color" opacity="0.3"/><circle cx="230" cy="14" r="6" :fill="palette.color" opacity="0.3"/></svg>

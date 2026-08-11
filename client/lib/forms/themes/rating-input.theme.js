@@ -3,8 +3,14 @@
  */
 export const ratingInputTheme = {
   slots: {
-    icon: '',
-    star: 'cursor-pointer inline-block text-neutral-200 dark:text-neutral-700 focus-visible:ring-2 focus-visible:ring-form/100 focus-visible:rounded-full focus-visible:outline-none'
+    icon: 'transition-transform duration-200 ease-out',
+    star: [
+      'cursor-pointer inline-block select-none transition-all duration-200 ease-out',
+      'text-neutral-300 dark:text-neutral-600',
+      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-form/60 focus-visible:rounded-full',
+      'hover:scale-110 active:scale-90',
+      'hover:drop-shadow-[0_2px_8px_rgba(251,191,36,0.35)]'
+    ].join(' ')
   },
   variants: {
     theme: {
@@ -19,19 +25,16 @@ export const ratingInputTheme = {
       lg: { icon: 'w-10 h-10' }
     },
     disabled: {
-      true: {
-        star: '!cursor-not-allowed'
-      }
+      true: { star: '!cursor-not-allowed !opacity-70 pointer-events-none hover:scale-100 active:scale-100 hover:drop-shadow-none' },
+      false: {}
     },
     isActive: {
-      true: {
-        star: '!text-yellow-400'
-      }
+      true: { star: '!text-amber-400 [&>svg>path]:fill-current drop-shadow-[0_2px_6px_rgba(251,191,36,0.45)]' },
+      false: {}
     },
     isHover: {
-      true: {
-        star: '!text-yellow-200 !dark:text-yellow-800'
-      }
+      true: { star: '!text-amber-300 [&>svg>path]:fill-current drop-shadow-[0_2px_10px_rgba(251,191,36,0.55)]' },
+      false: {}
     }
   },
   defaultVariants: {

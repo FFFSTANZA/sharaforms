@@ -37,7 +37,7 @@
         </UTooltip>
         <div class="flex-grow" />
         <UButton
-          v-if="previewFormSubmitted || (form && form.presentation_style === 'focused' && workingFormStore.formPageIndex !== 0)"
+          v-if="previewFormSubmitted || (form && form.presentation_style === 'focused' && focusedPreviewPage > 0)"
           icon="i-lucide-refresh-cw"
           color="neutral"
           variant="outline"
@@ -280,13 +280,13 @@ function toggleDarkPreview() {
   previewDarkMode.value = !previewDarkMode.value
 }
 
-function restartForm() {
+async function restartForm() {
   previewFormSubmitted.value = false
-  
+
   try {
     // Try using the component reference first
     if (formPreview.value && typeof formPreview.value.restart === 'function') {
-      formPreview.value.restart()
+      await formPreview.value.restart()
       return
     }
   } catch (error) {
@@ -297,6 +297,17 @@ function restartForm() {
 function toggleExpand() {
   isExpanded.value = !isExpanded.value
 }
+
+// Current focused preview page. Prefers the live formManager state (source of truth)
+// and falls back to the store's structure service getter, which may be unset or stale
+// (e.g. before the preview mounts or while the editor is in TEST/expanded mode).
+const focusedPreviewPage = computed(() => {
+  try {
+    const page = formPreview.value?.formManager?.state?.currentPage
+    if (typeof page === 'number' && page >= 0) return page
+  } catch { /* ignore */ }
+  return workingFormStore.formPageIndex
+})
 
 // Helpers to get current focused slide index
 const currentSlideIndex = computed(() => {

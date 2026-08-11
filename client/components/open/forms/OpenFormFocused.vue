@@ -79,19 +79,68 @@
           </div>
         </div>
         <div v-if="!props.formManager?.state.isSubmitted" class="mt-2 flex gap-2" :class="[getFieldAlignClasses(currentBlock), {'flex-col justify-normal! items-center': isLast &&form.use_captcha}]">
+          <!-- Previous (visible from the 2nd page onward, inline-editable in admin preview) -->
+          <editable-form-button
+            v-if="isAdminPreview && canGoPrev"
+            :form="form"
+            editable
+            native-type="button"
+            class="mt-0.5 px-6"
+            :model-value="form?.translations?.focused_previous_button_text"
+            :placeholder="$t('forms.buttons.previous')"
+            @update:model-value="updateFocusedTranslation('focused_previous_button_text', $event)"
+          />
+          <open-form-button
+            v-else-if="canGoPrev"
+            native-type="button"
+            :form="form"
+            class="mt-0.5 px-6"
+            @click.stop="goPrev"
+          >
+            {{ form?.translations?.focused_previous_button_text || $t('forms.buttons.previous') }}
+          </open-form-button>
+
           <slot name="submit-btn" v-if="isLast" :loading="isProcessing">
             <CaptchaWrapper v-if="form.use_captcha" :form-manager="formManager" />
-            <open-form-button 
-              native-type="button" 
-              :form="form" 
-              class="mt-0.5 px-6" 
-              :loading="isProcessing" 
+            <editable-form-button
+              v-if="isAdminPreview"
+              :form="form"
+              editable
+              :model-value="form.submit_button_text"
+              :placeholder="$t('forms.buttons.submit')"
+              :loading="isProcessing"
+              @update:model-value="form.submit_button_text = $event"
+            />
+            <open-form-button
+              v-else
+              native-type="button"
+              :form="form"
+              class="mt-0.5 px-6"
+              :loading="isProcessing"
               @click.prevent.stop="handleSubmitClick"
             >
               {{ form.submit_button_text || $t('forms.buttons.submit') }}
             </open-form-button>
           </slot>
-          <open-form-button v-else native-type="button" :form="form" class="mt-0.5 px-6" :loading="isProcessing" @click.stop="handleNextClick">
+          <!-- Next (inline-editable in admin preview) -->
+          <editable-form-button
+            v-if="isAdminPreview && !isLast"
+            :form="form"
+            editable
+            native-type="button"
+            class="mt-0.5 px-6"
+            :model-value="form?.translations?.focused_next_button_text"
+            :placeholder="$t('forms.buttons.next')"
+            @update:model-value="updateFocusedTranslation('focused_next_button_text', $event)"
+          />
+          <open-form-button
+            v-else-if="!isLast"
+            native-type="button"
+            :form="form"
+            class="mt-0.5 px-6"
+            :loading="isProcessing"
+            @click.stop="handleNextClick"
+          >
             {{ form?.translations?.focused_next_button_text || $t('forms.buttons.next') }}
           </open-form-button>
         </div>
@@ -133,6 +182,7 @@ import SideMediaSmall from './components/layouts/SideMediaSmall.vue'
 import CenteredStep from './components/layouts/CenteredStep.vue'
 import FormProgressbar from './FormProgressbar.vue'
 import OpenFormButton from './OpenFormButton.vue'
+import EditableFormButton from './EditableFormButton.vue'
 import SlidingTransition from '../../global/transitions/SlidingTransition.vue'
 import CaptchaWrapper from '~/components/forms/heavy/components/CaptchaWrapper.vue'
 import { FormMode } from '~/lib/forms/FormModeStrategy.js'
@@ -169,6 +219,17 @@ const hasPaymentBlock = computed(() => structure.value?.currentPageHasPaymentBlo
 // Admin preview affordances (editor only) - mirror OpenFormField behavior
 const workingFormStore = useWorkingFormStore()
 const isAdminPreview = computed(() => props.formManager?.strategy?.value?.admin?.showAdminControls || false)
+
+// Admin preview: write focused button label translations by replacing the whole
+// translations object (mirrors FormSubmissionSettings and avoids setting into a
+// readonly proxy around the stored form config).
+const updateFocusedTranslation = (key, val) => {
+  const current = form.value?.translations && typeof form.value.translations === 'object' && !Array.isArray(form.value.translations)
+    ? form.value.translations
+    : {}
+  form.value.translations = { ...current, [key]: val }
+}
+
 const beingEdited = computed(() => {
   if (!isAdminPreview.value || !workingFormStore.showEditFieldSidebar) return false
   if (!currentBlock.value) return false

@@ -276,9 +276,14 @@ const version = computed(() => useFeatureFlag("version"))
 const socialLinks = computed(() => [
   { label: "X", href: sharaformsConfig.links.twitter, icon: "i-simple-icons-x" },
   {
-    label: "Discord",
-    href: sharaformsConfig.links.discord,
-    icon: "i-simple-icons-discord",
+    label: "LinkedIn",
+    href: sharaformsConfig.links.linkedin,
+    icon: "i-simple-icons-linkedin",
+  },
+  {
+    label: "WhatsApp",
+    href: sharaformsConfig.links.whatsapp,
+    icon: "i-simple-icons-whatsapp",
   },
 ])
 

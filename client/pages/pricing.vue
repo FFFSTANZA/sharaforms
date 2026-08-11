@@ -100,6 +100,7 @@
 <script setup>
 import FeatureComparison from "~/components/pages/pricing/FeatureComparison.vue"
 import FaqSection from "~/components/pages/FaqSection.vue"
+import sharaformsConfig from "~/sharaforms.config.js"
 import { useIsAuthenticated } from "~/composables/useAuthFlow"
 
 definePageMeta({
@@ -494,7 +495,7 @@ const handlePlanCta = (plan) => {
 }
 
 const contactUs = () => {
-  useCrisp().openAndShowChat()
+  window.location.href = `mailto:${sharaformsConfig.links.contact_email}`
 }
 </script>
 

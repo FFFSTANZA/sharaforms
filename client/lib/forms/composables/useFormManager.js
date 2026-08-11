@@ -383,13 +383,21 @@ export function useFormManager(initialFormConfig, initialMode = FormMode.LIVE, o
     form.resetAndFill({})    
     pendingSubmissionService?.clear()
     
-    // Reinitialize the form to reapply URL parameters and default values
-    await initialize({
-      urlParams: options.urlParams,
-      submissionId: options.submissionId, // Explicitly pass submissionId (usually null)
-      skipPendingSubmission: true, // Don't reload from localStorage on restart
-      skipUrlParams: options.skipUrlParams // Pass through the skipUrlParams option
-    })
+    try {
+      // Reinitialize the form to reapply URL parameters and default values
+      await initialize({
+        urlParams: options.urlParams,
+        submissionId: options.submissionId, // Explicitly pass submissionId (usually null)
+        skipPendingSubmission: true, // Don't reload from localStorage on restart
+        skipUrlParams: options.skipUrlParams // Pass through the skipUrlParams option
+      })
+    } catch (error) {
+      // Never leave the form stuck in a processing/frozen state after a failed restart
+      console.error('[useFormManager] restart failed:', error)
+      state.isProcessing = false
+      state.isSubmitted = false
+      state.currentPage = 0
+    }
   }
   
   // Clean up when component using the manager is unmounted

@@ -266,3 +266,20 @@ The site key `6LchaXYtAAAAAB7XCUuvkv2UXWEutnbD3DTaotry` IS a real reCAPTCHA Ente
 - `GET /projects/{id}/keys` requires OAuth2 (gcloud auth print-access-token) — API keys are rejected ("API keys are not supported by this API").
 - Prefix-based key-type detection (6Lc vs 6Le) is folklore — always list keys via the API to know the truth.
 - reCAPTCHA Enterprise domain allowlist is enforced at render time client-side; wrong domains = silent blank widget (no console error).
+
+## Session: 2026-08-11 — Google OAuth Popup Sign-In Fixes
+
+### Symptom
+Intermittent Google sign-in failures: after choosing account/Continue the opener login/register page stayed stuck; popup sometimes didn't open or opened the wrong/stale window. Root causes found and fixed (all in `client/`):
+
+1. **New_User silent welcome bug (main "stays on same page")** — `pages/oauth/[provider]/callback.vue` routed `response.new_user` to `/forms/create` **inside the popup** and never messaged the opener, so the login/register page below never completed. Existing-user logins did message the opener → worked. Fix: auth flow now ALWAYS notifies the opener (`notifyOpenerAndClose`) with a structured `{new_user}` payload, then closes; `redirectInPlace()` only when no opener (tab opened directly).
+2. **Stale popup reuse** — `useOAuth.js` used a fixed popup name `oauth_popup_${service}`; any leftover window with that name was returned by `window.open('', name, ...)` instead of a fresh popup. Fix: unique `popupName()` = `oauth_popup_<svc>_<Date.now()>` (>1s retry gives distinct names), plus a module-level `activeFlows` Map dedupes double-clicks per service; `.finally()` clears.
+3. **No data channel** — `useWindowMessage` only posted bare type strings. `send()` now accepts `data` and posts `{type, payload}`; `listen()` matches both legacy string and structured payloads and exposes `event.payload` (spread copy, doesn't mutate original). Fully backward compatible (ack channel still posts raw string).
+4. **Opener-side listeners** (`LoginForm`, `RegisterForm`, `QuickRegister`) now read `event?.payload?.new_user`, re-init the auth store from cookies written by the popup, route new non-invite accounts to `/forms/create` with the "Welcome back 👋 Time to create your first form!" toast. `QuickRegister` (quick modal incl. guest builder `/forms/create/guest`) keeps AFTER_LOGIN in-place continue — welcome toast only, NO forced navigation (avoiding the guest-builder save-and-continue regression).
+
+### Verification
+`npx eslint` clean on all 6 changed files; `vitest run` — 46 files / 699 tests pass (incl. `oidc-link-flow` + 2FA suites, 27 tests). Not live-tested (dev stack may not be running); deploy pipeline auto-purges CF.
+
+### Gotchas
+- Route names in marketing pages are obfuscated to `'n'` at build — don't grep them for truth; `forms-create` is the standalone builder, guest mode is a separate `forms/create/guest.vue` child.
+- The OAuth callback checks `window.opener && !window.opener.closed` — tab-opened callbacks correctly bypass the popup path.

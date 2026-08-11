@@ -85,8 +85,6 @@
 <script setup>
 import sharaformsConfig from "~/sharaforms.config.js"
 
-const crisp = useCrisp()
-
 const actions = [
   {
     to: { name: 'forms-create-guest' },
@@ -99,10 +97,9 @@ const actions = [
     text: 'Find Your Forms'
   },
   {
-    href: '#',
+    to: sharaformsConfig.links.tech_docs,
     icon: 'i-lucide-book-open',
-    text: 'Documentation',
-    onClick: () => crisp.openHelpdesk()
+    text: 'Documentation'
   },
   {
     to: { name: 'index' },
@@ -110,10 +107,9 @@ const actions = [
     text: 'Explore SharaForms'
   },
   {
-    href: '#',
+    href: `mailto:${sharaformsConfig.links.contact_email}`,
     icon: 'i-lucide-message-square',
-    text: 'Need Assistance?',
-    onClick: () => crisp.openChat()
+    text: 'Need Assistance?'
   }
 ]
 </script>

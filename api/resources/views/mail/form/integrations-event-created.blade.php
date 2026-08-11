@@ -8,6 +8,6 @@ We tried to trigger a **{{$integration_name}}** for your form "{{$form->title}}"
 {{$error}}
 @endcomponent
 
-Contact us via the website live chat if you need any help.
+Email us at {{ config('links.contact_email') }} if you need any help.
 
 @endcomponent

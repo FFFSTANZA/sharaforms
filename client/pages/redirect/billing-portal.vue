@@ -25,6 +25,7 @@
 
 <script setup>
 import { billingApi } from "~/api"
+import sharaformsConfig from "~/sharaforms.config.js"
 
 definePageMeta({
   middleware: 'auth'
@@ -50,7 +51,7 @@ const beginSlowTimer = () => {
 }
 
 const openSupport = () => {
-  useCrisp().openAndShowChat('I need help opening the billing portal to manage my subscription.')
+  window.location.href = `mailto:${sharaformsConfig.links.contact_email}`
 }
 
 const goToBillingSettings = () => navigateTo({ name: 'home', query: { 'user-settings': 'billing' } })

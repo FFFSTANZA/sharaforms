@@ -170,12 +170,12 @@ SharaForms positions itself as **the form builder for teams that need more than 
 - **Integrations**: https://sharaforms.com/integrations
 - **Enterprise**: https://sharaforms.com/enterprise
 - **AI Form Builder**: https://sharaforms.com/ai-form-builder
-- **Help Center**: https://help.sharaforms.com
+- **Help Center**: https://sharaforms.com/forms/support-form-1zr4yc
 - **Technical Docs**: https://docs.sharaforms.com
-- **API Reference**: https://docs.sharaforms.com/api-reference/introduction
+- **API Reference**: https://docs.sharaforms.com/
 - **Changelog**: https://feedback.sharaforms.com/changelog
 - **Roadmap**: https://feedback.sharaforms.com/roadmap
-- **Community**: https://discord.gg/sharaforms
+- **Community**: https://whatsapp.com/channel/0029VbDNMPnFsn0eE3e08i3Z
 
 ---
 
@@ -408,7 +408,7 @@ Template pages embed CreativeWork, FAQPage, and BreadcrumbList structured data, 
 - Product: https://sharaforms.com
 - Pricing: https://sharaforms.com/pricing
 - Docs: https://docs.sharaforms.com
-- Help: https://help.sharaforms.com
-- API: https://docs.sharaforms.com/api-reference/introduction
+- Help: https://sharaforms.com/forms/support-form-1zr4yc
+- API: https://docs.sharaforms.com/
 - Comparisons hub: https://sharaforms.com/comparisons
 - Comparisons: https://sharaforms.com/sharaforms-vs-{competitor}

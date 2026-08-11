@@ -105,9 +105,9 @@ const afterLoginMessage = useWindowMessage(WindowMessageTypes.AFTER_LOGIN)
 
 onMounted(() => {
   // Listen for login-complete messages from popup window
-  windowMessage.listen(() => {
+  windowMessage.listen((event) => {
     // Handle social login completion
-    handleSocialLogin()
+    handleSocialLogin(event?.payload?.new_user === true)
   })
 })
 
@@ -117,17 +117,29 @@ onUnmounted(() => {
 })
 
 // Handle social login completion
-const handleSocialLogin = () => {
+const handleSocialLogin = (isNewUser = false) => {
   // This function is only called for social logins, so we refresh tokens
   const authStore = useAuthStore()
   const tokenValue = useCookie(AUTH_COOKIE_NAME).value ?? useCookie(LEGACY_AUTH_COOKIE_NAME).value
   const adminTokenValue = useCookie(ADMIN_AUTH_COOKIE_NAME).value ?? useCookie(LEGACY_ADMIN_AUTH_COOKIE_NAME).value
-  
+
   // Re-initialize the store with the latest tokens from cookies
   authStore.initStore(tokenValue, adminTokenValue)
-  
+
+  // Reset the quick-modal state either way
+  appStore.isUnauthorizedError = false
+  appStore.quickLoginModal = false
+  appStore.quickRegisterModal = false
+
   // Then proceed with normal login flow
   afterQuickLogin()
+
+  // Brand-new accounts also get a welcome toast. No forced navigation here: quick
+  // flows may be running an in-place task (e.g. the guest form builder), and the
+  // AFTER_LOGIN message lets that task continue where it left off.
+  if (isNewUser) {
+    useAlert().success({ title: "Welcome to SharaForms 👋", description: "Time to create your first form!" })
+  }
 }
 
 const openLogin = () => {

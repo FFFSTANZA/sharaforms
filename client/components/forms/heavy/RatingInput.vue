@@ -4,35 +4,43 @@
       <slot name="label" />
     </template>
 
-    <div 
-      class="stars-outer"
+    <div class="stars-outer flex flex-col items-center"
       role="slider"
       :aria-valuemin="0"
       :aria-valuemax="starsCount"
       :aria-valuenow="compVal"
       :aria-label="`Rating: ${compVal} out of ${starsCount} stars`"
     >
+      <div class="stars-row flex items-center gap-2">
+        <div
+          v-for="i in starsCount"
+          :key="i"
+          :class="ui.star({
+            disabled: disabled,
+            isActive: i <= compVal,
+            isHover: i > compVal && i <= hoverRating,
+            class: props.ui?.slots?.star
+          })"
+          role="button"
+          :tabindex="getStarTabIndex(i)"
+          :aria-label="`${i} star${i > 1 ? 's' : ''}`"
+          @click="setRating(i)"
+          @mouseenter="onMouseHover(i)"
+          @mouseleave="hoverRating = -1"
+          @keydown="handleKeydown($event, i)"
+        >
+          <Icon
+            name="lucide:star"
+            :class="ui.icon({ class: props.ui?.slots?.icon })"
+          />
+        </div>
+      </div>
+
       <div
-        v-for="i in starsCount"
-        :key="i"
-        :class="ui.star({
-          disabled: disabled,
-          isActive: i <= compVal,
-          isHover: i > compVal && i <= hoverRating,
-          class: props.ui?.slots?.star
-        })"
-        role="button"
-        :tabindex="getStarTabIndex(i)"
-        :aria-label="`${i} star${i > 1 ? 's' : ''}`"
-        @click="setRating(i)"
-        @mouseenter="onMouseHover(i)"
-        @mouseleave="hoverRating = -1"
-        @keydown="handleKeydown($event, i)"
+        v-if="hoverRating > 0 || compVal > 0"
+        class="star-value-pill"
       >
-        <Icon
-          name="lucide:star"
-          :class="ui.icon({ class: props.ui?.slots?.icon })"
-        />
+        {{ hoverRating > 0 ? hoverRating : compVal }}
       </div>
     </div>
 
@@ -182,3 +190,34 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.star-value-pill {
+  min-width: 1.6rem;
+  height: 1.6rem;
+  margin-top: 0.35rem;
+  padding: 0 0.4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1;
+  color: #fff;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+  animation: star-pill-in 0.2s ease-out both;
+}
+
+@keyframes star-pill-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+</style>

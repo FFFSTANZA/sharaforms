@@ -222,6 +222,7 @@
 <script setup>
 import Collapse from '@/components/app/Collapse.vue'
 import CopyContent from '@/components/open/forms/components/CopyContent.vue'
+import sharaformsConfig from '~/sharaforms.config.js'
 import { appUrl } from '~/lib/utils.js'
 
 const props = defineProps({
@@ -258,9 +259,9 @@ watch([isOpen, userEmailDomain], ([isOpenVal, domain]) => {
   }
 })
 
-// Open Crisp chat for support
+// Open email client for support
 const openSupportChat = () => {
-  useCrisp().openChat()
+  window.location.href = `mailto:${sharaformsConfig.links.contact_email}`
 }
 
 const roleOptions = [

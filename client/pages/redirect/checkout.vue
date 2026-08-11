@@ -24,6 +24,8 @@
 </template>
 
 <script setup>
+import sharaformsConfig from "~/sharaforms.config.js"
+
 definePageMeta({
   middleware: 'auth'
 })
@@ -87,7 +89,7 @@ const retryCheckout = async () => {
 }
 
 const openSupport = () => {
-  useCrisp().openAndShowChat('I need help starting the checkout flow for my subscription.')
+  window.location.href = `mailto:${sharaformsConfig.links.contact_email}`
 }
 
 const goToPricing = () => navigateTo({ name: 'pricing' })

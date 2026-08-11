@@ -32,6 +32,8 @@
 </template>
 
 <script setup>
+import sharaformsConfig from "~/sharaforms.config.js"
+
 definePageMeta({
   middleware: 'auth'
 })
@@ -41,7 +43,7 @@ useOpnSeoMeta({
 })
 
 const openSupport = () => {
-  useCrisp().openAndShowChat('I was redirected back from checkout and need help completing my subscription.')
+  window.location.href = `mailto:${sharaformsConfig.links.contact_email}`
 }
 
 onMounted(() => {

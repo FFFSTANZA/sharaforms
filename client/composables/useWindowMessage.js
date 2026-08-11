@@ -59,8 +59,13 @@ export const useWindowMessage = (messageType = null) => {
     }
 
     const handler = (event) => {
-      // Only react to our expected payload (the message name string)
-      if (event && event.data === targetEventType) {
+      if (!event) return
+      const rawData = event.data
+      // Accept both legacy string payloads and structured { type, payload } messages
+      const isStructuredPayload = rawData && typeof rawData === 'object' && rawData.type === targetEventType
+      const isMatch = rawData === targetEventType || isStructuredPayload
+
+      if (isMatch) {
         // Send acknowledgement if requested (best-effort)
         if (acknowledge) {
           try {
@@ -74,7 +79,8 @@ export const useWindowMessage = (messageType = null) => {
             // ignore ack failures
           }
         }
-        callback(event)
+        // Expose the structured payload (when present) without mutating the original event
+        callback(isStructuredPayload ? { ...event, payload: rawData.payload } : event)
       }
     }
 
@@ -112,6 +118,7 @@ export const useWindowMessage = (messageType = null) => {
    * @param {Window} _targetWindow - Ignored; maintained for API compatibility
    * @param {Object} options - Options for sending the message
    * @param {string} options.eventType - The type of message to send (defaults to constructor value)
+   * @param {Object|null} options.data - Optional structured payload attached to the message
    * @param {string} options.targetOrigin - Ignored; maintained for API compatibility
    * @param {boolean} options.useMessageChannel - Ignored; maintained for API compatibility
    * @param {number} options.timeout - Timeout in ms for the acknowledgment (best-effort), defaults to 500ms
@@ -121,6 +128,7 @@ export const useWindowMessage = (messageType = null) => {
   const send = (_targetWindow, options = {}) => {
     const { 
       eventType = null,
+      data = null,
       targetOrigin = '*', // unused with BroadcastChannel
       useMessageChannel = true, // unused with BroadcastChannel
       timeout = 500,
@@ -144,7 +152,12 @@ export const useWindowMessage = (messageType = null) => {
         console.error('BroadcastChannel is not supported in this environment', err)
         return null
       }
-      channel.postMessage(targetEventType)
+      // Structured payload (when provided) so listeners receive typed data
+      if (data !== null && data !== undefined) {
+        channel.postMessage({ type: targetEventType, payload: data })
+      } else {
+        channel.postMessage(targetEventType)
+      }
       // Close shortly after posting
       setTimeout(() => {
         try { channel.close() } catch { /* ignore */ }

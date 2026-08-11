@@ -43,6 +43,7 @@
 
 <script setup>
 import { authApi } from "~/api"
+import sharaformsConfig from "~/sharaforms.config.js"
 
 definePageMeta({
   middleware: 'auth'
@@ -158,7 +159,7 @@ const startPolling = () => {
 }
 
 const openSupport = () => {
-  useCrisp().openAndShowChat('My subscription checkout succeeded, but the app still shows it as pending.')
+  window.location.href = `mailto:${sharaformsConfig.links.contact_email}`
 }
 
 const goHome = () => navigateTo({ name: 'home' })

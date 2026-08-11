@@ -47,6 +47,43 @@ const { showTwoFactorModal, pendingAuthToken, handleTwoFactorVerified, handleTwo
 const loginMessage = useWindowMessage(WindowMessageTypes.LOGIN_COMPLETE)
 const providerMessage = useWindowMessage(WindowMessageTypes.OAUTH_PROVIDER_CONNECTED)
 
+/**
+ * Hand the OAuth result back to the opener page (which routes based on `new_user`
+ * and re-initializes auth state from the cookies this popup just wrote), then close
+ * the popup. The opener's `login-complete` listener is mounted on the login/register
+ * page that started the flow, so the message is handed off via BroadcastChannel.
+ */
+const notifyOpenerAndClose = async ({ newUser }) => {
+  // Best-effort ack wait; the message is already dispatched even if the ack times out
+  try {
+    await loginMessage.send(window.opener, {
+      data: { new_user: newUser },
+      waitForAcknowledgment: true,
+      timeout: 400
+    })
+  } catch {
+    // BroadcastChannel unavailable — nothing else to do, close anyway
+  }
+  try {
+    await providerMessage.send(window.opener, {
+      waitForAcknowledgment: false
+    })
+  } catch { /* best-effort */ }
+  try { window.close() } catch { /* ignore */ }
+  // If the window could not be closed, at least stop the spinner
+  loading.value = false
+}
+
+const redirectInPlace = (newUser) => {
+  if (newUser) {
+    router.push({ name: "forms-create" })
+    useAlert().success("Success! You're now registered with your Google account! Welcome to SharaForms.")
+  } else {
+    router.push({ name: "home" })
+  }
+  loading.value = false
+}
+
 const handleCallback = async () => {
   const provider = route.params.provider
   
@@ -95,33 +132,20 @@ const handleCallback = async () => {
       
       // Only proceed with redirect if we have a token (2FA not required)
       // If requires_2fa is true, we already returned above
-      if (response.token && !response.new_user) {
-        // Handle existing user login
-        if (window.opener) {
-          try {
-            await Promise.all([
-              loginMessage.send(window.opener, {
-                waitForAcknowledgment: true,
-                timeout: 500
-              }),
-              providerMessage.send(window.opener, {
-                useMessageChannel: false,
-                waitForAcknowledgment: false
-              })
-            ])
-            
-            window.close()
-            loading.value = false
-          } catch {
-            loading.value = false
-          }
-        } else {
-          router.push({ name: "home" })
+      if (response.token) {
+        const isNewUser = !!response.new_user
+        const hasOpener = !!window.opener && !window.opener.closed
+
+        // Always notify the opener (both new and existing users) so the page the user
+        // started from actually completes the sign-in. New users are routed to
+        // /forms/create by the opener's listener via the `new_user` flag.
+        if (hasOpener) {
+          await notifyOpenerAndClose({ newUser: isNewUser })
+          return
         }
-      } else {
-        // Handle new user registration
-        router.push({ name: "forms-create" })
-        useAlert().success("Success! You're now registered with your Google account! Welcome to SharaForms.")
+
+        // No opener (callback opened in a tab directly) → complete in this tab.
+        redirectInPlace(isNewUser)
       }
     } else if (response.provider) {
       // Integration flow - user was already logged in, provider was connected
@@ -171,33 +195,16 @@ const handleTwoFactorCancel = () => {
 
 const handleTwoFactorVerifiedAndRedirect = async (tokenData) => {
   await handleTwoFactorVerified(tokenData)
-  
-  // Handle redirect based on user status
-  if (tokenData.new_user) {
-    router.push({ name: "forms-create" })
-    useAlert().success("Success! You're now registered with your Google account! Welcome to SharaForms.")
-  } else {
-    if (window.opener) {
-      try {
-        await Promise.all([
-          loginMessage.send(window.opener, {
-            waitForAcknowledgment: true,
-            timeout: 500
-          }),
-          providerMessage.send(window.opener, {
-            useMessageChannel: false,
-            waitForAcknowledgment: false
-          })
-        ])
-        
-        window.close()
-      } catch {
-        router.push({ name: "home" })
-      }
-    } else {
-      router.push({ name: "home" })
-    }
+
+  const isNewUser = !!tokenData.new_user
+  const hasOpener = !!window.opener && !window.opener.closed
+
+  // Hand the result back to the opener (new users route via the `new_user` flag)
+  if (hasOpener) {
+    await notifyOpenerAndClose({ newUser: isNewUser })
+    return
   }
+  redirectInPlace(isNewUser)
 }
 
 onMounted(() => {

@@ -14,8 +14,8 @@
 <a href="https://github.com/SharaForms/SharaForms/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-AGPLv3-purple" alt="License">
 <a href="https://github.com/SharaForms/SharaForms/issues/new"><img src="https://img.shields.io/badge/Report a bug-Github-%231F80C0" alt="Report a bug"></a>
 <a href="https://github.com/SharaForms/SharaForms/discussions/new?category=q-a"><img src="https://img.shields.io/badge/Ask a question-Github-%231F80C0" alt="Ask a question"></a>
-<a href="https://feedback.sharaforms.com"><img src="https://img.shields.io/badge/Feature request-Featurebase-%231F80C0" alt="Ask a question"></a>
-<a href="https://discord.gg/sharaforms"><img src="https://img.shields.io/badge/SharaForms-Discord-%235865F2.svg" alt="Ask a question"></a>
+<a href="https://sharaforms.com/forms/feature-request-form-z7nhxv"><img src="https://img.shields.io/badge/Feature request-SharaForms-%231F80C0" alt="Feature request"></a>
+<a href="https://whatsapp.com/channel/0029VbDNMPnFsn0eE3e08i3Z"><img src="https://img.shields.io/badge/SharaForms-WhatsApp-25D366.svg" alt="Ask a question"></a>
 </p>
 
 SharaForms is a form builder.
@@ -55,9 +55,9 @@ For self-hosted installations, please refer to our [Deployment Guides](https://d
 
 ## Support & Community
 
-If you need help or have questions, please join our [Discord community](https://discord.gg/sharaforms). For more information and assistance, check out the following resources:
+If you need help or have questions, please join our [WhatsApp channel](https://whatsapp.com/channel/0029VbDNMPnFsn0eE3e08i3Z). For more information and assistance, check out the following resources:
 
--   [Product Helpdesk](https://help.sharaforms.com)
+-   [Help & Support](https://sharaforms.com/forms/support-form-1zr4yc)
 -   [Technical Documentation](https://docs.sharaforms.com)
 
 ## License

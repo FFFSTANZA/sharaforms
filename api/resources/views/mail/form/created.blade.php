@@ -16,11 +16,11 @@ If you want to embed your form to your website, copy and paste the following cod
     <script type="text/javascript" onload="initEmbed(\''.$form->slug.'\')" src="'.front_url("widgets/iframe.min.js").'"></script>' }}
 @endcomponent
 
-Finally, we created a **Discord channel** with all the other users to share our news and guides about SharaForms.
+Finally, we created a **WhatsApp channel** with all the other users to share our news and guides about SharaForms.
 I would love to see you there, here is the link:
 
-@component('mail::button', ['url' => config('links.discord')])
-Discord Channel
+@component('mail::button', ['url' => config('links.whatsapp')])
+WhatsApp Channel
 @endcomponent
 
 @endcomponent

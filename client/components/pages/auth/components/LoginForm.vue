@@ -139,6 +139,11 @@ const authFlow = useAuthFlow()
 const { showTwoFactorModal, pendingAuthToken, handleTwoFactorVerified, handleTwoFactorCancel, handleTwoFactorError } = authFlow
 const { completeLinkIfNeeded } = useOidcLinking()
 
+const AUTH_COOKIE_NAME = "sharaforms_token"
+const LEGACY_AUTH_COOKIE_NAME = "token"
+const ADMIN_AUTH_COOKIE_NAME = "sharaforms_admin_token"
+const LEGACY_ADMIN_AUTH_COOKIE_NAME = "admin_token"
+
 // Feature flags
 const oidcAvailable = computed(() => useFeatureFlag('oidc.available', false))
 const oidcForced = computed(() => useFeatureFlag('oidc.forced', false))
@@ -173,10 +178,41 @@ onMounted(() => {
   const windowMessage = useWindowMessage(WindowMessageTypes.LOGIN_COMPLETE)
   
   // Listen for login complete messages
-  windowMessage.listen(() => {
-    redirect()
+  windowMessage.listen((event) => {
+    handleLoginComplete(event)
   })
 })
+
+/**
+ * Handle a `login-complete` message from the OAuth popup. The popup wrote fresh
+ * auth cookies, so the store is re-initialized before routing. New accounts are
+ * routed straight to /forms/create via the `new_user` flag from the popup.
+ */
+const handleLoginComplete = (event) => {
+  const isNewUser = event?.payload?.new_user === true
+
+  // The popup wrote fresh auth cookies in this origin; register them in the store
+  const authStore = useAuthStore()
+  authStore.initStore(
+    useCookie(AUTH_COOKIE_NAME).value ?? useCookie(LEGACY_AUTH_COOKIE_NAME).value,
+    useCookie(ADMIN_AUTH_COOKIE_NAME).value ?? useCookie(LEGACY_ADMIN_AUTH_COOKIE_NAME).value
+  )
+
+  if (props.isQuick) {
+    // Quick flows are completed by QuickRegister (modal close + after-login message)
+    const afterLoginMessage = useWindowMessage(WindowMessageTypes.AFTER_LOGIN)
+    afterLoginMessage.send(window)
+    return
+  }
+
+  if (isNewUser) {
+    useAlert().success({ title: "Welcome to SharaForms 👋", description: "Time to create your first form!" })
+    router.push({ name: "forms-create" })
+    return
+  }
+
+  redirect()
+}
 
 // Methods
 const checkOidcOptions = async () => {

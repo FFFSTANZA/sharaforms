@@ -2,6 +2,9 @@ import { useQueryClient, useQuery, useMutation } from '@tanstack/vue-query'
 import { oauthApi } from '~/api/oauth'
 import { WindowMessageTypes, useWindowMessage } from '~/composables/useWindowMessage'
 
+// Module-level guards so concurrent component instances share one OAuth flow per service
+const activeFlows = new Map()
+
 export function useOAuth() {
   const queryClient = useQueryClient()
   const alert = useAlert()
@@ -52,9 +55,12 @@ export function useOAuth() {
   // Popup utilities
   const popupFeatures = 'width=600,height=700,left=100,top=100,resizable=yes,scrollbars=yes'
 
+  // Unique popup name per attempt so a leftover window with the same name is never reused.
+  const popupName = (service) => `oauth_popup_${service}_${Date.now()}`
+
   const preOpenPopupIfNeeded = (shouldOpenInNewTab, service) => {
     if (!shouldOpenInNewTab) return null
-    const popupWindow = window.open('', 'oauth_popup_' + service, popupFeatures)
+    const popupWindow = window.open('', popupName(service), popupFeatures)
     if (!popupWindow) {
       alert.error('Popup was blocked. Please allow popups and try again.')
       return null
@@ -68,7 +74,7 @@ export function useOAuth() {
       try { popupWindow.location.replace(targetUrl) } catch { popupWindow.location.href = targetUrl }
       return true
     }
-    const fallbackPopup = window.open(targetUrl, 'oauth_popup_' + service, popupFeatures)
+    const fallbackPopup = window.open(targetUrl, popupName(service), popupFeatures)
     if (!fallbackPopup) {
       alert.error('Popup was blocked. Please allow popups and try again.')
       return false
@@ -114,10 +120,16 @@ export function useOAuth() {
   // Enhanced connect method with redirect/newtab/autoClose support
   const connect = (service, redirect = false, newtab = false, autoClose = false, additionalData = {}) => {
     const serviceConfig = getService(service)
-    
+
     if (serviceConfig && serviceConfig.auth_type && serviceConfig.auth_type !== 'redirect') {
       return Promise.resolve()
     }
+
+    // Ignore duplicate clicks while a flow for the same service is already running
+    if (activeFlows.get(service)) {
+      return Promise.resolve()
+    }
+    activeFlows.set(service, true)
 
     const intention = redirect ? new URL(window.location.href).pathname : undefined
     // If opening in new tab, open synchronously to avoid popup blockers
@@ -140,10 +152,17 @@ export function useOAuth() {
         safelyClosePopup(popupWindow)
         handleOAuthError(error)
       })
+      .finally(() => activeFlows.delete(service))
   }
 
   // Guest connect method
   const guestConnect = (service, redirect = false, additionalData = {}) => {
+    // Ignore duplicate clicks while a flow for the same service is already running
+    if (activeFlows.get(service)) {
+      return Promise.resolve()
+    }
+    activeFlows.set(service, true)
+
     const intention = new URL(window.location.href).pathname
     const { $utm } = useNuxtApp()
 
@@ -166,6 +185,7 @@ export function useOAuth() {
         safelyClosePopup(popupWindow)
         handleOAuthError(error)
       })
+      .finally(() => activeFlows.delete(service))
   }
 
   // Mutation for connect (programmatic)

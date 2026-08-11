@@ -23,7 +23,7 @@ Our security system is designed to protect all users, and we appreciate your und
 Access Your Account
 @endcomponent
 
-If you have any questions about form best practices, feel free to reach out via live chat.
+If you have any questions about form best practices, feel free to email us at {{ config('links.contact_email') }}.
 
 Thanks,<br>
 {{ config('app.name') }} Security Team

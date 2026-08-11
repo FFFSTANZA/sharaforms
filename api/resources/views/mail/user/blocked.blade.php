@@ -10,7 +10,7 @@ Your account has been temporarily blocked by our automated security system.
 
 ## Think This is an Error?
 
-If you believe this is a mistake, please contact us immediately through the **live chat** on our website with:
+If you believe this is a mistake, please contact us immediately at **{{ config('links.contact_email') }}** with:
 
 - **Clear explanation** of your form's purpose
 - **Screenshots** or detailed description of your form content
@@ -21,8 +21,8 @@ If you believe this is a mistake, please contact us immediately through the **li
 
 Our team reviews appeals quickly during business hours, and legitimate accounts are typically restored within a few hours of providing adequate justification.
 
-@component('mail::button', ['url' => config('app.url')])
-Contact Support via Live Chat
+@component('mail::button', ['url' => 'mailto:' . config('links.contact_email')])
+Contact Support via Email
 @endcomponent
 
 Thanks,<br>
