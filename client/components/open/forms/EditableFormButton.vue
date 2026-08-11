@@ -8,7 +8,7 @@
       :icon="icon"
       @click="handleButtonClick"
     >
-      {{ displayText }}
+      <span ref="labelRef" :class="{ invisible: editing }">{{ displayText }}</span>
     </open-form-button>
 
     <!-- Pencil affordance (admin preview only) -->
@@ -28,7 +28,7 @@
       role="textbox"
       spellcheck="false"
       class="absolute inset-0 z-10 flex items-center justify-center text-center whitespace-nowrap outline-none cursor-text select-text overflow-hidden"
-      :style="{ color: textColor, caretColor: textColor }"
+      :style="{ color: editorColor, caretColor: editorColor }"
       @pointerdown.stop
       @click.stop
       @keydown.enter.prevent="commit"
@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import { ref, computed, nextTick } from 'vue'
+import { ref, computed, nextTick, watch } from 'vue'
 import OpenFormButton from './OpenFormButton.vue'
 
 defineOptions({ inheritAttrs: false })
@@ -59,7 +59,23 @@ const emit = defineEmits(['update:modelValue', 'click'])
 const editing = ref(false)
 const draft = ref('')
 const editor = ref(null)
+const labelRef = ref(null)
 let cancelled = false
+
+// Always mirror the button's real rendered text color so the editor never
+// paints a mismatched (e.g. black-on-colored) label over the button.
+const editorColor = ref('#0a0a0a')
+
+watch(editing, async (value) => {
+  if (!value) return
+  await nextTick()
+  const el = labelRef.value
+  if (!el) return
+  const color = window.getComputedStyle(el).color
+  if (color && color !== 'rgba(0, 0, 0, 0)') {
+    editorColor.value = color
+  }
+})
 
 const displayText = computed(() => {
   const value = (props.modelValue || '').trim()
@@ -68,19 +84,6 @@ const displayText = computed(() => {
 
 // While in the builder, never let the underlying button act as a real submit button.
 const effectiveNativeType = computed(() => (props.editable ? 'button' : props.nativeType))
-
-// Match OpenFormButton's readable text color, returned as a hex for the caret/editor color.
-const textColor = computed(() => {
-  const bg = props.form?.color
-  if (!bg) return '#0a0a0a'
-  const hex = bg.charAt(0) === '#' ? bg.substring(1, 7) : bg
-  if (!/^[0-9a-f]{6}$/i.test(hex)) return '#0a0a0a'
-  const r = parseInt(hex.substring(0, 2), 16)
-  const g = parseInt(hex.substring(2, 4), 16)
-  const b = parseInt(hex.substring(4, 6), 16)
-  const L = 0.2126 * r / 255 + 0.7152 * g / 255 + 0.0722 * b / 255
-  return L > 0.45 ? '#0a0a0a' : '#ffffff'
-})
 
 const handleButtonClick = (event) => {
   event.preventDefault()
