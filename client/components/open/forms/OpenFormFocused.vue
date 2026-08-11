@@ -217,11 +217,11 @@ const isProcessing = computed(() => props.formManager.state.isProcessing)
 const hasPaymentBlock = computed(() => structure.value?.currentPageHasPaymentBlock?.value ?? false)
 
 // Focused mode renders one field per page with no page-break fields, so the
-// per-page button labels live on the field object of the previous page (the
-// focused analog of the classic page-break next_btn_text / previous_btn_text).
-// They override the form-wide focused_*_button_text translations, so inline
-// editing of a Next/Previous button only ever affects that single button
-// (the settings panel remains the global default).
+// per-page Next label lives on the current page's field and the Previous label
+// on the previous page's field — the focused analog of classic's page-break
+// next_btn_text / previous_btn_text. They override the form-wide
+// focused_*_button_text translations, so inline editing of a Next/Previous
+// button only ever affects that single button (settings panel = global default).
 const previousFocusedField = computed(() => {
   const idx = currentIndex.value - 1
   if (idx < 0 || !structure?.value?.getPageFields) return null
