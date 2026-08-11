@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex items-center gap-3 sm:gap-4 rounded-xl border border-neutral-200 bg-white p-3 sm:p-4 shadow-xs"
+    class="flex items-center gap-3 sm:gap-4 px-4 sm:px-5 py-3.5"
   >
     <!-- Icon tile skeleton -->
     <USkeleton class="h-10 w-10 shrink-0 rounded-lg" />

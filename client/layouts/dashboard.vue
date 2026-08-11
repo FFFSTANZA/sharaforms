@@ -6,7 +6,7 @@
     <!-- Main content area -->
     <main class="sm:pl-58">
       <!-- Content wrapper with proper spacing -->
-      <div class="min-h-screen bg-white">
+      <div class="min-h-screen bg-neutral-50">
         <slot />
       </div>
     </main>

@@ -3,41 +3,27 @@
     <!-- Header Slot -->
     <template #header>
       <!-- Workspace Dropdown -->
-      <div class="grow">
+      <div class="grow min-w-0">
         <WorkspaceDropdown>
           <template #default="{ workspace }">
             <button
               v-if="workspace"
               aria-label="Workspace menu"
-              class="flex items-center gap-2 p-2 rounded-md hover:bg-neutral-200 transition-colors min-w-32 text-left"
+              class="flex w-full items-center gap-2.5 p-2 rounded-lg hover:bg-neutral-100 transition-colors min-w-0 text-left"
             >
-              <WorkspaceIcon :workspace="workspace" />
+              <WorkspaceIcon :workspace="workspace" size="size-8" />
               <div class="flex-1 min-w-0">
-                <p class="text-sm font-medium text-neutral-800 truncate">
+                <p class="text-sm font-semibold text-neutral-900 truncate">
                   {{ workspace.name }}
                 </p>
               </div>
+              <UIcon
+                name="i-lucide-chevron-down"
+                class="h-3.5 w-3.5 shrink-0 text-neutral-400"
+              />
             </button>
           </template>
         </WorkspaceDropdown>
-      </div>
-      
-      <!-- User Dropdown -->
-      <div class="flex gap-2 items-center">
-        <UserDropdown>
-          <template #default="{ user }">
-            <button
-              aria-label="User menu"
-              class="flex items-center gap-2 p-2 rounded-md hover:bg-neutral-200 transition-colors"
-            >
-              <img
-                :src="user?.photo_url"
-                class="rounded-full w-6 h-6"
-                :alt="user?.name"
-              >
-            </button>
-          </template>
-        </UserDropdown>
       </div>
     </template>
 
@@ -55,7 +41,7 @@
         <!-- Section Title (if exists) -->
         <h3 
           v-if="section.name"
-          class="text-xs font-medium text-neutral-400 tracking-wider mb-2 px-3"
+          class="text-[11px] font-semibold uppercase tracking-wider text-neutral-400 mb-1.5 px-2.5"
         >
           {{ section.name }}
         </h3>
@@ -67,6 +53,45 @@
           :tracking-properties="(item) => ({ label: item.label })"
           @item-click="handleItemClick"
         />
+      </div>
+    </template>
+
+    <!-- Footer Slot -->
+    <template #footer>
+      <div class="flex flex-col gap-2">
+        <UserDropdown>
+          <template #default="{ user }">
+            <button
+              v-if="user"
+              aria-label="User menu"
+              class="flex w-full items-center gap-2.5 p-2 rounded-lg hover:bg-neutral-100 transition-colors min-w-0 text-left"
+            >
+              <img
+                :src="user.photo_url"
+                :alt="user.name"
+                class="rounded-full h-7 w-7 shrink-0"
+              >
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-neutral-900 truncate">
+                  {{ user.name }}
+                </p>
+                <p class="text-[11px] text-neutral-400 truncate">
+                  {{ user.email }}
+                </p>
+              </div>
+              <UIcon
+                name="i-lucide-settings"
+                class="h-3.5 w-3.5 shrink-0 text-neutral-300"
+              />
+            </button>
+          </template>
+        </UserDropdown>
+        <p class="text-center text-[11px] text-neutral-400">
+          <NuxtLink class="font-semibold hover:text-neutral-500" :to="{ name: 'home' }">
+            SharaForms
+          </NuxtLink>
+          <span v-if="version"> v{{ version }}</span>
+        </p>
       </div>
     </template>
   </BaseSidebar>
@@ -82,6 +107,8 @@ import { useSharedNavigation } from "~/composables/components/useSharedNavigatio
 
 const route = useRoute()
 const sidebar = ref(null)
+
+const version = computed(() => useFeatureFlag('version'))
 
 const { sharedNavigationSections, createNavItem } = useSharedNavigation()
 

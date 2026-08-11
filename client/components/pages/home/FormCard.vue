@@ -1,6 +1,6 @@
 <template>
   <div
-    class="group relative flex items-center gap-3 sm:gap-4 rounded-xl border border-neutral-200 bg-white p-3 sm:p-4 shadow-xs transition-all duration-150 hover:border-blue-300/70 hover:shadow-md hover:shadow-neutral-200/60 cursor-pointer"
+    class="group relative flex items-center gap-3 sm:gap-4 px-4 sm:px-5 py-3.5 transition-colors hover:bg-neutral-50 cursor-pointer"
   >
     <!-- Type icon tile -->
     <div
@@ -140,7 +140,7 @@
     <!-- Link overlay covering entire card -->
     <NuxtLink
       :to="{name:'forms-slug-show-submissions', params: {slug:form.slug}}"
-      class="absolute inset-0 z-10 rounded-xl"
+      class="absolute inset-0 z-10"
     />
   </div>
 </template>

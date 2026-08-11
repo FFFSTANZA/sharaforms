@@ -2,10 +2,10 @@
   <div
     v-if="workspace"
     data-testid="home-page"
-    class="flex flex-col h-full bg-white"
+    class="flex flex-col h-full bg-neutral-50"
   >
     <div
-      class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-neutral-200 px-4 sm:px-6"
+      class="sticky top-0 z-50 bg-neutral-50/95 backdrop-blur border-b border-neutral-200/80 px-4 sm:px-6"
     >
       <div
         class="max-w-5xl mx-auto flex items-center justify-between flex-shrink-0 gap-3 h-16"
@@ -133,22 +133,22 @@
             </div>
 
             <div v-if="enrichedForms.length > 0" class="mb-10">
-              <div class="flex flex-col gap-2.5 lg:mt-6">
+              <div class="bg-white rounded-xl border border-neutral-200/70 shadow-sm overflow-hidden divide-y divide-neutral-100 lg:mt-6">
                 <FormCard
                   v-for="form in enrichedForms"
                   :key="form.id"
                   :form="form"
                 />
-              </div>
 
-              <div v-if="isLoadingMore" class="flex flex-col gap-2.5 mt-2.5">
-                <FormCardSkeleton />
-                <FormCardSkeleton class="opacity-60" />
-                <FormCardSkeleton class="opacity-30" />
+                <div v-if="isLoadingMore" class="divide-y divide-neutral-100">
+                  <FormCardSkeleton />
+                  <FormCardSkeleton />
+                  <FormCardSkeleton />
+                </div>
               </div>
 
               <div
-                v-else-if="!isComplete && totalPages > 1"
+                v-if="!isLoadingMore && !isComplete && totalPages > 1"
                 class="flex justify-center items-center py-4"
               >
                 <div class="text-sm text-neutral-500">
@@ -157,14 +157,14 @@
               </div>
             </div>
 
-            <div v-if="isFormsLoading" class="flex flex-col gap-2.5">
+            <div v-if="isFormsLoading" class="bg-white rounded-xl border border-neutral-200/70 shadow-sm overflow-hidden divide-y divide-neutral-100">
               <FormCardSkeleton />
               <FormCardSkeleton />
               <FormCardSkeleton />
             </div>
           </VTransition>
           <template #fallback>
-            <div class="flex flex-col gap-2.5">
+            <div class="bg-white rounded-xl border border-neutral-200/70 shadow-sm overflow-hidden divide-y divide-neutral-100">
               <FormCardSkeleton />
               <FormCardSkeleton />
               <FormCardSkeleton />
