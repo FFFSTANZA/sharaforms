@@ -18,6 +18,19 @@ const sitemapSources = process.env.NUXT_PUBLIC_API_BASE
 
 export default {
   exclude: [
+    '/admin',
+    '/home',
+    '/login',
+    '/register',
+    '/password/**',
+    '/oauth/**',
+    '/auth/**',
+    '/forms/create/**',
+    '/forms/**/edit',
+    '/forms/**/pdf-editor/**',
+    '/forms/**/show/**',
+    '/redirect/**',
+    '/report-abuse',
     '/subscriptions/**',
     '/templates/my-templates',
     '/setup',
