@@ -26,12 +26,12 @@ const paddingMap = {
 }
 
 const variantMap = {
-  default: 'border-neutral-300 shadow-sm bg-white',
-  subtle: 'border-neutral-200 bg-neutral-50/50',
+  default: 'border-neutral-200 bg-white shadow-sm',
+  subtle: 'border-neutral-200/70 bg-neutral-50/50',
 }
 
 const panelClasses = computed(() => [
-  'rounded-lg border',
+  'rounded-xl border',
   paddingMap[props.padding],
   variantMap[props.variant],
 ])

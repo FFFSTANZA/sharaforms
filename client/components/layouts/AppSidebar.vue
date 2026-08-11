@@ -9,7 +9,7 @@
             <button
               v-if="workspace"
               aria-label="Workspace menu"
-              class="flex w-full items-center gap-2.5 p-2 rounded-lg hover:bg-neutral-100 transition-colors min-w-0 text-left"
+              class="group flex w-full items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-neutral-100 transition-colors min-w-0 text-left"
             >
               <WorkspaceIcon :workspace="workspace" size="size-8" />
               <div class="flex-1 min-w-0">
@@ -19,7 +19,7 @@
               </div>
               <UIcon
                 name="i-lucide-chevron-down"
-                class="h-3.5 w-3.5 shrink-0 text-neutral-400"
+                class="h-3.5 w-3.5 shrink-0 text-neutral-400 group-hover:text-neutral-500"
               />
             </button>
           </template>
@@ -41,7 +41,7 @@
         <!-- Section Title (if exists) -->
         <h3 
           v-if="section.name"
-          class="text-[11px] font-semibold uppercase tracking-wider text-neutral-400 mb-1.5 px-2.5"
+          class="select-none text-[11px] font-semibold uppercase tracking-wider text-neutral-400/90 mb-1.5 px-2.5"
         >
           {{ section.name }}
         </h3>
@@ -64,12 +64,12 @@
             <button
               v-if="user"
               aria-label="User menu"
-              class="flex w-full items-center gap-2.5 p-2 rounded-lg hover:bg-neutral-100 transition-colors min-w-0 text-left"
+              class="group flex w-full items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-neutral-100 transition-colors min-w-0 text-left"
             >
               <img
                 :src="user.photo_url"
                 :alt="user.name"
-                class="rounded-full h-7 w-7 shrink-0"
+                class="rounded-full size-8 shrink-0"
               >
               <div class="flex-1 min-w-0">
                 <p class="text-sm font-medium text-neutral-900 truncate">
@@ -80,8 +80,8 @@
                 </p>
               </div>
               <UIcon
-                name="i-lucide-settings"
-                class="h-3.5 w-3.5 shrink-0 text-neutral-300"
+                name="i-lucide-chevron-up"
+                class="h-3.5 w-3.5 shrink-0 text-neutral-400 group-hover:text-neutral-500"
               />
             </button>
           </template>

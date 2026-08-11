@@ -3,7 +3,7 @@
     <div v-if="title || $slots.header" class="mb-4 flex items-start justify-between gap-4">
       <slot name="header">
         <div>
-          <h2 class="text-xl font-semibold">
+          <h2 class="text-xl font-semibold tracking-tight">
             {{ title }}
           </h2>
           <p

@@ -1,16 +1,20 @@
 <template>
-  <div class="text-center py-12 px-6 bg-neutral-50 rounded-lg border-2 border-dashed border-neutral-300">
-    <UIcon
+  <div class="text-center py-12 px-6 rounded-xl bg-neutral-50/60 ring-1 ring-inset ring-neutral-200 dark:bg-neutral-800/40 dark:ring-neutral-700/60">
+    <div
       v-if="icon"
-      :name="icon"
-      class="mx-auto h-12 w-12 text-neutral-400"
-    />
-    <h3 class="mt-2 text-lg font-semibold text-neutral-900">
+      class="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-white text-neutral-400 shadow-sm ring-1 ring-inset ring-neutral-200 dark:bg-neutral-800 dark:text-neutral-500 dark:ring-neutral-700"
+    >
+      <UIcon
+        :name="icon"
+        class="h-6 w-6"
+      />
+    </div>
+    <h3 class="mt-3 text-lg font-semibold tracking-tight text-neutral-900 dark:text-white">
       {{ title }}
     </h3>
     <p
       v-if="description"
-      class="mt-1 text-sm text-neutral-500"
+      class="mx-auto mt-1 max-w-md text-sm text-neutral-500 dark:text-neutral-400"
     >
       {{ description }}
     </p>

@@ -581,9 +581,15 @@ body.dark * {
 }
 
 :root {
-    --ui-border: var(--ui-color-neutral-300);
-    --ui-border-muted: var(--ui-color-neutral-300);
+    --ui-border: var(--ui-color-neutral-200);
+    --ui-border-muted: var(--ui-color-neutral-200);
     --ui-border-accented: var(--ui-color-neutral-300);
+}
+
+:root.dark {
+    --ui-border: var(--ui-color-neutral-700);
+    --ui-border-muted: var(--ui-color-neutral-700);
+    --ui-border-accented: var(--ui-color-neutral-600);
 }
 
 /* Why NoteForms */

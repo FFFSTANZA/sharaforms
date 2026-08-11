@@ -8,7 +8,13 @@
       :icon="icon"
       @click="handleButtonClick"
     >
-      <span ref="labelRef" :class="{ invisible: editing }">{{ displayText }}</span>
+      <!-- While editing, render the live draft (invisibly) so the button re-sizes
+           to the text as you type; visibility:hidden keeps the layout space. -->
+      <span
+        ref="labelRef"
+        :class="{ invisible: editing }"
+        :style="editing ? { whiteSpace: 'nowrap' } : undefined"
+      >{{ editing ? draft : displayText }}</span>
     </open-form-button>
 
     <!-- Pencil affordance (admin preview only) -->
@@ -27,10 +33,12 @@
       contenteditable="true"
       role="textbox"
       spellcheck="false"
-      class="absolute inset-0 z-10 flex items-center justify-center text-center whitespace-nowrap outline-none cursor-text select-text overflow-hidden"
+      class="absolute inset-0 z-10 flex items-center justify-center text-center whitespace-nowrap outline-none cursor-text select-text"
       :style="{ color: editorColor, caretColor: editorColor }"
       @pointerdown.stop
       @click.stop
+      @input="onInput"
+      @paste="handlePaste"
       @keydown.enter.prevent="commit"
       @keydown.esc.prevent="handleEscape"
       @blur="commit"
@@ -98,6 +106,7 @@ const handleButtonClick = (event) => {
 }
 
 const startEdit = () => {
+  if (editing.value) return
   draft.value = displayText.value
   editing.value = true
   cancelled = false
@@ -112,6 +121,38 @@ const startEdit = () => {
     selection.removeAllRanges()
     selection.addRange(range)
   })
+}
+
+// Keep the draft in sync with what the user types. contenteditable does NOT
+// update bound values by itself, so without this the commit() below would
+// read the original text and edits would never be saved.
+const onInput = () => {
+  const el = editor.value
+  if (!el) return
+  draft.value = el.textContent ?? ''
+}
+
+// Insert pasted content as plain text so rich HTML never leaks into the label.
+const handlePaste = (event) => {
+  event.preventDefault()
+  const text = event.clipboardData?.getData('text/plain') ?? ''
+  const el = editor.value
+  if (!el || !text) return
+
+  const selection = window.getSelection()
+  let range = selection?.rangeCount ? selection.getRangeAt(0) : null
+  if (!range) {
+    range = document.createRange()
+    range.selectNodeContents(el)
+  }
+  range.deleteContents()
+  range.insertNode(document.createTextNode(text))
+  range.collapse(false)
+  if (selection) {
+    selection.removeAllRanges()
+    selection.addRange(range)
+  }
+  onInput()
 }
 
 const commit = () => {

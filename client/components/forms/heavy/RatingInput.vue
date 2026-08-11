@@ -4,7 +4,7 @@
       <slot name="label" />
     </template>
 
-    <div class="stars-outer flex flex-col items-center"
+    <div class="stars-outer flex flex-col items-start"
       role="slider"
       :aria-valuemin="0"
       :aria-valuemax="starsCount"
@@ -36,12 +36,16 @@
         </div>
       </div>
 
-      <div
-        v-if="hoverRating > 0 || compVal > 0"
-        class="star-value-pill"
-      >
-        {{ hoverRating > 0 ? hoverRating : compVal }}
-      </div>
+      <Transition name="star-value">
+        <div
+          v-if="hoverRating > 0 || compVal > 0"
+          class="star-value mt-2 flex items-baseline gap-1.5 text-sm text-neutral-400 dark:text-neutral-500"
+          aria-hidden="true"
+        >
+          <span class="font-semibold text-neutral-700 dark:text-neutral-200 tabular-nums">{{ hoverRating > 0 ? hoverRating : compVal }}</span>
+          <span>of {{ starsCount }}</span>
+        </div>
+      </Transition>
     </div>
 
     <template #help>
@@ -192,32 +196,14 @@ export default {
 </script>
 
 <style scoped>
-.star-value-pill {
-  min-width: 1.6rem;
-  height: 1.6rem;
-  margin-top: 0.35rem;
-  padding: 0 0.4rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 9999px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  line-height: 1;
-  color: #fff;
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
-  animation: star-pill-in 0.2s ease-out both;
+.star-value-enter-active,
+.star-value-leave-active {
+  transition: opacity 0.18s ease, transform 0.18s ease;
 }
 
-@keyframes star-pill-in {
-  from {
-    opacity: 0;
-    transform: translateY(-4px) scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+.star-value-enter-from,
+.star-value-leave-to {
+  opacity: 0;
+  transform: translateY(-2px);
 }
 </style>

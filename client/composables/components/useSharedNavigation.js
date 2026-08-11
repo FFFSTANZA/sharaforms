@@ -33,30 +33,31 @@ export const useSharedNavigation = () => {
       active: isActive,
     }
 
-    // Clean, calm navigation items with a subtle hover + soft primary active pill
     const customClasses = ['group']
 
-    if (baseItem.color === 'primary') {
-      customClasses.push('hover:bg-primary-50/60')
+    if (isActive) {
+      // Active item: clean soft primary pill rendered by Nuxt UI's native
+      // activeVariant (no overlapping data-active hacks).
+      baseItem.color = 'primary'
+      baseItem.activeVariant = 'soft'
+      customClasses.push('font-medium')
+      baseItem.ui = {
+        ...baseItem.ui,
+        leadingIcon: 'text-primary-600 h-3.5 w-3.5',
+      }
+    } else if (baseItem.color === 'primary') {
+      // Highlighted CTA (Upgrade, What's new): subtle tint, not an active pill
+      customClasses.push('hover:bg-primary-50/70')
       baseItem.ui = {
         ...baseItem.ui,
         leadingIcon: 'text-primary-500 group-hover:text-primary-600 h-3.5 w-3.5',
       }
     } else {
+      // Default neutral item
       customClasses.push('hover:bg-neutral-100')
       baseItem.ui = {
         ...baseItem.ui,
         leadingIcon: 'text-neutral-400 group-hover:text-neutral-600 h-3.5 w-3.5',
-      }
-    }
-
-    if (isActive) {
-      customClasses.push(
-        'data-[active=true]:bg-primary-50/90 data-[active=true]:text-primary-800 data-[active=true]:font-medium'
-      )
-      baseItem.ui = {
-        ...baseItem.ui,
-        leadingIcon: 'text-primary-600 h-3.5 w-3.5',
       }
     }
 

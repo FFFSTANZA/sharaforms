@@ -86,18 +86,18 @@ const tooltipText = computed(() => {
 
 // Dynamic tag classes based on tier
 const tagClasses = computed(() => {
-  const base = 'px-2 text-xs uppercase inline rounded-full font-semibold cursor-pointer'
+  const base = 'px-2 py-0.5 text-[10px] uppercase tracking-wide inline-flex rounded-full font-semibold ring-1 ring-inset cursor-pointer'
 
   switch (displayTier.value) {
     case 'self_hosted':
-      return `${base} bg-emerald-600 text-white`
+      return `${base} bg-emerald-50 text-emerald-700 ring-emerald-200 dark:bg-emerald-500/15 dark:text-emerald-300 dark:ring-emerald-500/30`
     case 'enterprise':
-      return `${base} bg-purple-600 text-white`
+      return `${base} bg-purple-50 text-purple-700 ring-purple-200 dark:bg-purple-500/15 dark:text-purple-300 dark:ring-purple-500/30`
     case 'business':
-      return `${base} bg-orange-500 text-white`
+      return `${base} bg-orange-50 text-orange-700 ring-orange-200 dark:bg-orange-500/15 dark:text-orange-300 dark:ring-orange-500/30`
     case 'pro':
     default:
-      return `${base} bg-blue-500 text-white`
+      return `${base} bg-blue-50 text-blue-700 ring-blue-200 dark:bg-blue-500/15 dark:text-blue-300 dark:ring-blue-500/30`
   }
 })
 

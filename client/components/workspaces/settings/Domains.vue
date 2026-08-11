@@ -74,7 +74,7 @@
           />
         </div>
       </div>
-      <div v-else class="max-w-sm rounded-md border border-dashed border-neutral-300 p-4 text-center">
+      <div v-else class="max-w-sm rounded-xl border border-neutral-200 bg-neutral-50/50 p-4 text-center">
         <p class="text-sm text-neutral-500">
           No custom domains added yet.
         </p>
