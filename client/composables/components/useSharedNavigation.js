@@ -21,7 +21,7 @@ export const useSharedNavigation = () => {
     activeVariant: 'soft',
     color: 'neutral',
     block: true,
-    size: 'sm',
+    size: 'md',
   }
 
   // Helper function to apply defaults to navigation items
@@ -43,21 +43,21 @@ export const useSharedNavigation = () => {
       customClasses.push('font-medium')
       baseItem.ui = {
         ...baseItem.ui,
-        leadingIcon: 'text-primary-600 h-3.5 w-3.5',
+        leadingIcon: 'text-primary-600 h-4 w-4',
       }
     } else if (baseItem.color === 'primary') {
       // Highlighted CTA (Upgrade, What's new): subtle tint, not an active pill
       customClasses.push('hover:bg-primary-50/70')
       baseItem.ui = {
         ...baseItem.ui,
-        leadingIcon: 'text-primary-500 group-hover:text-primary-600 h-3.5 w-3.5',
+        leadingIcon: 'text-primary-500 group-hover:text-primary-600 h-4 w-4',
       }
     } else {
       // Default neutral item
       customClasses.push('hover:bg-neutral-100')
       baseItem.ui = {
         ...baseItem.ui,
-        leadingIcon: 'text-neutral-400 group-hover:text-neutral-600 h-3.5 w-3.5',
+        leadingIcon: 'text-neutral-400 group-hover:text-neutral-600 h-4 w-4',
       }
     }
 
@@ -80,7 +80,7 @@ export const useSharedNavigation = () => {
           color: hasNewChanges.value ? 'primary' : 'neutral',
             trailingIcon: hasNewChanges.value ? 'i-heroicons:star' : undefined,
           ui: {
-            trailingIcon: 'text-blue-500 h-3.5 w-3.5'
+            trailingIcon: 'text-blue-500 h-4 w-4'
           },
           onClick: openChangelog
         })] : []),

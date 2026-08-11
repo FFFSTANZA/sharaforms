@@ -41,7 +41,7 @@
         <!-- Section Title (if exists) -->
         <h3 
           v-if="section.name"
-          class="select-none text-[11px] font-semibold uppercase tracking-wider text-neutral-400/90 mb-1.5 px-2.5"
+          class="select-none text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2 px-3"
         >
           {{ section.name }}
         </h3>
@@ -75,18 +75,18 @@
                 <p class="text-sm font-medium text-neutral-900 truncate">
                   {{ user.name }}
                 </p>
-                <p class="text-[11px] text-neutral-400 truncate">
+                <p class="text-xs text-neutral-400 truncate">
                   {{ user.email }}
                 </p>
               </div>
               <UIcon
                 name="i-lucide-chevron-up"
-                class="h-3.5 w-3.5 shrink-0 text-neutral-400 group-hover:text-neutral-500"
+                class="h-4 w-4 shrink-0 text-neutral-400 group-hover:text-neutral-500"
               />
             </button>
           </template>
         </UserDropdown>
-        <p class="text-center text-[11px] text-neutral-400">
+        <p class="text-center text-xs text-neutral-400">
           <NuxtLink class="font-semibold hover:text-neutral-500" :to="{ name: 'home' }">
             SharaForms
           </NuxtLink>

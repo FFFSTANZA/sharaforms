@@ -4,7 +4,7 @@
     <FormSidebar :form="form" :loading="isLoading" />
     
     <!-- Main content area -->
-    <main class="flex-1 sm:pl-58 overflow-hidden">
+    <main class="flex-1 sm:pl-60 overflow-hidden">
       <div class="flex flex-col h-full">
         <!-- Loading State -->
         <div v-if="isLoading || !isFormFinished" class="flex-1 bg-white">
