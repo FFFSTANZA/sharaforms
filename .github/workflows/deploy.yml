@@ -85,6 +85,8 @@ jobs:
             NUXT_PUBLIC_PRIVACY_POLICY_PAGE_ID=${{ secrets.NUXT_PUBLIC_PRIVACY_POLICY_PAGE_ID }}
             NUXT_PUBLIC_TERMS_CONDITIONS_PAGE_ID=${{ secrets.NUXT_PUBLIC_TERMS_CONDITIONS_PAGE_ID }}
             NUXT_PUBLIC_GOOGLE_ANALYTICS_CODE=${{ secrets.NUXT_PUBLIC_GOOGLE_ANALYTICS_CODE }}
+            NUXT_PUBLIC_POSTHOG_KEY=${{ secrets.NUXT_PUBLIC_POSTHOG_KEY }}
+            NUXT_PUBLIC_POSTHOG_HOST=${{ secrets.NUXT_PUBLIC_POSTHOG_HOST }}
           tags: |
             ghcr.io/${{ env.GHCR_OWNER }}/sharaforms/ui:latest
             ghcr.io/${{ env.GHCR_OWNER }}/sharaforms/ui:${{ github.sha }}

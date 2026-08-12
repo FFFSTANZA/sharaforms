@@ -4,13 +4,15 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\OAuthRedirectRequest;
+use App\Service\OAuth\OAuthContextService;
 use App\Service\OAuth\OAuthFlowOrchestrator;
 use Illuminate\Http\Request;
 
 class OAuthController extends Controller
 {
     public function __construct(
-        private OAuthFlowOrchestrator $flowOrchestrator
+        private OAuthFlowOrchestrator $flowOrchestrator,
+        private OAuthContextService $contextService
     ) {
     }
 
@@ -19,12 +21,15 @@ class OAuthController extends Controller
      */
     public function redirect(OAuthRedirectRequest $request, string $provider)
     {
-        return response()->json(
-            $this->flowOrchestrator->processRedirect(
-                $provider,
-                $request->validated()
-            )
+        $result = $this->flowOrchestrator->processRedirect(
+            $provider,
+            $request->validated()
         );
+
+        // Bind the flow to this browser via a SameSite=Lax double-submit cookie.
+        return response()
+            ->json($result)
+            ->withCookie($this->contextService->issueStateCookie($result['state']));
     }
 
     /**

@@ -118,6 +118,13 @@ onUnmounted(() => {
 
 // Handle social login completion
 const handleSocialLogin = (isNewUser = false) => {
+  // This component is mounted globally (app.vue), so without this gate it would also
+  // react to every login-complete meant for the standalone /login and /register pages,
+  // causing a duplicate success toast and a stray AFTER_LOGIN delivery.
+  if (!appStore.isUnauthorizedError && !appStore.quickLoginModal && !appStore.quickRegisterModal) {
+    return
+  }
+
   // This function is only called for social logins, so we refresh tokens
   const authStore = useAuthStore()
   const tokenValue = useCookie(AUTH_COOKIE_NAME).value ?? useCookie(LEGACY_AUTH_COOKIE_NAME).value
@@ -162,8 +169,9 @@ const afterQuickLogin = () => {
   // Show success alert
   useAlert().success("Successfully logged in!")
   
-  // Use the window message for after-login instead of emitting the event
-  afterLoginMessage.send(window, { useMessageChannel: false })
+  // Use the window message for after-login instead of emitting the event.
+  // Fire-and-forget: don't wait up to 500ms for an acknowledgment that isn't needed.
+  afterLoginMessage.send(window, { useMessageChannel: false, waitForAcknowledgment: false })
 }
 
 const logout = () => {

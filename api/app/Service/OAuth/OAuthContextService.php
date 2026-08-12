@@ -3,6 +3,7 @@
 namespace App\Service\OAuth;
 
 use Illuminate\Support\Facades\Cache;
+use Symfony\Component\HttpFoundation\Cookie;
 
 /**
  * OAuthContextService
@@ -22,6 +23,13 @@ class OAuthContextService
     private const CACHE_TTL_MINUTES = 5;
     private const REDIRECT_CONTEXT_PREFIX = 'oauth-context:state:';
     private const WIDGET_CONTEXT_PREFIX = 'oauth-context:widget:';
+
+    /**
+     * Name of the double-submit state cookie issued on /oauth/connect.
+     * The cookie binds the initiated OAuth flow to the browser that started it,
+     * preventing cross-site forged logins from reusing a leaked state token.
+     */
+    public const STATE_COOKIE_NAME = 'oauth_state';
 
     /**
      * Store OAuth context with a unique state token
@@ -106,6 +114,44 @@ class OAuthContextService
     {
         $key = self::WIDGET_CONTEXT_PREFIX . session()->getId();
         Cache::forget($key);
+    }
+
+    /**
+     * Issue the double-submit state cookie for an OAuth flow.
+     *
+     * The cookie carries the same state token that is embedded in the
+     * authorization URL. On callback, the token must match both the cached
+     * context and this cookie (see stateCookieMatches) before the
+     * authorization code is exchanged.
+     */
+    public function issueStateCookie(string $stateToken, int $minutes = 5): Cookie
+    {
+        return new Cookie(
+            name: self::STATE_COOKIE_NAME,
+            value: $stateToken,
+            expire: now()->addMinutes($minutes)->getTimestamp(),
+            path: '/',
+            domain: null,
+            secure: (bool) config('session.secure', false),
+            httpOnly: true,
+            raw: false,
+            sameSite: (string) config('session.same_site', 'lax'),
+        );
+    }
+
+    /**
+     * Verify the oauth_state cookie matches the given state token.
+     *
+     * Uses hash_equals to prevent timing attacks. Returns false when the
+     * cookie is absent, non-string, or does not match.
+     */
+    public function stateCookieMatches(string $stateToken): bool
+    {
+        $cookieValue = request()->cookie(self::STATE_COOKIE_NAME);
+
+        return is_string($cookieValue)
+            && $cookieValue !== ''
+            && hash_equals($stateToken, $cookieValue);
     }
 
     /**

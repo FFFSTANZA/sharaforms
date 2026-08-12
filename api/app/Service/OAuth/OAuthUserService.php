@@ -75,7 +75,14 @@ class OAuthUserService
         // Retrieve UTM data from context service (works for both redirect and widget flows)
         // For redirect flows: gets from state token
         // For widget flows: gets from session context
-        $utmData = $this->contextService->getUtmData() ?? $this->contextService->getWidgetContext()['utm_data'] ?? null;
+        $utmData = $this->contextService->getUtmData();
+
+        if ($utmData === null) {
+            // getWidgetContext() is null for redirect-based flows, so read the
+            // widget UTM data defensively to avoid a null offset access.
+            $widgetContext = $this->contextService->getWidgetContext();
+            $utmData = $widgetContext['utm_data'] ?? null;
+        }
 
         $user = $this->userFactory->createVerifiedExternalUser(
             name: $userData['name'],

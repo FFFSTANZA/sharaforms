@@ -136,7 +136,15 @@ onMounted(async () => {
   }, { useMessageChannel: false })
 })
 
+// Guard against a duplicate AFTER_LOGIN delivery (e.g. popup retry) triggering the
+// form save twice within a short window.
+let lastLoggedInAt = 0
+
 const afterLogin = () => {
+  const now = Date.now()
+  if (now - lastLoggedInAt < 800) return
+  lastLoggedInAt = now
+
   isGuest.value = false
   invalidateAll() // Refetch all workspace queries
   setTimeout(() => {

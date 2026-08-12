@@ -276,9 +276,8 @@ const handleLoginComplete = (event) => {
   )
 
   if (props.isQuick) {
-    // Quick flows are completed by QuickRegister (modal close + after-login message)
-    const afterLoginMessage = useWindowMessage(WindowMessageTypes.AFTER_LOGIN)
-    afterLoginMessage.send(window)
+    // Quick flows are completed by QuickRegister (modal close + after-login message).
+    // Sending AFTER_LOGIN here too would double-deliver it and cause duplicate saves.
     return
   }
 

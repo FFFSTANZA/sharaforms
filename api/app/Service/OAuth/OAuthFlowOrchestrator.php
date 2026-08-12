@@ -111,15 +111,33 @@ class OAuthFlowOrchestrator
             return response()->json(['error' => "Invalid OAuth provider: {$provider}"], 400);
         }
 
-        // Get user data from OAuth provider
-        $userData = $this->userDataService->extractFromRedirect($providerService);
-
-        // Get context using state token from OAuth callback
+        // Get context using state token from OAuth callback.
+        // The state token is validated BEFORE any provider request is made.
         $stateToken = $params['state'] ?? null;
         $context = $this->contextService->getContext($stateToken);
 
         if (!$context) {
             return response()->json(['error' => 'OAuth context expired or invalid state'], 419);
+        }
+
+        // Double-submit cookie binding: the state token must also match the
+        // oauth_state cookie issued by /oauth/connect. This prevents a
+        // cross-site forged callback from reusing a leaked state token.
+        if (!$this->contextService->stateCookieMatches($stateToken)) {
+            return response()->json(['error' => 'OAuth state validation failed'], 419);
+        }
+
+        // Require the authorization code before contacting the provider.
+        if (empty($params['code'])) {
+            return response()->json(['error' => 'Missing authorization code'], 400);
+        }
+
+        // Get user data from OAuth provider (guarded so provider/network
+        // failures surface as a clean 4xx instead of an unhandled 500).
+        try {
+            $userData = $this->userDataService->extractFromRedirect($providerService);
+        } catch (\Throwable $e) {
+            return response()->json(['error' => 'OAuth authorization failed. Please try again.'], 400);
         }
 
         $intent = $context['intent'];

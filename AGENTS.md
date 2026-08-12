@@ -283,3 +283,21 @@ Intermittent Google sign-in failures: after choosing account/Continue the opener
 ### Gotchas
 - Route names in marketing pages are obfuscated to `'n'` at build — don't grep them for truth; `forms-create` is the standalone builder, guest mode is a separate `forms/create/guest.vue` child.
 - The OAuth callback checks `window.opener && !window.opener.closed` — tab-opened callbacks correctly bypass the popup path.
+
+## Session: 2026-08-12 — OAuth Login-CSRF State Cookie + Callback Hardening (api/)
+
+### Fixes (implemented + tested, NOT committed)
+1. **Login-CSRF binding (double-submit cookie)** — `OAuthContextService` gains `STATE_COOKIE_NAME='oauth_state'`, `issueStateCookie(string $stateToken, int $minutes=5): Cookie` (HttpOnly, path `/`, host-only, secure=`config('session.secure')`, SameSite=Lax via `config('session.same_site')`), and `stateCookieMatches(string $stateToken): bool` (non-empty string + `hash_equals`). `OAuthController::redirect` now injects `OAuthContextService` and attaches `->withCookie(...)` to the `/oauth/connect/{provider}` JSON response. Cookie is host-only → NOT sent to Google during popup top-level navigation; `EncryptCookies` in the `api` group encrypts it transparently.
+2. **State validated before code exchange** — `OAuthFlowOrchestrator::processCallback` reordered: provider → `getContext($state)` null → 419 → `stateCookieMatches()` false → 419 → `empty($params['code'])` → 400 "Missing authorization code" → `extractFromRedirect()` wrapped in `try/catch (\Throwable)` → 400 (was: code exchange ran FIRST with no guards; missing code = unhandled 500).
+3. **#4 re-diagnosis (earlier mis-diagnosis)** — widget UTM is NOT lost: the `api` group DOES include `StartSession` (`Kernel.php:89-95`), so session context works. Real latent defect fixed: `OAuthUserService` line ~78 did `getUtmData() ?? getWidgetContext()['utm_data'] ?? null` → PHP 8 null-offset warning when widget context is null (redirect flows). Now null-safe (`$widgetContext['utm_data'] ?? null`).
+
+### Tests
+- New `tests/Feature/OAuth/OAuthCallbackSecurityTest.php` — connect sets `oauth_state` cookie (presence + value), callback: no state → 419, unknown state → 419, valid context but no cookie → 419, cookie mismatch → 419, matching cookie but missing code → 400. Uses `withCredentials()->withCookie()` (EncryptCookies round-trips; `postJson` drops cookies unless `withCredentials`).
+- New `tests/Feature/OAuth/OAuthStateCookieTest.php` — `issueStateCookie` attrs + `stateCookieMatches` true/mismatch/absent/empty. Bound via `app()->instance('request', Request::create('/'))` (Feature group; Unit group has no app).
+- Pest gotcha: file-scope helper functions are plain functions, not methods — call `startFlow()`, not `$this->startFlow()`.
+- Run: `docker exec -u www-data sharaforms-api php vendor/bin/pest tests/Feature/OAuth tests/Unit/Service/OAuth` (after `config:clear`) → 64 passed (145 assertions). `php artisan test` is NOT defined in this container image — use `php vendor/bin/pest`.
+
+### Notes
+- `OAuthController::redirect` is the ONLY place issuing the cookie; widget flow (`processWidgetCallback`) is unaffected (no cookie required).
+- Multi-tab clobber of `oauth_state` is an accepted standard double-submit limitation; client `activeFlows` map mitigates double-clicks.
+- Pre-existing uncommitted work untouched: deploy.yml, LoginForm/QuickRegister/RegisterForm.vue, file-uploads.js, guest.vue, Dockerfile.client, oauth-popup-flow.spec.ts.
