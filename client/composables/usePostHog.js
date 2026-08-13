@@ -10,7 +10,8 @@ export function usePostHog () {
   if (!posthogClient && posthogKey && !process.server) {
     posthogClient = posthog.init(posthogKey, {
       api_host: posthogHost,
-      capture_pageview: false,
+      capture_pageview: true,
+      install_web_analytics: true,
     })
   }
 
