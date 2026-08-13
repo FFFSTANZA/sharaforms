@@ -185,7 +185,13 @@ useHead({
   link: [
     {
       rel: 'icon',
+      type: 'image/x-icon',
+      href: '/favicon.ico'
+    },
+    {
+      rel: 'icon',
       type: 'image/png',
+      sizes: '1254x1254',
       href: '/img/sharaforms-logo.png'
     },
     {
