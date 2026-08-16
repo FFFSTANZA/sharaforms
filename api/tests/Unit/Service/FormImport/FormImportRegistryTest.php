@@ -181,6 +181,14 @@ describe('AbstractImporter', function () {
         expect($importer->exposedExtractNextData($html))->toBe(['form' => ['id' => 1]]);
     });
 
+    it('extracts __NEXT_DATA__ when attributes appear in reversed order', function () use ($makeImporter) {
+        $html = '<html><body><script type="application/json" id="__NEXT_DATA__">{"form":{"id":2}}</script></body></html>';
+
+        $importer = $makeImporter();
+
+        expect($importer->exposedExtractNextData($html))->toBe(['form' => ['id' => 2]]);
+    });
+
     it('throws FormImportException when __NEXT_DATA__ is missing', function () use ($makeImporter) {
         $importer = $makeImporter();
 

@@ -279,7 +279,7 @@ const sourceConfigs = {
     id: 'typeform',
     label: 'Typeform',
     domain: 'typeform.com/to/...',
-    placeholder: 'https://yourname.typeform.com/to/FORM_ID.',
+    placeholder: 'https://yourname.typeform.com/to/FORM_ID',
     icon: 'i-simple-icons-typeform',
     iconClass: 'h-4 w-4 text-[#262627]',
     iconWrapClass: 'border-neutral-200 bg-white text-neutral-950',
@@ -288,7 +288,7 @@ const sourceConfigs = {
     id: 'tally',
     label: 'Tally',
     domain: 'tally.so/r/...',
-    placeholder: 'https://yourname.typeform.com/to/FORM_ID.',
+    placeholder: 'https://tally.so/r/FORM_ID',
     icon: 'sharaforms:tally',
     iconClass: 'h-4 w-4 text-neutral-600',
     iconWrapClass: 'border-neutral-200 bg-neutral-100 text-neutral-600',
@@ -297,7 +297,7 @@ const sourceConfigs = {
     id: 'fillout',
     label: 'Fillout',
     domain: 'fillout.com/t/...',
-    placeholder: 'https://yourname.typeform.com/to/FORM_ID.',
+    placeholder: 'https://company.fillout.com/t/FORM_ID',
     icon: 'i-simple-icons-fillout',
     iconClass: 'h-4 w-4 text-neutral-600',
     iconWrapClass: 'border-neutral-200 bg-neutral-100 text-neutral-600',
@@ -306,7 +306,7 @@ const sourceConfigs = {
     id: 'google_forms',
     label: 'Google Forms',
     domain: 'docs.google.com/forms/d/...',
-    placeholder: 'https://yourname.typeform.com/to/FORM_ID.',
+    placeholder: 'https://docs.google.com/forms/d/FORM_ID/edit',
     icon: 'i-simple-icons-googleforms',
     iconClass: 'h-4 w-4 text-neutral-600',
     iconWrapClass: 'border-neutral-200 bg-neutral-100 text-neutral-600',
@@ -538,7 +538,7 @@ const submitImport = () => {
 const connectProvider = () => {
   connecting.value = true
   oAuth.connect('google', false, true, true, { intent: 'forms_import' })
-    .catch(() => {
+    .finally(() => {
       connecting.value = false
     })
 }
@@ -549,7 +549,7 @@ function issueMessage(reason) {
   }
 
   if (reason === 'google_published_url' || reason === 'google_edit_url') {
-    return 'Use the Google Forms edit URL: https://yourname.typeform.com/to/FORM_ID.'
+    return 'Use a Google Forms URL like https://docs.google.com/forms/d/FORM_ID/edit.'
   }
 
   if (reason === 'google_unavailable') {

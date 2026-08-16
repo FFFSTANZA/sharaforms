@@ -69,7 +69,9 @@ abstract class AbstractImporter implements FormImporterInterface
 
     protected function extractNextData(string $html): array
     {
-        $pattern = '/<script\s+id="__NEXT_DATA__"\s+type="application\/json"[^>]*>(.*?)<\/script>/si';
+        // Attribute order is not guaranteed by the spec — use lookaheads so
+        // id="__NEXT_DATA__" and type="application/json" can appear in any order.
+        $pattern = '/<script\b(?=[^>]*\bid="__NEXT_DATA__")(?=[^>]*\btype="application\/json")[^>]*>(.*?)<\/script>/si';
 
         if (!preg_match($pattern, $html, $matches)) {
             throw new FormImportException(

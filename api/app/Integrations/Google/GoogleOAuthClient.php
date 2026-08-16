@@ -34,14 +34,34 @@ class GoogleOAuthClient
     public function refreshToken(): static
     {
         if (! $this->provider->refresh_token) {
-            return $this;
+            throw new GoogleOAuthException(
+                'Google account is missing a refresh token. Reconnect the account to grant offline access.',
+                GoogleOAuthException::MISSING_REFRESH_TOKEN
+            );
         }
 
-        $this->client->refreshToken($this->provider->refresh_token);
+        try {
+            $this->client->refreshToken($this->provider->refresh_token);
+        } catch (\GuzzleHttp\Exception\GuzzleException $e) {
+            throw new GoogleOAuthException(
+                'Could not reach Google to refresh the access token. Check your connection and try again.',
+                GoogleOAuthException::NETWORK_ERROR,
+                $e
+            );
+        } catch (\Throwable $e) {
+            throw new GoogleOAuthException(
+                'Google rejected the refresh token. Reconnect the account to renew access.',
+                GoogleOAuthException::INVALID_GRANT,
+                $e
+            );
+        }
 
         $token = $this->client->getAccessToken();
-        if (! $token || ! isset($token['access_token'])) {
-            return $this;
+        if (! is_array($token) || empty($token['access_token'])) {
+            throw new GoogleOAuthException(
+                'Google did not return a usable access token. Reconnect the account to renew access.',
+                GoogleOAuthException::INVALID_GRANT
+            );
         }
 
         $updateData = ['access_token' => $token['access_token']];

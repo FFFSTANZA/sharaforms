@@ -3,6 +3,7 @@
 namespace App\Service\FormImport\Importers;
 
 use App\Integrations\Google\GoogleOAuthClient;
+use App\Integrations\Google\GoogleOAuthException;
 use App\Models\OAuthProvider;
 use App\Service\FormImport\FormImportException;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +19,7 @@ class GoogleFormsImporter extends AbstractImporter
 
         $formId = $this->extractFormId($importData['url'] ?? '');
         if (! $formId) {
-            throw new FormImportException('Could not extract a form ID from the URL. Please use the edit URL (docs.google.com/forms/d/FORM_ID/edit).');
+            throw new FormImportException('Could not extract a form ID from the URL. Please use a Google Forms URL like docs.google.com/forms/d/FORM_ID/edit.');
         }
 
         $formData = $this->fetchForm($formId, $provider);
@@ -53,6 +54,8 @@ class GoogleFormsImporter extends AbstractImporter
     {
         try {
             return (new GoogleOAuthClient($provider))->getAccessTokenString();
+        } catch (GoogleOAuthException $e) {
+            throw new FormImportException($e->getMessage());
         } catch (\RuntimeException) {
             throw new FormImportException('Google account not found or token expired. Please reconnect your Google account.');
         }
@@ -65,13 +68,14 @@ class GoogleFormsImporter extends AbstractImporter
 
     private function extractFormId(string $url): ?string
     {
-        // Match: /forms/d/{formId}/...
-        if (preg_match('#/forms/d/([a-zA-Z0-9_-]+)#', $url, $matches)) {
-            // Reject published IDs (/d/e/...)
-            if ($matches[1] === 'e') {
-                return null;
-            }
+        // Published URLs use /forms/d/e/{formId}/viewform — "e" is a literal
+        // segment, so look one past it.
+        if (preg_match('#/forms/d/e/([a-zA-Z0-9_-]+)#', $url, $matches)) {
+            return $matches[1];
+        }
 
+        // Edit URLs: /forms/d/{formId}/...
+        if (preg_match('#/forms/d/([a-zA-Z0-9_-]+)#', $url, $matches)) {
             return $matches[1];
         }
 
@@ -92,9 +96,11 @@ class GoogleFormsImporter extends AbstractImporter
 
         if ($response->status() === 401 && $provider->refresh_token) {
             $oauth = new GoogleOAuthClient($provider->fresh());
-            $oauth->refreshToken();
             try {
+                $oauth->refreshToken();
                 $accessToken = $oauth->getAccessTokenString();
+            } catch (GoogleOAuthException $e) {
+                throw new FormImportException($e->getMessage());
             } catch (\RuntimeException) {
                 throw new FormImportException(
                     'Google authentication expired or insufficient permissions. Please reconnect your Google account.'

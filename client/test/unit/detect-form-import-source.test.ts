@@ -61,18 +61,18 @@ describe('detectFormImportSource', () => {
     })
   })
 
-  it('flags published Google Forms URLs', () => {
+  it('detects published Google Forms URLs', () => {
     expect(detectFormImportSource('https://docs.google.com/forms/d/e/1abc123/viewform')).toEqual({
       source: 'google_forms',
       normalizedUrl: 'https://docs.google.com/forms/d/e/1abc123/viewform',
-      reason: 'google_published_url',
+      reason: null,
     })
   })
 
   it('flags Google Forms URLs without a form id', () => {
-    expect(detectFormImportSource('https://docs.google.com/forms/')).toEqual({
+    expect(detectFormImportSource('https://docs.google.com/forms/d/')).toEqual({
       source: 'google_forms',
-      normalizedUrl: 'https://docs.google.com/forms/',
+      normalizedUrl: 'https://docs.google.com/forms/d/',
       reason: 'google_edit_url',
     })
   })

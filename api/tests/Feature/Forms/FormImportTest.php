@@ -1045,19 +1045,25 @@ describe('GoogleFormsImporter', function () {
         ]);
     })->throws(\App\Service\FormImport\FormImportException::class);
 
-    it('rejects published form URLs during import', function () {
+    it('imports published form URLs during import', function () {
         $user = $this->actingAsUser();
         $provider = OAuthProvider::factory()->create([
             'user_id' => $user->id,
             'access_token' => 'test-token',
         ]);
 
+        Http::fake([
+            'forms.googleapis.com/v1/forms/*' => Http::response(googleFormsFixture(), 200),
+        ]);
+
         $importer = app(\App\Service\FormImport\Importers\GoogleFormsImporter::class);
-        $importer->import([
+        $result = $importer->import([
             'url' => 'https://docs.google.com/forms/d/e/published123/viewform',
             'oauth_provider_id' => $provider->id,
         ]);
-    })->throws(\App\Service\FormImport\FormImportException::class);
+
+        expect($result['title'])->toBe('Google Test Form');
+    });
 });
 
 // ---------------------------------------------------------------------------

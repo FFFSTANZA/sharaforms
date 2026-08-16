@@ -38,15 +38,12 @@ export function detectFormImportSource(url) {
   }
 
   if (host === 'docs.google.com' && path.startsWith('/forms/')) {
-    if (/\/forms\/d\/e\//.test(path)) {
-      return { source: 'google_forms', normalizedUrl, reason: 'google_published_url' }
+    // Accept edit URLs (/forms/d/{id}/...) and published URLs (/forms/d/e/{id}/viewform).
+    if (/\/forms\/d\/e\/[a-zA-Z0-9_-]+/.test(path) || /\/forms\/d\/[a-zA-Z0-9_-]+(?:\/|$)/.test(path)) {
+      return { source: 'google_forms', normalizedUrl, reason: null }
     }
 
-    if (!/\/forms\/d\/[a-zA-Z0-9_-]+/.test(path)) {
-      return { source: 'google_forms', normalizedUrl, reason: 'google_edit_url' }
-    }
-
-    return { source: 'google_forms', normalizedUrl, reason: null }
+    return { source: 'google_forms', normalizedUrl, reason: 'google_edit_url' }
   }
 
   if (host === 'typeform.com' || host.endsWith('.typeform.com')) {
