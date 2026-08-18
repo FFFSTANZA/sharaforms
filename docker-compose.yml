@@ -15,6 +15,9 @@ services:
       DB_USERNAME: ${DB_USERNAME:-forge}
       DB_PASSWORD: ${DB_PASSWORD:-forge}
       DB_CONNECTION: ${DB_CONNECTION:-pgsql}
+      # Google Drive Picker (browser API key, referrer-restricted; public by design)
+      GOOGLE_PICKER_API_KEY: ${GOOGLE_PICKER_API_KEY:-AIzaSyApglQOcqcECb-oB0D1Hmq8To-E9y8E49s}
+      GOOGLE_PICKER_APP_ID: ${GOOGLE_PICKER_APP_ID:-775268936981}
       # PHP Configuration
       PHP_MEMORY_LIMIT: "1G"
       PHP_MAX_EXECUTION_TIME: "600"
