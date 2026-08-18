@@ -954,14 +954,36 @@ describe('GoogleFormsImporter', function () {
         expect($satisfaction['required'])->toBeTrue();
     });
 
+    it('maps a radio "Other" option to a regular option', function () {
+        Http::fake([
+            'docs.google.com/*' => Http::response(
+                googleFormsPublicHtmlFixture([
+                    'items' => [[14, 'Satisfaction', '', 2, [[15, [['Good', 0], ['', 0, null, null, 1], ['Bad', 0]], 0]]]],
+                ]),
+                200
+            ),
+        ]);
+
+        $importer = app(\App\Service\FormImport\Importers\GoogleFormsImporter::class);
+        $result = $importer->import([
+            'url' => 'https://docs.google.com/forms/d/1abc123/edit',
+        ]);
+
+        $satisfaction = collect($result['properties'])->firstWhere('name', 'Satisfaction');
+        $options = array_column($satisfaction['select']['options'], 'name');
+        expect($options)->toBe(['Good', 'Other', 'Bad']);
+    });
+
     it('maps grid questions to matrix', function () {
         Http::fake([
             'docs.google.com/*' => Http::response(
                 googleFormsPublicHtmlFixture([
                     'items' => [[
-                        15, 'Satisfaction', '', 9, [],
-                        [['r1', 'Service'], ['r2', 'Price']],
-                        [['c1', 'Good'], ['c2', 'Bad']],
+                        15, 'Satisfaction', '', 7,
+                        [
+                            [101, [['Good'], ['Bad']], 1, ['Service']],
+                            [102, [['Good'], ['Bad']], 1, ['Price']],
+                        ],
                     ]],
                 ]),
                 200
@@ -979,11 +1001,38 @@ describe('GoogleFormsImporter', function () {
         expect($matrix['columns'])->toBe(['Good', 'Bad']);
     });
 
+    it('maps checkbox grid questions to matrix', function () {
+        Http::fake([
+            'docs.google.com/*' => Http::response(
+                googleFormsPublicHtmlFixture([
+                    'items' => [[
+                        16, 'Features', '', 10,
+                        [
+                            [201, [['Yes'], ['No']], 0, ['Email reports']],
+                            [202, [['Yes'], ['No']], 0, ['SMS alerts']],
+                        ],
+                    ]],
+                ]),
+                200
+            ),
+        ]);
+
+        $importer = app(\App\Service\FormImport\Importers\GoogleFormsImporter::class);
+        $result = $importer->import([
+            'url' => 'https://docs.google.com/forms/d/1abc123/edit',
+        ]);
+
+        $matrix = collect($result['properties'])->firstWhere('type', 'matrix');
+        expect($matrix)->not->toBeNull();
+        expect($matrix['rows'])->toBe(['Email reports', 'SMS alerts']);
+        expect($matrix['columns'])->toBe(['Yes', 'No']);
+    });
+
     it('maps scale questions with labels', function () {
         Http::fake([
             'docs.google.com/*' => Http::response(
                 googleFormsPublicHtmlFixture([
-                    'items' => [[16, 'Rating', '', 5, [[17, null, 0, 1, 5, 'Low', 'High']]]],
+                    'items' => [[16, 'Rating', '', 5, [[17, [['1'], ['2'], ['3'], ['4'], ['5']], 0, ['Low', 'High']]]]],
                 ]),
                 200
             ),
@@ -999,6 +1048,70 @@ describe('GoogleFormsImporter', function () {
         expect($rating['scale_min_value'])->toBe(1);
         expect($rating['scale_max_value'])->toBe(5);
         expect($rating['help'])->toBe('Low → High');
+    });
+
+    it('derives scale range from the point labels', function () {
+        Http::fake([
+            'docs.google.com/*' => Http::response(
+                googleFormsPublicHtmlFixture([
+                    'items' => [[17, 'Effort', '', 5, [[18, [['0'], ['1'], ['2'], ['3'], ['4'], ['5'], ['6'], ['7'], ['8'], ['9'], ['10']], 1, []]]]],
+                ]),
+                200
+            ),
+        ]);
+
+        $importer = app(\App\Service\FormImport\Importers\GoogleFormsImporter::class);
+        $result = $importer->import([
+            'url' => 'https://docs.google.com/forms/d/1abc123/edit',
+        ]);
+
+        $effort = collect($result['properties'])->firstWhere('name', 'Effort');
+        expect($effort['type'])->toBe('scale');
+        expect($effort['scale_min_value'])->toBe(0);
+        expect($effort['scale_max_value'])->toBe(10);
+        expect($effort['required'])->toBeTrue();
+        expect($effort)->not->toHaveKey('help');
+    });
+
+    it('maps date questions (type 9) to a date field', function () {
+        Http::fake([
+            'docs.google.com/*' => Http::response(
+                googleFormsPublicHtmlFixture([
+                    'items' => [[18, 'Delivery date', '', 9, [[19, null, 0]]]],
+                ]),
+                200
+            ),
+        ]);
+
+        $importer = app(\App\Service\FormImport\Importers\GoogleFormsImporter::class);
+        $result = $importer->import([
+            'url' => 'https://docs.google.com/forms/d/1abc123/edit',
+        ]);
+
+        $date = collect($result['properties'])->firstWhere('name', 'Delivery date');
+        expect($date)->not->toBeNull();
+        expect($date['type'])->toBe('date');
+    });
+
+    it('maps section header description into the nf-text block', function () {
+        Http::fake([
+            'docs.google.com/*' => Http::response(
+                googleFormsPublicHtmlFixture([
+                    'items' => [[19, 'About you', 'Please tell us a little about yourself.', 6, null]],
+                ]),
+                200
+            ),
+        ]);
+
+        $importer = app(\App\Service\FormImport\Importers\GoogleFormsImporter::class);
+        $result = $importer->import([
+            'url' => 'https://docs.google.com/forms/d/1abc123/edit',
+        ]);
+
+        $header = collect($result['properties'])->firstWhere('type', 'nf-text');
+        expect($header)->not->toBeNull();
+        expect($header['content'])->toContain('About you');
+        expect($header['content'])->toContain('Please tell us a little about yourself.');
     });
 
     it('throws when the page has no form data', function () {
@@ -1230,7 +1343,7 @@ function googleFormsPublicHtmlFixture(array $overrides = []): string
         'items' => [
             [1, 'Your Name', 'Enter your full name', 0, [[2, null, 1]]],
             [3, 'Department', '', 3, [[4, [['Sales', 0], ['Support', 0], ['Engineering', 0]], 1]]],
-            [5, 'Start date', '', 7, [[6, null, 0]]],
+            [5, 'Start date', '', 9, [[6, null, 0]]],
             [7, 'Comments', '', 1, [[8, null, 0]]],
         ],
     ];

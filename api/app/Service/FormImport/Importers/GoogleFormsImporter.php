@@ -143,7 +143,9 @@ class GoogleFormsImporter extends AbstractImporter
             if ($text !== '') {
                 $content .= '<p><strong>' . e($text) . '</strong></p>';
             }
-            $description = $this->sanitizeText($extra[1] ?? '', 8000);
+            // Google puts the section header's description at item[2]; its
+            // extra slot (item[4]) is null for section headers.
+            $description = $this->sanitizeText($item[2] ?? '', 8000);
             if ($description !== '') {
                 $content .= '<p>' . e($description) . '</p>';
             }
@@ -176,6 +178,12 @@ class GoogleFormsImporter extends AbstractImporter
                     continue;
                 }
                 $label = $this->sanitizeText($option[0] ?? '', 255);
+                // Google flags the "Other" choice with an empty label and
+                // option[4] === 1 — surface it as a regular "Other" option
+                // instead of dropping it with the empty-label filter.
+                if ($label === '' && ($option[4] ?? null) === 1) {
+                    $label = 'Other';
+                }
                 if ($label !== '') {
                     $labels[] = $label;
                 }
@@ -189,9 +197,9 @@ class GoogleFormsImporter extends AbstractImporter
             3 => $this->mapDropdownQuestion($property, $labels),
             4 => $this->mapCheckboxesQuestion($property, $labels),
             5 => $this->mapScaleQuestion($property, $extra),
-            7 => $this->mapDateQuestion($property),
+            7, 10 => $this->mapGridQuestion($item, $typeCode, $required),
             8 => $this->mapTimeQuestion($property),
-            9, 10 => $this->mapGridQuestion($item, $typeCode, $required),
+            9 => $this->mapDateQuestion($property),
             default => $property,
         };
     }
@@ -243,16 +251,33 @@ class GoogleFormsImporter extends AbstractImporter
     private function mapScaleQuestion(array $property, array $extra): array
     {
         $property['type'] = 'scale';
-        $property['scale_min_value'] = (int) ($extra[0][3] ?? 1);
-        $property['scale_max_value'] = (int) ($extra[0][4] ?? 5);
+
+        // Real shape: extra[0] = [entryId, [["1"],["2"],...], required, [lowLabel, highLabel]]
+        $points = $extra[0][1] ?? [];
+        $min = 1;
+        $max = 5;
+        if (is_array($points) && $points !== []) {
+            $first = is_array($points[0] ?? null) ? ($points[0][0] ?? null) : null;
+            $last = is_array($points[count($points) - 1] ?? null) ? ($points[count($points) - 1][0] ?? null) : null;
+            if (is_numeric($first)) {
+                $min = (int) $first;
+            }
+            if (is_numeric($last)) {
+                $max = (int) $last;
+            }
+        }
+
+        $property['scale_min_value'] = $min;
+        $property['scale_max_value'] = $max;
         $property['scale_step_value'] = 1;
 
         if ($property['scale_max_value'] <= $property['scale_min_value']) {
             $property['scale_max_value'] = $property['scale_min_value'] + 5;
         }
 
-        $lowLabel = $this->sanitizeText($extra[0][5] ?? '', 255);
-        $highLabel = $this->sanitizeText($extra[0][6] ?? '', 255);
+        $labels = $extra[0][3] ?? null;
+        $lowLabel = is_array($labels) ? $this->sanitizeText($labels[0] ?? '', 255) : '';
+        $highLabel = is_array($labels) ? $this->sanitizeText($labels[1] ?? '', 255) : '';
         if ($lowLabel !== '' || $highLabel !== '') {
             $property['help'] = trim($lowLabel . ' → ' . $highLabel);
         }
@@ -277,10 +302,37 @@ class GoogleFormsImporter extends AbstractImporter
 
     private function mapGridQuestion(array $item, int $typeCode, bool $required): ?array
     {
-        $rows = $this->extractGridEntries($item[5] ?? null);
-        $columns = $this->extractGridEntries($item[6] ?? null);
+        // Real shape: item[4] (extra) is a list of row entries, one per grid
+        // row. Each entry: [colEntryId, [["col1"],["col2"],...], required,
+        // [rowLabel], ...]. Columns come from the first row; every row carries
+        // the full column list.
+        $entries = $item[4] ?? null;
+        if (! is_array($entries) || $entries === []) {
+            return null;
+        }
 
-        if ($rows === [] && $columns === []) {
+        $rows = [];
+        $columns = [];
+
+        foreach ($entries as $entry) {
+            if (! is_array($entry)) {
+                continue;
+            }
+            $rowLabel = $this->sanitizeText($entry[3][0] ?? '', 255);
+            if ($rowLabel !== '') {
+                $rows[] = $rowLabel;
+            }
+            if ($columns === [] && is_array($entry[1] ?? null)) {
+                foreach ($entry[1] as $column) {
+                    $label = $this->sanitizeText(is_array($column) ? ($column[0] ?? '') : $column, 255);
+                    if ($label !== '' && ! in_array($label, $columns, true)) {
+                        $columns[] = $label;
+                    }
+                }
+            }
+        }
+
+        if ($rows === [] || $columns === []) {
             return null;
         }
 
@@ -295,26 +347,6 @@ class GoogleFormsImporter extends AbstractImporter
             'rows' => $rows,
             'columns' => $columns,
         ];
-    }
-
-    private function extractGridEntries(mixed $entries): array
-    {
-        if (! is_array($entries)) {
-            return [];
-        }
-
-        $out = [];
-        foreach ($entries as $entry) {
-            if (! is_array($entry)) {
-                continue;
-            }
-            $label = $this->sanitizeText($entry[1] ?? $entry[0] ?? '', 255);
-            if ($label !== '') {
-                $out[] = $label;
-            }
-        }
-
-        return $out;
     }
 
     private function attachOptions(array $property, array $labels): array
