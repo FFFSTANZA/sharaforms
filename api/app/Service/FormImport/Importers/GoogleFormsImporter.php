@@ -2,21 +2,12 @@
 
 namespace App\Service\FormImport\Importers;
 
-use App\Integrations\Google\GoogleOAuthClient;
-use App\Integrations\Google\GoogleOAuthException;
-use App\Models\OAuthProvider;
 use App\Service\FormImport\FormImportException;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 
 class GoogleFormsImporter extends AbstractImporter
 {
-    private const GOOGLE_FORMS_API = 'https://forms.googleapis.com/v1/forms/';
-
     public function import(array $importData): array
     {
-        $provider = $this->resolveGoogleProvider($importData);
-
         $formId = $importData['form_id'] ?? null;
         if (! is_string($formId) || $formId === '') {
             $formId = $this->extractFormId($importData['url'] ?? '');
@@ -26,9 +17,9 @@ class GoogleFormsImporter extends AbstractImporter
             throw new FormImportException('Could not extract a form ID from the URL. Please use a Google Forms URL like docs.google.com/forms/d/FORM_ID/edit.');
         }
 
-        $formData = $this->fetchForm($formId, $provider);
+        $html = $this->fetchHtml($this->buildViewformUrl($formId));
 
-        return $this->parseFormData($formData);
+        return $this->parseFormData($this->extractFormData($html));
     }
 
     public function validate(array $importData): bool
@@ -40,43 +31,14 @@ class GoogleFormsImporter extends AbstractImporter
         return parent::validate($importData);
     }
 
-    private function resolveGoogleProvider(array $importData): OAuthProvider
-    {
-        $oauthProviderId = $importData['oauth_provider_id'] ?? null;
-        if (! $oauthProviderId) {
-            throw new FormImportException('Please select a Google account to import from.');
-        }
-
-        $provider = OAuthProvider::where('id', $oauthProviderId)
-            ->where('user_id', Auth::id())
-            ->first();
-
-        if (! $provider || ! $provider->access_token) {
-            throw new FormImportException('Google account not found or token expired. Please reconnect your Google account.');
-        }
-
-        return $provider;
-    }
-
-    /**
-     * Uses the same Google OAuth refresh path as Sheets integrations so stale access tokens are renewed.
-     *
-     * @throws FormImportException
-     */
-    private function googleAccessToken(OAuthProvider $provider): string
-    {
-        try {
-            return (new GoogleOAuthClient($provider))->getAccessTokenString();
-        } catch (GoogleOAuthException $e) {
-            throw new FormImportException($e->getMessage());
-        } catch (\RuntimeException) {
-            throw new FormImportException('Google account not found or token expired. Please reconnect your Google account.');
-        }
-    }
-
     public function allowedDomains(): array
     {
         return ['docs.google.com'];
+    }
+
+    private function buildViewformUrl(string $formId): string
+    {
+        return "https://docs.google.com/forms/d/e/{$formId}/viewform";
     }
 
     private function extractFormId(string $url): ?string
@@ -95,63 +57,40 @@ class GoogleFormsImporter extends AbstractImporter
         return null;
     }
 
-    private function requestGoogleForm(string $formId, string $accessToken)
+    private function extractFormData(string $html): array
     {
-        return Http::timeout(15)
-            ->withToken($accessToken)
-            ->get(self::GOOGLE_FORMS_API . $formId);
-    }
-
-    private function fetchForm(string $formId, OAuthProvider $provider): array
-    {
-        $accessToken = $this->googleAccessToken($provider);
-        $response = $this->requestGoogleForm($formId, $accessToken);
-
-        if ($response->status() === 401 && $provider->refresh_token) {
-            $oauth = new GoogleOAuthClient($provider->fresh());
-            try {
-                $oauth->refreshToken();
-                $accessToken = $oauth->getAccessTokenString();
-            } catch (GoogleOAuthException $e) {
-                throw new FormImportException($e->getMessage());
-            } catch (\RuntimeException) {
-                throw new FormImportException(
-                    'Google authentication expired or insufficient permissions. Please reconnect your Google account.'
-                );
-            }
-            $response = $this->requestGoogleForm($formId, $accessToken);
+        if (! preg_match('/FB_PUBLIC_LOAD_DATA_\s*=\s*(\[.*?\]);/s', $html, $matches)) {
+            throw new FormImportException('Could not find form data in the page. Make sure the form is public and its URL is correct.');
         }
 
-        if ($response->status() === 401 || $response->status() === 403) {
-            throw new FormImportException(
-                'Google authentication expired or insufficient permissions. Please reconnect your Google account.'
-            );
+        $data = json_decode($matches[1], true);
+
+        if (json_last_error() !== JSON_ERROR_NONE || ! is_array($data)) {
+            throw new FormImportException('Failed to parse form data from page.');
         }
 
-        if ($response->status() === 404) {
-            throw new FormImportException('Form not found. Make sure you have access to this Google Form.');
-        }
-
-        if (! $response->successful()) {
-            throw new FormImportException('Failed to fetch Google Form. HTTP status: ' . $response->status());
-        }
-
-        return $response->json();
+        return $data;
     }
 
     private function parseFormData(array $data): array
     {
-        $title = $this->sanitizeText($data['info']['title'] ?? $data['info']['documentTitle'] ?? 'Imported Google Form', 255);
-        $description = $this->sanitizeText($data['info']['description'] ?? '', 8000);
-        $items = $data['items'] ?? [];
+        $title = $this->sanitizeText($data[1][8] ?? 'Imported Google Form', 255);
+        $description = $this->sanitizeText($data[1][0] ?? '', 8000);
+        $items = $data[1][1] ?? [];
 
         $properties = [];
 
-        if ($description != '') {
-            $properties[] = $this->mapTextItem(['description' => $description]);
+        if ($description !== '') {
+            $properties[] = $this->mapTextItem([
+                'title' => '',
+                'description' => $description,
+            ]);
         }
 
         foreach ($items as $item) {
+            if (! is_array($item)) {
+                continue;
+            }
             $mapped = $this->mapItem($item);
             if ($mapped !== null) {
                 $properties[] = $mapped;
@@ -161,198 +100,6 @@ class GoogleFormsImporter extends AbstractImporter
         return [
             'title' => $title,
             'properties' => $properties,
-        ];
-    }
-
-    private function mapItem(array $item): ?array
-    {
-        if (isset($item['questionItem'])) {
-            return $this->mapQuestionItem($item);
-        }
-
-        if (isset($item['questionGroupItem'])) {
-            return $this->mapQuestionGroupItem($item);
-        }
-
-        if (isset($item['textItem'])) {
-            return $this->mapTextItem($item);
-        }
-
-        if (isset($item['pageBreakItem'])) {
-            return $this->mapPageBreak();
-        }
-
-        return null;
-    }
-
-    private function mapQuestionItem(array $item): ?array
-    {
-        $question = $item['questionItem']['question'] ?? [];
-        $title = $this->sanitizeText($item['title'] ?? 'Untitled', 255);
-        $required = (bool) ($question['required'] ?? false);
-
-        if (isset($question['choiceQuestion'])) {
-            return $this->mapChoiceQuestion($question['choiceQuestion'], $title, $required, $item);
-        }
-
-        if (isset($question['scaleQuestion'])) {
-            return $this->mapScaleQuestion($question['scaleQuestion'], $title, $required);
-        }
-
-        if (isset($question['dateQuestion'])) {
-            return $this->mapDateQuestion($question['dateQuestion'], $title, $required);
-        }
-
-        if (isset($question['timeQuestion'])) {
-            return $this->mapTimeQuestion($title, $required);
-        }
-
-        if (isset($question['ratingQuestion'])) {
-            return $this->mapRatingQuestion($question['ratingQuestion'], $title, $required);
-        }
-
-        if (isset($question['fileUploadQuestion'])) {
-            return $this->baseProperty($title, 'files', $required);
-        }
-
-        if (isset($question['textQuestion'])) {
-            $isParagraph = (bool) ($question['textQuestion']['paragraph'] ?? false);
-            $property = $this->baseProperty($title, 'text', $required);
-            if ($isParagraph) {
-                $property['multi_lines'] = true;
-            }
-
-            return $property;
-        }
-
-        // Unknown question type → fallback to text
-        return $this->baseProperty($title, 'text', $required);
-    }
-
-    private function mapChoiceQuestion(array $choice, string $title, bool $required, array $item): array
-    {
-        $choiceType = $choice['type'] ?? 'RADIO';
-        $options = $choice['options'] ?? [];
-
-        $opnType = match ($choiceType) {
-            'CHECKBOX' => 'multi_select',
-            'DROP_DOWN' => 'select',
-            default => 'select', // RADIO
-        };
-
-        $labels = [];
-        foreach ($options as $option) {
-            if (isset($option['isOther']) && $option['isOther']) {
-                $labels[] = 'Other';
-
-                continue;
-            }
-            $text = $this->sanitizeText($option['value'] ?? '', 255);
-            if ($text !== '') {
-                $labels[] = $text;
-            }
-        }
-
-        $property = $this->baseProperty($title, $opnType, $required);
-
-        if (! empty($item['description'])) {
-            $property['help'] = $this->sanitizeText($item['description'], 1000);
-        }
-
-        if ($labels !== []) {
-            $property[$opnType]['options'] = array_map(
-                fn ($label) => ['id' => $this->generateFieldId(), 'name' => $label],
-                $labels
-            );
-        }
-
-        if ($choiceType !== 'DROP_DOWN' && ($choiceType === 'CHECKBOX' || count($labels) <= 5)) {
-            $property['without_dropdown'] = true;
-        }
-
-        return $property;
-    }
-
-    private function mapScaleQuestion(array $scale, string $title, bool $required): array
-    {
-        $property = $this->baseProperty($title, 'scale', $required);
-        $property['scale_min_value'] = (int) ($scale['low'] ?? 1);
-        $property['scale_max_value'] = (int) ($scale['high'] ?? 5);
-        $property['scale_step_value'] = 1;
-
-        if ($property['scale_max_value'] <= $property['scale_min_value']) {
-            $property['scale_max_value'] = $property['scale_min_value'] + 5;
-        }
-
-        if (! empty($scale['lowLabel'])) {
-            $property['help'] = $this->sanitizeText($scale['lowLabel'], 255)
-                . ' → '
-                . $this->sanitizeText($scale['highLabel'] ?? '', 255);
-        }
-
-        return $property;
-    }
-
-    private function mapRatingQuestion(array $rating, string $title, bool $required): array
-    {
-        $property = $this->baseProperty($title, 'rating', $required);
-        $property['rating_max_value'] = max(1, min(10, (int) ($rating['ratingScaleLevel'] ?? 5)));
-
-        return $property;
-    }
-
-    private function mapDateQuestion(array $dateQ, string $title, bool $required): array
-    {
-        $property = $this->baseProperty($title, 'date', $required);
-        if (! empty($dateQ['includeTime'])) {
-            $property['with_time'] = true;
-        }
-
-        return $property;
-    }
-
-    private function mapTimeQuestion(string $title, bool $required): array
-    {
-        $property = $this->baseProperty($title, 'date', $required);
-        $property['with_time'] = true;
-
-        return $property;
-    }
-
-    private function mapQuestionGroupItem(array $item): ?array
-    {
-        $group = $item['questionGroupItem'] ?? [];
-        $grid = $group['grid'] ?? [];
-        $questions = $group['questions'] ?? [];
-        $title = $this->sanitizeText($item['title'] ?? 'Grid', 255);
-
-        $columns = $grid['columns']['options'] ?? [];
-        $columnLabels = array_map(
-            fn ($col) => $this->sanitizeText($col['value'] ?? '', 255),
-            $columns
-        );
-        $columnLabels = array_filter($columnLabels, fn ($s) => $s !== '');
-
-        $rowLabels = [];
-        foreach ($questions as $q) {
-            $rowTitle = $this->sanitizeText($q['rowQuestion']['title'] ?? '', 255);
-            if ($rowTitle !== '') {
-                $rowLabels[] = $rowTitle;
-            }
-        }
-
-        if ($rowLabels === [] && $columnLabels === []) {
-            return null;
-        }
-
-        return [
-            'id' => $this->generateFieldId(),
-            'name' => $title,
-            'type' => 'matrix',
-            'required' => (bool) ($questions[0]['required'] ?? false),
-            'hidden' => false,
-            'rows' => array_values($rowLabels),
-            'columns' => array_values($columnLabels),
         ];
     }
 
@@ -381,13 +128,202 @@ class GoogleFormsImporter extends AbstractImporter
         ];
     }
 
-    private function mapPageBreak(): array
+    private function mapItem(array $item): ?array
     {
+        $text = $this->sanitizeText($item[1] ?? '', 255);
+        $help = $this->sanitizeText($item[2] ?? '', 1000);
+        $typeCode = (int) ($item[3] ?? -1);
+        $extra = $item[4] ?? null;
+
+        if ($typeCode === 6) {
+            $content = '';
+            if ($text !== '') {
+                $content .= '<p><strong>' . e($text) . '</strong></p>';
+            }
+            $description = $this->sanitizeText($extra[1] ?? '', 8000);
+            if ($description !== '') {
+                $content .= '<p>' . e($description) . '</p>';
+            }
+
+            if ($content === '') {
+                return null;
+            }
+
+            return [
+                'id' => $this->generateFieldId(),
+                'name' => $text !== '' ? $text : 'Text',
+                'type' => 'nf-text',
+                'content' => $content,
+            ];
+        }
+
+        $property = $this->baseProperty($text !== '' ? $text : 'Untitled', 'text', false);
+
+        if ($help !== '') {
+            $property['help'] = $help;
+        }
+
+        $required = $this->isRequired($extra);
+        $property['required'] = $required;
+
+        $labels = [];
+        if (is_array($extra) && is_array($extra[0][1] ?? null)) {
+            foreach ($extra[0][1] as $option) {
+                if (! is_array($option)) {
+                    continue;
+                }
+                $label = $this->sanitizeText($option[0] ?? '', 255);
+                if ($label !== '') {
+                    $labels[] = $label;
+                }
+            }
+        }
+
+        return match ($typeCode) {
+            0 => $this->mapTextQuestion($property),
+            1 => $this->mapParagraphQuestion($property),
+            2 => $this->mapRadioQuestion($property, $labels),
+            3 => $this->mapDropdownQuestion($property, $labels),
+            4 => $this->mapCheckboxesQuestion($property, $labels),
+            5 => $this->mapScaleQuestion($property, $extra),
+            7 => $this->mapDateQuestion($property),
+            8 => $this->mapTimeQuestion($property),
+            9, 10 => $this->mapGridQuestion($item, $typeCode, $required),
+            default => $property,
+        };
+    }
+
+    private function isRequired(mixed $extra): bool
+    {
+        if (! is_array($extra) || ! is_array($extra[0] ?? null)) {
+            return false;
+        }
+
+        return (bool) ($extra[0][2] ?? 0);
+    }
+
+    private function mapTextQuestion(array $property): array
+    {
+        return $property;
+    }
+
+    private function mapParagraphQuestion(array $property): array
+    {
+        $property['multi_lines'] = true;
+
+        return $property;
+    }
+
+    private function mapRadioQuestion(array $property, array $labels): array
+    {
+        $property['type'] = 'select';
+        $property['without_dropdown'] = true;
+
+        return $this->attachOptions($property, $labels);
+    }
+
+    private function mapDropdownQuestion(array $property, array $labels): array
+    {
+        $property['type'] = 'select';
+
+        return $this->attachOptions($property, $labels);
+    }
+
+    private function mapCheckboxesQuestion(array $property, array $labels): array
+    {
+        $property['type'] = 'multi_select';
+        $property['without_dropdown'] = true;
+
+        return $this->attachOptions($property, $labels);
+    }
+
+    private function mapScaleQuestion(array $property, array $extra): array
+    {
+        $property['type'] = 'scale';
+        $property['scale_min_value'] = (int) ($extra[0][3] ?? 1);
+        $property['scale_max_value'] = (int) ($extra[0][4] ?? 5);
+        $property['scale_step_value'] = 1;
+
+        if ($property['scale_max_value'] <= $property['scale_min_value']) {
+            $property['scale_max_value'] = $property['scale_min_value'] + 5;
+        }
+
+        $lowLabel = $this->sanitizeText($extra[0][5] ?? '', 255);
+        $highLabel = $this->sanitizeText($extra[0][6] ?? '', 255);
+        if ($lowLabel !== '' || $highLabel !== '') {
+            $property['help'] = trim($lowLabel . ' → ' . $highLabel);
+        }
+
+        return $property;
+    }
+
+    private function mapDateQuestion(array $property): array
+    {
+        $property['type'] = 'date';
+
+        return $property;
+    }
+
+    private function mapTimeQuestion(array $property): array
+    {
+        $property['type'] = 'date';
+        $property['with_time'] = true;
+
+        return $property;
+    }
+
+    private function mapGridQuestion(array $item, int $typeCode, bool $required): ?array
+    {
+        $rows = $this->extractGridEntries($item[5] ?? null);
+        $columns = $this->extractGridEntries($item[6] ?? null);
+
+        if ($rows === [] && $columns === []) {
+            return null;
+        }
+
+        $title = $this->sanitizeText($item[1] ?? 'Grid', 255);
+
         return [
             'id' => $this->generateFieldId(),
-            'name' => 'Page Break',
-            'type' => 'nf-page-break',
+            'name' => $title !== '' ? $title : 'Grid',
+            'type' => 'matrix',
+            'required' => $required,
+            'hidden' => false,
+            'rows' => $rows,
+            'columns' => $columns,
         ];
+    }
+
+    private function extractGridEntries(mixed $entries): array
+    {
+        if (! is_array($entries)) {
+            return [];
+        }
+
+        $out = [];
+        foreach ($entries as $entry) {
+            if (! is_array($entry)) {
+                continue;
+            }
+            $label = $this->sanitizeText($entry[1] ?? $entry[0] ?? '', 255);
+            if ($label !== '') {
+                $out[] = $label;
+            }
+        }
+
+        return $out;
+    }
+
+    private function attachOptions(array $property, array $labels): array
+    {
+        if ($labels !== []) {
+            $property[$property['type']]['options'] = array_map(
+                fn ($label) => ['id' => $this->generateFieldId(), 'name' => $label],
+                $labels
+            );
+        }
+
+        return $property;
     }
 
     private function baseProperty(string $name, string $type, bool $required): array

@@ -387,14 +387,8 @@ const hasPrompt = computed(() => {
   return !!aiForm.form_prompt?.trim()
 })
 
-const { isAuthenticated: authenticated } = useIsAuthenticated()
-const googleImportAvailable = computed(() => {
-  return authenticated.value && !!useFeatureFlag('services.google.auth', false) && !useFeatureFlag('self_hosted', false)
-})
 const importSourcesLabel = computed(() => {
-  return googleImportAvailable.value
-    ? 'Typeform, Tally, Fillout, or Google Forms'
-    : 'Typeform, Tally, or Fillout'
+  return 'Typeform, Tally, Fillout, or Google Forms'
 })
 
 const selectedStyleLabel = computed(() => {

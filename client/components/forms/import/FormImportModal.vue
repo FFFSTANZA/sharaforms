@@ -108,19 +108,12 @@
           />
         </div>
 
-        <div
-          class="grid grid-cols-1 gap-2"
-          :class="supportedSources.length === 4 ? 'sm:grid-cols-4' : 'sm:grid-cols-3'"
-        >
+        <div class="grid grid-cols-1 gap-2 sm:grid-cols-4">
           <div
             v-for="source in supportedSources"
             :key="source.id"
             class="min-w-0 rounded-lg border bg-white p-3 shadow-sm transition duration-200"
             :class="sourceCardClass(source)"
-            :role="source.id === 'google_forms' ? 'button' : undefined"
-            :tabindex="source.id === 'google_forms' ? 0 : undefined"
-            @click="selectSourceCard(source)"
-            @keydown.enter="selectSourceCard(source)"
           >
             <div class="mb-3 flex items-start justify-between gap-2">
               <span
@@ -137,11 +130,6 @@
                 name="i-lucide-circle-check"
                 class="h-4 w-4 text-blue-600"
               />
-              <Icon
-                v-else-if="source.requiresAuth && !authenticated"
-                name="i-lucide-lock-keyhole"
-                class="h-4 w-4 text-neutral-300"
-              />
             </div>
             <p class="text-sm font-semibold text-neutral-950">{{ source.label }}</p>
             <p
@@ -153,154 +141,12 @@
           </div>
         </div>
       </div>
-
-      <VTransition name="fade">
-        <div
-          v-if="googleSourceActive && !sourceIssue"
-          class="mt-4 rounded-lg border border-neutral-200 bg-white p-4 shadow-sm"
-        >
-          <div
-            v-if="!authenticated"
-            class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
-          >
-            <div class="min-w-0">
-              <p class="text-sm font-semibold text-neutral-950">Google Forms needs an account</p>
-              <p class="mt-1 text-sm text-neutral-500">
-                We need access to the Google Forms you own to import them.
-              </p>
-            </div>
-            <UButton
-              label="Log in to import"
-              icon="i-lucide-circle-user-round"
-              class="justify-center"
-              @click="appStore.quickRegisterModal = true"
-            />
-          </div>
-
-          <div
-            v-else-if="loadingProviders"
-            class="py-4 text-center"
-          >
-            <Loader class="mx-auto mb-3 h-6 w-6" />
-            <p class="text-sm text-neutral-500">Checking Google connection...</p>
-          </div>
-
-          <div v-else-if="filteredProviders.length">
-            <FlatSelectInput
-              v-model="selectedProviderId"
-              :form="importForm"
-              name="oauth_provider_id"
-              :options="filteredProviders"
-              :disable-options="disabledProviderIds"
-              disable-options-tooltip="Re-connect account to fix permissions"
-              display-key="email"
-              option-key="id"
-              emit-key="id"
-              :required="true"
-              label="Google account"
-            >
-              <template #help>
-                <InputHelp>
-                  <span>
-                    <a
-                      class="cursor-pointer text-blue-500"
-                      @click="connectProvider"
-                    >
-                      Connect another account
-                    </a>
-                  </span>
-                </InputHelp>
-              </template>
-            </FlatSelectInput>
-
-            <div class="mt-4">
-              <UButton
-                :loading="pickerLoading"
-                :disabled="!selectedProviderId"
-                label="Choose a form from Drive"
-                icon="i-lucide-folder-open"
-                color="primary"
-                variant="soft"
-                block
-                @click="openPicker"
-              />
-              <div
-                v-if="importForm.form_id"
-                class="mt-2 flex items-center gap-2 text-sm text-neutral-600"
-              >
-                <Icon
-                  name="i-simple-icons-googleforms"
-                  class="h-4 w-4 shrink-0"
-                />
-                <span class="min-w-0 truncate">{{ pickedFormName || 'Selected Google Form' }}</span>
-                <button
-                  type="button"
-                  class="shrink-0 text-xs font-medium text-neutral-400 transition hover:text-neutral-700"
-                  @click="clearPickedForm"
-                >
-                  Clear
-                </button>
-              </div>
-              <p
-                v-else
-                class="mt-2 text-xs leading-5 text-neutral-400"
-              >
-                Pick a form from your Drive, or paste a docs.google.com URL above.
-              </p>
-            </div>
-          </div>
-
-          <div
-            v-else
-            class="text-center"
-          >
-            <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg border border-blue-100 bg-blue-50 text-blue-600">
-              <Icon
-                name="i-simple-icons-google"
-                class="h-5 w-5"
-              />
-            </div>
-            <UButton
-              :loading="connecting"
-              label="Connect Google"
-              icon="i-simple-icons-google"
-              @click="connectProvider"
-            />
-            <p class="mx-auto mt-3 max-w-sm text-sm leading-6 text-neutral-500">
-              Connect Google to import the Google Forms you own.
-            </p>
-          </div>
-        </div>
-      </VTransition>
     </template>
   </UModal>
-
-  <Teleport to="body">
-    <div
-      v-if="pickerOpen"
-      class="fixed inset-0 z-[9999]"
-      aria-hidden="true"
-    >
-      <button
-        type="button"
-        class="fixed right-4 top-4 z-[10000] flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-600 shadow-lg transition hover:bg-neutral-100 hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-400"
-        aria-label="Close Google Picker"
-        title="Close picker (Esc)"
-        @click="closePicker"
-      >
-        <Icon
-          name="i-lucide-x"
-          class="h-5 w-5"
-        />
-      </button>
-    </div>
-  </Teleport>
 </template>
 
 <script setup>
 import { formsApi } from '~/api/forms'
-import { oauthApi } from '~/api/oauth'
-import { WindowMessageTypes, useWindowMessage } from '~/composables/useWindowMessage'
 import { detectFormImportSource } from '~/lib/forms/detect-form-import-source'
 
 const props = defineProps({
@@ -319,29 +165,11 @@ const isOpen = computed({
 
 const importForm = useForm({
   url: '',
-  form_id: null,
-  oauth_provider_id: null,
 })
-
-let activePicker = null
-const pickerOpen = ref(false)
 
 const loading = ref(false)
 const importError = ref('')
 const suggestedSource = ref(null)
-const connecting = ref(false)
-const selectedProviderId = ref(null)
-const pickedFormName = ref('')
-const selectedSourceOverride = ref(null)
-const pickerLoading = ref(false)
-
-const appStore = useAppStore()
-const oAuth = useOAuth()
-const { isAuthenticated: authenticated } = useIsAuthenticated()
-const isGoogleImportConfigured = computed(() => {
-  return !!useFeatureFlag('services.google.auth', false) && !useFeatureFlag('self_hosted', false)
-})
-const showGoogleImportSource = computed(() => isGoogleImportConfigured.value && authenticated.value)
 
 const sourceConfigs = {
   typeform: {
@@ -379,69 +207,26 @@ const sourceConfigs = {
     icon: 'i-simple-icons-googleforms',
     iconClass: 'h-4 w-4 text-neutral-600',
     iconWrapClass: 'border-neutral-200 bg-neutral-100 text-neutral-600',
-    requiresAuth: true,
   },
 }
 
-const supportedSources = computed(() => Object.values(sourceConfigs).filter((source) => {
-  return source.id !== 'google_forms' || showGoogleImportSource.value
-}))
+const supportedSources = computed(() => Object.values(sourceConfigs))
 const supportedSourceConfigs = computed(() => {
   return Object.fromEntries(supportedSources.value.map(source => [source.id, source]))
 })
 const importDetection = computed(() => detectFormImportSource(importForm.url))
 const detectedSource = computed(() => importDetection.value.source)
-const isGoogleSource = computed(() => detectedSource.value === 'google_forms')
-const googleSourceActive = computed(() => isGoogleSource.value || selectedSourceOverride.value === 'google_forms')
 const detectedSourceConfig = computed(() => supportedSourceConfigs.value[detectedSource.value] ?? null)
 const activeSourceConfig = computed(() => detectedSourceConfig.value ?? supportedSourceConfigs.value[suggestedSource.value] ?? null)
 const supportedSourcesLabel = computed(() => formatSourceList(supportedSources.value.map(source => source.label)))
 const activePlaceholder = computed(() => activeSourceConfig.value?.placeholder ?? `Paste a ${supportedSourcesLabel.value} URL`)
-const sourceIssue = computed(() => {
-  if (isGoogleSource.value && !isGoogleImportConfigured.value) {
-    return 'google_unavailable'
-  }
+const sourceIssue = computed(() => importDetection.value.reason)
 
-  return importDetection.value.reason
-})
-const shouldFetchGoogleProviders = computed(() => {
-  return props.show && authenticated.value && isGoogleImportConfigured.value && googleSourceActive.value
-})
-const { data: providersData, isLoading: loadingProviders } = oAuth.providers({
-  enabled: shouldFetchGoogleProviders,
-})
-
-const filteredProviders = computed(() =>
-  (providersData.value || []).filter(provider => provider.provider === 'google')
-)
-
-const disabledProviderIds = computed(() => {
-  return filteredProviders.value
-    .filter(provider => !provider.scopes?.includes(oAuth.googleFormsPermissionScope))
-    .map(provider => provider.id)
-})
-
-const validGoogleProviders = computed(() => {
-  return filteredProviders.value.filter(provider => !disabledProviderIds.value.includes(provider.id))
-})
-
-const importTargetReady = computed(() => {
-  if (googleSourceActive.value) {
-    return !!importForm.form_id || !!importForm.url
-  }
-
-  return !!detectedSource.value
-})
+const importTargetReady = computed(() => !!detectedSource.value)
 
 const canSubmit = computed(() => {
   if (loading.value || sourceIssue.value) {
     return false
-  }
-
-  if (googleSourceActive.value) {
-    return authenticated.value
-      && !!selectedProviderId.value
-      && (!!importForm.form_id || !!importForm.url)
   }
 
   return !!importForm.url && !!detectedSource.value
@@ -476,22 +261,6 @@ const statusMessage = computed(() => {
     return importError.value
   }
 
-  if (googleSourceActive.value) {
-    if (!authenticated.value) {
-      return 'Google Forms detected. Log in to connect Google and import this form.'
-    }
-
-    if (!selectedProviderId.value) {
-      return 'Google Forms detected. Select a Google account before importing.'
-    }
-
-    if (!importForm.form_id && !importForm.url) {
-      return 'Choose a Google Form from Drive or paste its URL.'
-    }
-
-    return 'Google Forms ready to import.'
-  }
-
   if (!importForm.url) {
     return 'Paste a URL and we will detect the import source automatically.'
   }
@@ -509,52 +278,20 @@ const statusMessage = computed(() => {
 
 watch(() => props.show, (open) => {
   if (!open) {
-    closePicker()
     loading.value = false
     importError.value = ''
-    connecting.value = false
-    selectedSourceOverride.value = null
     return
   }
 
   suggestedSource.value = props.defaultSource ?? null
   importForm.url = ''
-  importForm.form_id = null
-  pickedFormName.value = ''
-  importForm.oauth_provider_id = null
-  selectedProviderId.value = null
-  selectedSourceOverride.value = null
   importForm.errors.clear()
   importError.value = ''
 })
 
-watch(detectedSource, (source) => {
+watch(detectedSource, () => {
   importError.value = ''
   importForm.errors.clear()
-
-  if (source === 'google_forms') {
-    return
-  }
-
-  importForm.oauth_provider_id = null
-  selectedProviderId.value = null
-  if (source) {
-    selectedSourceOverride.value = null
-  }
-})
-
-watch([validGoogleProviders, googleSourceActive], ([providers, active]) => {
-  if (!active || selectedProviderId.value || providers.length !== 1) {
-    return
-  }
-
-  selectedProviderId.value = providers[0].id
-  importForm.oauth_provider_id = providers[0].id
-})
-
-watch(selectedProviderId, (providerId) => {
-  importForm.oauth_provider_id = providerId
-  importError.value = ''
 })
 
 const handleUrlInput = () => {
@@ -569,94 +306,38 @@ const clearUrl = () => {
 }
 
 const isSourceActive = (source) => {
-  if (source.id === 'google_forms') {
-    return googleSourceActive.value
-  }
-
   return detectedSource.value === source.id
 }
 
 const sourceCardClass = (source) => {
   if (isSourceActive(source) && !sourceIssue.value) {
-    return 'border-blue-200 ring-1 ring-blue-100 cursor-pointer'
-  }
-
-  if (source.requiresAuth && !authenticated.value) {
-    return 'border-neutral-200 opacity-70 cursor-pointer'
-  }
-
-  if (source.id === 'google_forms') {
-    return 'border-neutral-200 cursor-pointer'
+    return 'border-blue-200 ring-1 ring-blue-100'
   }
 
   return 'border-neutral-200'
 }
 
-const selectSourceCard = (source) => {
-  if (source.id !== 'google_forms') {
-    return
-  }
-
-  if (!authenticated.value) {
-    appStore.quickRegisterModal = true
-    return
-  }
-
-  selectedSourceOverride.value = selectedSourceOverride.value === 'google_forms' ? null : 'google_forms'
-  importError.value = ''
-  importForm.errors.clear()
-}
-
 const submitImport = () => {
   if (loading.value) return
 
-  if (googleSourceActive.value) {
-    if (!authenticated.value) {
-      appStore.quickRegisterModal = true
-      return
-    }
+  if (!detectedSource.value) {
+    importError.value = importForm.url ? 'This URL is not from a supported import source.' : 'A form URL is required.'
+    return
+  }
 
-    if (!selectedProviderId.value) {
-      importError.value = 'Select a Google account to import this form.'
-      return
-    }
-
-    if (!importForm.form_id && !importForm.url) {
-      importError.value = 'Choose a Google Form from Drive or paste its URL.'
-      return
-    }
-  } else {
-    if (!detectedSource.value) {
-      importError.value = importForm.url ? 'This URL is not from a supported import source.' : 'A form URL is required.'
-      return
-    }
-
-    if (sourceIssue.value) {
-      importError.value = issueMessage(sourceIssue.value)
-      return
-    }
+  if (sourceIssue.value) {
+    importError.value = issueMessage(sourceIssue.value)
+    return
   }
 
   loading.value = true
   importError.value = ''
 
-  const importData = {}
-
-  if (importForm.form_id) {
-    importData.form_id = importForm.form_id
-  }
-
-  if (importForm.url) {
-    importData.url = importDetection.value.normalizedUrl
-  }
-
-  if (googleSourceActive.value) {
-    importData.oauth_provider_id = selectedProviderId.value
-  }
-
   formsApi.import({
-    source: googleSourceActive.value ? 'google_forms' : detectedSource.value,
-    import_data: importData,
+    source: detectedSource.value,
+    import_data: {
+      url: importDetection.value.normalizedUrl,
+    },
   })
     .then((response) => {
       useAlert().success(response.message || 'Form imported successfully!')
@@ -673,153 +354,6 @@ const submitImport = () => {
     })
 }
 
-const connectProvider = () => {
-  connecting.value = true
-  oAuth.connect('google', false, true, true, { intent: 'forms_import' })
-    .finally(() => {
-      connecting.value = false
-    })
-}
-
-const clearPickedForm = () => {
-  importForm.form_id = null
-  pickedFormName.value = ''
-  importError.value = ''
-}
-
-const openPicker = () => {
-  if (!selectedProviderId.value || pickerLoading.value) return
-
-  pickerLoading.value = true
-  oauthApi.token(selectedProviderId.value)
-    .then((data) => {
-      loadGooglePicker(data.access_token)
-    })
-    .catch((error) => {
-      const message = error?.data?.message || error?.message || 'Failed to connect to Google Drive. Please try again.'
-      importError.value = message
-      useAlert().error(message)
-    })
-    .finally(() => {
-      pickerLoading.value = false
-    })
-}
-
-const closePicker = () => {
-  if (activePicker) {
-    try {
-      activePicker.setVisible(false)
-      activePicker.dispose()
-    } catch (error) {
-      console.error('[FormImportModal] Error closing Google Picker:', error)
-    }
-    activePicker = null
-  }
-  pickerOpen.value = false
-}
-
-const loadGooglePicker = (accessToken) => {
-  const pickerKey = useFeatureFlag('services.google.picker_api_key', null)
-  const pickerAppId = useFeatureFlag('services.google.picker_app_id', null)
-
-  let attempts = 0
-
-  const pickerFailed = () => {
-    pickerLoading.value = false
-    importError.value = 'Google Picker failed to load. Please try again.'
-    useAlert().error(importError.value)
-  }
-
-  const startPicker = () => {
-    setTimeout(() => {
-      const pickerNs = window.google && window.google.picker
-      if (!pickerNs || typeof pickerNs.PickerBuilder !== 'function') {
-        if (attempts < 2) {
-          attempts += 1
-          reloadGapiScript()
-          return
-        }
-        pickerFailed()
-        return
-      }
-
-      const { PickerBuilder, View, ViewId, Feature, Action } = pickerNs
-
-      try {
-        const view = new View(ViewId.DOCS)
-        view.setMimeTypes('application/vnd.google-apps.form')
-
-        const picker = new PickerBuilder()
-          .enableFeature(Feature.NAV_HIDDEN)
-          .setAppId(pickerAppId)
-          .setOAuthToken(accessToken)
-          .setDeveloperKey(pickerKey)
-          .setOrigin(window.location.origin)
-          .addView(view)
-          .setCallback((data) => {
-            if (data.action === Action.PICKED && data.docs && data.docs[0]) {
-              importForm.form_id = data.docs[0].id
-              pickedFormName.value = data.docs[0].name || 'Selected Google Form'
-              importError.value = ''
-            }
-            closePicker()
-          })
-          .build()
-
-        activePicker = picker
-        pickerOpen.value = true
-        picker.setVisible(true)
-      } catch (error) {
-        console.error('[FormImportModal] Google Picker error:', error)
-        importError.value = 'Google Picker failed to load. Please try again.'
-        useAlert().error(importError.value)
-      }
-    }, 0)
-  }
-
-  const reloadGapiScript = () => {
-    document.querySelectorAll('script[src*="apis.google.com"]').forEach((script) => script.remove())
-    delete window.gapi
-    const script = document.createElement('script')
-    script.src = 'https://apis.google.com/js/api.js'
-    script.async = true
-    script.defer = true
-    script.onload = () => {
-      if (window.gapi && typeof window.gapi.load === 'function') {
-        window.gapi.load('picker', startPicker)
-      } else {
-        pickerFailed()
-      }
-    }
-    script.onerror = pickerFailed
-    document.head.appendChild(script)
-  }
-
-  if (!window.gapi) {
-    const script = document.createElement('script')
-    script.src = 'https://apis.google.com/js/api.js'
-    script.async = true
-    script.defer = true
-    script.onload = () => {
-      if (window.gapi && typeof window.gapi.load === 'function') {
-        window.gapi.load('picker', startPicker)
-      } else {
-        pickerFailed()
-      }
-    }
-    script.onerror = pickerFailed
-    document.head.appendChild(script)
-    return
-  }
-
-  if (typeof window.gapi.load !== 'function') {
-    reloadGapiScript()
-    return
-  }
-
-  window.gapi.load('picker', startPicker)
-}
-
 function issueMessage(reason) {
   if (reason === 'invalid_url') {
     return 'Enter a valid URL, for example https://yourname.typeform.com/to/FORM_ID.'
@@ -827,10 +361,6 @@ function issueMessage(reason) {
 
   if (reason === 'google_published_url' || reason === 'google_edit_url') {
     return 'Use a Google Forms URL like https://docs.google.com/forms/d/FORM_ID/edit.'
-  }
-
-  if (reason === 'google_unavailable') {
-    return 'Google Forms import is not available in this environment.'
   }
 
   if (reason === 'typeform_form_id') {
@@ -851,28 +381,4 @@ function formatSourceList(sources) {
 
   return `${sources.slice(0, -1).join(', ')}, or ${sources.at(-1)}`
 }
-
-const windowMessage = useWindowMessage(WindowMessageTypes.OAUTH_PROVIDER_CONNECTED)
-const handleKeydown = (event) => {
-  if (event.key === 'Escape' && pickerOpen.value) {
-    event.preventDefault()
-    closePicker()
-  }
-}
-
-onMounted(() => {
-  window.addEventListener('keydown', handleKeydown)
-  windowMessage.listen(() => {
-    connecting.value = false
-    oAuth.invalidateProviders()
-  }, {
-    useMessageChannel: false,
-    acknowledge: false,
-  })
-})
-
-onUnmounted(() => {
-  window.removeEventListener('keydown', handleKeydown)
-  closePicker()
-})
 </script>

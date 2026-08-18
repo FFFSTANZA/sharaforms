@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\FormImportRequest;
 use App\Service\FormImport\FormImportException;
 use App\Service\FormImport\FormImportService;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Support\Facades\Auth;
 
 class FormImportController extends Controller
@@ -19,10 +18,6 @@ class FormImportController extends Controller
     public function import(FormImportRequest $request)
     {
         $this->hydrateAuthenticatedUserIfPresent();
-
-        if ($request->get('source') === 'google_forms' && ! Auth::check()) {
-            throw new AuthenticationException('Please log in to import from Google Forms.');
-        }
 
         try {
             $result = $this->importService->import(

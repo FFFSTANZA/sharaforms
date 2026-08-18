@@ -18,7 +18,6 @@ class FormImportRequest extends FormRequest
             'import_data' => 'required|array',
             'import_data.url' => 'nullable|url|required_without:import_data.form_id',
             'import_data.form_id' => 'nullable|string',
-            'import_data.oauth_provider_id' => 'nullable|integer|exists:oauth_providers,id|required_if:source,google_forms',
         ];
     }
 
@@ -28,7 +27,6 @@ class FormImportRequest extends FormRequest
             'import_data.url.required' => 'A form URL is required.',
             'import_data.url.required_without' => 'A form URL is required.',
             'import_data.url.url' => 'Please provide a valid URL.',
-            'import_data.oauth_provider_id.required_if' => 'Please select an account to import from.',
         ];
     }
 }

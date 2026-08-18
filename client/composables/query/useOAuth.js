@@ -11,7 +11,6 @@ export function useOAuth() {
 
   // Constants
   const googleDrivePermissionFileScope = 'https://www.googleapis.com/auth/drive.file'
-  const googleFormsPermissionScope = 'https://www.googleapis.com/auth/drive.file'
   
   // Service definitions
   const services = computed(() => {
@@ -326,7 +325,6 @@ export function useOAuth() {
   return {
     // Constants
     googleDrivePermissionFileScope,
-    googleFormsPermissionScope,
     
     // Service definitions
     services,

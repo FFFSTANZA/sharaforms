@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\OAuthProvider;
+
 use Illuminate\Support\Facades\Http;
 
 // ---------------------------------------------------------------------------
@@ -68,19 +68,6 @@ it('allows unauthenticated URL-based import requests', function () {
     ])->assertSuccessful();
 });
 
-it('rejects unauthenticated Google Forms import requests', function () {
-    $user = $this->createUser();
-    $provider = OAuthProvider::factory()->create(['user_id' => $user->id]);
-
-    $this->postJson(route('open.forms.import'), [
-        'source' => 'google_forms',
-        'import_data' => [
-            'url' => 'https://docs.google.com/forms/d/1abc123/edit',
-            'oauth_provider_id' => $provider->id,
-        ],
-    ])->assertStatus(401);
-});
-
 it('returns the importer exception message with a 422', function () {
     $this->postJson(route('open.forms.import'), [
         'source' => 'typeform',
@@ -114,17 +101,6 @@ it('rejects import with a malformed URL', function () {
     ])
         ->assertStatus(422)
         ->assertJsonValidationErrors('import_data.url');
-});
-
-it('requires an oauth_provider_id when importing from Google Forms', function () {
-    $this->createUser();
-
-    $this->postJson(route('open.forms.import'), [
-        'source' => 'google_forms',
-        'import_data' => ['url' => 'https://docs.google.com/forms/d/1abc123/edit'],
-    ])
-        ->assertStatus(422)
-        ->assertJsonPath('message', 'Please select an account to import from.');
 });
 
 // ---------------------------------------------------------------------------
@@ -850,115 +826,83 @@ describe('FilloutImporter', function () {
 // ---------------------------------------------------------------------------
 
 describe('GoogleFormsImporter', function () {
-    it('maps Google Forms fields via API', function () {
-        $user = $this->actingAsUser();
-        $provider = OAuthProvider::factory()->create([
-            'user_id' => $user->id,
-            'access_token' => 'test-token',
-        ]);
-
+    it('maps Google Forms public page fields', function () {
         Http::fake([
-            'forms.googleapis.com/v1/forms/*' => Http::response(googleFormsFixture(), 200),
+            'docs.google.com/*' => Http::response(googleFormsPublicHtmlFixture(), 200),
         ]);
 
         $importer = app(\App\Service\FormImport\Importers\GoogleFormsImporter::class);
         $result = $importer->import([
-            'form_id' => '1abc123',
-            'oauth_provider_id' => $provider->id,
+            'url' => 'https://docs.google.com/forms/d/1abc123/edit',
         ]);
 
         expect($result['title'])->toBe('Google Test Form');
         expect($result['properties'])->toHaveCount(4);
 
         $types = array_column($result['properties'], 'type');
-        expect($types)->toContain('text');
-        expect($types)->toContain('select');
-        expect($types)->toContain('date');
+        expect($types)->toBe(['text', 'select', 'date', 'text']);
+
+        $name = $result['properties'][0];
+        expect($name['required'])->toBeTrue();
+        expect($name['help'])->toBe('Enter your full name');
+
+        $department = collect($result['properties'])->firstWhere('name', 'Department');
+        expect($department['type'])->toBe('select');
+        expect($department['select']['options'])->toHaveCount(3);
+        expect($department)->not->toHaveKey('without_dropdown');
     });
 
     it('prefers form_id over a URL when both are given', function () {
-        $user = $this->actingAsUser();
-        $provider = OAuthProvider::factory()->create([
-            'user_id' => $user->id,
-            'access_token' => 'test-token',
-        ]);
-
         Http::fake([
-            'forms.googleapis.com/v1/forms/*' => Http::response(googleFormsFixture(), 200),
+            'docs.google.com/*' => Http::response(googleFormsPublicHtmlFixture(), 200),
         ]);
 
         $importer = app(\App\Service\FormImport\Importers\GoogleFormsImporter::class);
         $result = $importer->import([
             'form_id' => '1abc123',
             'url' => 'https://docs.google.com/forms/d/2xyz999/edit',
-            'oauth_provider_id' => $provider->id,
         ]);
 
         expect($result['title'])->toBe('Google Test Form');
 
         Http::assertSent(function ($request) {
-            return $request->url() === 'https://forms.googleapis.com/v1/forms/1abc123';
+            return $request->url() === 'https://docs.google.com/forms/d/e/1abc123/viewform';
         });
     });
 
     it('renders Google Forms description as an intro nf-text block', function () {
-        $user = $this->actingAsUser();
-        $provider = OAuthProvider::factory()->create([
-            'user_id' => $user->id,
-            'access_token' => 'test-token',
-        ]);
-
-        $fixture = googleFormsFixture();
-        $fixture['info']['description'] = 'Please answer honestly — your feedback improves the product.';
-
         Http::fake([
-            'forms.googleapis.com/v1/forms/*' => Http::response($fixture, 200),
+            'docs.google.com/*' => Http::response(
+                googleFormsPublicHtmlFixture(['description' => 'Please answer honestly — your feedback improves the product.']),
+                200
+            ),
         ]);
 
         $importer = app(\App\Service\FormImport\Importers\GoogleFormsImporter::class);
         $result = $importer->import([
             'url' => 'https://docs.google.com/forms/d/1abc123/edit',
-            'oauth_provider_id' => $provider->id,
         ]);
 
         // Description shows up first, as an editable nf-text block.
         $first = $result['properties'][0];
         expect($first['type'])->toBe('nf-text');
         expect($first['content'])->toContain('Please answer honestly');
+        expect($result['properties'])->toHaveCount(5);
     });
 
-    it('keeps long Google Forms DROP_DOWN questions as a real dropdown', function () {
-        $user = $this->actingAsUser();
-        $provider = OAuthProvider::factory()->create([
-            'user_id' => $user->id,
-            'access_token' => 'test-token',
-        ]);
-
-        $fixture = googleFormsFixture();
-        $fixture['items'][] = [
-            'title' => 'Country',
-            'questionItem' => [
-                'question' => [
-                    'required' => true,
-                    'choiceQuestion' => [
-                        'type' => 'DROP_DOWN',
-                        'options' => array_map(
-                            fn ($i) => ['value' => "Country {$i}"],
-                            range(1, 16)
-                        ),
-                    ],
-                ],
-            ],
-        ];
-
+    it('keeps long DROP_DOWN questions as a real dropdown', function () {
         Http::fake([
-            'forms.googleapis.com/v1/forms/*' => Http::response($fixture, 200),
+            'docs.google.com/*' => Http::response(
+                googleFormsPublicHtmlFixture([
+                    'items' => [[9, 'Country', '', 3, [[10, array_map(fn ($i) => ["Country {$i}", 0], range(1, 16)), 1]]]],
+                ]),
+                200
+            ),
         ]);
 
         $importer = app(\App\Service\FormImport\Importers\GoogleFormsImporter::class);
         $result = $importer->import([
             'url' => 'https://docs.google.com/forms/d/1abc123/edit',
-            'oauth_provider_id' => $provider->id,
         ]);
 
         $country = collect($result['properties'])->firstWhere('name', 'Country');
@@ -967,41 +911,20 @@ describe('GoogleFormsImporter', function () {
         expect($country)->not->toHaveKey('without_dropdown');
     });
 
-    it('keeps short Google Forms DROP_DOWN questions as a real dropdown', function () {
-        // Author explicitly picked a dropdown — pre-fix the ≤5 rule would
-        // have flattened this into a radio list.
-        $user = $this->actingAsUser();
-        $provider = OAuthProvider::factory()->create([
-            'user_id' => $user->id,
-            'access_token' => 'test-token',
-        ]);
-
-        $fixture = googleFormsFixture();
-        $fixture['items'][] = [
-            'title' => 'Priority',
-            'questionItem' => [
-                'question' => [
-                    'required' => false,
-                    'choiceQuestion' => [
-                        'type' => 'DROP_DOWN',
-                        'options' => [
-                            ['value' => 'Low'],
-                            ['value' => 'Medium'],
-                            ['value' => 'High'],
-                        ],
-                    ],
-                ],
-            ],
-        ];
-
+    it('keeps short DROP_DOWN questions as a real dropdown', function () {
+        // Author explicitly picked a dropdown — do not flatten into radio.
         Http::fake([
-            'forms.googleapis.com/v1/forms/*' => Http::response($fixture, 200),
+            'docs.google.com/*' => Http::response(
+                googleFormsPublicHtmlFixture([
+                    'items' => [[11, 'Priority', '', 3, [[12, [['Low', 0], ['Medium', 0], ['High', 0]], 0]]]],
+                ]),
+                200
+            ),
         ]);
 
         $importer = app(\App\Service\FormImport\Importers\GoogleFormsImporter::class);
         $result = $importer->import([
             'url' => 'https://docs.google.com/forms/d/1abc123/edit',
-            'oauth_provider_id' => $provider->id,
         ]);
 
         $priority = collect($result['properties'])->firstWhere('name', 'Priority');
@@ -1009,33 +932,45 @@ describe('GoogleFormsImporter', function () {
         expect($priority)->not->toHaveKey('without_dropdown');
     });
 
-    it('maps grid questions to matrix', function () {
-        $user = $this->actingAsUser();
-        $provider = OAuthProvider::factory()->create([
-            'user_id' => $user->id,
-            'access_token' => 'test-token',
-        ]);
-
-        $fixture = googleFormsFixture();
-        $fixture['items'][] = [
-            'title' => 'Satisfaction',
-            'questionGroupItem' => [
-                'grid' => ['columns' => ['options' => [['value' => 'Good'], ['value' => 'Bad']]]],
-                'questions' => [
-                    ['required' => true, 'rowQuestion' => ['title' => 'Service']],
-                    ['required' => true, 'rowQuestion' => ['title' => 'Price']],
-                ],
-            ],
-        ];
-
+    it('maps radio questions to a radio-style select', function () {
         Http::fake([
-            'forms.googleapis.com/v1/forms/*' => Http::response($fixture, 200),
+            'docs.google.com/*' => Http::response(
+                googleFormsPublicHtmlFixture([
+                    'items' => [[13, 'Satisfaction', '', 2, [[14, [['Good', 0], ['Ok', 0], ['Bad', 0]], 1]]]],
+                ]),
+                200
+            ),
         ]);
 
         $importer = app(\App\Service\FormImport\Importers\GoogleFormsImporter::class);
         $result = $importer->import([
             'url' => 'https://docs.google.com/forms/d/1abc123/edit',
-            'oauth_provider_id' => $provider->id,
+        ]);
+
+        $satisfaction = collect($result['properties'])->firstWhere('name', 'Satisfaction');
+        expect($satisfaction['type'])->toBe('select');
+        expect($satisfaction['without_dropdown'])->toBeTrue();
+        expect($satisfaction['select']['options'])->toHaveCount(3);
+        expect($satisfaction['required'])->toBeTrue();
+    });
+
+    it('maps grid questions to matrix', function () {
+        Http::fake([
+            'docs.google.com/*' => Http::response(
+                googleFormsPublicHtmlFixture([
+                    'items' => [[
+                        15, 'Satisfaction', '', 9, [],
+                        [['r1', 'Service'], ['r2', 'Price']],
+                        [['c1', 'Good'], ['c2', 'Bad']],
+                    ]],
+                ]),
+                200
+            ),
+        ]);
+
+        $importer = app(\App\Service\FormImport\Importers\GoogleFormsImporter::class);
+        $result = $importer->import([
+            'url' => 'https://docs.google.com/forms/d/1abc123/edit',
         ]);
 
         $matrix = collect($result['properties'])->firstWhere('type', 'matrix');
@@ -1044,63 +979,59 @@ describe('GoogleFormsImporter', function () {
         expect($matrix['columns'])->toBe(['Good', 'Bad']);
     });
 
-    it('throws on expired Google token', function () {
-        $user = $this->actingAsUser();
-        $provider = OAuthProvider::factory()->create([
-            'user_id' => $user->id,
-            'access_token' => 'expired-token',
-            'refresh_token' => '',
-        ]);
-
+    it('maps scale questions with labels', function () {
         Http::fake([
-            'forms.googleapis.com/v1/forms/*' => Http::response('Unauthorized', 401),
+            'docs.google.com/*' => Http::response(
+                googleFormsPublicHtmlFixture([
+                    'items' => [[16, 'Rating', '', 5, [[17, null, 0, 1, 5, 'Low', 'High']]]],
+                ]),
+                200
+            ),
+        ]);
+
+        $importer = app(\App\Service\FormImport\Importers\GoogleFormsImporter::class);
+        $result = $importer->import([
+            'url' => 'https://docs.google.com/forms/d/1abc123/edit',
+        ]);
+
+        $rating = collect($result['properties'])->firstWhere('name', 'Rating');
+        expect($rating['type'])->toBe('scale');
+        expect($rating['scale_min_value'])->toBe(1);
+        expect($rating['scale_max_value'])->toBe(5);
+        expect($rating['help'])->toBe('Low → High');
+    });
+
+    it('throws when the page has no form data', function () {
+        Http::fake([
+            'docs.google.com/*' => Http::response('<html><body><h1>Not a form</h1></body></html>', 200),
         ]);
 
         $importer = app(\App\Service\FormImport\Importers\GoogleFormsImporter::class);
         $importer->import([
             'url' => 'https://docs.google.com/forms/d/1abc123/edit',
-            'oauth_provider_id' => $provider->id,
         ]);
-    })->throws(\App\Service\FormImport\FormImportException::class);
-
-    it('throws when oauth_provider_id is missing', function () {
-        $importer = app(\App\Service\FormImport\Importers\GoogleFormsImporter::class);
-        $importer->import([
-            'url' => 'https://docs.google.com/forms/d/1abc123/edit',
-        ]);
-    })->throws(\App\Service\FormImport\FormImportException::class);
+    })->throws(\App\Service\FormImport\FormImportException::class, 'Could not find form data');
 
     it('throws when neither form_id nor url is provided', function () {
-        $user = $this->actingAsUser();
-        $provider = OAuthProvider::factory()->create([
-            'user_id' => $user->id,
-            'access_token' => 'test-token',
-        ]);
-
         $importer = app(\App\Service\FormImport\Importers\GoogleFormsImporter::class);
-        $importer->import([
-            'oauth_provider_id' => $provider->id,
-        ]);
-    })->throws(\App\Service\FormImport\FormImportException::class);
+        $importer->import([]);
+    })->throws(\App\Service\FormImport\FormImportException::class, 'Could not extract a form ID');
 
-    it('imports published form URLs during import', function () {
-        $user = $this->actingAsUser();
-        $provider = OAuthProvider::factory()->create([
-            'user_id' => $user->id,
-            'access_token' => 'test-token',
-        ]);
-
+    it('imports published viewform URLs during import', function () {
         Http::fake([
-            'forms.googleapis.com/v1/forms/*' => Http::response(googleFormsFixture(), 200),
+            'docs.google.com/*' => Http::response(googleFormsPublicHtmlFixture(), 200),
         ]);
 
         $importer = app(\App\Service\FormImport\Importers\GoogleFormsImporter::class);
         $result = $importer->import([
             'url' => 'https://docs.google.com/forms/d/e/published123/viewform',
-            'oauth_provider_id' => $provider->id,
         ]);
 
         expect($result['title'])->toBe('Google Test Form');
+
+        Http::assertSent(function ($request) {
+            return $request->url() === 'https://docs.google.com/forms/d/e/published123/viewform';
+        });
     });
 });
 
@@ -1109,57 +1040,34 @@ describe('GoogleFormsImporter', function () {
 // ---------------------------------------------------------------------------
 
 describe('Google Forms controller flow', function () {
-    it('resolves Google token via oauth_provider_id', function () {
-        $user = $this->actingAsUser();
-
-        $provider = OAuthProvider::factory()->create([
-            'user_id' => $user->id,
-            'access_token' => 'valid-google-token',
-            'refresh_token' => 'refresh-token',
-        ]);
-
+    it('imports a Google Form via public URL', function () {
         Http::fake([
-            'forms.googleapis.com/v1/forms/*' => Http::response(googleFormsFixture(), 200),
+            'docs.google.com/*' => Http::response(googleFormsPublicHtmlFixture(), 200),
         ]);
 
         $this->postJson(route('open.forms.import'), [
             'source' => 'google_forms',
-            'import_data' => [
-                'form_id' => '1abc123',
-                'oauth_provider_id' => $provider->id,
-            ],
+            'import_data' => ['url' => 'https://docs.google.com/forms/d/1abc123/edit'],
         ])
             ->assertSuccessful()
             ->assertJsonPath('form.title', 'Google Test Form');
 
         Http::assertSent(function ($request) {
-            return $request->url() === 'https://forms.googleapis.com/v1/forms/1abc123'
-                && $request->hasHeader('Authorization', 'Bearer valid-google-token');
+            return $request->url() === 'https://docs.google.com/forms/d/e/1abc123/viewform';
         });
     });
 
-    it('returns error when oauth_provider_id is missing', function () {
-        $this->actingAsUser();
-
+    it('returns an error when neither form_id nor url is given', function () {
         $this->postJson(route('open.forms.import'), [
             'source' => 'google_forms',
-            'import_data' => ['url' => 'https://docs.google.com/forms/d/1abc123/edit'],
+            'import_data' => [],
         ])->assertStatus(422);
     });
 
     it('returns 422 when form_id is empty and no url is given', function () {
-        $user = $this->actingAsUser();
-        $provider = OAuthProvider::factory()->create([
-            'user_id' => $user->id,
-            'access_token' => 'test-token',
-        ]);
-
         $this->postJson(route('open.forms.import'), [
             'source' => 'google_forms',
-            'import_data' => [
-                'form_id' => '',
-                'oauth_provider_id' => $provider->id,
-            ],
+            'import_data' => ['form_id' => ''],
         ])->assertStatus(422);
     });
 });
@@ -1294,54 +1202,36 @@ function filloutRegistrationHtmlFixture(): string
     return '<html><body><script id="__NEXT_DATA__" type="application/json">' . $json . '</script></body></html>';
 }
 
-function googleFormsFixture(): array
+function googleFormsPublicHtmlFixture(array $overrides = []): string
 {
-    return [
-        'info' => ['title' => 'Google Test Form', 'documentTitle' => 'Google Test Form'],
+    $defaults = [
+        'title' => 'Google Test Form',
+        'description' => '',
         'items' => [
-            [
-                'title' => 'Your Name',
-                'questionItem' => [
-                    'question' => [
-                        'required' => true,
-                        'textQuestion' => ['paragraph' => false],
-                    ],
-                ],
-            ],
-            [
-                'title' => 'Favorite Color',
-                'questionItem' => [
-                    'question' => [
-                        'required' => false,
-                        'choiceQuestion' => [
-                            'type' => 'RADIO',
-                            'options' => [
-                                ['value' => 'Red'],
-                                ['value' => 'Blue'],
-                                ['value' => 'Green'],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-            [
-                'title' => 'Birth Date',
-                'questionItem' => [
-                    'question' => [
-                        'required' => false,
-                        'dateQuestion' => ['includeTime' => false],
-                    ],
-                ],
-            ],
-            [
-                'title' => 'Comments',
-                'questionItem' => [
-                    'question' => [
-                        'required' => false,
-                        'textQuestion' => ['paragraph' => true],
-                    ],
-                ],
-            ],
+            [1, 'Your Name', 'Enter your full name', 0, [[2, null, 1]]],
+            [3, 'Department', '', 3, [[4, [['Sales', 0], ['Support', 0], ['Engineering', 0]], 1]]],
+            [5, 'Start date', '', 7, [[6, null, 0]]],
+            [7, 'Comments', '', 1, [[8, null, 0]]],
         ],
     ];
+
+    $data = array_replace($defaults, $overrides);
+
+    // Matches what Google emits on public pages: data[0] is null, data[1]
+    // is the form array where index 0 is the description, index 1 the items
+    // and index 8 the title. Sequential keys keep json_encode from turning
+    // data[1] into an object.
+    $form = [
+        null,
+        [$data['description'], $data['items'], 'Thank you for your response.', null, null, null, null, null, $data['title']],
+    ];
+
+    $formJson = json_encode($form, JSON_UNESCAPED_UNICODE);
+
+    return '<html><head></head><body>'
+        . '<form action="https://docs.google.com/forms/d/e/1abc123/formResponse">'
+        . '<input name="entry.1">'
+        . '</form>'
+        . '<script>var FB_PUBLIC_LOAD_DATA_ = ' . $formJson . ';</script>'
+        . '</body></html>';
 }

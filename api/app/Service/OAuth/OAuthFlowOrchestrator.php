@@ -33,8 +33,7 @@ class OAuthFlowOrchestrator
 
     public const INTENT_AUTH = 'auth';
     public const INTENT_INTEGRATION = 'integration';
-    public const INTENT_FORMS_IMPORT = 'forms_import';
-    public const INTENTS = [self::INTENT_AUTH, self::INTENT_INTEGRATION, self::INTENT_FORMS_IMPORT];
+    public const INTENTS = [self::INTENT_AUTH, self::INTENT_INTEGRATION];
 
     public function __construct(
         private OAuthContextService $contextService,
@@ -213,7 +212,7 @@ class OAuthFlowOrchestrator
                 $inviteToken,
                 $invitedEmail
             ),
-            self::INTENT_INTEGRATION, self::INTENT_FORMS_IMPORT => $this->handleIntegrationFlow(
+            self::INTENT_INTEGRATION => $this->handleIntegrationFlow(
                 $providerService,
                 $userData
             ),
@@ -285,7 +284,7 @@ class OAuthFlowOrchestrator
      */
     private function validateIntentRequirements(string $intent, OAuthProviderService $providerService): void
     {
-        if (in_array($intent, [self::INTENT_INTEGRATION, self::INTENT_FORMS_IMPORT], true) && !Auth::check()) {
+        if (in_array($intent, [self::INTENT_INTEGRATION], true) && !Auth::check()) {
             abort(401, 'Integration requires authentication');
         }
 
