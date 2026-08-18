@@ -51,6 +51,9 @@ services:
       GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-change-me}
       GOOGLE_REDIRECT_URL: http://localhost:3000/oauth/google/callback
       GOOGLE_FONTS_API_KEY: ${GOOGLE_FONTS_API_KEY:-change-me}
+      # Google Drive Picker (browser API key; HTTP-referrer restricted)
+      GOOGLE_PICKER_API_KEY: ${GOOGLE_PICKER_API_KEY:-change-me}
+      GOOGLE_PICKER_APP_ID: ${GOOGLE_PICKER_APP_ID:-775268936981}
       # reCAPTCHA Enterprise
       RE_CAPTCHA_SITE_KEY: ${RE_CAPTCHA_SITE_KEY:-change-me}
       RE_CAPTCHA_SECRET_KEY: ${RE_CAPTCHA_SECRET_KEY:-change-me}

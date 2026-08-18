@@ -863,7 +863,7 @@ describe('GoogleFormsImporter', function () {
 
         $importer = app(\App\Service\FormImport\Importers\GoogleFormsImporter::class);
         $result = $importer->import([
-            'url' => 'https://docs.google.com/forms/d/1abc123/edit',
+            'form_id' => '1abc123',
             'oauth_provider_id' => $provider->id,
         ]);
 
@@ -874,6 +874,31 @@ describe('GoogleFormsImporter', function () {
         expect($types)->toContain('text');
         expect($types)->toContain('select');
         expect($types)->toContain('date');
+    });
+
+    it('prefers form_id over a URL when both are given', function () {
+        $user = $this->actingAsUser();
+        $provider = OAuthProvider::factory()->create([
+            'user_id' => $user->id,
+            'access_token' => 'test-token',
+        ]);
+
+        Http::fake([
+            'forms.googleapis.com/v1/forms/*' => Http::response(googleFormsFixture(), 200),
+        ]);
+
+        $importer = app(\App\Service\FormImport\Importers\GoogleFormsImporter::class);
+        $result = $importer->import([
+            'form_id' => '1abc123',
+            'url' => 'https://docs.google.com/forms/d/2xyz999/edit',
+            'oauth_provider_id' => $provider->id,
+        ]);
+
+        expect($result['title'])->toBe('Google Test Form');
+
+        Http::assertSent(function ($request) {
+            return $request->url() === 'https://forms.googleapis.com/v1/forms/1abc123';
+        });
     });
 
     it('renders Google Forms description as an intro nf-text block', function () {
@@ -1045,6 +1070,19 @@ describe('GoogleFormsImporter', function () {
         ]);
     })->throws(\App\Service\FormImport\FormImportException::class);
 
+    it('throws when neither form_id nor url is provided', function () {
+        $user = $this->actingAsUser();
+        $provider = OAuthProvider::factory()->create([
+            'user_id' => $user->id,
+            'access_token' => 'test-token',
+        ]);
+
+        $importer = app(\App\Service\FormImport\Importers\GoogleFormsImporter::class);
+        $importer->import([
+            'oauth_provider_id' => $provider->id,
+        ]);
+    })->throws(\App\Service\FormImport\FormImportException::class);
+
     it('imports published form URLs during import', function () {
         $user = $this->actingAsUser();
         $provider = OAuthProvider::factory()->create([
@@ -1087,7 +1125,7 @@ describe('Google Forms controller flow', function () {
         $this->postJson(route('open.forms.import'), [
             'source' => 'google_forms',
             'import_data' => [
-                'url' => 'https://docs.google.com/forms/d/1abc123/edit',
+                'form_id' => '1abc123',
                 'oauth_provider_id' => $provider->id,
             ],
         ])
@@ -1095,7 +1133,7 @@ describe('Google Forms controller flow', function () {
             ->assertJsonPath('form.title', 'Google Test Form');
 
         Http::assertSent(function ($request) {
-            return str_contains($request->url(), 'forms.googleapis.com')
+            return $request->url() === 'https://forms.googleapis.com/v1/forms/1abc123'
                 && $request->hasHeader('Authorization', 'Bearer valid-google-token');
         });
     });
@@ -1106,6 +1144,22 @@ describe('Google Forms controller flow', function () {
         $this->postJson(route('open.forms.import'), [
             'source' => 'google_forms',
             'import_data' => ['url' => 'https://docs.google.com/forms/d/1abc123/edit'],
+        ])->assertStatus(422);
+    });
+
+    it('returns 422 when form_id is empty and no url is given', function () {
+        $user = $this->actingAsUser();
+        $provider = OAuthProvider::factory()->create([
+            'user_id' => $user->id,
+            'access_token' => 'test-token',
+        ]);
+
+        $this->postJson(route('open.forms.import'), [
+            'source' => 'google_forms',
+            'import_data' => [
+                'form_id' => '',
+                'oauth_provider_id' => $provider->id,
+            ],
         ])->assertStatus(422);
     });
 });

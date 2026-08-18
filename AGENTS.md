@@ -301,3 +301,47 @@ Intermittent Google sign-in failures: after choosing account/Continue the opener
 - `OAuthController::redirect` is the ONLY place issuing the cookie; widget flow (`processWidgetCallback`) is unaffected (no cookie required).
 - Multi-tab clobber of `oauth_state` is an accepted standard double-submit limitation; client `activeFlows` map mitigates double-clicks.
 - Pre-existing uncommitted work untouched: deploy.yml, LoginForm/QuickRegister/RegisterForm.vue, file-uploads.js, guest.vue, Dockerfile.client, oauth-popup-flow.spec.ts.
+
+## Session: 2026-08-17 — Google OAuth Consent Screen: "Unverified App" Warning Root Cause
+
+### Symptom
+App published to Production on the consent screen, but Google still showed "Google hasn't verified this app — requesting access to sensitive info" (developer `sarveshwar2006@gmail.com`). Console Data Access said "Verification not required" while branding said "Your branding is not being shown to users".
+
+### Root cause
+- **Not a gcloud/app misconfig — it's one sensitive runtime scope.** Plain login/register (`intent: 'auth'`) requests only `openid/profile/email` (non-sensitive). Drive integration (`intent: 'integration'`) uses `drive.file` — **non-sensitive** per Google's Drive API docs. The ONLY sensitive scope anywhere is `https://www.googleapis.com/auth/forms.body.readonly`, requested solely by the Google Forms import flow (`FormImportModal.vue:540` → `intent: 'forms_import'`; mapped in `OAuthGoogleDriver::getScopesForIntent` line 87).
+- **Console "no verification required" is misleading**: it reflects scopes *declared* in Data Access, but Google keys the warning off scopes *actually requested at runtime* (`forms.body.readonly`).
+- **Why the scope was invisible in Data Access**: the **Google Forms API (`forms.googleapis.com`) was NOT enabled** in the GCP project. The scope picker only lists scopes for enabled APIs. **Fixed**: `gcloud services enable forms.googleapis.com --project=sharaforms` (op completed). Now the scope appears in the picker.
+- **No gcloud command or REST API exists for the consumer consent screen** (branding/publish/test-users/verification) — probed `oauth2.googleapis.com/v1|/v2/brands`, `/v1/projects/775268936981/brands`, `authplatform.googleapis.com` (discovery + brands), `consumersettings.googleapis.com/v1/projects/...` → all 404. `gcloud iam oauth-clients` is workforce/IAP only. Console-only by design.
+
+### Correct runtime scope map (code truth)
+- `auth` (login/register/one-tap) → `openid, profile, email` — non-sensitive, no warning once published.
+- `integration` (Drive/Sheets connect, `useOAuth.js` default `intent: 'integration'`) → + `drive.file` — non-sensitive.
+- `forms_import` (Google Forms import modal only) → + `forms.body.readonly` — **SENSITIVE** → warning + needs verification.
+
+### Manual steps given (Console-only, user to do)
+1. `https://console.cloud.google.com/auth/scopes?project=sharaforms` → Data Access → Add or remove scopes → now select `forms.body.readonly` (Forms API just enabled) + `drive.file`.
+2. Data Access status flips to "Verification required".
+3. Submit at `https://console.cloud.google.com/auth/verification?project=sharaforms`: branding (name SharaForms, logo, support `tech@sharaforms.com`, homepage), privacy `https://sharaforms.com/privacy-policy` (200), terms `https://sharaforms.com/terms-conditions` (**NOT** `/terms-of-service` which 404s — real route is `terms-conditions.vue`), scope justification + demo video. Review up to ~10 days. Until approved, warning stays only on the import flow and is bypassable via "Advanced → continue".
+4. Branding verification must be submitted first ("branding not shown" status) before scope verification passes.
+
+### Gotchas
+- The scope picker hiding a scope almost always means the owning API is disabled — check `gcloud services list --enabled --project=<proj>`.
+- `drive.file` is Google's recommended non-sensitive Drive scope; `forms.body.readonly` is the sensitive trigger. Login/Sheets are clean — don't chase a warning that only belongs to the Forms-import flow.
+
+## Session: 2026-08-18 — Google Forms Import → Drive Picker (drive.file, removes sensitive scope)
+
+### What changed
+- **No more pasted-form-ID/URL scope for Google Forms**: `forms_import` intent now requests `drive.file` (same non-sensitive scope as `integration`). `forms.body.readonly` is gone from the runtime scope map entirely — grep confirms zero code references; only AGENTS.md history remains.
+- **GoogleFormsImporter**: `form_id` is now primary; falls back to `extractFormId($importData['url'] ?? '')`; throws `FormImportException('Could not extract a form ID from the URL. ...')` if neither. `validate()` returns true when `form_id` is a non-empty string, else `parent::validate()`. Calls `GET https://forms.googleapis.com/v1/forms/{formId}` with the user's token.
+- **FormImportRequest**: `url` → `nullable|url|required_without:import_data.form_id`; `form_id` → `nullable|string`; `oauth_provider_id` → `nullable|integer|exists:oauth_providers,id|required_if:source,google_forms`; message `'import_data.url.required_without' => 'A form URL is required.'` (note: `required_without` uses `has()` — an empty `form_id` counts as present → 422).
+- **New token endpoint** `GET /settings/providers/{provider}/token` (route `settings.providers.token`, `auth.multi` + `settings.` groups, policy `view` = owner): returns `{access_token, expires_in: 3600}` from `GoogleOAuthClient` (refreshes if expired, persists updated provider). Non-google provider → 403 `'This provider cannot issue an access token.'`; `GoogleOAuthException` → 422; generic `RuntimeException` → 422 `'Google account not found or token expired. Please reconnect your Google account.'`.
+- **Client**: `oauthApi.token(providerId)` → `GET /settings/providers/{providerId}/token`. `FormImportModal.vue` loads the **Drive Picker**: `View(ViewId.DOCS)` + `setMimeTypes('application/vnd.google-apps.form')`, `setAppId(pickerAppId=775268936981)`, `setOAuthToken(access_token)`, `setDeveloperKey(pickerKey)`, `setOrigin(window.location.origin)`, callback sets `importForm.form_id = docs[0].id`. Providers lacking `drive.file` in `scopes` are disabled with "Re-connect account to fix permissions". `useOAuth.js` both scope constants = `drive.file`.
+- **Config/env**: `config/services.php` google block gains `picker_api_key` (env `GOOGLE_PICKER_API_KEY`) + `picker_app_id` (default `775268936981` = numeric GCP project id); `.env.example` adds both; `docker-compose.dev.yml` passes them; `FeatureFlagsController` exposes `services.google.picker_api_key`/`picker_app_id` (client reads those flag keys).
+- **GCP (CLI-verified)**: `picker.googleapis.com`, `forms.googleapis.com`, `drive.googleapis.com`, `siteverification.googleapis.com`, `apikeys.googleapis.com`, `sheets.googleapis.com` enabled. Picker Browser API key UID `2aaea2aa-96de-4e8c-897e-c1c97e17203e` restricted to `apiTargets: [picker.googleapis.com]`, allowedReferrers `sharaforms.com/*`, `www.sharaforms.com/*`, `http://localhost:3000/*`, `https://localhost:3000/*`.
+- **Tests**: `FormImportTest` google block converted to `form_id` (asserts exact `https://forms.googleapis.com/v1/forms/1abc123` + Bearer header); new tests for form_id-over-URL preference, neither-provided throws, empty form_id → 422, controller flow with form_id. New `api/tests/Feature/Settings/OAuthProviderTokenTest.php` (5 tests: guest 401, non-owner 403, owned google 200, non-google 403, missing token/refresh → 422). Targeted 55/55 (182 assertions); OAuth+Forms suites 367 passed/2 skipped. Client: eslint clean; vitest 716/717 (1 pre-existing unrelated failure in `file-uploads.test.ts`).
+
+### Gotchas
+- **drive.file consequence**: pasted `docs.google.com` form URLs now return 403 from the Forms API — the Picker selection is the only way to get a `form_id`; pasting a google URL in the import box surfaces the picker (URL still works for typeform/tally/fillout).
+- `setOrigin(window.location.origin)` must match a key referrer or the Picker refuses to render — the API-key referrers above are the source of truth for allowed origins.
+- Site-verification list API returns `403 ACCESS_TOKEN_SCOPE_INSUFFICIENT` with the current gcloud token — verify once via Console.
+- Manual step remaining (Console-only, no API): add `drive.file` to Data Access scopes after this deploy (replaces the now-removed `forms.body.readonly` guidance).

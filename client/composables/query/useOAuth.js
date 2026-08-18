@@ -10,8 +10,8 @@ export function useOAuth() {
   const alert = useAlert()
 
   // Constants
-  const googleDrivePermissionFileScope = 'https://www.googleapis.com/auth/forms.body.readonly'
-  const googleFormsPermissionScope = 'https://www.googleapis.com/auth/forms.body.readonly'
+  const googleDrivePermissionFileScope = 'https://www.googleapis.com/auth/drive.file'
+  const googleFormsPermissionScope = 'https://www.googleapis.com/auth/drive.file'
   
   // Service definitions
   const services = computed(() => {

@@ -17,7 +17,11 @@ class GoogleFormsImporter extends AbstractImporter
     {
         $provider = $this->resolveGoogleProvider($importData);
 
-        $formId = $this->extractFormId($importData['url'] ?? '');
+        $formId = $importData['form_id'] ?? null;
+        if (! is_string($formId) || $formId === '') {
+            $formId = $this->extractFormId($importData['url'] ?? '');
+        }
+
         if (! $formId) {
             throw new FormImportException('Could not extract a form ID from the URL. Please use a Google Forms URL like docs.google.com/forms/d/FORM_ID/edit.');
         }
@@ -25,6 +29,15 @@ class GoogleFormsImporter extends AbstractImporter
         $formData = $this->fetchForm($formId, $provider);
 
         return $this->parseFormData($formData);
+    }
+
+    public function validate(array $importData): bool
+    {
+        if (is_string($importData['form_id'] ?? null) && $importData['form_id'] !== '') {
+            return true;
+        }
+
+        return parent::validate($importData);
     }
 
     private function resolveGoogleProvider(array $importData): OAuthProvider

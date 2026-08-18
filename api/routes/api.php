@@ -86,6 +86,7 @@ Route::group(['middleware' => 'auth.multi'], function () {
         });
 
         Route::prefix('/providers')->name('providers.')->group(function () {
+            Route::get('/{provider}/token', [OAuthProviderController::class, 'token'])->name('token');
             Route::delete('/{provider}', [OAuthProviderController::class, 'destroy'])->name('destroy');
         });
 

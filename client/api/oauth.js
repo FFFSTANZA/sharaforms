@@ -9,6 +9,7 @@ export const oauthApi = {
   callback: (service, data) => apiService.post(`${OAUTH_BASE_PATH}/${service}/callback`, data),
   widgetCallback: (service, data) => apiService.post(`${OAUTH_BASE_PATH}/widget-callback/${service}`, data),
   delete: (providerId) => apiService.delete(`/settings/providers/${providerId}`),
+  token: (providerId) => apiService.get(`/settings/providers/${providerId}/token`),
 
   // OAuth flow (for authentication)
   redirect: (provider, data) => apiService.post(`${OAUTH_BASE_PATH}/connect/${provider}`, { ...data, intent: 'auth' })

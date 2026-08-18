@@ -84,7 +84,7 @@ class OAuthGoogleDriver implements OAuthDriver, SupportsEmailRestrictionsContrac
         return match ($intent) {
             'auth' => ['openid', 'profile', 'email'],
             'integration' => ['openid', 'profile', 'email', 'https://www.googleapis.com/auth/drive.file'],
-            'forms_import' => ['openid', 'profile', 'email', 'https://www.googleapis.com/auth/forms.body.readonly'],
+            'forms_import' => ['openid', 'profile', 'email', 'https://www.googleapis.com/auth/drive.file'],
             default => ['openid', 'profile', 'email'],
         };
     }

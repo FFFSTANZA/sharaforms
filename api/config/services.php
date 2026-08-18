@@ -103,6 +103,8 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => env('GOOGLE_REDIRECT_URL', front_url('/oauth/google/callback')),
         'fonts_api_key' => env('GOOGLE_FONTS_API_KEY'),
+        'picker_api_key' => env('GOOGLE_PICKER_API_KEY'),
+        'picker_app_id' => env('GOOGLE_PICKER_APP_ID', '775268936981'),
     ],
 
     'telegram' => [
