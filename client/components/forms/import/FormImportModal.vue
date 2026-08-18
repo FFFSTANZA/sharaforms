@@ -359,7 +359,7 @@ function issueMessage(reason) {
     return 'Enter a valid URL, for example https://yourname.typeform.com/to/FORM_ID.'
   }
 
-  if (reason === 'google_published_url' || reason === 'google_edit_url') {
+  if (reason === 'google_edit_url') {
     return 'Use a Google Forms URL like https://docs.google.com/forms/d/FORM_ID/edit.'
   }
 

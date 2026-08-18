@@ -59,7 +59,10 @@ class GoogleFormsImporter extends AbstractImporter
 
     private function extractFormData(string $html): array
     {
-        if (! preg_match('/FB_PUBLIC_LOAD_DATA_\s*=\s*(\[.*?\]);/s', $html, $matches)) {
+        // Match a balanced bracket expression so a literal "];" inside a
+        // string (e.g. an option label like "Use [A]; [B]") cannot truncate
+        // the JSON at the first "];".
+        if (! preg_match('/FB_PUBLIC_LOAD_DATA_\s*=\s*(\[(?:[^\[\]]+|(?1))*\]);/s', $html, $matches)) {
             throw new FormImportException('Could not find form data in the page. Make sure the form is public and its URL is correct.');
         }
 

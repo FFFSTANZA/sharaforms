@@ -1033,6 +1033,26 @@ describe('GoogleFormsImporter', function () {
             return $request->url() === 'https://docs.google.com/forms/d/e/published123/viewform';
         });
     });
+
+    it('parses option labels that contain a literal ]; sequence', function () {
+        Http::fake([
+            'docs.google.com/*' => Http::response(
+                googleFormsPublicHtmlFixture([
+                    'items' => [[3, 'Department', '', 3, [[4, [['Sales [Q1]; [Q2]', 0], ['Support', 0]], 1]]]],
+                ]),
+                200
+            ),
+        ]);
+
+        $importer = app(\App\Service\FormImport\Importers\GoogleFormsImporter::class);
+        $result = $importer->import([
+            'url' => 'https://docs.google.com/forms/d/1abc123/edit',
+        ]);
+
+        $department = collect($result['properties'])->firstWhere('name', 'Department');
+        expect($department['select']['options'][0]['name'])->toBe('Sales [Q1]; [Q2]');
+        expect($department['select']['options'][1]['name'])->toBe('Support');
+    });
 });
 
 // ---------------------------------------------------------------------------
