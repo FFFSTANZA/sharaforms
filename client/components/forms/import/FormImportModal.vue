@@ -689,7 +689,6 @@ const loadGooglePicker = (accessToken) => {
 
     const view = new View(ViewId.DOCS)
     view.setMimeTypes('application/vnd.google-apps.form')
-    view.setIncludeFolders(true)
 
     new picker.PickerBuilder()
       .enableFeature(Feature.NAV_HIDDEN)
