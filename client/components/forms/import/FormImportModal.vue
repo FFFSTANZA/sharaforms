@@ -705,13 +705,13 @@ const loadGooglePicker = (accessToken) => {
         return
       }
 
-      const { picker, View, ViewId, Feature, Action } = pickerNs
+      const { PickerBuilder, View, ViewId, Feature, Action } = pickerNs
 
       try {
         const view = new View(ViewId.DOCS)
         view.setMimeTypes('application/vnd.google-apps.form')
 
-        new picker.PickerBuilder()
+        new PickerBuilder()
           .enableFeature(Feature.NAV_HIDDEN)
           .setAppId(pickerAppId)
           .setOAuthToken(accessToken)
