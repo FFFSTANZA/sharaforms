@@ -684,34 +684,73 @@ const loadGooglePicker = (accessToken) => {
   const pickerKey = useFeatureFlag('services.google.picker_api_key', null)
   const pickerAppId = useFeatureFlag('services.google.picker_app_id', null)
 
-  const startPicker = () => {
-    const { picker, View, ViewId, Feature, Action } = window.google.picker
+  let attempts = 0
 
-    const view = new View(ViewId.DOCS)
-    view.setMimeTypes('application/vnd.google-apps.form')
-
-    new picker.PickerBuilder()
-      .enableFeature(Feature.NAV_HIDDEN)
-      .setAppId(pickerAppId)
-      .setOAuthToken(accessToken)
-      .setDeveloperKey(pickerKey)
-      .setOrigin(window.location.origin)
-      .addView(view)
-      .setCallback((data) => {
-        if (data.action === Action.PICKED && data.docs && data.docs[0]) {
-          importForm.form_id = data.docs[0].id
-          pickedFormName.value = data.docs[0].name || 'Selected Google Form'
-          importError.value = ''
-        }
-      })
-      .build()
-      .setVisible(true)
+  const pickerFailed = () => {
+    pickerLoading.value = false
+    importError.value = 'Google Picker failed to load. Please try again.'
+    useAlert().error(importError.value)
   }
 
-  const loadPicker = () => {
-    if (window.gapi) {
-      window.gapi.load('picker', startPicker)
+  const startPicker = () => {
+    setTimeout(() => {
+      const pickerNs = window.google && window.google.picker
+      if (!pickerNs || typeof pickerNs.PickerBuilder !== 'function') {
+        if (attempts < 2) {
+          attempts += 1
+          reloadGapiScript()
+          return
+        }
+        pickerFailed()
+        return
+      }
+
+      const { picker, View, ViewId, Feature, Action } = pickerNs
+
+      try {
+        const view = new View(ViewId.DOCS)
+        view.setMimeTypes('application/vnd.google-apps.form')
+
+        new picker.PickerBuilder()
+          .enableFeature(Feature.NAV_HIDDEN)
+          .setAppId(pickerAppId)
+          .setOAuthToken(accessToken)
+          .setDeveloperKey(pickerKey)
+          .setOrigin(window.location.origin)
+          .addView(view)
+          .setCallback((data) => {
+            if (data.action === Action.PICKED && data.docs && data.docs[0]) {
+              importForm.form_id = data.docs[0].id
+              pickedFormName.value = data.docs[0].name || 'Selected Google Form'
+              importError.value = ''
+            }
+          })
+          .build()
+          .setVisible(true)
+      } catch (error) {
+        console.error('[FormImportModal] Google Picker error:', error)
+        importError.value = 'Google Picker failed to load. Please try again.'
+        useAlert().error(importError.value)
+      }
+    }, 0)
+  }
+
+  const reloadGapiScript = () => {
+    document.querySelectorAll('script[src*="apis.google.com"]').forEach((script) => script.remove())
+    delete window.gapi
+    const script = document.createElement('script')
+    script.src = 'https://apis.google.com/js/api.js'
+    script.async = true
+    script.defer = true
+    script.onload = () => {
+      if (window.gapi && typeof window.gapi.load === 'function') {
+        window.gapi.load('picker', startPicker)
+      } else {
+        pickerFailed()
+      }
     }
+    script.onerror = pickerFailed
+    document.head.appendChild(script)
   }
 
   if (!window.gapi) {
@@ -719,12 +758,24 @@ const loadGooglePicker = (accessToken) => {
     script.src = 'https://apis.google.com/js/api.js'
     script.async = true
     script.defer = true
-    script.onload = loadPicker
+    script.onload = () => {
+      if (window.gapi && typeof window.gapi.load === 'function') {
+        window.gapi.load('picker', startPicker)
+      } else {
+        pickerFailed()
+      }
+    }
+    script.onerror = pickerFailed
     document.head.appendChild(script)
     return
   }
 
-  loadPicker()
+  if (typeof window.gapi.load !== 'function') {
+    reloadGapiScript()
+    return
+  }
+
+  window.gapi.load('picker', startPicker)
 }
 
 function issueMessage(reason) {
