@@ -274,6 +274,27 @@
       </VTransition>
     </template>
   </UModal>
+
+  <Teleport to="body">
+    <div
+      v-if="pickerOpen"
+      class="fixed inset-0 z-[9999]"
+      aria-hidden="true"
+    >
+      <button
+        type="button"
+        class="fixed right-4 top-4 z-[10000] flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-600 shadow-lg transition hover:bg-neutral-100 hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-400"
+        aria-label="Close Google Picker"
+        title="Close picker (Esc)"
+        @click="closePicker"
+      >
+        <Icon
+          name="i-lucide-x"
+          class="h-5 w-5"
+        />
+      </button>
+    </div>
+  </Teleport>
 </template>
 
 <script setup>
@@ -301,6 +322,9 @@ const importForm = useForm({
   form_id: null,
   oauth_provider_id: null,
 })
+
+let activePicker = null
+const pickerOpen = ref(false)
 
 const loading = ref(false)
 const importError = ref('')
@@ -485,6 +509,7 @@ const statusMessage = computed(() => {
 
 watch(() => props.show, (open) => {
   if (!open) {
+    closePicker()
     loading.value = false
     importError.value = ''
     connecting.value = false
@@ -680,6 +705,19 @@ const openPicker = () => {
     })
 }
 
+const closePicker = () => {
+  if (activePicker) {
+    try {
+      activePicker.setVisible(false)
+      activePicker.dispose()
+    } catch (error) {
+      console.error('[FormImportModal] Error closing Google Picker:', error)
+    }
+    activePicker = null
+  }
+  pickerOpen.value = false
+}
+
 const loadGooglePicker = (accessToken) => {
   const pickerKey = useFeatureFlag('services.google.picker_api_key', null)
   const pickerAppId = useFeatureFlag('services.google.picker_app_id', null)
@@ -711,7 +749,7 @@ const loadGooglePicker = (accessToken) => {
         const view = new View(ViewId.DOCS)
         view.setMimeTypes('application/vnd.google-apps.form')
 
-        new PickerBuilder()
+        const picker = new PickerBuilder()
           .enableFeature(Feature.NAV_HIDDEN)
           .setAppId(pickerAppId)
           .setOAuthToken(accessToken)
@@ -724,9 +762,13 @@ const loadGooglePicker = (accessToken) => {
               pickedFormName.value = data.docs[0].name || 'Selected Google Form'
               importError.value = ''
             }
+            closePicker()
           })
           .build()
-          .setVisible(true)
+
+        activePicker = picker
+        pickerOpen.value = true
+        picker.setVisible(true)
       } catch (error) {
         console.error('[FormImportModal] Google Picker error:', error)
         importError.value = 'Google Picker failed to load. Please try again.'
@@ -811,7 +853,15 @@ function formatSourceList(sources) {
 }
 
 const windowMessage = useWindowMessage(WindowMessageTypes.OAUTH_PROVIDER_CONNECTED)
+const handleKeydown = (event) => {
+  if (event.key === 'Escape' && pickerOpen.value) {
+    event.preventDefault()
+    closePicker()
+  }
+}
+
 onMounted(() => {
+  window.addEventListener('keydown', handleKeydown)
   windowMessage.listen(() => {
     connecting.value = false
     oAuth.invalidateProviders()
@@ -819,5 +869,10 @@ onMounted(() => {
     useMessageChannel: false,
     acknowledge: false,
   })
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown)
+  closePicker()
 })
 </script>
