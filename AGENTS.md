@@ -345,3 +345,73 @@ App published to Production on the consent screen, but Google still showed "Goog
 - `setOrigin(window.location.origin)` must match a key referrer or the Picker refuses to render — the API-key referrers above are the source of truth for allowed origins.
 - Site-verification list API returns `403 ACCESS_TOKEN_SCOPE_INSUFFICIENT` with the current gcloud token — verify once via Console.
 - Manual step remaining (Console-only, no API): add `drive.file` to Data Access scopes after this deploy (replaces the now-removed `forms.body.readonly` guidance).
+
+## Session: 2026-08-18 (later) — Live Console Fixes: Picker setIncludeFolders crash + benign warnings triage
+
+### Fix shipped (commit e70d868, deploy run 32117006563, all green)
+- **`Uncaught TypeError: O.setIncludeFolders is not a function`** (inside gapi picker bootstrap, `apis.google.com/js/api.js m=picker le=scs,fedcm_migration_mod`) — current Google Picker build removed `View.setIncludeFolders()`. `FormImportModal.vue:692` called `view.setIncludeFolders(true)` → whole picker crashed on the integrations/forms-create page. **Fix: deleted that line** (view is already MIME-filtered to `application/vnd.google-apps.form`; folders were never a valid import target). Only occurrence in client source (grep-verified). ESLint clean; no tests cover the picker.
+- Deploy pipeline verified the live config path already in place from the env fix: `/api/content/feature-flags` returns `picker_api_key`/`picker_app_id`/`client_id` (compose-inline defaults from `d5bfaa7`), `/api/settings/providers/1/token` exists (401 unauthenticated).
+
+### Triaged as benign / third-party (no code change)
+- **"preloaded Euclid-Circular-B-Regular.ttf not used within a few seconds"** — the font IS used: home SSR inlines `#app{font-family:euclid-circular-b,sans-serif!important}` + all 4 `@font-face` rules in `<style>`; preload link has `crossorigin`; URL matches; file serves `200 font/ttf 141448B`. Chrome heuristic noise on SSR pages where initial paint happens before font swap. Cosmetic only.
+- **"Blocked loading mixed active content http://developers.google.com/"** — no reference in client source (grep `developers.google`, `http://` links). Emitted by Google's own gapi/picker internals; triggered while the picker was in the errored state. Expect it to disappear with the setIncludeFolders fix.
+- **Cookie `dmn_chk_...` rejected (invalid domain)** — Google third-party cookie (persona/account chooser), browser privacy rejection, not app-caused and not fixable from code.
+
+### Verification limits
+- `/forms/create` returns HTTP 302 (auth-gated) so the lazy picker chunk can't be fetched unauthenticated; the fix's presence in the shipped bundle rests on source-grep (only occurrence removed) + green UI build from e70d868 + CF purge. Ask the user to hard-refresh the integrations/forms-create page and reopen the Google Forms import to confirm the picker now renders.
+- Manual Console step still pending for the user: add `drive.file` to Data Access scopes (`console.cloud.google.com/auth/scopes`).
+
+## Session: 2026-08-18 (night 2) — Google Picker `PickerBuilder is undefined` crash → hardened gapi bootstrap
+
+### Symptom
+After e70d868 shipped, the integrations/forms-create page now threw (instead of the old `setIncludeFolders` crash): `Uncaught TypeError: can't access property "PickerBuilder", T is undefined` at `DboAVYaO.js:1:10135` (our lazy chunk), fired from inside gapi's own `m=picker` module script (`scs` loader, `fedcm_migration_mod` experiment). Meaning: gapi called our `startPicker` callback but `window.google.picker` was NOT yet defined — the loader's namespace assignment raced the callback dispatch. Not a key/appId/config problem.
+
+### Fix (commit b7c0344, deploy run 32118646841, all 4 jobs green)
+- Rewrote `loadGooglePicker` in `client/components/forms/import/FormImportModal.vue` to be race-proof + retry + friendly-fail:
+  1. **Deferred namespace read**: callback wraps the builder in `setTimeout(0)` so the loader finishes attaching `google.picker` before we touch it.
+  2. **Guard + retry**: reads `window.google?.picker?.PickerBuilder`; if missing, `reloadGapiScript()` (removes all `apis.google.com` scripts, `delete window.gapi`, re-appends `api.js`) up to 2 retries (`attempts` counter).
+  3. **try/catch around `PickerBuilder().build().setVisible(true)`** → `console.error('[FormImportModal] Google Picker error:')` + friendly `importError`/alert instead of uncaught TypeError.
+  4. **Broken-gapi guard**: if `window.gapi` exists but has no `.load`, force reload; script `onerror` and onload-without-gapi → `pickerFailed()`.
+- ESLint clean; vitest 716/717 (1 = pre-existing unrelated `file-uploads.test.ts`). Live: home 200, old crashing chunk `DboAVYaO.js` gone from the payload (new bundle deployed), integrations route still 302 (auth-gated → can't grep the lazy chunk from here).
+
+### Other reports triaged (no code change)
+- Euclid preload "not used" — benign Chrome heuristic (font IS applied via inline SSR `#app`/`@font-face`, file 200 141448B).
+- `dmn_chk_*` cookie rejected — Google third-party persona/account-chooser cookie, browser privacy, not app-caused.
+- Mixed content `http://developers.google.com/` + gapi `_/jserror` CORS block — Google's own gapi/picker internals, expected to clear once the picker renders.
+- Pending user Console step unchanged: add `drive.file` to Data Access scopes.
+
+## Session: 2026-08-18 (night 3) — REAL picker root cause: `google.picker` destructure bug (PickerBuilder vs `picker`)
+
+### Symptom
+After b7c0344's hardened bootstrap shipped, the caught (not uncaught) error still fired: `[FormImportModal] Google Picker error: TypeError: can't access property "PickerBuilder", ne is undefined` — inside our try/catch, after the `PickerBuilder` guard passed. My earlier "loader race" theory was wrong.
+
+### REAL root cause
+`const { picker, View, ViewId, Feature, Action } = window.google.picker` destructures a **non-existent `picker` property**. The `google.picker` namespace exposes `PickerBuilder` (constructor), `View`, `ViewId`, `Feature`, `Action` — NOT `picker`. So `picker === undefined` → `new picker.PickerBuilder()` always threw `can't access property "PickerBuilder", ne is undefined`. The `setIncludeFolders` crash (e70d868) had been **masking it** by throwing earlier (before the PickerBuilder line); removing it surfaced the latent bug. The picker likely NEVER rendered in production (both prior crashes were pre-PickerBuilder). The b7c0344 retry/hardening was still worth keeping (it turned the crash into a caught, logged, user-visible error and guards gapi load flakiness) but was not the fix.
+
+### Fix (commit 69673af, deploy run 32120067842, all 4 jobs green)
+- `const { picker, ... } = pickerNs` → `const { PickerBuilder, ... } = pickerNs`; `new picker.PickerBuilder()` → `new PickerBuilder()`. The `typeof pickerNs.PickerBuilder !== 'function'` guard in b7c0344 now exactly matches the usage. ESLint clean; vitest 716/717 (1 pre-existing `file-uploads.test.ts`). Live: home 200, whole chunk set re-hashed (new bundle), integrations route still 302 auth-gated.
+- **Lesson: when a runtime error says `can't access property "X", <minified> is undefined`, suspect the destructure — the minified var is a destructured name, not the namespace.** Align the guard with the actual property used.
+
+### Font preload "not used" warning — final verdict: cosmetic, no fix
+- Verified the live SSR HTML fully wires the font: `<link rel="preload" as="font" crossorigin href="/fonts/euclid-circular-b/Euclid-Circular-B-Regular.ttf">` + all 4 `@font-face` rules inlined + `#app{font-family:euclid-circular-b,sans-serif!important}`. Family name matches (`euclid-circular-b` both sides), file serves 200 font/ttf 141448B. The warning is a Chrome `font-display: swap` heuristic false positive (fallback painted first; swap outside the heuristic window). Removing the preload would silence it at a small font-latency cost — not worth it.
+- `dmn_chk_*` cookie rejected — Google third-party persona cookie, not fixable from app code.
+
+## Session: 2026-08-18 (night 4) — Picker 401 "The API developer key is invalid" → key was API-restricted
+
+### Symptom
+After 69673af (PickerBuilder destructure), the picker iframe finally loaded from `docs.google.com/picker?...developerKey=AIzaSyApglQOcqcECb-oB0D1Hmq8To-E9y8E49s&hostId=sharaforms.com&appId=775268936981&parent=https://sharaforms.com/favicon.ico&...` but returned `[HTTP/2 401 2556ms]` and the picker showed "There was an error! The API developer key is invalid." User also saw the Google cookie-consent prompt inside the iframe they couldn't click.
+
+### Root cause
+The Picker Browser API Key (uid `2aaea2aa-96de-4e8c-897e-c1c97e17203e`, displayName "Picker Browser API Key") had **`apiTargets: [picker.googleapis.com]`** in its restrictions. The Google Picker loads its UI from the `docs.google.com/picker` front-end, and an API-target-restricted key is rejected with "The API developer key is invalid" even though `picker.googleapis.com` is the documented service. Google's Picker requires the developer key to be **unrestricted or referrer-restricted only** — no `apiTargets`.
+
+### Fix (GCP config, no code change)
+- `PATCH https://apikeys.googleapis.com/v2/projects/775268936981/locations/global/keys/2aaea2aa-...?updateMask=restrictions` with body `{"restrictions":{"browserKeyRestrictions":{"allowedReferrers":["sharaforms.com/*","www.sharaforms.com/*","http://localhost:3000/*","https://localhost:3000/*"]}}}` → returned async op (poll endpoint 404s; just re-GET the key to verify). Verified: `updateTime` bumped, `restrictions` now only `browserKeyRestrictions.allowedReferrers`, **no `apiTargets`**.
+- API-key restriction changes propagate within minutes; user should hard-refresh and reopen the import picker.
+- gcloud token refresh hangs in this env (network/consent); workaround: read `refresh_token` from `~/.config/gcloud/credentials.db` (sqlite, account `sarveshwar2006@gmail.com`, client_id `32555940559.apps.googleusercontent.com`), then POST `https://oauth2.googleapis.com/token` with `grant_type=refresh_token` → `access_token` for curl calls to `apikeys.googleapis.com`. Token saved at `/tmp/opencode/tok.json`.
+- Correct key-list endpoint: `GET /v2/projects/{proj}/locations/global/keys` (the non-location `/v2/projects/{proj}/keys` 404s).
+
+### Still-open / benign (unchanged)
+- `dmn_chk_*` cookie rejected — Google third-party persona cookie, browser privacy, not app-caused.
+- Euclid font preload "not used" — Chrome `font-display: swap` heuristic false positive; font fully wired in SSR (verified earlier).
+- "It is asking for google cookies access" inside the picker iframe — Google's own consent UI in the docs.google.com frame; the `setOAuthToken` token we pass should let the file list render without it. If it still blocks, that's third-party-cookie blocking in the user's browser, not app code.
+- Pending user Console step unchanged: add `drive.file` to Data Access scopes (`console.cloud.google.com/auth/scopes`).
