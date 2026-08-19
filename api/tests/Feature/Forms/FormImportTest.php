@@ -1006,7 +1006,7 @@ describe('GoogleFormsImporter', function () {
             'docs.google.com/*' => Http::response(
                 googleFormsPublicHtmlFixture([
                     'items' => [[
-                        16, 'Features', '', 10,
+                        16, 'Features', '', 7,
                         [
                             [201, [['Yes'], ['No']], 0, ['Email reports']],
                             [202, [['Yes'], ['No']], 0, ['SMS alerts']],
@@ -1026,6 +1026,71 @@ describe('GoogleFormsImporter', function () {
         expect($matrix)->not->toBeNull();
         expect($matrix['rows'])->toBe(['Email reports', 'SMS alerts']);
         expect($matrix['columns'])->toBe(['Yes', 'No']);
+    });
+
+    it('maps section headers (type 8) to an nf-text block', function () {
+        Http::fake([
+            'docs.google.com/*' => Http::response(
+                googleFormsPublicHtmlFixture([
+                    'items' => [[19, 'More examples', 'This is a new section', 8, null]],
+                ]),
+                200
+            ),
+        ]);
+
+        $importer = app(\App\Service\FormImport\Importers\GoogleFormsImporter::class);
+        $result = $importer->import([
+            'url' => 'https://docs.google.com/forms/d/1abc123/edit',
+        ]);
+
+        $header = collect($result['properties'])->firstWhere('type', 'nf-text');
+        expect($header)->not->toBeNull();
+        expect($header['content'])->toContain('More examples');
+        expect($header['content'])->toContain('This is a new section');
+    });
+
+    it('maps time questions (type 10) to a date-with-time field', function () {
+        Http::fake([
+            'docs.google.com/*' => Http::response(
+                googleFormsPublicHtmlFixture([
+                    'items' => [[20, 'Wake-up time', '', 10, [[21, null, 0]]]],
+                ]),
+                200
+            ),
+        ]);
+
+        $importer = app(\App\Service\FormImport\Importers\GoogleFormsImporter::class);
+        $result = $importer->import([
+            'url' => 'https://docs.google.com/forms/d/1abc123/edit',
+        ]);
+
+        $time = collect($result['properties'])->firstWhere('name', 'Wake-up time');
+        expect($time)->not->toBeNull();
+        expect($time['type'])->toBe('date');
+        expect($time['with_time'])->toBeTrue();
+    });
+
+    it('skips image and video items (types 11 and 12)', function () {
+        Http::fake([
+            'docs.google.com/*' => Http::response(
+                googleFormsPublicHtmlFixture([
+                    'items' => [
+                        [1, 'Your Name', '', 0, [[2, null, 1]]],
+                        [3, 'Map of Indonesia', null, 11, null],
+                        [4, 'Watch this video', null, 12, null],
+                    ],
+                ]),
+                200
+            ),
+        ]);
+
+        $importer = app(\App\Service\FormImport\Importers\GoogleFormsImporter::class);
+        $result = $importer->import([
+            'url' => 'https://docs.google.com/forms/d/1abc123/edit',
+        ]);
+
+        expect($result['properties'])->toHaveCount(1);
+        expect($result['properties'][0]['name'])->toBe('Your Name');
     });
 
     it('maps scale questions with labels', function () {

@@ -138,13 +138,13 @@ class GoogleFormsImporter extends AbstractImporter
         $typeCode = (int) ($item[3] ?? -1);
         $extra = $item[4] ?? null;
 
-        if ($typeCode === 6) {
+        if ($typeCode === 6 || $typeCode === 8) {
             $content = '';
             if ($text !== '') {
                 $content .= '<p><strong>' . e($text) . '</strong></p>';
             }
-            // Google puts the section header's description at item[2]; its
-            // extra slot (item[4]) is null for section headers.
+            // Google puts the section/heading description at item[2]; its
+            // extra slot (item[4]) is null for these items.
             $description = $this->sanitizeText($item[2] ?? '', 8000);
             if ($description !== '') {
                 $content .= '<p>' . e($description) . '</p>';
@@ -197,9 +197,13 @@ class GoogleFormsImporter extends AbstractImporter
             3 => $this->mapDropdownQuestion($property, $labels),
             4 => $this->mapCheckboxesQuestion($property, $labels),
             5 => $this->mapScaleQuestion($property, $extra),
-            7, 10 => $this->mapGridQuestion($item, $typeCode, $required),
-            8 => $this->mapTimeQuestion($property),
+            // Type 7 covers both multiple-choice grids and checkbox grids.
+            7 => $this->mapGridQuestion($item, $required),
             9 => $this->mapDateQuestion($property),
+            10 => $this->mapTimeQuestion($property),
+            // Type 11 (image) and 12 (video) carry no question data of their
+            // own; skip them rather than emitting an empty text field.
+            11, 12 => null,
             default => $property,
         };
     }
@@ -300,7 +304,7 @@ class GoogleFormsImporter extends AbstractImporter
         return $property;
     }
 
-    private function mapGridQuestion(array $item, int $typeCode, bool $required): ?array
+    private function mapGridQuestion(array $item, bool $required): ?array
     {
         // Real shape: item[4] (extra) is a list of row entries, one per grid
         // row. Each entry: [colEntryId, [["col1"],["col2"],...], required,
