@@ -453,3 +453,21 @@ Symptoms of the old bug: section headers (type 8) became date-with-time fields, 
 - Prior deploy failure (32214369515, d0b04a3) was a **transient GitHub 504** on `composer install` downloading `symfony/polyfill-mbstring` — infra flake, not code. Re-run on the new SHA succeeded.
 - Live fixtures kept at `/tmp/opencode/gf1.html`, `gf3.html`; container copies `/tmp/gf1.html`, `/tmp/gf3.html` for future importer probes.
 - GOTCHA: earlier AGENTS.md/`@sharaforms` entries claiming "type 8 = time, type 10 = checkbox grid" were wrong — the synthetic fixture (not live HTML) led both the code and the docs astray. Trust real page dumps over fixtures.
+
+## Session: 2026-08-19 (later) — Favicon Not in Google Search: dedicated PNG set + deploy
+
+### Root cause
+Favicon showed in the browser tab but not Google SERPs. Primary `<link rel="icon">` pointed at `/img/sharaforms-logo.png` with `sizes="1254x1254"` (314KB full logo — not a favicon-size asset); only a legacy multi-frame ICO (16/32/48/64px) as fallback. Google's separate favicon crawler expects a dedicated square icon ≥48×48 (multiples preferred), PNG preferred, at a stable URL. robots.txt was NOT blocking (`Allow: /`); live serving of `favicon.ico` (7682B, `image/vnd.microsoft.icon`) and `logo.png` were already 200.
+
+### Changes (commit fba5991, deploy run 32243753179 all green)
+- Generated `client/public/favicon-48x48.png` (2.8KB), `favicon-96x96.png` (6KB), `favicon-192x192.png` (15KB) from `img/sharaforms-logo.png` via `magick -resize NxN -filter Lanczos -unsharp 0x1`.
+- `app.vue` head links: kept `rel=icon` `/favicon.ico` fallback; replaced the 1254px logo icon link with PNG icon links 192×192 / 96×96 / 48×48; apple-touch-icon unchanged.
+- `site.webmanifest`: 192×192 icon → `/favicon-192x192.png`; 512 stays `/img/sharaforms-logo.png`.
+- Same commit also swept the pre-existing uncommitted marketing/SEO copy refresh (pages, `useOpnSeoMeta`/`useComparisonSeo`, ai.txt, llms*.txt).
+- Live verified: all 4 favicon files 200; homepage `<head>` emits the 3 PNG icon links + ico.
+
+### Gotchas
+- **Deploy is push-triggered**: the GitHub Action (`Build and Deploy`) builds api/ui images → SSH to VPS (`docker compose pull && up -d` + ingress restart) → CF purge → pre-warm. A plain push to `main` redeploys automatically; no manual VPS steps.
+- **Google favicon caching is the real lag** — correct tags alone won't appear in SERPs for days-to-weeks. Speed-up: GSC URL Inspection → Request Indexing on `/` AND on `/favicon-192x192.png` directly (inspect the image URL to hit the favicon crawler), then never change the favicon URL (churn resets trust).
+- Agent can't view images — used the 1254px logo as source for consistency with apple-touch-icon.
+- Remaining user-side actions after this session: rotate the GitHub PAT (`ghp_dH6f...` was pasted in chat → treat as exposed) and run the GSC re-index steps.
