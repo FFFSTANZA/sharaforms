@@ -415,3 +415,41 @@ The Picker Browser API Key (uid `2aaea2aa-96de-4e8c-897e-c1c97e17203e`, displayN
 - Euclid font preload "not used" — Chrome `font-display: swap` heuristic false positive; font fully wired in SSR (verified earlier).
 - "It is asking for google cookies access" inside the picker iframe — Google's own consent UI in the docs.google.com frame; the `setOAuthToken` token we pass should let the file list render without it. If it still blocks, that's third-party-cookie blocking in the user's browser, not app code.
 - Pending user Console step unchanged: add `drive.file` to Data Access scopes (`console.cloud.google.com/auth/scopes`).
+
+## Session: 2026-08-19 — Google Forms Import Deep Audit: Type Codes Were WRONG (fixed, deployed)
+
+### The core finding
+The importer's type routing was based on a **synthetic fixture**, not real Google pages. Auditing against **two live public forms** (including the famous "Understanding Different Question Types in Google Forms" demo, which contains all 11 types) exposed two wrong codes that silently broke real imports:
+
+| Type | Was (wrong) | Is (verified real) |
+|------|-------------|---------------------|
+| 7 | grid | **grid — BOTH multiple-choice grid AND checkbox grid** (checkbox grids are type 7, not 10) |
+| 8 | time | **section header** (rendered like type 6 as an nf-text block) |
+| 9 | date | **date** ✓ |
+| 10 | grid | **time** (mapTimeQuestion → date + with_time) |
+| 11 | (fell to default→empty text) | **image — skip** (no question data) |
+| 12 | — | **video — skip** |
+| 0/1/2/3/4/5 | text/paragraph/radio/dropdown/checkbox/scale | unchanged ✓ |
+
+Symptoms of the old bug: section headers (type 8) became date-with-time fields, and time questions (type 10) vanished entirely (grid mapper returned null).
+
+### Real item shapes confirmed (item = FB_PUBLIC_LOAD_DATA_[1][1][n])
+- Every question item: `[id, title, help, typeCode, extra, null ×6, [null, title], [null, desc?]]` — help at **item[2]**, extra at **item[4]**.
+- `extra` = `[[entryId, options, required, ...]]`; required flag = `extra[0][2]`; options = `extra[0][1]` each `[label, null, null, null, otherFlag]` where `otherFlag === 1` means the "Other" choice (empty label) → surfaced as `'Other'` option.
+- Scale: `extra[0][1]` = point labels `[["1"],...["10"]]` (min/max = first/last), `extra[0][3]` = `[lowLabel, highLabel]`.
+- Grid (type 7): `extra` = one entry per row; each `[colEntryId, [["col1"],...], required, [rowLabel]]` — columns from first row's `extra[0][1]`, rows from each `entry[3][0]`.
+- Section/heading (6 & 8): description at **item[2]**, extra is null.
+- Form container: `data[1][0]` description, `data[1][1]` items, `data[1][8]` title (confirmed on live gf1/gf3).
+- Date extra includes trailing `[0,1]` format flag; time extra `[0]` — both ignored, type code is what matters.
+
+### Changes (commit 37fe77d)
+- `GoogleFormsImporter.php`: section branch `typeCode === 6 || 8`; match arms `7 => mapGridQuestion`, `9 => date`, `10 => time`, `11,12 => null`; `mapGridQuestion` dropped the now-unused `$typeCode` param.
+- `FormImportTest.php`: checkbox-grid test moved type 10→7; new regression tests: section header (8) → nf-text, time (10) → date+with_time, image/video (11/12) skipped.
+- Smoke-tested against real gf1 (Council Public Comment) + gf3 (11-types demo): all 28/5 properties map correctly.
+
+### Verification
+- `FormImportTest.php`: **58 passed (194 assertions)**. `tests/Feature/Forms`: **338 passed, 2 skipped** (was 334 before; +4 new tests).
+- Deploy run 32220568498 all 5 jobs green → VPS pulled new images. Live: `https://sharaforms.com/` 200, `/api/content/plans` 200.
+- Prior deploy failure (32214369515, d0b04a3) was a **transient GitHub 504** on `composer install` downloading `symfony/polyfill-mbstring` — infra flake, not code. Re-run on the new SHA succeeded.
+- Live fixtures kept at `/tmp/opencode/gf1.html`, `gf3.html`; container copies `/tmp/gf1.html`, `/tmp/gf3.html` for future importer probes.
+- GOTCHA: earlier AGENTS.md/`@sharaforms` entries claiming "type 8 = time, type 10 = checkbox grid" were wrong — the synthetic fixture (not live HTML) led both the code and the docs astray. Trust real page dumps over fixtures.
