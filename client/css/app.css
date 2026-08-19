@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 @import "./fonts.css";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+@import "./dashboard-design.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 @custom-variant ltr-only (&:where(:dir(ltr)));

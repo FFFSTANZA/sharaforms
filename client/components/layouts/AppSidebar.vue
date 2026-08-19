@@ -1,180 +1,272 @@
 <template>
-  <BaseSidebar ref="sidebar">
-    <!-- Header Slot -->
-    <template #header>
-      <!-- Workspace Dropdown -->
-      <div class="grow min-w-0">
+  <div>
+    <!-- Mobile top bar -->
+    <div class="sm:hidden fixed top-0 left-0 right-0 h-14 bg-white border-b border-[#E6E8EE] z-50 px-4 flex items-center justify-between">
+      <p class="text-[18px] font-bold text-[#1D1F24] tracking-tight">SharaForms<span class="text-[#ff5c38]">.</span></p>
+      <UButton
+        square
+        size="sm"
+        icon="i-lucide-menu"
+        variant="ghost"
+        color="neutral"
+        @click="isMobileMenuOpen = true"
+      />
+    </div>
+
+    <!-- Mobile Drawer Overlay -->
+    <div
+      v-if="isMobileMenuOpen"
+      class="sm:hidden fixed inset-0 bg-neutral-950/20 backdrop-blur-xs z-50"
+      @click="isMobileMenuOpen = false"
+    ></div>
+
+    <!-- Sidebar Element -->
+    <aside
+      :class="[
+        'sidebar w-[260px] shrink-0 flex flex-col fixed top-0 left-0 h-full overflow-y-auto z-[60] border-r border-[#E6E8EE] transition-transform duration-300 ease-in-out',
+        isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full sm:translate-x-0'
+      ]"
+    >
+      <div class="flex flex-col h-full px-6 py-8 gap-7">
+        <!-- Brand -->
+        <div class="px-4 flex items-center justify-between">
+          <p class="whitespace-nowrap select-none text-[20px] font-bold leading-none tracking-tight text-[#1D1F24]">
+            SharaForms<span class="text-[#ff5c38]">.</span>
+          </p>
+          <UButton
+            v-if="isMobileMenuOpen"
+            square
+            size="xs"
+            class="sm:hidden"
+            icon="i-lucide-x"
+            variant="ghost"
+            color="neutral"
+            @click="isMobileMenuOpen = false"
+          />
+        </div>
+
+        <!-- Workspace Selector -->
         <WorkspaceDropdown>
-          <template #default="{ workspace }">
+          <template #default="{ workspace: currentWorkspace }">
             <button
-              v-if="workspace"
-              aria-label="Workspace menu"
-              class="group flex w-full items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-neutral-100 transition-colors min-w-0 text-left"
+              class="flex w-full items-center justify-between px-4 py-3 rounded-xl bg-white border border-[#E6E8EE] shadow-[0_1px_2px_rgba(23,25,35,0.04),0_8px_20px_-12px_rgba(23,25,35,0.14)] hover:border-[#FFB79A] transition-all text-left"
             >
-              <WorkspaceIcon :workspace="workspace" size="size-8" />
-              <div class="flex-1 min-w-0">
-                <p class="text-sm font-semibold text-neutral-900 truncate">
-                  {{ workspace.name }}
-                </p>
+              <div class="flex items-center gap-2.5 min-w-0">
+                <div class="grad-brand w-6 h-6 rounded-lg flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-layer-group text-[9px] text-white"></i>
+                </div>
+                <span class="text-sm font-medium text-[#565A62] truncate">{{ currentWorkspace?.name || 'My Workspace' }}</span>
               </div>
-              <UIcon
-                name="i-lucide-chevron-down"
-                class="h-3.5 w-3.5 shrink-0 text-neutral-400 group-hover:text-neutral-500"
-              />
+              <i class="fa-solid fa-chevron-down text-[9px] text-[#A7ABB2] shrink-0"></i>
             </button>
           </template>
         </WorkspaceDropdown>
-      </div>
-    </template>
 
-    <!-- Navigation Slot -->
-    <template #navigation>
-      <div 
-        v-for="(section, index) in navigationSections" 
-        :key="section.name || 'main'"
-        :class="[
-          index !== navigationSections.length - 1 ? 'mb-6' : '',
-          // Push Product and Help sections to bottom
-          index === 1 ? 'mt-auto' : ''
-        ]"
-      >
-        <!-- Section Title (if exists) -->
-        <h3 
-          v-if="section.name"
-          class="select-none text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2 px-3"
-        >
-          {{ section.name }}
-        </h3>
-        
-        <!-- Section Items -->
-        <NavigationList
-          :items="section.items"
-          tracking-name="sidebar_nav_click"
-          :tracking-properties="(item) => ({ label: item.label })"
-          @item-click="handleItemClick"
-        />
-      </div>
-    </template>
-
-    <!-- Footer Slot -->
-    <template #footer>
-      <div class="flex flex-col gap-2">
-        <UserDropdown>
-          <template #default="{ user }">
-            <button
-              v-if="user"
-              aria-label="User menu"
-              class="group flex w-full items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-neutral-100 transition-colors min-w-0 text-left"
-            >
-              <img
-                :src="user.photo_url"
-                :alt="user.name"
-                class="rounded-full size-8 shrink-0"
-              >
-              <div class="flex-1 min-w-0">
-                <p class="text-sm font-medium text-neutral-900 truncate">
-                  {{ user.name }}
-                </p>
-                <p class="text-xs text-neutral-400 truncate">
-                  {{ user.email }}
-                </p>
-              </div>
-              <UIcon
-                name="i-lucide-chevron-up"
-                class="h-4 w-4 shrink-0 text-neutral-400 group-hover:text-neutral-500"
-              />
-            </button>
-          </template>
-        </UserDropdown>
-        <p class="text-center text-xs text-neutral-400">
-          <NuxtLink class="font-semibold hover:text-neutral-500" :to="{ name: 'home' }">
-            SharaForms
+        <!-- Main Navigation -->
+        <nav class="flex flex-col gap-1">
+          <NuxtLink
+            :to="{ name: 'home', query: { tab: 'dashboard' } }"
+            class="relative flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all"
+            :class="[ activeTab === 'dashboard' ? 'nav-active tab-link font-semibold text-[#1D1F24]' : 'tab-link text-[#565A62]' ]"
+            @click="isMobileMenuOpen = false"
+          >
+            <span
+              v-if="activeTab === 'dashboard'"
+              class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-full bg-[#ff5c38]"
+            ></span>
+            <i class="fa-solid fa-house text-[14px] w-4 text-center" :class="{ 'text-[#ff5c38]': activeTab === 'dashboard' }"></i>
+            <span class="nav-label">Dashboard</span>
           </NuxtLink>
-          <span v-if="version"> v{{ version }}</span>
-        </p>
+
+          <NuxtLink
+            :to="{ name: 'home', query: { tab: 'forms' } }"
+            class="relative flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all"
+            :class="[ activeTab === 'forms' ? 'nav-active tab-link font-semibold text-[#1D1F24]' : 'tab-link text-[#565A62]' ]"
+            @click="isMobileMenuOpen = false"
+          >
+            <span
+              v-if="activeTab === 'forms'"
+              class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-full bg-[#ff5c38]"
+            ></span>
+            <i class="fa-solid fa-file-lines text-[14px] w-4 text-center" :class="{ 'text-[#ff5c38]': activeTab === 'forms' }"></i>
+            <span class="nav-label">My Forms</span>
+          </NuxtLink>
+
+          <NuxtLink
+            :to="{ name: 'templates-my-templates' }"
+            class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all"
+            :class="[ route.name?.startsWith('templates') ? 'nav-active font-semibold text-[#1D1F24]' : 'text-[#565A62]' ]"
+            @click="isMobileMenuOpen = false"
+          >
+            <i class="fa-solid fa-clone text-[14px] w-4 text-center"></i>
+            Templates
+          </NuxtLink>
+        </nav>
+
+        <!-- Divider -->
+        <div class="border-t border-[#E6E8EE]/80"></div>
+
+        <!-- Product Section -->
+        <div class="flex flex-col gap-0.5">
+          <p class="px-4 text-[11px] font-medium uppercase tracking-[0.1em] text-[#A0A4AD] mb-1.5">
+            Product
+          </p>
+          <button
+            v-if="featureBaseEnabled"
+            @click="openChangelog"
+            class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all text-left w-full hover:bg-[#F0F1F4]"
+          >
+            <i class="fa-solid fa-bullhorn text-[14px] w-4 text-center"></i>
+            What's new
+          </button>
+          <a
+            :href="links.roadmap"
+            target="_blank"
+            class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all"
+          >
+            <i class="fa-solid fa-map text-[14px] w-4 text-center"></i>
+            Roadmap
+          </a>
+          <a
+            :href="links.feature_requests"
+            target="_blank"
+            class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all"
+          >
+            <i class="fa-solid fa-lightbulb text-[14px] w-4 text-center"></i>
+            Feature Requests
+          </a>
+        </div>
+
+        <!-- Help Section -->
+        <div class="flex flex-col gap-0.5">
+          <p class="px-4 text-[11px] font-medium uppercase tracking-[0.1em] text-[#A0A4AD] mb-1.5">
+            Help
+          </p>
+          <a
+            :href="links.help_url"
+            target="_blank"
+            class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all"
+          >
+            <i class="fa-solid fa-circle-question text-[14px] w-4 text-center"></i>
+            Help Center
+          </a>
+          <a
+            :href="links.api_docs"
+            target="_blank"
+            class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all"
+          >
+            <i class="fa-solid fa-code text-[14px] w-4 text-center"></i>
+            API Docs
+          </a>
+          <button
+            @click="contactSupport"
+            class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all text-left w-full hover:bg-[#F0F1F4]"
+          >
+            <i class="fa-solid fa-envelope text-[14px] w-4 text-center"></i>
+            Contact Support
+          </button>
+        </div>
+
+        <!-- Upgrade + Profile -->
+        <div class="mt-auto flex flex-col gap-4">
+          <!-- Upgrade block -->
+          <div
+            v-if="showUpgradeBanner"
+            class="bg-[#FDF6EB] border border-[#f5dfa8] rounded-2xl p-4 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.6)]"
+          >
+            <p class="text-sm font-semibold text-[#1D1F24] mb-1">
+              <i class="fa-solid fa-crown text-[10px] text-[#d97706] mr-1.5"></i>{{ upgradeTitle }}
+            </p>
+            <p class="text-xs text-[#8E9198] font-medium mb-3 leading-relaxed">
+              Unlock advanced analytics, custom domains &amp; more.
+            </p>
+            <button
+              @click="triggerUpgrade"
+              class="btn-primary w-full text-white text-sm font-semibold py-2.5 rounded-xl"
+            >
+              Upgrade Now
+            </button>
+          </div>
+
+          <!-- User profile block -->
+          <UserDropdown v-if="user">
+            <template #default="{ user: currentUser }">
+              <div
+                class="flex items-center gap-3 px-3 py-3 rounded-2xl hover:bg-[#F0F1F4] transition-all cursor-pointer min-w-0"
+              >
+                <img
+                  :src="currentUser.photo_url || 'https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg'"
+                  :alt="currentUser.name"
+                  class="w-9 h-9 rounded-full object-cover ring-2 ring-[#E6E8EE] shrink-0"
+                />
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-semibold leading-none truncate text-[#1D1F24]">{{ currentUser.name }}</p>
+                  <p class="text-xs text-[#8E9198] font-medium mt-1 truncate">{{ currentUser.email }}</p>
+                </div>
+                <i class="fa-solid fa-ellipsis-vertical text-[10px] text-[#A7ABB2] shrink-0"></i>
+              </div>
+            </template>
+          </UserDropdown>
+        </div>
       </div>
-    </template>
-  </BaseSidebar>
+    </aside>
+  </div>
 </template>
 
 <script setup>
-import BaseSidebar from "~/components/layouts/BaseSidebar.vue"
+import { ref, computed } from "vue"
+import { useRoute } from "vue-router"
 import WorkspaceDropdown from "~/components/dashboard/WorkspaceDropdown.vue"
-import WorkspaceIcon from "~/components/workspaces/WorkspaceIcon.vue"
 import UserDropdown from "~/components/dashboard/UserDropdown.vue"
-import NavigationList from "~/components/global/NavigationList.vue"
-import { useSharedNavigation } from "~/composables/components/useSharedNavigation"
+import sharaformsConfig from "~/sharaforms.config.js"
+import { useAppStore } from "~/stores/app"
 
 const route = useRoute()
-const sidebar = ref(null)
+const isMobileMenuOpen = ref(false)
 
-const version = computed(() => useFeatureFlag('version'))
-
-const { sharedNavigationSections, createNavItem } = useSharedNavigation()
+const appStore = useAppStore()
+const featureBaseEnabled = computed(() => appStore.featureBaseEnabled)
 
 const { current: workspace } = useCurrentWorkspace()
 const isSelfHosted = computed(() => useFeatureFlag('self_hosted'))
 const { can } = useWorkspaceAbilities()
 const { openSubscriptionModal } = useAppModals()
+const { data: user } = useAuth().user()
 
-// Check if current route matches a prefix
-function isActiveRoute(prefix) {
-  if (!prefix) return false
-  return route.name?.startsWith(prefix)
+const links = sharaformsConfig.links
+
+const activeTab = computed(() => {
+  if (route.name !== 'home') return null
+  return route.query.tab || 'dashboard'
+})
+
+const showUpgradeBanner = computed(() => {
+  if (!workspace.value || isSelfHosted.value) return false
+  const isProUpgrade = !can('workspaces.multiple')
+  const isBusinessUpgrade = can('workspaces.multiple') && !can('multi_user.roles')
+  return isProUpgrade || isBusinessUpgrade
+})
+
+const upgradeTitle = computed(() => {
+  if (!workspace.value) return 'Upgrade to Pro'
+  return can('workspaces.multiple') ? 'Upgrade to Business' : 'Upgrade to Pro'
+})
+
+const triggerUpgrade = () => {
+  usePostHog().logEvent('app_sidebar_upgrade_click')
+  const plan = can('workspaces.multiple') ? 'business' : 'pro'
+  openSubscriptionModal({
+    plan,
+    modal_title: `Upgrade to ${plan === 'business' ? 'Business' : 'Pro'} plan`,
+  })
 }
 
-// Navigation sections structure
-const navigationSections = computed(() => [
-  // Section 1: Main navigation (no name)
-  {
-    name: null,
-    items: [
-      createNavItem({
-        label: 'Home', 
-        icon: 'i-heroicons:home',
-        to: { name: 'home' },
-        active: isActiveRoute('home')
-      }),
-      createNavItem({
-        label: 'Templates',
-        icon: 'i-heroicons:document-duplicate',
-        to: { name: 'templates-my-templates' },
-        active: isActiveRoute('templates')
-      }),
-      // Show upgrade for non-pro users
-      ...(workspace.value && !can('workspaces.multiple') && !isSelfHosted.value ? [createNavItem({
-        label: 'Upgrade to Pro',
-        icon: 'i-heroicons:arrow-up-circle',
-          onClick: () => {
-          usePostHog().logEvent('app_sidebar_upgrade_click')
-          openSubscriptionModal({
-            plan: 'pro',
-            modal_title: 'Upgrade to Pro plan',
-          })
-        },
-        color: 'primary'
-      })] : []),
-      ...(workspace.value && can('workspaces.multiple') && !can('multi_user.roles') && !isSelfHosted.value ? [createNavItem({
-        label: 'Upgrade to Business',
-        icon: 'i-heroicons:arrow-up-circle',
-        onClick: () => {
-          usePostHog().logEvent('app_sidebar_upgrade_click')
-          openSubscriptionModal({
-            plan: 'business',
-            modal_title: 'Upgrade to Business plan',
-          })
-        },
-        color: 'primary'
-      })] : [])
-    ]
-  },
-  // Add shared navigation sections (Product and Help)
-  ...sharedNavigationSections.value
-])
-
-function handleItemClick(_item) {
-  if (sidebar.value && sidebar.value.isMobileMenuOpen) {
-    sidebar.value.isMobileMenuOpen = false
-  }
+const openChangelog = () => {
+  if (import.meta.server || !window.Featurebase) return
+  window.Featurebase("manually_open_changelog_popup")
 }
-</script> 
+
+const contactSupport = () => {
+  window.location.href = `mailto:${links.contact_email}`
+}
+</script>
