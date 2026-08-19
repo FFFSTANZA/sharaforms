@@ -491,7 +491,7 @@ const tabContent = {
     badge: "Build smarter flows",
     title: "Logic & Calculations",
     description:
-      "Go beyond basic field logic with built-in calculations, conditional flows, hidden data, and post-submit routing.",
+      "Go beyond basic field logic with built-in calculators, conditional flows, hidden data, and post-submit routing.",
     points: [
       "Conditional logic",
       "Calculations & computed fields",

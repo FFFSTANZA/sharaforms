@@ -15,7 +15,7 @@
               <div
                 class="brand-text-muted text-base leading-7 tracking-[-1.1%] font-medium"
               >
-                4.9/5 — Trusted by 10,000+ teams in finance, fintech, and
+                 4.9/5, Trusted by 10,000+ teams in finance, fintech, and
                 consulting
               </div>
             </div>
@@ -34,7 +34,7 @@
               class="brand-text-muted mt-4 text-lg sm:text-xl leading-7 tracking-[-1.5%] sm:leading-8 font-normal"
             >
               Streamline client onboarding, compliance checks, and data
-              collection with SharaForms — the form builder built for
+               collection with SharaForms, the form builder built for
               financial institutions that need flexibility, security, and
               control.
             </p>
@@ -145,7 +145,7 @@
             <p
               class="text-base tracking-[-1.1%] font-medium leading-7 text-white/72"
             >
-              SharaForms fits into your workflow — connect to tools your team
+               SharaForms fits into your workflow, connect to tools your team
               already uses.
             </p>
           </div>
@@ -227,12 +227,26 @@
       </div>
     </section>
 
+    <ScrollReveal>
+      <FaqSection
+        class="sf-faq"
+        :faqs="industryFaqs"
+        :title-lines="['Security and compliance', 'answers']"
+        description="Answers on security, data residency, self-hosting, and audit readiness."
+        :default-open-index="0"
+        id-prefix="industry-faq-answer"
+        @contact="contactUs"
+      />
+    </ScrollReveal>
+
     <OpenFormFooter />
   </div>
 </template>
 
 <script setup>
 import TemplatesSlider from "~/components/pages/welcome/TemplatesSlider.vue"
+import FaqSection from "~/components/pages/FaqSection.vue"
+import sharaformsConfig from "~/sharaforms.config.js"
 
 defineRouteRules({
   swr: 3600,
@@ -243,15 +257,77 @@ definePageMeta({
 })
 
 useOpnSeoMeta({
-  title: "Industry",
+  title: "Secure Forms for Financial Services and Teams",
   description:
-    "Transform financial operations with powerful and secure forms built for teams that need flexibility, security, and control.",
-  speakable: ["h1", ".marketing-page > section:first-child p"],
+    "Secure forms for financial services: KYC client onboarding, loan applications, compliance and audit requests, and more. Built for teams that need control.",
+  keywords: "secure financial forms, financial services forms, client onboarding forms, compliance forms, audit request forms, insurance forms, secure data collection",
+  speakable: ["h1", ".marketing-page > section:first-child p", ".faq-answer p"],
   breadcrumbs: [
     { name: "Home", item: "/" },
     { name: "Industry" },
   ],
 })
+
+const industryFaqs = [
+  {
+    question: "Are forms on SharaForms secure enough for financial data?",
+    answer:
+      "Yes. Forms use SSL encryption in transit and encrypted data storage, with optional self-hosting so sensitive client data stays within your control.",
+  },
+  {
+    question: "Can SharaForms handle KYC and client onboarding?",
+    answer:
+      "Yes. Build structured intake forms to collect KYC data, supporting documents, and account-opening details, with a full audit trail on every submission.",
+  },
+  {
+    question: "Can I self-host to keep data on my own infrastructure?",
+    answer:
+      "Yes. SharaForms offers self-hosting so financial teams can keep data in their own environment and meet internal data-governance requirements.",
+  },
+  {
+    question: "Does SharaForms keep an audit trail of submissions?",
+    answer:
+      "Yes. Every submission is tracked with a complete audit trail, making compliance and audit requests straightforward to satisfy.",
+  },
+  {
+    question: "Can I white-label client-facing forms?",
+    answer:
+      "Yes. Custom branding and white-labeling are available so client-facing forms match your organization's identity.",
+  },
+  {
+    question: "Is data residency available in India?",
+    answer:
+      "Yes. Managed cloud hosting stores data in India, and enterprise plans can also deploy on managed India hosting or fully self-hosted infrastructure.",
+  },
+]
+
+const industryFaqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${useRuntimeConfig().public.appUrl.replace(/\/+$/, '')}/#faq`,
+  mainEntity: industryFaqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+}
+
+useHead({
+  script: [
+    {
+      key: "industry-faq-schema",
+      type: "application/ld+json",
+      textContent: JSON.stringify(industryFaqSchema),
+    },
+  ],
+})
+
+const contactUs = () => {
+  window.location.href = `mailto:${sharaformsConfig.links.contact_email}`
+}
 
 const financialUseCases = [
   {
@@ -302,7 +378,7 @@ const financialImprovements = [
   {
     title: "Ensures compliance",
     description:
-      "Keep sensitive data within your control — self-host or use secure cloud hosting.",
+      "Keep sensitive data within your control, self-host or use secure cloud hosting.",
     icon: "i-lucide-shield-check",
   },
   {

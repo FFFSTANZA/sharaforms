@@ -149,6 +149,10 @@ const { isAuthenticated: authenticated } = useIsAuthenticated()
 
 const type = computed(() => typesMap.get(route.params.slug))
 
+if (!type.value) {
+  throw createError({ statusCode: 404, statusMessage: 'Template type page not found' })
+}
+
 // Computed
 const templates = computed(() => {
   if (!allTemplates.value) return []
@@ -177,7 +181,7 @@ useOpnSeoMeta({
   description: () =>
     type.value
       ? type.value.meta_description
-      : "Browse free, no-code SharaForms templates with unlimited submissions and calculated fields.",
+      : "Browse free, no-code SharaForms templates with built-in calculators, quotes, and unlimited submissions.",
   speakable: ["h1", "p"],
   breadcrumbs: [
     { name: "Home", item: "/" },
@@ -209,7 +213,7 @@ useHead(() => ({
         name: type.value?.meta_title || 'Form Templates',
         description: type.value?.meta_description,
         url: resolveSchemaUrl(schemaBaseUrl, `/templates/types/${route.params.slug}`),
-        keywords: `free form templates, ${type.value?.name || 'form'} templates, free form builder, unlimited submissions, calculated fields, no-code form templates`,
+        keywords: `free form templates, ${type.value?.name || 'form'} templates, free form builder, unlimited submissions, built-in calculators, no-code form templates`,
         isPartOf: {
           '@id': `${resolveSchemaUrl(schemaBaseUrl, '/templates')}#collection`,
         },

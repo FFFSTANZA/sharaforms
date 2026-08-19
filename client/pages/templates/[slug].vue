@@ -345,6 +345,10 @@ import { handleDarkMode, useDarkMode } from "~/lib/forms/public-page.js"
 import { resolveSchemaUrl, stripHtml, useSchemaBaseUrl } from '~/composables/useSchemaSeo'
 import { useTemplateMeta } from '~/composables/data/useTemplateMeta'
 
+defineRouteRules({
+  swr: 3600,
+})
+
 const route = useRoute()
 const { detail, list } = useTemplates()
 
@@ -356,6 +360,11 @@ const { data: allTemplates, suspense: templatesSuspense } = list()
 if (import.meta.server) {
   await templateSuspense()
   await templatesSuspense()
+}
+
+// Unknown slugs must return a real 404 to crawlers instead of a 200 soft-404.
+if (import.meta.server && !template.value) {
+  throw createError({ statusCode: 404, statusMessage: 'Template page not found' })
 }
 
 const form = computed(() => {
@@ -447,7 +456,8 @@ function buildTemplateKeywords () {
     "free form template",
     "free form builder",
     "unlimited submissions",
-    "calculated fields",
+    "built-in calculators",
+    "quote forms",
     "no-code form",
   ]
   return parts.join(", ")
@@ -552,12 +562,18 @@ const templateBreadcrumbSchema = computed(() => {
       {
         '@type': 'ListItem',
         position: 1,
+        name: 'Home',
+        item: resolveSchemaUrl(schemaBaseUrl, '/'),
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
         name: 'Templates',
         item: resolveSchemaUrl(schemaBaseUrl, '/templates'),
       },
       {
         '@type': 'ListItem',
-        position: 2,
+        position: 3,
         name: template.value.name,
         item: resolveSchemaUrl(schemaBaseUrl, `/templates/${template.value.slug}`),
       },

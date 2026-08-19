@@ -32,14 +32,20 @@
 </template>
 
 <script setup>
-const authStore = useAuthStore()
-
-useOpnSeoMeta({
-  title: "404 - Page not found",
-})
-
 const props = defineProps({
   error: { type: Object, default: null }
+})
+
+const authStore = useAuthStore()
+
+const statusCode = props.error?.statusCode || 404
+
+useOpnSeoMeta({
+  title: statusCode === 503 ? 'SharaForms Maintenance' : 'Page not found',
+  description: statusCode === 503
+    ? 'SharaForms is temporarily unavailable while maintenance is in progress. Please try again in a few minutes.'
+    : 'The page you are looking for could not be found or something went wrong. Return to the SharaForms homepage.',
+  robots: { index: false, follow: false },
 })
 
 if (props.error?.statusCode === 500) {

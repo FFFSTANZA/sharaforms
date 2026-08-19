@@ -73,7 +73,7 @@ const previewDescription = computed(() => {
   if (props.form.seo_meta?.page_description) {
     return props.form.seo_meta.page_description
   }
-  return 'Build beautiful, powerful forms for free with SharaForms. Unlimited submissions, rich features, and seamless integrations — easy to use.'
+  return 'Build beautiful, powerful forms for free with SharaForms. Unlimited submissions, built-in calculators, and seamless integrations, easy to use.'
 })
 
 const previewDomain = computed(() => {

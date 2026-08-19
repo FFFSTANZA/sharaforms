@@ -404,93 +404,6 @@
     <!--    </section>-->
     <!-- END TESTIMONIALS -->
 
-    <!-- START FAQS -->
-    <!--    <section class="bg-white py-12 sm:py-16 lg:py-20 xl:py-24 border-t border-neutral-200">-->
-    <!--      <div class="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">-->
-    <!--        <div class="text-center max-w-3xl mx-auto">-->
-    <!--          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-neutral-900 tracking-tight lg:leading-tight">-->
-    <!--            Frequently Asked Questions-->
-    <!--          </h2>-->
-    <!--          <p class="text-neutral-500 text-base leading-7 sm:text-lg sm:leading-8 font-medium mt-4">-->
-    <!--            We've compiled a list of the most common questions we get asked.-->
-    <!--          </p>-->
-    <!--        </div>-->
-
-    <!--        <div class="mt-12 sm:mt-16 lg:mt-20">-->
-    <!--          <dl class="gap-y-12 grid grid-cols-1 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-16 lg:gap-x-10">-->
-    <!--            <div>-->
-    <!--              <dt class="sm:text-lg text-base leading-7 font-medium sm:leading-8 text-neutral-900">-->
-    <!--                What's the best thing about Switzerland?-->
-    <!--              </dt>-->
-    <!--              <dd class="mt-2 text-base font-medium leading-7 text-neutral-500">-->
-    <!--                I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit.-->
-    <!--                Quas cupiditate-->
-    <!--                laboriosam fugiat.-->
-    <!--              </dd>-->
-    <!--            </div>-->
-
-    <!--            <div>-->
-    <!--              <dt class="sm:text-lg text-base leading-7 font-medium sm:leading-8 text-neutral-900">-->
-    <!--                How do you make holy water?-->
-    <!--              </dt>-->
-    <!--              <dd class="mt-2 text-base font-medium leading-7 text-neutral-500">-->
-    <!--                You boil the hell out of it. Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam aut-->
-    <!--                tempora vitae odio-->
-    <!--                inventore fuga aliquam nostrum quod porro. Delectus quia facere id sequi expedita natus.-->
-    <!--              </dd>-->
-    <!--            </div>-->
-
-    <!--            <div>-->
-    <!--              <dt class="sm:text-lg text-base leading-7 font-medium sm:leading-8 text-neutral-900">-->
-    <!--                What do you call someone with no body and no nose?-->
-    <!--              </dt>-->
-    <!--              <dd class="mt-2 text-base font-medium leading-7 text-neutral-500">-->
-    <!--                Nobody knows. Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, voluptas ipsa quia-->
-    <!--                excepturi, quibusdam-->
-    <!--                natus exercitationem sapiente tempore labore voluptatem.-->
-    <!--              </dd>-->
-    <!--            </div>-->
-
-    <!--            <div>-->
-    <!--              <dt class="sm:text-lg text-base leading-7 font-medium sm:leading-8 text-neutral-900">-->
-    <!--                Why do you never see elephants hiding in trees?-->
-    <!--              </dt>-->
-    <!--              <dd class="mt-2 text-base font-medium leading-7 text-neutral-500">-->
-    <!--                Because they're so good at it. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas-->
-    <!--                cupiditate laboriosam-->
-    <!--                fugiat.-->
-    <!--              </dd>-->
-    <!--            </div>-->
-
-    <!--            <div>-->
-    <!--              <dt class="sm:text-lg text-base leading-7 font-medium sm:leading-8 text-neutral-900">-->
-    <!--                Why can't you hear a pterodactyl go to the bathroom?-->
-    <!--              </dt>-->
-    <!--              <dd class="mt-2 text-base font-medium leading-7 text-neutral-500">-->
-    <!--                Because the pee is silent. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam, quas-->
-    <!--                voluptatibus ex culpa-->
-    <!--                ipsum, aspernatur blanditiis fugiat ullam magnam suscipit deserunt illum natus facilis atque vero-->
-    <!--                consequatur! Quisquam,-->
-    <!--                debitis error.-->
-    <!--              </dd>-->
-    <!--            </div>-->
-
-    <!--            <div>-->
-    <!--              <dt class="sm:text-lg text-base leading-7 font-medium sm:leading-8 text-neutral-900">-->
-    <!--                Why did the invisible man turn down the job offer?-->
-    <!--              </dt>-->
-    <!--              <dd class="mt-2 text-base font-medium leading-7 text-neutral-500">-->
-    <!--                He couldn't see himself doing it. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet-->
-    <!--                perspiciatis-->
-    <!--                officiis corrupti tenetur. Temporibus ut voluptatibus, perferendis sed unde rerum deserunt eius.-->
-    <!--              </dd>-->
-    <!--            </div>-->
-    <!--          </dl>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--    </section>-->
-    <!-- END FAQS -->
-
     <!-- START CTA -->
     <section
       class="bg-gradient-to-b from-neutral-100 to-white py-12 sm:py-16 lg:pt-20 xl:pt-24"
@@ -608,11 +521,11 @@ definePageMeta({
 const config = useRuntimeConfig()
 
 useOpnSeoMeta({
-  title: "Free AI Form Builder for Calculated Forms",
+  title: "Free AI Form Builder for Calculators and Quotes",
   description:
-    "Turn prompts into production-ready forms with SharaForms AI Builder, then publish on a free plan with unlimited forms and submissions, formulas, and workflow-ready fields.",
+    "Turn a prompt into a form that closes deals. SharaForms AI Builder drafts calculators, quote forms, and proposals with formulas and conditional logic.",
   ogImage: "/share-preview.jpg",
-  keywords: "free ai form builder, ai form builder, unlimited forms, calculated forms, forms with formulas, unlimited submissions",
+  keywords: "free ai form builder, ai form builder, forms that close deals, pricing calculator form, quote forms, unlimited forms, unlimited submissions",
   speakable: ["h1", ".marketing-page > section:first-child p"],
   breadcrumbs: [
     { name: "Home", item: "/" },
@@ -636,7 +549,7 @@ const aiVideoSchema = computed(() => {
     '@type': 'VideoObject',
     '@id': `${siteUrl}/ai-form-builder#video`,
     name: 'SharaForms AI Form Builder Demo',
-    description: 'See how SharaForms AI Builder turns a prompt into a production-ready form with calculations, conditional logic, and dynamic fields.',
+    description: 'See how SharaForms AI Builder turns a prompt into a production-ready form with built-in calculators, conditional logic, and dynamic fields.',
     thumbnailUrl: `${siteUrl}/share-preview.jpg`,
     contentUrl: `${siteUrl}/video/sharaforms-ai.mp4`,
     embedUrl: `${siteUrl}/ai-form-builder`,

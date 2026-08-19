@@ -2,7 +2,7 @@
   <ComparisonPage
     competitor-name="HeyForm"
     competitor-icon="sharaforms:heyform"
-    :hero-title="'SharaForms — the more capable HeyForm alternative'"
+    :hero-title="'SharaForms, the more capable HeyForm alternative'"
     competitor-plan-label="Basic"
     :plan-comparison-title="'Entry Plan Comparison:\nSharaForms Free vs HeyForm Basic'"
     plan-comparison-subtitle="Compare SharaForms's free plan with HeyForm's entry cloud plan."
@@ -10,11 +10,11 @@
     :switch-reasons="switchReasons"
     :feature-comparison="featureComparison"
     :get-competitor-price="getPrice"
-    :summary-line="'SharaForms is the HeyForm alternative that is actually free to use hosted — unlimited forms, unlimited submissions, built-in calculations, dynamic PDFs, and custom domains from $0.'"
+    :summary-line="'SharaForms is the HeyForm alternative that is actually free to use hosted, with unlimited forms, unlimited submissions, built-in calculators, dynamic PDFs, and custom domains from $0.'"
     :faqs="faqs"
   >
     <template #hero-subtitle>
-      Build polished forms with <b>unlimited responses, stronger workflow control, and room to scale</b> — without hitting paid ceilings too early.
+      Build polished forms with <b>unlimited responses, stronger workflow control, and room to scale</b>, without hitting paid ceilings too early.
       <br/><br/>
       HeyForm is a solid conversational builder, but pricing starts where many teams still need room to experiment. SharaForms gives you a fuller platform with more control, richer developer workflows, and no submission ceiling.
     </template>
@@ -160,7 +160,7 @@ const faqs = [
   {
     question: 'Is SharaForms a good HeyForm alternative?',
     answer:
-      'Yes. HeyForm is a clean, open-source builder, but its hosted plan starts with a paid entry tier and caps features. SharaForms is free with unlimited forms and unlimited submissions, adds built-in calculations, dynamic PDFs, and custom domains, and scales more predictably.',
+      'Yes. HeyForm is a clean, open-source builder, but its hosted plan starts with a paid entry tier and caps features. SharaForms is free with unlimited forms and unlimited submissions, adds built-in calculators, dynamic PDFs, and custom domains, and scales more predictably.',
   },
   {
     question: 'Is HeyForm free?',

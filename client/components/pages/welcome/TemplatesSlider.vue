@@ -9,7 +9,7 @@
       <p
         class="brand-text-muted mt-4 text-base font-normal leading-7 tracking-[-1.1%]"
       >
-        All templates are fully customizable — adapt them to your compliance and
+        All templates are fully customizable, adapt them to your compliance and
         brand requirements in minutes.
       </p>
     </div>

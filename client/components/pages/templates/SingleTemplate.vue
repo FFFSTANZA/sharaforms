@@ -37,11 +37,11 @@
       </div>
     </div>
     <div class="px-5 pt-5 pb-4">
-      <p
+      <h3
         class="text-lg font-semibold leading-snug text-neutral-900 dark:text-neutral-50 group-hover:text-neutral-700 dark:group-hover:text-neutral-200 transition-colors duration-150"
       >
         {{ template.name }}
-      </p>
+      </h3>
       <p
         class="line-clamp-2 mt-1.5 text-sm leading-relaxed text-neutral-500 dark:text-neutral-400"
       >

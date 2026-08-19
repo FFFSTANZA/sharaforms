@@ -2,17 +2,17 @@
   <ComparisonPage
     competitor-name="123FormBuilder"
     competitor-icon="sharaforms:123formbuilder"
-    :hero-title="'SharaForms — the modern 123FormBuilder alternative'"
+    :hero-title="'SharaForms, the modern 123FormBuilder alternative'"
     competitor-plan-label="Basic"
     :free-plan-comparison="freePlanComparison"
     :switch-reasons="switchReasons"
     :feature-comparison="featureComparison"
     :get-competitor-price="getPrice"
-    :summary-line="'SharaForms is the modern 123FormBuilder alternative — a cleaner builder with unlimited forms, unlimited submissions, built-in calculations, dynamic PDFs, and custom domains from $0.'"
+    :summary-line="'SharaForms is the modern 123FormBuilder alternative, a cleaner builder with unlimited forms, unlimited submissions, built-in calculators, dynamic PDFs, and custom domains from $0.'"
     :faqs="faqs"
   >
     <template #hero-subtitle>
-      Build polished forms with <b>unlimited responses, stronger control, and modern workflow flexibility</b> — without squeezing your team into a limited starter plan.
+      Build polished forms with <b>unlimited responses, stronger control, and modern workflow flexibility</b>, without squeezing your team into a limited starter plan.
       <br/><br/>
       123FormBuilder handles the basics, but meaningful limits arrive fast. SharaForms gives builders and teams more room to grow, with cleaner design control, deeper workflows, and infrastructure choice when it matters.
     </template>
@@ -167,7 +167,7 @@ const faqs = [
   {
     question: 'Is SharaForms a good 123FormBuilder alternative?',
     answer:
-      'Yes. 123FormBuilder has been around a long time, but its interface and limits feel dated. SharaForms gives you a modern builder with unlimited forms and unlimited submissions on the free plan, built-in calculations, dynamic PDFs, custom domains, and a much cleaner editing experience.',
+      'Yes. 123FormBuilder has been around a long time, but its interface and limits feel dated. SharaForms gives you a modern builder with unlimited forms and unlimited submissions on the free plan, built-in calculators, dynamic PDFs, custom domains, and a much cleaner editing experience.',
   },
   {
     question: 'Is 123FormBuilder free?',

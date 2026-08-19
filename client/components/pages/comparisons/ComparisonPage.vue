@@ -35,8 +35,8 @@
               class="brand-text-muted my-8 text-lg sm:text-xl leading-7 tracking-[-1.5%] sm:leading-8 font-normal"
             >
               <slot name="hero-subtitle">
-                Build polished forms with <b>unlimited responses, stronger control, and room to grow</b>
-                — without the usual upgrade pressure.
+                Build polished forms with <b>unlimited responses, stronger control, and room to grow</b>,
+                without the usual upgrade pressure.
               </slot>
             </p>
 
@@ -79,7 +79,7 @@
               class="brand-text-muted mt-4 text-base tracking-[-1.1%] font-medium leading-8"
             >
               Compare SharaForms and {{ competitorName }} inside the same live
-              form flow —
+              form flow,
               <br class="hidden sm:block" />
               no screenshots, no hand-picked demos.
             </p>
@@ -306,7 +306,7 @@
           <p
             class="mt-4 text-base tracking-[-1.1%] font-medium leading-8 text-gray-600"
           >
-            {{ competitorName }} is beautiful — but SharaForms is powerful, open,
+            {{ competitorName }} is beautiful, but SharaForms is powerful, open,
             and free.
           </p>
         </div>
@@ -759,7 +759,7 @@
           <p
             class="mt-4 text-base tracking-[-1.1%] font-medium leading-8 text-gray-600"
           >
-            See how SharaForms stacks up against every major form builder —
+            See how SharaForms stacks up against every major form builder,
             free plans, pricing, and features side by side.
           </p>
         </div>
@@ -858,7 +858,7 @@ const props = defineProps({
   featureSectionSubtitle: {
     type: String,
     default:
-      "SharaForms gives you the same polished experience — but open, customizable, and accessible to everyone.",
+      "SharaForms gives you the same polished experience, but open, customizable, and accessible to everyone.",
   },
   freePlanComparison: {
     type: Array,
@@ -907,7 +907,7 @@ const resolvedPlanComparisonTitleLines = computed(() =>
 const resolvedPlanComparisonSubtitle = computed(
   () =>
     props.planComparisonSubtitle ??
-    `With SharaForms, you get everything ${props.competitorName} offers — and more — without limits.`,
+    `With SharaForms, you get everything ${props.competitorName} offers, and more, without limits.`,
 )
 
 const resolvedHeroSecondaryCtaLabel = computed(
@@ -951,7 +951,7 @@ const otherComparisons = computed(() =>
 const bottomLine = computed(
   () =>
     props.summaryLine ??
-    `SharaForms is a free ${props.competitorName} alternative that gives you unlimited forms, unlimited submissions, and built-in calculations — without ${props.competitorName}'s free-tier limits, upgrade pressure, or cost as your usage grows.`,
+    `SharaForms is a free ${props.competitorName} alternative that gives you unlimited forms, unlimited submissions, and built-in calculators, without ${props.competitorName}'s free-tier limits, upgrade pressure, or cost as your usage grows.`,
 )
 
 const defaultFaqs = computed(() => [
@@ -962,7 +962,7 @@ const defaultFaqs = computed(() => [
   },
   {
     question: `Is SharaForms a good ${props.competitorName} alternative?`,
-    answer: `For most teams, yes. SharaForms covers the polished form-building experience ${props.competitorName} is known for, plus built-in calculations, conditional logic, dynamic PDF documents, custom CSS, and a more generous free tier — without upgrade pressure as your usage grows.`,
+    answer: `For most teams, yes. SharaForms covers the polished form-building experience ${props.competitorName} is known for, plus built-in calculators, conditional logic, dynamic PDF documents, custom CSS, and a more generous free tier, without upgrade pressure as your usage grows.`,
   },
   {
     question: `How much does SharaForms cost compared to ${props.competitorName}?`,
@@ -971,12 +971,12 @@ const defaultFaqs = computed(() => [
   },
   {
     question: `Can I import my forms from ${props.competitorName} to SharaForms?`,
-    answer: `Yes — SharaForms supports importing forms from common builders, including ${props.competitorName}, so you can move without rebuilding from scratch.`,
+    answer: `Yes, SharaForms supports importing forms from common builders, including ${props.competitorName}, so you can move without rebuilding from scratch.`,
   },
   {
     question: 'Does SharaForms support calculations and formulas?',
     answer:
-      'Yes. Built-in calculations and formulas are a core SharaForms feature — build order forms, quote calculators, and pricing estimators that compute totals in real time.',
+      'Yes. Built-in calculators and formulas are a core SharaForms feature, so you can build order forms, quote calculators, and pricing estimators that compute totals in real time.',
   },
 ])
 
@@ -1001,7 +1001,7 @@ const privacyFeatures = [
     icon: "i-lucide-square-code",
     title: "Self-Hosting",
     description:
-      "Deploy SharaForms on-premise or use our managed service — your data always belongs to you.",
+      "Deploy SharaForms on-premise or use our managed service, your data always belongs to you.",
   },
   {
     icon: "i-lucide-globe",
@@ -1018,7 +1018,7 @@ const privacyFeatures = [
     icon: "i-lucide-shield-check",
     title: "Transparency",
     description:
-      "No tracking pixels, no hidden analytics — just clean, honest form building.",
+      "No tracking pixels, no hidden analytics, just clean, honest form building.",
   },
 ]
 
@@ -1068,7 +1068,7 @@ const comparisonSchema = computed(() => {
         '@type': 'Article',
         '@id': `${canonicalUrl}#article`,
         headline: `Why teams choose SharaForms over ${props.competitorName}`,
-        description: `Key reasons teams evaluating ${props.competitorName} choose SharaForms, including unlimited forms and submissions, built-in calculations, and workflow flexibility.`,
+        description: `Key reasons teams evaluating ${props.competitorName} choose SharaForms, including unlimited forms and submissions, built-in calculators, and workflow flexibility.`,
         name: `SharaForms vs ${props.competitorName}`,
         author: {
           '@type': 'Organization',
@@ -1089,7 +1089,7 @@ const comparisonSchema = computed(() => {
       {
         '@type': 'ItemList',
         name: `Why teams choose SharaForms over ${props.competitorName}`,
-        description: `Key reasons teams evaluating ${props.competitorName} choose SharaForms, including unlimited forms and submissions, built-in calculations, and workflow flexibility.`,
+        description: `Key reasons teams evaluating ${props.competitorName} choose SharaForms, including unlimited forms and submissions, built-in calculators, and workflow flexibility.`,
         numberOfItems: props.switchReasons.length,
         itemListElement: props.switchReasons.map((reason, index) => ({
           '@type': 'ListItem',

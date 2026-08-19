@@ -109,11 +109,11 @@ definePageMeta({
 })
 
 useOpnSeoMeta({
-  title: "Free Plan and Pricing for Calculated Forms",
+  title: "Free Form Builder Pricing and Plans",
   description:
-    "Explore SharaForms pricing, including a generous free plan with unlimited forms and submissions, plus paid tiers for branding, advanced collaboration, and larger team workflows.",
+    "Explore SharaForms pricing: a free plan with unlimited forms and submissions, built-in calculators, instant quotes, and proposals. Paid tiers add branding.",
   ogImage: "/share-preview.jpg",
-  keywords: "free form builder pricing, unlimited forms, unlimited submissions pricing, free online forms, calculated forms pricing, free forms with formulas",
+  keywords: "free form builder pricing, form builder pricing, unlimited forms, unlimited submissions pricing, free online forms, pricing calculator forms, quote forms",
   speakable: [".faq-answer p", "h1"],
   breadcrumbs: [
     { name: "Home", item: "/" },
@@ -312,12 +312,12 @@ const faqs = [
   {
     question: "Is there any submission or form limit?",
     answer:
-      "No — both forms and submissions are unlimited on all plans. The Free plan gives you access to most features without restrictive usage caps.",
+      "No, both forms and submissions are unlimited on all plans. The Free plan gives you access to most features without restrictive usage caps.",
   },
   {
     question: "Are integrations included in the Free plan?",
     answer:
-      "Yes — basic integrations like webhooks and API access are available on the Free plan. Some advanced integrations are available on higher tiers.",
+      "Yes, basic integrations like webhooks and API access are available on the Free plan. Some advanced integrations are available on higher tiers.",
   },
   {
     question: "Can I hide the SharaForms branding?",
@@ -337,7 +337,7 @@ const faqs = [
   {
     question: "Do you offer discounts for non-profits or education?",
     answer:
-      "Yes — we offer discounted pricing for non-profits and students. Contact us and we’ll help you get set up.",
+      "Yes, we offer discounted pricing for non-profits and students. Contact us and we’ll help you get set up.",
   },
   {
     question: "Can I cancel my subscription anytime?",
@@ -347,7 +347,7 @@ const faqs = [
   {
     question: "Can I switch between plans?",
     answer:
-      "Yes — you can upgrade or downgrade at any time. Changes apply immediately, and billing adjusts accordingly.",
+      "Yes, you can upgrade or downgrade at any time. Changes apply immediately, and billing adjusts accordingly.",
   },
   {
     question: "Do you offer refunds?",
@@ -362,12 +362,12 @@ const faqs = [
   {
     question: "Is there an API, and is it free?",
     answer:
-      "Yes — SharaForms has an API and API access tokens. They’re available on the Free plan, with higher tiers unlocking more advanced capabilities.",
+      "Yes, SharaForms has an API and API access tokens. They’re available on the Free plan, with higher tiers unlocking more advanced capabilities.",
   },
   {
     question: "Can I collaborate with my team?",
     answer:
-      "Yes — multi-user collaboration is supported. Higher tiers add roles and permissions for larger teams.",
+      "Yes, multi-user collaboration is supported. Higher tiers add roles and permissions for larger teams.",
   },
 ]
 
@@ -389,18 +389,6 @@ const pricingFaqSchema = {
           text: faq.answer,
         },
       })),
-    },
-    {
-      "@type": "QAPage",
-      "@id": "#qa",
-      mainEntity: {
-        "@type": "Question",
-        name: faqs[0].question,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: faqs[0].answer,
-        },
-      },
     },
   ],
 }
@@ -451,7 +439,7 @@ const pricingProductSchema = {
   "@type": "Product",
   "@id": `${useRuntimeConfig().public.appUrl.replace(/\/+$/, '')}/pricing#product`,
   name: "SharaForms Form Builder",
-  description: "A powerful form builder with unlimited forms and submissions, built-in calculations, conditional logic, dynamic documents, and integrations.",
+  description: "A powerful form builder with unlimited forms and submissions, built-in calculators, conditional logic, dynamic documents, and integrations.",
   brand: {
     "@type": "Brand",
     name: "SharaForms",

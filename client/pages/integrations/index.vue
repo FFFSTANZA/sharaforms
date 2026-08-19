@@ -194,9 +194,9 @@ import { generalIntegrationGuides, integrationGuides } from '~/data/integration-
 import { resolveSchemaUrl, useSchemaBaseUrl } from '~/composables/useSchemaSeo'
 
 useOpnSeoMeta({
-  title: "Available Integrations",
+  title: "Form Builder Integrations and Setup Guides",
   description:
-    "Explore native setup guides for every SharaForms integration.",
+    "Browse setup guides for every SharaForms integration: webhooks, Zapier, Google Sheets, Slack, and more. Step-by-step tutorials for connected workflows.",
   speakable: ["h1", "p"],
   breadcrumbs: [
     { name: "Home", item: "/" },
@@ -230,23 +230,20 @@ const integrationsList = computed(() => {
 const setupGuides = generalIntegrationGuides
 const schemaBaseUrl = useSchemaBaseUrl()
 
-const integrationsCollectionSchema = computed(() => ({
+const integrationsListSchema = computed(() => ({
   '@context': 'https://schema.org',
-  '@type': 'CollectionPage',
+  '@type': 'ItemList',
   name: 'SharaForms Integrations',
   description: 'Browse SharaForms integrations and setup guides for notifications, webhooks, automations, and connected workflows.',
   url: resolveSchemaUrl(schemaBaseUrl, '/integrations'),
-  mainEntity: {
-    '@type': 'ItemList',
-    numberOfItems: integrationsList.value.length,
-    itemListElement: integrationsList.value.map((integration, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      url: resolveSchemaUrl(schemaBaseUrl, `/integrations/${integration.slug}`),
-      name: integration.title,
-      description: integration.description,
-    })),
-  },
+  numberOfItems: integrationsList.value.length,
+  itemListElement: integrationsList.value.map((integration, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    url: resolveSchemaUrl(schemaBaseUrl, `/integrations/${integration.slug}`),
+    name: integration.title,
+    description: integration.description,
+  })),
 }))
 
 const setupGuidesSchema = computed(() => ({
@@ -265,9 +262,9 @@ const setupGuidesSchema = computed(() => ({
 useHead(() => ({
   script: [
     {
-      key: 'integrations-collection-schema',
+      key: 'integrations-list-schema',
       type: 'application/ld+json',
-      textContent: JSON.stringify(integrationsCollectionSchema.value),
+      textContent: JSON.stringify(integrationsListSchema.value),
     },
     {
       key: 'integrations-setup-guides-schema',

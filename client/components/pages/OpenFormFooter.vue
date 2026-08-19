@@ -200,7 +200,7 @@
           <div
             class="brand-text-soft text-sm leading-5 tracking-[0.6%] font-medium sm:text-right lg:mt-8 lg:text-left"
           >
-            {{ currYear }} SharaForms — All rights reserved
+            {{ currYear }} SharaForms. All rights reserved.
             <span v-if="version" class="block mt-1">
               Version {{ version }}
             </span>

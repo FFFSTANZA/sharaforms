@@ -5,15 +5,15 @@
     competitor-icon-class="text-[#7248B9]"
     hero-import-source="google_forms"
     hero-secondary-cta-label="Import your Google Form"
-    :hero-title="'SharaForms — the more capable Google Forms alternative'"
+    :hero-title="'SharaForms, the more capable Google Forms alternative'"
     :free-plan-comparison="freePlanComparison"
     :switch-reasons="switchReasons"
     :feature-comparison="featureComparison"
-    :summary-line="'SharaForms is the Google Forms alternative for teams that need more than basic surveys — full design customization, conditional logic, built-in calculations, unlimited submissions, and full control over your data, free from $0.'"
+    :summary-line="'SharaForms is the Google Forms alternative for teams that need more than basic surveys, with full design customization, conditional logic, built-in calculators, unlimited submissions, and full control over your data, free from $0.'"
     :faqs="faqs"
   >
     <template #hero-subtitle>
-      Build polished forms with <b>unlimited responses, deeper customization, and full control over your data</b> — without settling for basic defaults.
+      Build polished forms with <b>unlimited responses, deeper customization, and full control over your data</b>, without settling for basic defaults.
       <br/><br/>
       Google Forms is dependable for lightweight collection, especially inside Google Workspace. SharaForms gives teams a more branded, workflow-ready experience when they need stronger design control, richer logic, and better extensibility.
     </template>
@@ -156,17 +156,17 @@ const faqs = [
   {
     question: 'Is SharaForms a good Google Forms alternative?',
     answer:
-      'Yes. For lightweight surveys Google Forms is fine, but SharaForms adds unlimited forms and submissions, full design customization, conditional logic, built-in calculations, dynamic PDFs, custom domains, and stronger data control — without the basic look or limits of Google Forms.',
+      'Yes. For lightweight surveys Google Forms is fine, but SharaForms adds unlimited forms and submissions, full design customization, conditional logic, built-in calculators, dynamic PDFs, custom domains, and stronger data control, without the basic look or limits of Google Forms.',
   },
   {
     question: 'Is Google Forms free?',
     answer:
-      'Google Forms is free to use, but it offers limited design customization, basic logic, and ties your data to Google Workspace. SharaForms is also free — with unlimited forms and submissions — plus more advanced features and full control over where your data lives.',
+      'Google Forms is free to use, but it offers limited design customization, basic logic, and ties your data to Google Workspace. SharaForms is also free, with unlimited forms and submissions, plus more advanced features and full control over where your data lives.',
   },
   {
     question: 'Can I import my Google Forms into SharaForms?',
     answer:
-      'Yes. SharaForms has a one-click Google Forms import — you can move your existing forms directly without rebuilding them from scratch.',
+      'Yes. SharaForms has a one-click Google Forms import, so you can move your existing forms directly without rebuilding them from scratch.',
   },
   {
     question: 'How much does SharaForms cost compared to Google Forms?',

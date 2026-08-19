@@ -2,18 +2,18 @@
   <ComparisonPage
     competitor-name="Form.io"
     competitor-icon="sharaforms:formio"
-    :hero-title="'SharaForms — the easier Form.io alternative'"
+    :hero-title="'SharaForms, the easier Form.io alternative'"
     competitor-plan-label="Self-hosted"
     :plan-comparison-title="'Hosted vs Self-hosted Setup:\nSharaForms vs Form.io'"
     plan-comparison-subtitle="Compare SharaForms's hosted free plan with Form.io's developer-oriented self-hosted setup."
     :free-plan-comparison="freePlanComparison"
     :switch-reasons="switchReasons"
     :feature-comparison="featureComparison"
-    :summary-line="'SharaForms is the Form.io alternative for teams that want a developer-friendly form builder without the self-hosting overhead — fully hosted, free with unlimited forms and submissions, with API and webhooks included from $0.'"
+    :summary-line="'SharaForms is the Form.io alternative for teams that want a developer-friendly form builder without the self-hosting overhead, fully hosted, free with unlimited forms and submissions, with API and webhooks included from $0.'"
     :faqs="faqs"
   >
     <template #hero-subtitle>
-      Build polished forms with <b>unlimited responses, strong workflow control, and no unnecessary setup overhead</b> — all without turning forms into engineering projects.
+      Build polished forms with <b>unlimited responses, strong workflow control, and no unnecessary setup overhead</b>, all without turning forms into engineering projects.
       <br/><br/>
       Form.io is powerful, but it asks for engineering time and backend setup. SharaForms gives teams a polished builder and developer-grade workflows out of the box, without making every form a custom implementation.
     </template>
@@ -156,12 +156,12 @@ const faqs = [
   {
     question: 'Is SharaForms a good Form.io alternative?',
     answer:
-      'Yes. Form.io is developer-oriented and expects engineering overhead to self-host and run. SharaForms gives teams a hosted, no-code builder with API and webhooks for developers — far less setup, a free plan with unlimited submissions, and no mandatory infrastructure work.',
+      'Yes. Form.io is developer-oriented and expects engineering overhead to self-host and run. SharaForms gives teams a hosted, no-code builder with API and webhooks for developers, far less setup, a free plan with unlimited submissions, and no mandatory infrastructure work.',
   },
   {
     question: 'Is Form.io free?',
     answer:
-      'Form.io is open source if you self-host, but running it means managing servers, databases, and upgrades yourself. SharaForms is free and fully hosted — unlimited forms and unlimited submissions, no servers to operate, and paid plans from $12 per month for advanced features.',
+      'Form.io is open source if you self-host, but running it means managing servers, databases, and upgrades yourself. SharaForms is free and fully hosted, with unlimited forms and unlimited submissions, no servers to operate, and paid plans from $12 per month for advanced features.',
   },
   {
     question: 'Can I import my Form.io forms into SharaForms?',

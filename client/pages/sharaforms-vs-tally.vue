@@ -3,11 +3,11 @@
     competitor-name="Tally"
     competitor-icon="sharaforms:tally"
     hero-import-source="tally"
-    :hero-title="'SharaForms — the more powerful Tally alternative'"
+    :hero-title="'SharaForms, the more powerful Tally alternative'"
     :free-plan-comparison="freePlanComparison"
     :switch-reasons="switchReasons"
     :feature-comparison="featureComparison"
-    :summary-line="'SharaForms is the Tally alternative for teams that want Tally\'s simple, embeddable forms plus deeper workflow control — unlimited forms, unlimited submissions, built-in calculations, dynamic PDFs, and self-hosting from $0.'"
+    :summary-line="'SharaForms is the Tally alternative for teams that want Tally\'s simple, embeddable forms plus deeper workflow control, with unlimited forms, unlimited submissions, built-in calculators, dynamic PDFs, and self-hosting from $0.'"
     :faqs="faqs"
   >
     <template #hero-subtitle>
@@ -158,7 +158,7 @@ const faqs = [
   {
     question: 'Is SharaForms a good Tally alternative?',
     answer:
-      'Yes. Tally is great for simple, embeddable forms, but SharaForms adds deeper workflow control, richer customization, built-in calculations, dynamic PDFs, custom domains, and self-hosting — with the same free, no-limits starting point.',
+      'Yes. Tally is great for simple, embeddable forms, but SharaForms adds deeper workflow control, richer customization, built-in calculators, dynamic PDFs, custom domains, and self-hosting, with the same free, no-limits starting point.',
   },
   {
     question: 'Is Tally free?',

@@ -98,8 +98,8 @@ export const useOpnSeoMeta = (meta, alwaysEnabled = false) => {
       ? {
           ogImage: () => resolveOgImageUrl(rawOgImage, canonicalBaseUrl),
           ogImageAlt: seoMeta.title || 'SharaForms',
-          ogImageWidth: 1536,
-          ogImageHeight: 1024,
+          ogImageWidth: 1200,
+          ogImageHeight: 630,
           twitterImageAlt: seoMeta.title || 'SharaForms',
           twitterImage: () => resolveOgImageUrl(rawOgImage, canonicalBaseUrl),
         }
@@ -193,12 +193,18 @@ function buildPageSchema ({ title, description, canonicalUrl, canonicalBaseUrl, 
     schema.breadcrumb = {
       '@type': 'BreadcrumbList',
       '@id': `${canonicalUrl}#breadcrumb`,
-      itemListElement: breadcrumbs.map((item, index) => ({
-        '@type': 'ListItem',
-        position: index + 1,
-        name: item.name,
-        ...(item.item ? { item: item.item } : {}),
-      })),
+      itemListElement: breadcrumbs.map((item, index) => {
+        const name = resolveMetaValue(item.name)
+        const itemUrl = resolveMetaValue(item.item)
+        return {
+          '@type': 'ListItem',
+          position: index + 1,
+          name,
+          ...(itemUrl
+            ? { item: /^https?:\/\//.test(itemUrl) ? itemUrl : joinCanonicalUrl(baseUrl, itemUrl) }
+            : {}),
+        }
+      }),
     }
   }
 
@@ -215,14 +221,14 @@ function getPageSchemaType (path) {
 
 function getPageKeywords (path) {
   if (path === '/pricing') {
-    return 'free form builder pricing, unlimited forms, unlimited submissions pricing, free online forms, calculated forms pricing'
+    return 'free form builder pricing, unlimited forms, unlimited submissions pricing, free online forms, pricing calculator forms, quote forms'
   }
 
   if (path === '/ai-form-builder') {
-    return 'ai form builder, free ai form builder, unlimited forms, calculated forms, online forms with formulas'
+    return 'ai form builder, free ai form builder, unlimited forms, pricing calculator forms, quote forms, forms that close deals'
   }
 
-  return 'free form builder, unlimited forms, unlimited submissions, calculated forms, formula forms, online forms'
+  return 'free form builder, unlimited forms, unlimited submissions, forms that close deals, pricing calculator forms, online forms'
 }
 
 function normalizeCanonicalUrl (url, canonicalBaseUrl) {

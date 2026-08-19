@@ -19,16 +19,16 @@
             class="text-white text-4xl sm:text-[56px] sm:leading-16 tracking-[-1%] font-semibold my-5"
           >
             Forms that
-            <span class="brand-gradient-text">calculate.</span>
+            <span class="brand-gradient-text">close deals.</span>
             Not just collect.
           </h1>
 
           <p
             class="text-white/55 text-lg sm:text-xl leading-7 tracking-[-1.5%] sm:leading-8 font-normal max-w-2xl mx-auto"
           >
-            Beautiful forms at scale. Unlimited responses, built-in formulas,
-            conditional logic, signatures, computed fields, and dynamic
-            document generation — all in one platform.
+            The form builder with built-in calculators, quotes, and proposals.
+            Unlimited responses, formulas, conditional logic, and dynamic
+            documents in one platform.
           </p>
 
           <div class="relative mt-9">
@@ -73,6 +73,18 @@
 
     <!-- <AiFeature class="pb-8" /> -->
 
+    <ScrollReveal>
+      <FaqSection
+        class="sf-faq"
+        :faqs="homepageFaqs"
+        :title-lines="['Everything you need', 'to know']"
+        description="Straight answers about pricing, features, and data security."
+        :default-open-index="0"
+        id-prefix="homepage-faq-answer"
+        @contact="contactUs"
+      />
+    </ScrollReveal>
+
     <div class="pt-12 sm:pt-16"><OpenFormFooter /></div>
   </div>
 </template>
@@ -81,6 +93,8 @@
 import LiveDemo from "~/components/pages/welcome/LiveDemo.vue"
 import Features from "~/components/pages/welcome/Features.vue"
 import MoreFeatures from "../components/pages/welcome/MoreFeatures.vue"
+import FaqSection from "~/components/pages/FaqSection.vue"
+import sharaformsConfig from "~/sharaforms.config.js"
 import { useIsAuthenticated } from "~/composables/useAuthFlow"
 
 definePageMeta({
@@ -91,16 +105,49 @@ definePageMeta({
 const { isAuthenticated: authenticated } = useIsAuthenticated()
 
 useOpnSeoMeta({
-  title: "Free Form Builder with Unlimited Forms, Submissions, and Built-In Calculations",
+  title: "Forms That Close Deals | Free Form Builder",
   description:
-    "SharaForms is a free form builder with unlimited forms and submissions, built-in calculations, conditional logic, dynamic documents, and integrations for teams that need forms that do more than collect.",
+    "SharaForms is the free form builder that closes deals. Build pricing calculators, instant quotes, and proposals with conditional logic on a generous free plan.",
   ogImage: "/share-preview.jpg",
-  keywords: "free form builder, unlimited forms, unlimited submissions, calculated forms, formula forms, online calculator forms, dynamic forms",
-  speakable: ["h1", ".marketing-page > section:first-child p"],
+  keywords: "free form builder, forms that close deals, pricing calculator form, instant quote form, proposal form builder, online calculator forms, unlimited forms, unlimited submissions",
+  speakable: ["h1", ".marketing-page > section:first-child p", ".faq-answer p"],
   breadcrumbs: [
     { name: "Home" },
   ],
 })
+
+const homepageFaqs = [
+  {
+    question: "Is SharaForms free?",
+    answer:
+      "Yes. The Free plan is free forever with unlimited forms and submissions and no credit card required. Paid plans add advanced features like custom branding and premium integrations.",
+  },
+  {
+    question: "Are there limits on forms or submissions?",
+    answer:
+      "No. Both forms and submissions are unlimited on all plans.",
+  },
+  {
+    question: "Can I build pricing calculators, quotes, and proposals?",
+    answer:
+      "Yes. SharaForms has built-in calculators, instant quotes, and proposals, so you can collect answers and deliver a result in one flow.",
+  },
+  {
+    question: "Does SharaForms support conditional logic and formulas?",
+    answer:
+      "Yes. Show or hide fields based on answers with conditional logic, and use formula fields to compute totals, prices, and scores automatically.",
+  },
+  {
+    question: "Where is my data stored?",
+    answer:
+      "On the managed cloud, data is stored in India with SSL encryption in transit and at rest. You can also self-host SharaForms to keep data fully within your control.",
+  },
+  {
+    question: "Can I connect SharaForms to my other tools?",
+    answer:
+      "Yes. SharaForms offers API access, webhooks, and integrations with tools like Zapier, n8n, Google Sheets, and more.",
+  },
+]
 
 const homepageSoftwareSchema = {
   "@context": "https://schema.org",
@@ -113,8 +160,22 @@ const homepageSoftwareSchema = {
     "@type": "Offer",
     price: "0",
     priceCurrency: "USD",
-    description: "Free form builder with unlimited forms and submissions",
+    description: "Free form builder with built-in calculators, quotes, and proposals",
   },
+}
+
+const homepageFaqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${useRuntimeConfig().public.appUrl.replace(/\/+$/, '')}/#faq`,
+  mainEntity: homepageFaqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
 }
 
 useHead({
@@ -124,8 +185,17 @@ useHead({
       type: "application/ld+json",
       textContent: JSON.stringify(homepageSoftwareSchema),
     },
+    {
+      key: "homepage-faq-schema",
+      type: "application/ld+json",
+      textContent: JSON.stringify(homepageFaqSchema),
+    },
   ],
 })
+
+const contactUs = () => {
+  window.location.href = `mailto:${sharaformsConfig.links.contact_email}`
+}
 </script>
 
 <style lang="scss" scoped>

@@ -11,7 +11,7 @@
           We're sorry! This Form Is No Longer Here
         </h1>
         <p class="text-neutral-500 mt-3 max-w-xl mx-auto">
-          It may have been deleted, deactivated, or the form URL might have been regenerated or updated by its owner. But don't worry—you've got plenty of other options!
+          It may have been deleted, deactivated, or the form URL might have been regenerated or updated by its owner. But don't worry, you've got plenty of other options!
         </p>
         
         <h3 class="my-8 text-dark text-xl font-semibold text-center md:pt-0 mx-auto md:max-w-full">

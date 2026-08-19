@@ -225,7 +225,7 @@ definePageMeta({
 
 useOpnSeoMeta({
   title: () => guide.value?.name ?? 'Integration',
-  description: () => guide.value?.seoDescription ?? 'Create beautiful forms for free. Unlimited forms, fields, and submissions.',
+  description: () => guide.value?.seoDescription ?? 'SharaForms is a free form builder with unlimited forms and submissions, built-in calculators, instant quotes, and proposals for teams that need more than basic forms.',
   speakable: ["h1", "p"],
 })
 
@@ -274,12 +274,18 @@ const integrationBreadcrumbSchema = computed(() => {
       {
         '@type': 'ListItem',
         position: 1,
+        name: 'Home',
+        item: resolveSchemaUrl(schemaBaseUrl, '/'),
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
         name: 'Integrations',
         item: resolveSchemaUrl(schemaBaseUrl, '/integrations'),
       },
       {
         '@type': 'ListItem',
-        position: 2,
+        position: 3,
         name: guide.value.name,
         item: resolveSchemaUrl(schemaBaseUrl, `/integrations/${guide.value.slug}`),
       },

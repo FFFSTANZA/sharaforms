@@ -2,17 +2,17 @@
   <ComparisonPage
     competitor-name="JotForm"
     competitor-icon="sharaforms:jotform"
-    :hero-title="'SharaForms — the cleaner Jotform alternative'"
+    :hero-title="'SharaForms, the cleaner Jotform alternative'"
     competitor-plan-label="Starter"
     :free-plan-comparison="freePlanComparison"
     :switch-reasons="switchReasons"
     :feature-comparison="featureComparison"
     :get-competitor-price="getPrice"
-    :summary-line="'SharaForms is the Jotform alternative for teams that want Jotform\'s breadth of features without the submission, storage, and pricing caps — unlimited forms, unlimited submissions, and a cleaner interface from $0.'"
+    :summary-line="'SharaForms is the Jotform alternative for teams that want Jotform\'s breadth of features without the submission, storage, and pricing caps, with unlimited forms, unlimited submissions, and a cleaner interface from $0.'"
     :faqs="faqs"
   >
     <template #hero-subtitle>
-      Build polished forms with <b>unlimited responses, stronger control, and fewer tradeoffs</b> — without hitting artificial caps as you grow.
+      Build polished forms with <b>unlimited responses, stronger control, and fewer tradeoffs</b>, without hitting artificial caps as you grow.
       <br/><br/>
       Jotform covers a lot of ground, but the pricing and limits show up quickly. SharaForms gives teams a cleaner form stack with more breathing room on submissions, better workflow control, and less friction as usage grows.
     </template>
@@ -155,7 +155,7 @@ const faqs = [
   {
     question: 'Is SharaForms a good JotForm alternative?',
     answer:
-      'Yes. SharaForms covers the breadth Jotform is known for — many field types, conditional logic, and payments — with a cleaner interface, unlimited forms and submissions on the free plan, and no forced upgrades as your volume grows.',
+      'Yes. SharaForms covers the breadth Jotform is known for, including many field types, conditional logic, and payments, with a cleaner interface, unlimited forms and submissions on the free plan, and no forced upgrades as your volume grows.',
   },
   {
     question: 'Is Jotform free?',

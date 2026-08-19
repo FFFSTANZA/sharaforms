@@ -3,16 +3,16 @@
     competitor-name="Fillout"
     competitor-icon="sharaforms:fillout"
     hero-import-source="fillout"
-    :hero-title="'SharaForms — the more scalable Fillout alternative'"
+    :hero-title="'SharaForms, the more scalable Fillout alternative'"
     :free-plan-comparison="freePlanComparison"
     :switch-reasons="switchReasons"
     :feature-comparison="featureComparison"
     :get-competitor-price="getPrice"
-    :summary-line="'SharaForms is the Fillout alternative for teams that need to scale past response caps — unlimited forms, unlimited submissions, built-in calculations, custom domains, and self-hosting from $0.'"
+    :summary-line="'SharaForms is the Fillout alternative for teams that need to scale past response caps, with unlimited forms, unlimited submissions, built-in calculators, custom domains, and self-hosting from $0.'"
     :faqs="faqs"
   >
     <template #hero-subtitle>
-      Build modern forms with <b>unlimited responses, developer-grade control, and complete ownership of your data</b> — without monthly ceilings.
+      Build modern forms with <b>unlimited responses, developer-grade control, and complete ownership of your data</b>, without monthly ceilings.
       <br/><br/>
       Fillout is elegant and capable, but its free plan still introduces volume limits. SharaForms keeps the experience modern while giving growing teams more control, more flexibility, and far more room to scale.
     </template>
@@ -170,7 +170,7 @@ const faqs = [
   {
     question: 'Is SharaForms a good Fillout alternative?',
     answer:
-      'Yes. Fillout is a polished builder, but its free plan caps responses and usage quickly. SharaForms is free with unlimited forms and unlimited submissions, adds built-in calculations, custom domains, and self-hosting, and keeps scaling predictable.',
+      'Yes. Fillout is a polished builder, but its free plan caps responses and usage quickly. SharaForms is free with unlimited forms and unlimited submissions, adds built-in calculators, custom domains, and self-hosting, and keeps scaling predictable.',
   },
   {
     question: 'Is Fillout free?',

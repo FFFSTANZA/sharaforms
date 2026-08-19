@@ -416,7 +416,7 @@
             <p
               class="text-base tracking-[-1.1%] font-medium leading-7 text-white/72"
             >
-              SharaForms fits into your workflow — connect to tools your team
+               SharaForms fits into your workflow, connect to tools your team
               already uses.
             </p>
           </div>
@@ -585,8 +585,9 @@ definePageMeta({
 
 useOpnSeoMeta({
   title: "Secure Form Builder for Teams and Enterprises",
-      description:
-    "Build secure forms, surveys, and workflows with SharaForms Enterprise. Manage access, automate data collection, and choose cloud, India hosting, or self-hosted deployment.",
+  description:
+    "Build secure forms, surveys, and workflows with SharaForms Enterprise. Automate data collection and deploy on managed cloud, India hosting, or self-hosted.",
+  keywords: "secure form builder, enterprise form builder, secure forms, form workflow automation, self-hosted form builder, data collection forms, form data security",
   speakable: [".faq-answer p", "h1"],
   breadcrumbs: [
     { name: "Home", item: "/" },
@@ -677,7 +678,7 @@ const enterpriseFeatures = [
   {
     title: "Automations",
     description:
-      "Connect SharaForms to your existing tools — send submissions to CRMs, trigger webhooks, or automate workflows with Zapier or Make.",
+      "Connect SharaForms to your existing tools, send submissions to CRMs, trigger webhooks, or automate workflows with Zapier or Make.",
     imageSrc: "/img/pages/enterprise/enterprise-2.png",
   },
   {
@@ -831,18 +832,6 @@ const enterpriseFaqSchema = {
           text: faq.answer,
         },
       })),
-    },
-    {
-      "@type": "QAPage",
-      "@id": "#qa",
-      mainEntity: {
-        "@type": "Question",
-        name: enterpriseFaqs[0].question,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: enterpriseFaqs[0].answer,
-        },
-      },
     },
   ],
 }

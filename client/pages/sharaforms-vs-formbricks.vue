@@ -3,17 +3,17 @@
     competitor-name="Formbricks"
     competitor-icon="i-simple-icons-formbricks"
     competitor-icon-class="text-[#00CABA]"
-    :hero-title="'SharaForms — the broader Formbricks alternative'"
+    :hero-title="'SharaForms, the broader Formbricks alternative'"
     competitor-plan-label="Hobby"
     :free-plan-comparison="freePlanComparison"
     :switch-reasons="switchReasons"
     :feature-comparison="featureComparison"
     :get-competitor-price="getPrice"
-    :summary-line="'SharaForms is the Formbricks alternative for teams that need more than surveys and in-app feedback — a general-purpose form builder with unlimited submissions on the free plan, built-in calculations, and no steep per-seat pricing, from $0.'"
+    :summary-line="'SharaForms is the Formbricks alternative for teams that need more than surveys and in-app feedback, with a general-purpose form builder with unlimited submissions on the free plan, built-in calculators, and no steep per-seat pricing, from $0.'"
     :faqs="faqs"
   >
     <template #hero-subtitle>
-      Build polished forms with <b>unlimited responses, broader use cases, and room to scale</b> — without boxing the product into a single category.
+      Build polished forms with <b>unlimited responses, broader use cases, and room to scale</b>, without boxing the product into a single category.
       <br/><br/>
       Formbricks is strong for surveys and in-app feedback. SharaForms is built for broader form work: lead capture, registrations, applications, internal operations, embedded flows, and more.
       <br/><br/>
@@ -149,7 +149,7 @@ const faqs = [
   {
     question: 'Is SharaForms a good Formbricks alternative?',
     answer:
-      'Yes. Formbricks focuses on surveys and in-app feedback, while SharaForms is a general-purpose form builder that handles those cases and more — lead capture, order forms, applications, and workflows — with unlimited submissions on the free plan and no steep per-seat pricing.',
+      'Yes. Formbricks focuses on surveys and in-app feedback, while SharaForms is a general-purpose form builder that handles those cases and more, including lead capture, order forms, applications, and workflows, with unlimited submissions on the free plan and no steep per-seat pricing.',
   },
   {
     question: 'Is Formbricks free?',

@@ -2,15 +2,15 @@
   <ComparisonPage
     competitor-name="Youform"
     competitor-icon="sharaforms:youform"
-    :hero-title="'SharaForms — the more extensible Youform alternative'"
+    :hero-title="'SharaForms, the more extensible Youform alternative'"
     :free-plan-comparison="freePlanComparison"
     :switch-reasons="switchReasons"
     :feature-comparison="featureComparison"
-    :summary-line="'SharaForms is the Youform alternative for teams that want modern, no-code forms without submission ceilings — unlimited forms, unlimited submissions, deeper logic, custom domains, and self-hosting from $0.'"
+    :summary-line="'SharaForms is the Youform alternative for teams that want modern, no-code forms without submission ceilings, with unlimited forms, unlimited submissions, deeper logic, custom domains, and self-hosting from $0.'"
     :faqs="faqs"
   >
     <template #hero-subtitle>
-      Build modern forms with <b>unlimited responses, deeper logic, and tighter control over your data</b> — without usage caps or platform lock-in.
+      Build modern forms with <b>unlimited responses, deeper logic, and tighter control over your data</b>, without usage caps or platform lock-in.
       <br/><br/>
       Youform feels modern and fast. SharaForms keeps that ease, then adds richer workflow control, stronger customization, and deployment flexibility for teams that need more than a lightweight builder.
     </template>

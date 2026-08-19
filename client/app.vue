@@ -36,8 +36,8 @@ import Clarity from "~/components/vendor/Clarity.vue"
 import CookieConsentBanner from "~/components/global/CookieConsentBanner.vue"
 const config = useRuntimeConfig()
 const route = useRoute()
+const { locale } = useI18n()
 const { hasAnalyticsConsent } = usePrivacyPreferences()
-const { locales } = useI18n()
 
 // Check if current page is a public form page (for performance optimization)
 const isPublicFormPage = computed(() => route.name === 'forms-slug')
@@ -46,7 +46,7 @@ const isPublicFormPage = computed(() => route.name === 'forms-slug')
 useOpnSeoMeta({
   title: "Free Form Builder with Unlimited Forms and Submissions",
   description:
-    "SharaForms is a free form builder with unlimited forms and submissions, built-in formulas, dynamic documents, and powerful integrations for teams that need more than basic forms.",
+    "SharaForms is a free form builder with unlimited forms and submissions, built-in calculators, instant quotes, and proposals for teams that need more than basic forms.",
   ogImage: "/share-preview.jpg",
   robots: () => {
     return config.public.env === "production" ? null : "noindex, nofollow"
@@ -70,7 +70,7 @@ const globalStructuredData = computed(() => {
         name: "SharaForms",
         url: `${baseUrl}/`,
         description:
-          "SharaForms helps teams build free online forms with unlimited forms and submissions, built-in calculations, dynamic documents, and workflow-ready automations.",
+          "SharaForms helps teams build free online forms with unlimited forms and submissions, built-in calculators, dynamic documents, and workflow-ready automations.",
         logo: {
           "@type": "ImageObject",
           url: `${baseUrl}/img/sharaforms-logo.png`,
@@ -83,20 +83,10 @@ const globalStructuredData = computed(() => {
         name: "SharaForms",
         alternateName: "SharaForms Free Form Builder",
         description:
-          "SharaForms is a free form builder for teams that need unlimited forms and submissions, built-in calculations, dynamic documents, and automation-ready integrations.",
+          "SharaForms is a free form builder for teams that need unlimited forms and submissions, built-in calculators, dynamic documents, and automation-ready integrations.",
         publisher: {
           "@id": `${baseUrl}/#organization`,
         },
-        potentialAction: [
-          {
-            "@type": "SearchAction",
-            target: {
-              "@type": "EntryPoint",
-              urlTemplate: `${baseUrl}/?q={search_term_string}`,
-            },
-            "query-input": "required name=search_term_string",
-          },
-        ],
         inLanguage: ["en-US", "ar-EG", "bn-BD", "ca-ES", "cs-CZ", "de-DE", "es-ES", "eu-ES", "fr-FR", "gl-ES", "hi-IN", "hu-HU", "it-IT", "ja-JP", "jv-ID", "ko-KR", "mr-IN", "nl-NL", "pa-IN", "pl-PL", "pt-BR", "ru-RU", "sk-SK", "sr-RS", "sv-SE", "ta-IN", "te-IN", "tr-TR", "uk-UA", "ur-PK", "vi-VN", "zh-CN"],
       },
       {
@@ -110,8 +100,8 @@ const globalStructuredData = computed(() => {
         url: `${baseUrl}/`,
         image: `${baseUrl}/share-preview.jpg`,
         description:
-          "A powerful form builder with a generous free tier, unlimited forms and submissions, built-in formulas, calculated forms, conditional logic, PDFs, signatures, and integrations.",
-        keywords: "free form builder, unlimited forms, unlimited submissions, calculated forms, formula forms, online calculator forms, dynamic forms, survey builder, no-code forms, conditional logic forms, workflow automation, lead generation forms, order forms, registration forms",
+          "A free form builder that closes deals with built-in calculators, instant quotes, and proposals. Unlimited forms and submissions, formulas, conditional logic, PDFs, signatures, and integrations.",
+        keywords: "free form builder, forms that close deals, pricing calculator forms, quote forms, proposal form builder, unlimited forms, unlimited submissions, online calculator forms, no-code forms, conditional logic forms, workflow automation, lead generation forms, order forms, registration forms",
         isAccessibleForFree: true,
         offers: {
           "@type": "Offer",
@@ -122,8 +112,8 @@ const globalStructuredData = computed(() => {
         },
         featureList: [
           "Unlimited forms and submissions on the free plan",
-          "Built-in formulas and calculations",
-          "Calculated forms for quotes, scores, pricing, and approvals",
+          "Built-in calculators for quotes, scores, pricing, and approvals",
+          "Instant quote forms and proposal templates",
           "Conditional logic and dynamic workflows",
           "Integrations and API access",
           "Dynamic document and PDF generation",
@@ -191,8 +181,20 @@ useHead({
     {
       rel: 'icon',
       type: 'image/png',
-      sizes: '1254x1254',
-      href: '/img/sharaforms-logo.png'
+      sizes: '192x192',
+      href: '/favicon-192x192.png'
+    },
+    {
+      rel: 'icon',
+      type: 'image/png',
+      sizes: '96x96',
+      href: '/favicon-96x96.png'
+    },
+    {
+      rel: 'icon',
+      type: 'image/png',
+      sizes: '48x48',
+      href: '/favicon-48x48.png'
     },
     {
       rel: 'apple-touch-icon',
@@ -208,13 +210,6 @@ useHead({
       rel: 'ai-txt',
       href: '/ai.txt'
     },
-    ...(siteBaseUrl.value
-      ? locales.value.map(l => ({
-          rel: 'alternate',
-          hreflang: l.iso || l.code,
-          href: currentHref.value
-        }))
-      : []),
     {
       rel: 'llms-txt',
       href: '/llms.txt'
@@ -238,7 +233,7 @@ useHead({
       ]
     : [],
   htmlAttrs: () => ({
-    dir: 'ltr'
+    dir: locale.value?.startsWith('ar') ? 'rtl' : 'ltr'
   })
 })
 

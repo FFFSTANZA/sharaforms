@@ -31,7 +31,9 @@ definePageMeta({
 })
 
 useOpnSeoMeta({
-  title: "404 - Page not found",
+  title: "Page not found",
+  description: "The page you are looking for does not exist or has been moved. Return to the SharaForms homepage.",
+  robots: { index: false, follow: false },
 })
 
 const event = useRequestEvent()
