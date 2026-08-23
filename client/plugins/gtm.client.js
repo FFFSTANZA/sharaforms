@@ -27,11 +27,6 @@ export default defineNuxtPlugin(() => {
       'security_storage': 'granted'
     })
 
-    gtag('consent', 'update', {
-      'ad_storage': 'granted',
-      'analytics_storage': 'granted',
-    })
-    
     // Enable IP anonymization
     gtag('set', 'anonymize_ip', true)
     

@@ -1,4 +1,4 @@
-export const useFormImagePreloader = (formRef, stateRef) => {
+export const useFormImagePreloader = (formRef, stateRef, { skipPreload = false } = {}) => {
   const form = computed(() => formRef?.value || {})
   const state = computed(() => stateRef?.value || {})
 
@@ -35,9 +35,14 @@ export const useFormImagePreloader = (formRef, stateRef) => {
     return Array.from(new Set(urls))
   })
 
-  useHead(() => ({
-    link: (criticalImageUrls.value || []).map((href) => ({ rel: 'preload', as: 'image', href }))
-  }))
+  // Skip <link rel="preload"> in demo/embed contexts where the form is below the fold
+  // and images are already warmed via the Image() cache below. Preloading below-fold
+  // images triggers "preloaded ... was not used within a few seconds" browser warnings.
+  if (!skipPreload) {
+    useHead(() => ({
+      link: (criticalImageUrls.value || []).map((href) => ({ rel: 'preload', as: 'image', href }))
+    }))
+  }
 
   function warmImageCache(urls) {
     if (!urls || urls.length === 0) return

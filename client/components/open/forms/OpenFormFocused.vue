@@ -333,7 +333,9 @@ const coverMedia = computed(() => ({
 const borderRadius = computed(() => form.value?.border_radius || 'small')
 
 // Preload images used by the form (cover/logo/blocks)
-useFormImagePreloader(form, state)
+// Skip <link rel="preload"> in demo mode — the form is below the fold and images
+// are already warmed via Image() cache; preloading triggers browser warnings.
+useFormImagePreloader(form, state, { skipPreload: isDemoMode.value })
 
 // Auto-focus the input field after page transition
 const formElement = ref(null)

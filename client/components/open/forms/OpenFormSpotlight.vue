@@ -515,7 +515,7 @@ const coverMedia = computed(() => ({
   brightness: form.value?.cover_settings?.brightness
 }))
 
-useFormImagePreloader(form, state)
+useFormImagePreloader(form, state, { skipPreload: isDemoMode.value })
 
 // Admin preview
 const workingFormStore = useWorkingFormStore()
