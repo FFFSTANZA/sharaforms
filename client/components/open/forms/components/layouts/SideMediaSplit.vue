@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full min-h-full flex z-10 flex-col @3xl:flex-row overflow-hidden">
+  <div class="w-full h-full flex z-10 flex-col @3xl:flex-row overflow-hidden">
     <!-- Mobile: media as background on top, content dictates scroll -->
     <div class="relative block @3xl:hidden w-full">
       <!-- Spacer for the visual band; live demo can tune this through a CSS variable. -->
