@@ -1,7 +1,7 @@
 <template>
   <div
     ref="demoFormElement"
-    class="live-demo-form relative flex min-h-[460px] flex-col overflow-hidden bg-white sm:min-h-[620px]"
+    class="live-demo-form relative flex h-full flex-col overflow-hidden bg-white"
     :style="formStyle"
   >
     <component
