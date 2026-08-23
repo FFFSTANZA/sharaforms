@@ -1,12 +1,12 @@
 /**
  * FocusedSelectorInput tailwind-variants configuration
- * Used for focused mode one-per-line option selection
+ * Typeform-inspired: polished option cards with refined selection states
  */
 export const focusedSelectorInputTheme = {
   slots: {
-    container: 'space-y-2 focus:outline-hidden',
+    container: 'space-y-2.5 focus:outline-hidden',
     option: [
-      'w-full border border-transparent transition-all duration-200',
+      'w-full border transition-all duration-250 ease-out',
       'overflow-hidden',
       'group'
     ],
@@ -16,13 +16,14 @@ export const focusedSelectorInputTheme = {
     ],
     label: [
       'shrink-0 flex items-center justify-center',
-      'font-medium transition-all duration-200'
+      'font-medium transition-all duration-200 ease-out'
     ],
     optionText: [
       'flex-1 text-left transition-colors duration-200'
     ],
     checkmark: [
-      'shrink-0 opacity-0 transition-all duration-200'
+      'shrink-0 opacity-0 transition-all duration-300 ease-out',
+      'scale-75'
     ]
   },
   variants: {
@@ -35,7 +36,7 @@ export const focusedSelectorInputTheme = {
           'text-neutral-700 dark:text-neutral-300'
         ],
         label: [
-          'text-neutral-500 dark:text-neutral-400'
+          'text-neutral-400 dark:text-neutral-500'
         ]
       },
       notion: {
@@ -46,7 +47,7 @@ export const focusedSelectorInputTheme = {
           'text-notion-text dark:text-notion-dark-text'
         ],
         label: [
-          'text-neutral-500 dark:text-neutral-400'
+          'text-neutral-400 dark:text-neutral-500'
         ]
       },
       minimal: {
@@ -57,32 +58,32 @@ export const focusedSelectorInputTheme = {
           'text-neutral-700 dark:text-neutral-300'
         ],
         label: [
-          'text-neutral-500 dark:text-neutral-400'
+          'text-neutral-400 dark:text-neutral-500'
         ]
       }
     },
     size: {
       xs: {
-        optionButton: 'px-3 py-2 text-xs',
-        label: 'w-6 h-6 text-xs',
-        optionText: 'text-xs',
+        optionButton: 'px-3 py-2.5 text-sm min-h-[40px]',
+        label: 'w-7 h-7 text-sm',
+        optionText: 'text-sm',
         checkmark: 'w-4 h-4'
       },
       sm: {
-        optionButton: 'px-4 py-2.5 text-sm',
-        label: 'w-7 h-7 text-sm',
-        optionText: 'text-sm',
+        optionButton: 'px-4 py-3 text-base min-h-[44px]',
+        label: 'w-8 h-8 text-sm',
+        optionText: 'text-base',
         checkmark: 'w-5 h-5'
       },
       md: {
-        optionButton: 'px-5 py-3 text-base',
-        label: 'w-8 h-8 text-base',
+        optionButton: 'px-5 py-3.5 text-base min-h-[48px]',
+        label: 'w-8 h-8 text-sm',
         optionText: 'text-base',
         checkmark: 'w-5 h-5'
       },
       lg: {
-        optionButton: 'px-6 py-4 text-lg',
-        label: 'w-10 h-10 text-lg',
+        optionButton: 'px-6 py-4.5 text-lg min-h-[56px]',
+        label: 'w-10 h-10 text-base',
         optionText: 'text-lg',
         checkmark: 'w-6 h-6'
       }
@@ -93,51 +94,55 @@ export const focusedSelectorInputTheme = {
         label: 'rounded-none'
       },
       small: {
-        option: 'rounded-lg',
-        label: 'rounded-md'
+        option: 'rounded-xl',
+        label: 'rounded-lg'
       },
       full: {
-        option: 'rounded-[20px]',
+        option: 'rounded-2xl',
         label: 'rounded-xl'
       }
     },
     selected: {
       true: {
         option: [
-          'bg-[color-mix(in_srgb,var(--bg-form-color)_20%,transparent)]',
-          'dark:bg-[color-mix(in_srgb,var(--bg-form-color)_25%,transparent)]',
-          'shadow-[0_0_0_1px_color-mix(in_srgb,var(--bg-form-color)_60%,transparent)]',
-          'dark:shadow-[0_0_0_1px_color-mix(in_srgb,var(--bg-form-color)_70%,transparent)]'
+          'bg-[color-mix(in_srgb,var(--bg-form-color)_12%,transparent)]',
+          'dark:bg-[color-mix(in_srgb,var(--bg-form-color)_18%,transparent)]',
+          'shadow-[0_0_0_1.5px_color-mix(in_srgb,var(--bg-form-color)_50%,transparent)]',
+          'dark:shadow-[0_0_0_1.5px_color-mix(in_srgb,var(--bg-form-color)_60%,transparent)]'
         ],
         optionButton: [
           'text-form-color',
-          'hover:bg-[color-mix(in_srgb,var(--bg-form-color)_30%,transparent)]',
-          'dark:hover:bg-[color-mix(in_srgb,var(--bg-form-color)_35%,transparent)]'
+          'hover:bg-[color-mix(in_srgb,var(--bg-form-color)_8%,transparent)]',
+          'dark:hover:bg-[color-mix(in_srgb,var(--bg-form-color)_12%,transparent)]'
         ],
-        optionText: 'text-neutral-900 dark:text-white',
+        optionText: 'text-neutral-900 dark:text-white font-medium',
         label: [
-          'bg-form text-white dark:text-white'
+          'bg-form text-white dark:text-white',
+          'shadow-sm'
         ],
-        checkmark: 'opacity-100 text-form dark:text-form'
+        checkmark: 'opacity-100 text-form dark:text-form scale-100'
       },
       false: {
         option: [
-          'bg-[color-mix(in_srgb,var(--bg-form-color)_8%,transparent)]',
-          'dark:bg-[color-mix(in_srgb,var(--bg-form-color)_12%,transparent)]',
-          'hover:bg-[color-mix(in_srgb,var(--bg-form-color)_15%,transparent)]',
-          'dark:hover:bg-[color-mix(in_srgb,var(--bg-form-color)_20%,transparent)]'
+          'bg-[color-mix(in_srgb,var(--bg-form-color)_5%,transparent)]',
+          'dark:bg-[color-mix(in_srgb,var(--bg-form-color)_8%,transparent)]',
+          'border-transparent',
+          'hover:bg-[color-mix(in_srgb,var(--bg-form-color)_10%,transparent)]',
+          'dark:hover:bg-[color-mix(in_srgb,var(--bg-form-color)_15%,transparent)]',
+          'hover:shadow-sm'
         ],
         optionText: 'text-neutral-700 dark:text-neutral-200',
         label: [
-          'border border-current'
+          'border border-current/40',
+          'text-neutral-400 dark:text-neutral-500'
         ]
       }
     },
     animating: {
       true: {
         option: 'flash-animation',
-        optionText: 'text-neutral-900 dark:text-white',
-        checkmark: 'opacity-100 text-form dark:text-form'
+        optionText: 'text-neutral-900 dark:text-white font-medium',
+        checkmark: 'opacity-100 text-form dark:text-form scale-100'
       }
     },
     disabled: {
@@ -158,4 +163,3 @@ export const focusedSelectorInputTheme = {
     disabled: false
   }
 }
-

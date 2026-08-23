@@ -1,8 +1,8 @@
 <template>
   <div>
     <!-- Mobile top bar -->
-    <div class="sm:hidden fixed top-0 left-0 right-0 h-14 bg-white border-b border-[#E6E8EE] z-50 px-4 flex items-center justify-between">
-      <p class="text-[18px] font-bold text-[#1D1F24] tracking-tight">SharaForms<span class="text-[#ff5c38]">.</span></p>
+    <div class="sm:hidden fixed top-0 left-0 right-0 h-14 bg-[var(--sf-bg-surface)] border-b border-[var(--sf-border-card)] z-50 px-4 flex items-center justify-between">
+      <p class="text-[18px] font-bold text-[var(--sf-text-primary)] tracking-tight">SharaForms<span class="text-[var(--sf-coral-500)]">.</span></p>
       <UButton
         square
         size="sm"
@@ -16,22 +16,22 @@
     <!-- Mobile Drawer Overlay -->
     <div
       v-if="isMobileMenuOpen"
-      class="sm:hidden fixed inset-0 bg-neutral-950/20 backdrop-blur-xs z-50"
+      class="sm:hidden fixed inset-0 bg-[var(--sf-text-primary)]/20 backdrop-blur-xs z-50"
       @click="isMobileMenuOpen = false"
     ></div>
 
     <!-- Sidebar Element -->
     <aside
       :class="[
-        'sidebar w-[260px] shrink-0 flex flex-col fixed top-0 left-0 h-full overflow-y-auto z-[60] border-r border-[#E6E8EE] transition-transform duration-300 ease-in-out',
+        'sidebar w-[260px] shrink-0 flex flex-col fixed top-0 left-0 h-full overflow-y-auto z-[60] border-r border-[var(--sf-border-card)] transition-transform duration-300 ease-in-out',
         isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full sm:translate-x-0'
       ]"
     >
       <div class="flex flex-col h-full px-6 py-8 gap-7">
         <!-- Brand -->
         <div class="px-4 flex items-center justify-between">
-          <p class="whitespace-nowrap select-none text-[20px] font-bold leading-none tracking-tight text-[#1D1F24]">
-            SharaForms<span class="text-[#ff5c38]">.</span>
+          <p class="whitespace-nowrap select-none text-[20px] font-bold leading-none tracking-tight text-[var(--sf-text-primary)]">
+            SharaForms<span class="text-[var(--sf-coral-500)]">.</span>
           </p>
           <UButton
             v-if="isMobileMenuOpen"
@@ -49,15 +49,15 @@
         <WorkspaceDropdown>
           <template #default="{ workspace: currentWorkspace }">
             <button
-              class="flex w-full items-center justify-between px-4 py-3 rounded-xl bg-white border border-[#E6E8EE] shadow-[0_1px_2px_rgba(23,25,35,0.04),0_8px_20px_-12px_rgba(23,25,35,0.14)] hover:border-[#FFB79A] transition-all text-left"
+              class="flex w-full items-center justify-between px-4 py-3 rounded-xl bg-[var(--sf-bg-surface)] border border-[var(--sf-border-card)] shadow-[0_1px_2px_rgba(23,25,35,0.04),0_8px_20px_-12px_rgba(23,25,35,0.14)] hover:border-[var(--sf-hover-border)] transition-all text-left"
             >
               <div class="flex items-center gap-2.5 min-w-0">
                 <div class="grad-brand w-6 h-6 rounded-lg flex items-center justify-center shrink-0">
                   <i class="fa-solid fa-layer-group text-[9px] text-white"></i>
                 </div>
-                <span class="text-sm font-medium text-[#565A62] truncate">{{ currentWorkspace?.name || 'My Workspace' }}</span>
+                <span class="text-sm font-medium text-[var(--sf-text-body)] truncate">{{ currentWorkspace?.name || 'My Workspace' }}</span>
               </div>
-              <i class="fa-solid fa-chevron-down text-[9px] text-[#A7ABB2] shrink-0"></i>
+              <i class="fa-solid fa-chevron-down text-[9px] text-[var(--sf-text-disabled)] shrink-0"></i>
             </button>
           </template>
         </WorkspaceDropdown>
@@ -67,35 +67,35 @@
           <NuxtLink
             :to="{ name: 'home', query: { tab: 'dashboard' } }"
             class="relative flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all"
-            :class="[ activeTab === 'dashboard' ? 'nav-active tab-link font-semibold text-[#1D1F24]' : 'tab-link text-[#565A62]' ]"
+            :class="[ activeTab === 'dashboard' ? 'nav-active tab-link font-semibold text-[var(--sf-text-primary)]' : 'tab-link text-[var(--sf-text-body)]' ]"
             @click="isMobileMenuOpen = false"
           >
             <span
               v-if="activeTab === 'dashboard'"
-              class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-full bg-[#ff5c38]"
+              class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-full bg-[var(--sf-coral-500)]"
             ></span>
-            <i class="fa-solid fa-house text-[14px] w-4 text-center" :class="{ 'text-[#ff5c38]': activeTab === 'dashboard' }"></i>
+            <i class="fa-solid fa-house text-[14px] w-4 text-center" :class="{ 'text-[var(--sf-coral-500)]': activeTab === 'dashboard' }"></i>
             <span class="nav-label">Dashboard</span>
           </NuxtLink>
 
           <NuxtLink
             :to="{ name: 'home', query: { tab: 'forms' } }"
             class="relative flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all"
-            :class="[ activeTab === 'forms' ? 'nav-active tab-link font-semibold text-[#1D1F24]' : 'tab-link text-[#565A62]' ]"
+            :class="[ activeTab === 'forms' ? 'nav-active tab-link font-semibold text-[var(--sf-text-primary)]' : 'tab-link text-[var(--sf-text-body)]' ]"
             @click="isMobileMenuOpen = false"
           >
             <span
               v-if="activeTab === 'forms'"
-              class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-full bg-[#ff5c38]"
+              class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-full bg-[var(--sf-coral-500)]"
             ></span>
-            <i class="fa-solid fa-file-lines text-[14px] w-4 text-center" :class="{ 'text-[#ff5c38]': activeTab === 'forms' }"></i>
+            <i class="fa-solid fa-file-lines text-[14px] w-4 text-center" :class="{ 'text-[var(--sf-coral-500)]': activeTab === 'forms' }"></i>
             <span class="nav-label">My Forms</span>
           </NuxtLink>
 
           <NuxtLink
             :to="{ name: 'templates-my-templates' }"
             class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all"
-            :class="[ route.name?.startsWith('templates') ? 'nav-active font-semibold text-[#1D1F24]' : 'text-[#565A62]' ]"
+            :class="[ route.name?.startsWith('templates') ? 'nav-active font-semibold text-[var(--sf-text-primary)]' : 'text-[var(--sf-text-body)]' ]"
             @click="isMobileMenuOpen = false"
           >
             <i class="fa-solid fa-clone text-[14px] w-4 text-center"></i>
@@ -104,17 +104,17 @@
         </nav>
 
         <!-- Divider -->
-        <div class="border-t border-[#E6E8EE]/80"></div>
+        <div class="border-t border-[var(--sf-border-card)]/80"></div>
 
         <!-- Product Section -->
         <div class="flex flex-col gap-0.5">
-          <p class="px-4 text-[11px] font-medium uppercase tracking-[0.1em] text-[#A0A4AD] mb-1.5">
+          <p class="px-4 text-[11px] font-medium uppercase tracking-[0.1em] text-[var(--sf-text-label)] mb-1.5">
             Product
           </p>
           <button
             v-if="featureBaseEnabled"
             @click="openChangelog"
-            class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all text-left w-full hover:bg-[#F0F1F4]"
+            class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all text-left w-full hover:bg-[var(--sf-nav-hover-bg)]"
           >
             <i class="fa-solid fa-bullhorn text-[14px] w-4 text-center"></i>
             What's new
@@ -139,7 +139,7 @@
 
         <!-- Help Section -->
         <div class="flex flex-col gap-0.5">
-          <p class="px-4 text-[11px] font-medium uppercase tracking-[0.1em] text-[#A0A4AD] mb-1.5">
+          <p class="px-4 text-[11px] font-medium uppercase tracking-[0.1em] text-[var(--sf-text-label)] mb-1.5">
             Help
           </p>
           <a
@@ -160,7 +160,7 @@
           </a>
           <button
             @click="contactSupport"
-            class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all text-left w-full hover:bg-[#F0F1F4]"
+            class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all text-left w-full hover:bg-[var(--sf-nav-hover-bg)]"
           >
             <i class="fa-solid fa-envelope text-[14px] w-4 text-center"></i>
             Contact Support
@@ -174,10 +174,10 @@
             v-if="showUpgradeBanner"
             class="bg-[#FDF6EB] border border-[#f5dfa8] rounded-2xl p-4 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.6)]"
           >
-            <p class="text-sm font-semibold text-[#1D1F24] mb-1">
+            <p class="text-sm font-semibold text-[var(--sf-text-primary)] mb-1">
               <i class="fa-solid fa-crown text-[10px] text-[#d97706] mr-1.5"></i>{{ upgradeTitle }}
             </p>
-            <p class="text-xs text-[#8E9198] font-medium mb-3 leading-relaxed">
+            <p class="text-xs text-[var(--sf-text-caption)] font-medium mb-3 leading-relaxed">
               Unlock advanced analytics, custom domains &amp; more.
             </p>
             <button
@@ -192,18 +192,18 @@
           <UserDropdown v-if="user">
             <template #default="{ user: currentUser }">
               <div
-                class="flex items-center gap-3 px-3 py-3 rounded-2xl hover:bg-[#F0F1F4] transition-all cursor-pointer min-w-0"
+                class="flex items-center gap-3 px-3 py-3 rounded-2xl hover:bg-[var(--sf-nav-hover-bg)] transition-all cursor-pointer min-w-0"
               >
                 <img
                   :src="currentUser.photo_url || 'https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg'"
                   :alt="currentUser.name"
-                  class="w-9 h-9 rounded-full object-cover ring-2 ring-[#E6E8EE] shrink-0"
+                  class="w-9 h-9 rounded-full object-cover ring-2 ring-[var(--sf-border-card)] shrink-0"
                 />
                 <div class="flex-1 min-w-0">
-                  <p class="text-sm font-semibold leading-none truncate text-[#1D1F24]">{{ currentUser.name }}</p>
-                  <p class="text-xs text-[#8E9198] font-medium mt-1 truncate">{{ currentUser.email }}</p>
+                  <p class="text-sm font-semibold leading-none truncate text-[var(--sf-text-primary)]">{{ currentUser.name }}</p>
+                  <p class="text-xs text-[var(--sf-text-caption)] font-medium mt-1 truncate">{{ currentUser.email }}</p>
                 </div>
-                <i class="fa-solid fa-ellipsis-vertical text-[10px] text-[#A7ABB2] shrink-0"></i>
+                <i class="fa-solid fa-ellipsis-vertical text-[10px] text-[var(--sf-text-disabled)] shrink-0"></i>
               </div>
             </template>
           </UserDropdown>

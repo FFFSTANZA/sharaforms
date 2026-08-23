@@ -10,12 +10,29 @@
           <p class="text-[13px] text-[#6E7278] font-medium mt-1">A snapshot of your forms' performance</p>
         </div>
         <div class="flex items-center gap-4">
-          <button
-            class="btn-ghost flex items-center gap-2 border border-[#DEE1E7] rounded-xl px-4 py-3.5 text-xs font-semibold text-[#565A62] shadow-[0_1px_2px_rgba(23,25,35,0.04)]"
-          >
-            <i class="fa-solid fa-calendar-day text-[10px] text-[#ff5c38]"></i>
-            Last 7 days <i class="fa-solid fa-chevron-down text-[9px] text-[#A7ABB2]"></i>
-          </button>
+          <div ref="dateDropdownRef" class="relative">
+            <button
+              class="btn-ghost flex items-center gap-2 border border-[#DEE1E7] rounded-xl px-4 py-3.5 text-xs font-semibold text-[#565A62] shadow-[0_1px_2px_rgba(23,25,35,0.04)]"
+              @click.stop="showDateDropdown = !showDateDropdown"
+            >
+              <i class="fa-solid fa-calendar-day text-[10px] text-[#ff5c38]"></i>
+              {{ selectedDateLabel }} <i class="fa-solid fa-chevron-down text-[9px] text-[#A7ABB2]"></i>
+            </button>
+            <div
+              v-if="showDateDropdown"
+              class="absolute right-0 top-full mt-2 bg-white border border-[#E6E8EE] rounded-xl shadow-[0_12px_40px_-12px_rgba(23,25,35,0.2)] z-50 py-1.5 min-w-[160px]"
+            >
+              <button
+                v-for="option in dateOptions"
+                :key="option.value"
+                class="w-full text-left px-4 py-2.5 text-xs font-medium transition-colors"
+                :class="selectedDays === option.value ? 'text-[#ff5c38] bg-[#FFE9E2]' : 'text-[#565A62] hover:bg-[#F7F8FA]'"
+                @click="selectDateRange(option.value)"
+              >
+                {{ option.label }}
+              </button>
+            </div>
+          </div>
           <NuxtLink
             v-if="!workspace?.is_readonly"
             :to="{ name: 'forms-create' }"
@@ -41,10 +58,16 @@
               <p class="text-sm font-medium text-[#565A62] truncate">Total views</p>
             </div>
             <div class="flex flex-col items-end shrink-0">
-              <span class="inline-flex items-center text-xs font-semibold text-[#0e7a46] tabular-nums">
-                <i class="fa-solid fa-arrow-trend-up text-[9px] mr-0.5"></i>12%
+              <span
+                class="inline-flex items-center text-xs font-semibold tabular-nums"
+                :class="viewsTrend.direction === 'up' ? 'text-[#0e7a46]' : viewsTrend.direction === 'down' ? 'text-[#dc2626]' : 'text-[#8E9198]'"
+              >
+                <i
+                  class="text-[9px] mr-0.5"
+                  :class="viewsTrend.direction === 'up' ? 'fa-solid fa-arrow-trend-up' : viewsTrend.direction === 'down' ? 'fa-solid fa-arrow-trend-down' : 'fa-solid fa-minus'"
+                ></i>{{ viewsTrend.percentage }}%
               </span>
-              <span class="text-[11px] text-[#8E9198] mt-1">vs last week</span>
+              <span class="text-[11px] text-[#8E9198] mt-1">vs previous</span>
             </div>
           </div>
           <p class="text-[32px] font-bold leading-none tracking-tight text-[#1D1F24] tabular-nums mt-6 whitespace-nowrap">
@@ -75,10 +98,16 @@
               <p class="text-sm font-medium text-[#565A62] truncate">Total responses</p>
             </div>
             <div class="flex flex-col items-end shrink-0">
-              <span class="inline-flex items-center text-xs font-semibold text-[#0e7a46] tabular-nums">
-                <i class="fa-solid fa-arrow-trend-up text-[9px] mr-0.5"></i>8.4%
+              <span
+                class="inline-flex items-center text-xs font-semibold tabular-nums"
+                :class="submissionsTrend.direction === 'up' ? 'text-[#0e7a46]' : submissionsTrend.direction === 'down' ? 'text-[#dc2626]' : 'text-[#8E9198]'"
+              >
+                <i
+                  class="text-[9px] mr-0.5"
+                  :class="submissionsTrend.direction === 'up' ? 'fa-solid fa-arrow-trend-up' : submissionsTrend.direction === 'down' ? 'fa-solid fa-arrow-trend-down' : 'fa-solid fa-minus'"
+                ></i>{{ submissionsTrend.percentage }}%
               </span>
-              <span class="text-[11px] text-[#8E9198] mt-1">vs last week</span>
+              <span class="text-[11px] text-[#8E9198] mt-1">vs previous</span>
             </div>
           </div>
           <p class="text-[32px] font-bold leading-none tracking-tight text-[#1D1F24] tabular-nums mt-6 whitespace-nowrap">
@@ -109,10 +138,16 @@
               <p class="text-sm font-medium text-[#565A62] truncate">Conversion rate</p>
             </div>
             <div class="flex flex-col items-end shrink-0">
-              <span class="inline-flex items-center text-xs font-semibold text-[#0e7a46] tabular-nums">
-                <i class="fa-solid fa-arrow-trend-up text-[9px] mr-0.5"></i>2.1%
+              <span
+                class="inline-flex items-center text-xs font-semibold tabular-nums"
+                :class="conversionTrend.direction === 'up' ? 'text-[#0e7a46]' : conversionTrend.direction === 'down' ? 'text-[#dc2626]' : 'text-[#8E9198]'"
+              >
+                <i
+                  class="text-[9px] mr-0.5"
+                  :class="conversionTrend.direction === 'up' ? 'fa-solid fa-arrow-trend-up' : conversionTrend.direction === 'down' ? 'fa-solid fa-arrow-trend-down' : 'fa-solid fa-minus'"
+                ></i>{{ conversionTrend.percentage }}%
               </span>
-              <span class="text-[11px] text-[#8E9198] mt-1">vs last week</span>
+              <span class="text-[11px] text-[#8E9198] mt-1">vs previous</span>
             </div>
           </div>
           <p class="text-[32px] font-bold leading-none tracking-tight text-[#1D1F24] tabular-nums mt-6 whitespace-nowrap">
@@ -166,15 +201,15 @@
         >
           <div class="flex items-center justify-between mb-8">
             <div>
-              <h2 class="text-[15px] font-semibold text-[#1D1F24]">Weekly views</h2>
-              <p class="text-xs text-[#8E9198] font-medium mt-0.5">Last 7 days</p>
+              <h2 class="text-[15px] font-semibold text-[#1D1F24]">{{ selectedDays <= 7 ? 'Weekly' : 'Period' }} views</h2>
+              <p class="text-xs text-[#8E9198] font-medium mt-0.5">Last {{ selectedDays }} days</p>
             </div>
             <div class="flex items-center gap-4">
               <span class="flex items-center gap-2 text-xs font-medium text-[#6E7278]">
                 <span class="w-2 h-2 rounded-full bg-[#0891b2]"></span>
                 <span class="text-[#383B41] tabular-nums font-semibold">{{ formatNumberWithCommas(totalViews) }}</span> views
               </span>
-              <span class="text-[11px] font-medium text-[#8E9198]">vs 987 last week</span>
+              <span class="text-[11px] font-medium text-[#8E9198]">vs {{ formatNumberWithCommas(previousViewsTotal) }} previous</span>
             </div>
           </div>
 
@@ -431,7 +466,20 @@
               </span>
             </div>
             <p class="text-[14px] font-semibold text-[#1D1F24] truncate group-hover:text-[#ff5c38] transition-colors">{{ form.title }}</p>
-            <p class="text-xs text-[#8E9198] font-medium mt-0.5">Updated {{ form.last_edited_human }}</p>
+            <div class="flex items-center gap-1.5 mt-1">
+              <p class="text-xs text-[#8E9198] font-medium truncate">{{ form.slug }}</p>
+              <template v-if="form.tags?.length">
+                <span class="text-[#C7C9CE] shrink-0">·</span>
+                <span class="flex items-center gap-1 min-w-0">
+                  <span
+                    v-for="tag in form.tags.slice(0, 2)"
+                    :key="tag"
+                    class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-[#F0F1F4] text-[#6E7278] capitalize shrink-0"
+                  >{{ tag }}</span>
+                  <span v-if="form.tags.length > 2" class="text-[10px] text-[#A7ABB2] shrink-0">+{{ form.tags.length - 2 }}</span>
+                </span>
+              </template>
+            </div>
 
             <div class="mt-4 pt-4 border-t border-[#ECEEF2] flex items-center justify-between">
               <div class="flex items-center gap-3 text-sm font-semibold text-[#565A62] tabular-nums">
@@ -455,11 +503,11 @@
                   <i class="fa-solid fa-pen text-[11px]"></i>
                 </NuxtLink>
                 <button
-                  @click="previewForm(form)"
+                  @click="copyFormLink(form)"
                   class="w-7 h-7 flex items-center justify-center rounded-lg text-[#A7ABB2] hover:text-[#383B41] hover:bg-[#ECEEF2] transition-all"
-                  title="Preview form"
+                  title="Copy form link"
                 >
-                  <i class="fa-solid fa-arrow-up-from-bracket text-[11px]"></i>
+                  <i class="fa-solid fa-link text-[11px]"></i>
                 </button>
                 <ExtraMenu :form="form" :is-main-page="true" portal="#home-portals">
                   <template #default="{ loading }">
@@ -603,10 +651,10 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue"
+import { ref, computed, watch, onMounted, onUnmounted } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import { useFuse } from "@vueuse/integrations/useFuse"
-import { useLocalStorage, refDebounced } from "@vueuse/core"
+import { useLocalStorage, refDebounced, useClipboard } from "@vueuse/core"
 import ExtraMenu from "~/components/pages/forms/show/ExtraMenu.vue"
 import FormCardSkeleton from "~/components/pages/home/FormCardSkeleton.vue"
 import { formatNumber, formatNumberWithCommas } from "~/lib/utils.js"
@@ -640,6 +688,10 @@ const {
   enabled: computed(() => import.meta.client && !!workspaceId.value),
 })
 
+// Dashboard stats
+const selectedDays = ref(7)
+const { dashboard } = useDashboardStats(workspaceId, { days: selectedDays })
+
 // State
 const search = ref("")
 const debouncedSearch = refDebounced(search, 500)
@@ -647,6 +699,34 @@ const selectedTags = ref([])
 const viewMode = useLocalStorage('sharaforms-viewmode', 'grid')
 const currentPage = ref(1)
 const itemsPerPage = 8
+const showDateDropdown = ref(false)
+
+const dateOptions = [
+  { label: 'Last 7 days', value: 7 },
+  { label: 'Last 30 days', value: 30 },
+  { label: 'Last 90 days', value: 90 },
+]
+
+const selectedDateLabel = computed(() => {
+  return dateOptions.find(d => d.value === selectedDays.value)?.label || 'Last 7 days'
+})
+
+const selectDateRange = (days) => {
+  selectedDays.value = days
+  showDateDropdown.value = false
+}
+
+// Close dropdown on outside click
+const dateDropdownRef = ref(null)
+if (import.meta.client) {
+  const closeDropdown = (e) => {
+    if (showDateDropdown.value && dateDropdownRef.value && !dateDropdownRef.value.contains(e.target)) {
+      showDateDropdown.value = false
+    }
+  }
+  onMounted(() => document.addEventListener('click', closeDropdown))
+  onUnmounted(() => document.removeEventListener('click', closeDropdown))
+}
 
 // Methods
 const clearFilters = () => {
@@ -742,20 +822,40 @@ watch(enrichedForms, () => {
   currentPage.value = 1
 })
 
-// KPI Computations
+// KPI Computations — use dashboard API for period-specific data, forms list for all-time
 const totalViews = computed(() => {
+  if (dashboard.value) return dashboard.value.views.current
   if (!forms.value) return 0
   return forms.value.reduce((sum, f) => sum + (f.views_count || 0), 0)
 })
 
 const totalResponses = computed(() => {
+  if (dashboard.value) return dashboard.value.submissions.current
   if (!forms.value) return 0
   return forms.value.reduce((sum, f) => sum + (f.submissions_count || 0), 0)
 })
 
 const conversionRate = computed(() => {
+  if (dashboard.value) return dashboard.value.conversion_rate.current
   if (!totalViews.value) return 0
   return (totalResponses.value / totalViews.value) * 100
+})
+
+// Trend data from dashboard API
+const viewsTrend = computed(() => {
+  return dashboard.value?.views?.trend || { percentage: 0, direction: 'neutral' }
+})
+
+const submissionsTrend = computed(() => {
+  return dashboard.value?.submissions?.trend || { percentage: 0, direction: 'neutral' }
+})
+
+const conversionTrend = computed(() => {
+  return dashboard.value?.conversion_rate?.trend || { percentage: 0, direction: 'neutral' }
+})
+
+const previousViewsTotal = computed(() => {
+  return dashboard.value?.views?.previous || 0
 })
 
 const liveFormsCount = computed(() => {
@@ -771,27 +871,27 @@ const liveFormsPercentage = computed(() => {
   return (liveFormsCount.value / forms.value.length) * 100
 })
 
-// Weekly Chart Computations
+// Weekly Chart Computations — use real daily data from dashboard API
 const weeklyData = computed(() => {
-  const mockDays = [128, 172, 156, 214, 187, 96, 161]
-  const totalMock = 1114
-  const ratios = mockDays.map(v => v / totalMock)
-  
-  const actualTotal = totalViews.value
-  const days = actualTotal > 0 
-    ? ratios.map(r => Math.round(actualTotal * r))
-    : mockDays
-    
-  const peak = Math.max(...days)
-  return [
-    { label: 'Mon', count: days[0], height: peak > 0 ? (days[0] / peak) * 100 : 0 },
-    { label: 'Tue', count: days[1], height: peak > 0 ? (days[1] / peak) * 100 : 0 },
-    { label: 'Wed', count: days[2], height: peak > 0 ? (days[2] / peak) * 100 : 0 },
-    { label: 'Thu', count: days[3], height: peak > 0 ? (days[3] / peak) * 100 : 0, peak: true },
-    { label: 'Fri', count: days[4], height: peak > 0 ? (days[4] / peak) * 100 : 0 },
-    { label: 'Sat', count: days[5], height: peak > 0 ? (days[5] / peak) * 100 : 0 },
-    { label: 'Sun', count: days[6], height: peak > 0 ? (days[6] / peak) * 100 : 0 },
-  ]
+  const chartData = dashboard.value?.chart
+  if (chartData && chartData.length > 0) {
+    const peak = Math.max(...chartData.map(d => d.views), 1)
+    return chartData.map(d => ({
+      label: d.label,
+      count: d.views,
+      height: (d.views / peak) * 100,
+      peak: d.views === peak,
+    }))
+  }
+
+  // Fallback: adapt label count to selected period
+  const count = Math.min(selectedDays.value, 14) // cap at 14 bars to avoid overflow
+  return Array.from({ length: count }, () => ({
+    label: '',
+    count: 0,
+    height: 0,
+    peak: false,
+  }))
 })
 
 const peakChartValue = computed(() => {
@@ -807,7 +907,7 @@ const peakDayText = computed(() => {
 const dailyAverage = computed(() => {
   const days = weeklyData.value.map(d => d.count)
   const sum = days.reduce((a, b) => a + b, 0)
-  return Math.round(sum / 7)
+  return days.length > 0 ? Math.round(sum / days.length) : 0
 })
 
 // Top Performing Forms
@@ -879,15 +979,17 @@ const getCompletionBarColor = (form) => {
   return 'bg-[#0891b2]'
 }
 
-const navigateToSubmissions = (form) => {
-  router.push({ name: 'forms-slug-show-submissions', params: { slug: form.slug } })
-}
-
-const previewForm = (form) => {
+const { copy } = useClipboard()
+const copyFormLink = (form) => {
   if (form.visibility === 'draft') {
-    useAlert().warning("This form is currently in Draft mode.")
+    useAlert().warning("This form is currently in Draft mode and is not publicly accessible.")
     return
   }
-  window.open(form.share_url, '_blank')
+  copy(form.share_url)
+  useAlert().success("Form link copied!")
+}
+
+const navigateToSubmissions = (form) => {
+  router.push({ name: 'forms-slug-show-submissions', params: { slug: form.slug } })
 }
 </script>

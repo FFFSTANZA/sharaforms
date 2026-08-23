@@ -82,7 +82,9 @@ class PlanAccessService
 
     public function userHasFeature(User $user, string $feature): bool
     {
-        $requiredTier = config('plans.features.' . $feature);
+        // Literal-key lookup: feature keys contain dots (e.g.
+        // 'integrations.trello'), so config() dot notation cannot reach them.
+        $requiredTier = config('plans.features')[$feature] ?? null;
         if ($requiredTier === null) {
             return false;
         }
@@ -140,13 +142,16 @@ class PlanAccessService
 
     public function getRequiredTier(string $feature): ?string
     {
-        return config('plans.features.' . $feature)
-            ?? config('plans.form_features.' . $feature);
+        // Literal-key lookup: feature keys contain dots (e.g.
+        // 'integrations.trello'), so config() dot notation cannot reach them.
+        return config('plans.features')[$feature]
+            ?? config('plans.form_features')[$feature]
+            ?? null;
     }
 
     public function getFormFeatureRequiredTier(string $feature): ?string
     {
-        return config('plans.form_features.' . $feature);
+        return config('plans.form_features')[$feature] ?? null;
     }
 
     public function getTierDisplayName(string $tier): string

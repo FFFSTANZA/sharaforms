@@ -11,7 +11,6 @@ class N8nIntegration extends AbstractIntegrationHandler
     {
         return [
             'webhook_url' => ['required', 'url', new PublicWebhookUrlRule()],
-            'provider_url' => 'nullable|url',
         ];
     }
 

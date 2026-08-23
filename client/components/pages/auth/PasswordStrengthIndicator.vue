@@ -25,10 +25,10 @@
         >
           <Icon 
             :name="passwordRules[rule.key] ? 'lucide:circle-check' : 'lucide:circle-x'"
-            :class="passwordRules[rule.key] ? 'text-green-500' : 'text-neutral-400'"
+            :class="passwordRules[rule.key] ? 'text-[#16a34a]' : 'text-[#A7ABB2]'"
             class="w-3 h-3"
           />
-          <span class="text-xs" :class="passwordRules[rule.key] ? 'text-green-600' : 'text-neutral-500'">
+          <span class="text-xs" :class="passwordRules[rule.key] ? 'text-[#16a34a]' : 'text-[#8E9198]'">
             {{ rule.message }}
           </span>
         </div>
@@ -96,11 +96,11 @@ const strengthPercentage = computed(() => {
 
 // Strength configuration
 const strengthConfig = [
-  { threshold: 0, text: 'Very Weak', barClass: 'bg-neutral-300', textClass: 'text-neutral-500' },
-  { threshold: 1, text: 'Weak', barClass: 'bg-red-500', textClass: 'text-red-600' },
-  { threshold: 2, text: 'Fair', barClass: 'bg-orange-500', textClass: 'text-orange-600' },
-  { threshold: 3, text: 'Good', barClass: 'bg-yellow-500', textClass: 'text-yellow-600' },
-  { threshold: passwordRulesConfig.length, text: 'Strong', barClass: 'bg-green-500', textClass: 'text-green-600' }
+  { threshold: 0, text: 'Very Weak', barClass: 'bg-[#C7C9CE]', textClass: 'text-[#8E9198]' },
+  { threshold: 1, text: 'Weak', barClass: 'bg-[#c2351f]', textClass: 'text-[#c2351f]' },
+  { threshold: 2, text: 'Fair', barClass: 'bg-[#d97706]', textClass: 'text-[#d97706]' },
+  { threshold: 3, text: 'Good', barClass: 'bg-[#0891b2]', textClass: 'text-[#0891b2]' },
+  { threshold: passwordRulesConfig.length, text: 'Strong', barClass: 'bg-[#16a34a]', textClass: 'text-[#16a34a]' }
 ]
 
 // Strength bar styling

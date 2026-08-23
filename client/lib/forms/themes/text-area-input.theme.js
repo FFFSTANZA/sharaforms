@@ -1,5 +1,7 @@
 /**
  * TextAreaInput tailwind-variants configuration
+ * Typeform-inspired: matching polish to TextInput
+ * Mobile: min-h for touch targets, font-size >= 16px to prevent iOS zoom
  */
 export const textAreaInputTheme = {
   slots: {
@@ -7,11 +9,13 @@ export const textAreaInputTheme = {
       'appearance-none w-full',
       'border',
       'bg-white dark:bg-notion-dark-light',
-      'text-neutral-700 dark:text-neutral-300',
+      'text-neutral-800 dark:text-neutral-200',
       'placeholder-neutral-400 dark:placeholder-neutral-500',
-      'focus:outline-hidden',
+      'focus:outline-none',
+      'transition-all duration-200 ease-out',
       'disabled:cursor-not-allowed disabled:opacity-75',
-      'min-h-[100px] resize-y block'
+      'min-h-[120px] resize-y block',
+      'leading-relaxed'
     ],
     help: 'text-neutral-500'
   },
@@ -19,15 +23,17 @@ export const textAreaInputTheme = {
     theme: {
       default: {
         input: [
-          'border-neutral-300 dark:border-neutral-600',
-          'shadow-xs',
-          'focus:ring-2 focus:ring-form/100 focus:border-transparent'
+          'border-neutral-200 dark:border-neutral-600/60',
+          'shadow-sm',
+          'hover:border-neutral-300 dark:hover:border-neutral-500',
+          'focus:ring-2 focus:ring-form/15 focus:border-form/40'
         ]
       },
       simple: {
         input: [
-          'border-neutral-300 dark:border-neutral-600',
-          'focus:ring-2 focus:ring-form/100 focus:border-transparent'
+          'border-neutral-200 dark:border-neutral-600/60',
+          'hover:border-neutral-300 dark:hover:border-neutral-500',
+          'focus:ring-2 focus:ring-form/15 focus:border-form/40'
         ]
       },
       notion: {
@@ -35,7 +41,8 @@ export const textAreaInputTheme = {
           'border-notion-input-border dark:border-notion-input-borderDark',
           'bg-notion-input-background dark:bg-notion-dark-light',
           'text-neutral-900 dark:text-neutral-100',
-          'focus:ring-2 focus:ring-form/40 focus:border-transparent'
+          'hover:border-neutral-400 dark:hover:border-neutral-500',
+          'focus:ring-2 focus:ring-form/25 focus:border-transparent'
         ]
       },
       minimal: {
@@ -43,6 +50,7 @@ export const textAreaInputTheme = {
           'border-2 border-transparent',
           'bg-neutral-100 dark:bg-notion-dark-light',
           'text-neutral-700 dark:text-neutral-300',
+          'hover:bg-neutral-50 dark:hover:bg-neutral-800/50',
           'focus:ring-0 focus:border-form'
         ]
       },
@@ -60,10 +68,10 @@ export const textAreaInputTheme = {
       }
     },
     size: {
-      xs: { input: 'px-2.5 py-1.5 text-xs' },
-      sm: { input: 'px-2 py-1.5 text-sm' },
-      md: { input: 'px-4 py-2 text-base' },
-      lg: { input: 'px-5 py-3 text-lg' }
+      xs: { input: 'px-3 py-2 text-base' },
+      sm: { input: 'px-3 py-2 text-base' },
+      md: { input: 'px-4 py-2.5 text-base' },
+      lg: { input: 'px-5 py-3.5 text-lg' }
     },
     borderRadius: {
       none: { input: 'rounded-none' },
@@ -71,10 +79,10 @@ export const textAreaInputTheme = {
       full: { input: 'rounded-[20px]' }
     },
     hasError: {
-      true: { input: '!ring-red-500 !ring-2 !border-transparent' }
+      true: { input: '!ring-red-500/40 !ring-2 !border-red-400 dark:!border-red-500/60' }
     },
     disabled: {
-      true: { input: '!cursor-not-allowed !bg-neutral-200 dark:!bg-neutral-800' }
+      true: { input: '!cursor-not-allowed !bg-neutral-100 dark:!bg-neutral-800' }
     }
   },
   defaultVariants: {
@@ -85,4 +93,3 @@ export const textAreaInputTheme = {
     disabled: false
   }
 }
-

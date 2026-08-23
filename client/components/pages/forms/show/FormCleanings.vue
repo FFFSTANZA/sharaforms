@@ -2,29 +2,29 @@
   <VTransition>
     <section
       v-if="shouldShowWarning"
-      class="flex gap-3 p-4 bg-blue-50 dark:bg-blue-950 rounded-lg border border-blue-300 border-solid max-md:flex-wrap mb-2"
+      class="flex gap-3 p-4 bg-[var(--sf-amber-light)] rounded-lg border border-[var(--sf-status-draft-border)] border-solid max-md:flex-wrap mb-2"
       aria-labelledby="notification-title"
     >
       <div class="flex justify-center items-center self-start py-px">
         <Icon
           name="i-lucide-lock-open"
-          class="w-6 h-6 text-blue-500"
+          class="w-6 h-6 text-[var(--sf-amber)]"
         />
       </div>
       <div class="flex flex-col flex-1 max-md:max-w-full">
-        <div class="flex flex-col text-sm leading-5 text-slate-900 max-md:max-w-full">
+        <div class="flex flex-col text-sm leading-5 text-[var(--sf-text-primary)] max-md:max-w-full">
           <h5
             id="notification-title"
-            class="font-medium max-md:max-w-full text-blue-500"
+            class="font-medium max-md:max-w-full text-[var(--sf-amber)]"
           >
             Upgrade to unlock all features
           </h5>
-          <p class="mt-2 max-md:max-w-full text-slate-500">
+          <p class="mt-2 max-md:max-w-full text-[var(--sf-text-caption)]">
             <span v-if="specifyFormOwner">Only you are seeing this notification, as owner of the form.</span> The
             following features are disabled on the published form:
           </p>
           <div
-            class="text-slate-500 break-words whitespace-break-spaces"
+            class="text-[var(--sf-text-caption)] break-words whitespace-break-spaces"
             v-html="cleaningContent"
           />
         </div>

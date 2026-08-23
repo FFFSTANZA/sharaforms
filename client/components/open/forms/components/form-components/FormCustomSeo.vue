@@ -1,99 +1,80 @@
 <template>
   <VForm size="sm">
-    <div class="space-y-4">
-      <div class="flex flex-col flex-wrap items-start justify-between gap-4 sm:flex-row sm:items-center">
-        <div>
-          <h3 class="text-lg font-medium text-neutral-900">
-            SEO & Social Sharing - Meta <PlanTag
-            class="ml-2"
-            feature="seo_meta"
-            upgrade-modal-title="Upgrade to Enhance Your Form's SEO"
-            upgrade-modal-description="Explore advanced SEO features in the editor on our Free plan. Upgrade to fully implement custom meta tags, Open Graph data, and improved search visibility. Boost your form's online presence and attract more respondents with our premium SEO toolkit."
+    <div class="px-1 space-y-4">
+      <!-- SEO Meta Card -->
+      <div class="rounded-2xl border border-[var(--sf-border-card)] bg-[var(--sf-bg-surface)] p-5 shadow-[var(--sf-shadow-card)]">
+        <div class="flex items-center justify-between mb-5">
+          <div class="flex items-center gap-2.5">
+            <div class="w-7 h-7 rounded-lg bg-[var(--sf-nav-active-bg)] flex items-center justify-center flex-shrink-0">
+              <i class="fa-solid fa-link text-[12px] text-[var(--sf-coral-500)]"></i>
+            </div>
+            <h3 class="text-[13px] font-semibold text-[var(--sf-text-primary)]">
+              SEO & Social Sharing
+              <PlanTag class="ml-1" feature="seo_meta" upgrade-modal-title="Upgrade to Enhance Your Form's SEO" upgrade-modal-description="Explore advanced SEO features in the editor on our Free plan." />
+            </h3>
+          </div>
+          <UButton
+            label="Help"
+            icon="i-lucide-circle-question-mark"
+            variant="outline"
+            color="neutral"
+            size="xs"
+            @click="crisp.openHelpdeskArticle('how-do-i-add-custom-seo-settings-to-my-forms-url-preview-1v9y9a')"
           />
-          </h3>
-          <p class="mt-1 text-sm text-neutral-500">
-            Customize the image and text that appear when you share your form on other sites (Open Graph).
-          </p>
         </div>
-      <UButton
-        label="Help"
-        icon="i-lucide-circle-question-mark"
-        variant="outline"
-        color="neutral"
-        @click="crisp.openHelpdeskArticle('how-do-i-add-custom-seo-settings-to-my-forms-url-preview-1v9y9a')"
-      />
+
+        <template v-if="form.seo_meta">
+          <div class="flex flex-col lg:flex-row gap-8 lg:items-start">
+            <div class="flex-1 space-y-4 max-w-xs">
+              <SelectInput
+                v-if="useFeatureFlag('custom_domains')"
+                v-model="form.custom_domain"
+                :clearable="true"
+                :disabled="customDomainOptions.length <= 0"
+                :options="customDomainOptions"
+                name="type"
+                label="Form Domain"
+                placeholder="yourdomain.com"
+              />
+              <text-input v-model="form.seo_meta.page_title" name="page_title" label="Page Title" help="Max 60 characters recommended" />
+              <text-area-input v-model="form.seo_meta.page_description" name="page_description" label="Page Description" help="Between 150 and 160 characters" />
+              <image-input v-model="form.seo_meta.page_thumbnail" name="page_thumbnail" label="Thumbnail Image" help="og:image - 1200px X 800px" />
+              <image-input v-model="form.seo_meta.page_favicon" name="page_favicon" label="Favicon Image" help="Public form page favicon" />
+            </div>
+            <SeoPreview :form="form" />
+          </div>
+        </template>
       </div>
 
-      <template v-if="form.seo_meta">
-        <div class="flex flex-col lg:flex-row gap-8 mt-4 lg:items-start">
-          <!-- Left Column - Form Inputs -->
-          <div class="flex-1 space-y-4 max-w-xs">
-            <SelectInput
-              v-if="useFeatureFlag('custom_domains')"
-              v-model="form.custom_domain"
-              :clearable="true"
-              :disabled="customDomainOptions.length <= 0"
-              :options="customDomainOptions"
-              name="type"
-              label="Form Domain"
-              placeholder="yourdomain.com"
-            />
-            <text-input
-              v-model="form.seo_meta.page_title"
-              name="page_title"
-              label="Page Title"
-              help="Max 60 characters recommended"
-            />
-            <text-area-input
-              v-model="form.seo_meta.page_description"
-              name="page_description"
-              label="Page Description"
-              help="Between 150 and 160 characters"
-            />
-            <image-input
-              v-model="form.seo_meta.page_thumbnail"
-              name="page_thumbnail"
-              label="Thumbnail Image"
-              help="og:image - 1200px X 800px"
-            />
-            <image-input
-              v-model="form.seo_meta.page_favicon"
-              name="page_favicon"
-              label="Favicon Image"
-              help="Public form page favicon"
-            />
+      <!-- Link Privacy Card -->
+      <div class="rounded-2xl border border-[var(--sf-border-card)] bg-[var(--sf-bg-surface)] p-5 shadow-[var(--sf-shadow-card)]">
+        <div class="flex items-center gap-2.5 mb-5">
+          <div class="w-7 h-7 rounded-lg bg-[var(--sf-teal-light)] flex items-center justify-center flex-shrink-0">
+            <i class="fa-solid fa-lock text-[12px] text-[var(--sf-teal)]"></i>
           </div>
-          
-          <!-- Right Column - Preview (After fields on mobile) -->
-          <SeoPreview :form="form" />
+          <h3 class="text-[13px] font-semibold text-[var(--sf-text-primary)]">Link Privacy</h3>
         </div>
-      </template>
-
-      <div class="w-full border-t pt-4 mt-4">
-        <h4 class="font-semibold">
-          Link Privacy
-        </h4>
-        <p class="text-neutral-500 text-sm mb-4">
+        <p class="text-[var(--sf-text-caption)] text-sm mb-4">
           Disable to prevent Google from listing your form in search results.
         </p>
-        <ToggleSwitchInput
-          name="can_be_indexed"
-          :form="form"
-          label="Indexable by Google"
-        />
+        <ToggleSwitchInput name="can_be_indexed" :form="form" label="Indexable by Google" />
       </div>
 
-      <div v-if="useFeatureFlag('self_hosted')" class="w-full border-t pt-4 mt-4">
-        <h4 class="font-semibold">
-          Custom Form URL
-        </h4>
-        <p class="text-neutral-500 text-sm mb-4">
+      <!-- Custom URL Card -->
+      <div v-if="useFeatureFlag('self_hosted')" class="rounded-2xl border border-[var(--sf-border-card)] bg-[var(--sf-bg-surface)] p-5 shadow-[var(--sf-shadow-card)]">
+        <div class="flex items-center gap-2.5 mb-5">
+          <div class="w-7 h-7 rounded-lg bg-[var(--sf-indigo-light)] flex items-center justify-center flex-shrink-0">
+            <i class="fa-solid fa-globe text-[12px] text-[var(--sf-indigo)]"></i>
+          </div>
+          <h3 class="text-[13px] font-semibold text-[var(--sf-text-primary)]">Custom Form URL</h3>
+        </div>
+        <p class="text-[var(--sf-text-caption)] text-sm mb-4">
           Create a custom URL for your form. This will be the unique identifier in your form's URL.
         </p>
         <text-input
           :form="form"
           name="slug"
-          class="mt-4 max-w-xs"
+          class="max-w-xs"
           label="Custom Form URL"
           help="Use only lowercase letters, numbers, and hyphens. Example: my-custom-form"
         />

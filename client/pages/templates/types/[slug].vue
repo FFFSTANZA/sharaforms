@@ -28,7 +28,7 @@
             <h1
               class="mt-6 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-balance text-neutral-900 dark:text-neutral-50"
             >
-              {{ type.name }}
+              {{ type.h1 || type.name }}
             </h1>
             <p
               class="mx-auto mt-5 max-w-2xl text-base leading-7 sm:text-lg sm:leading-8 text-neutral-600 dark:text-neutral-400 text-pretty"
@@ -109,6 +109,77 @@
       </section>
       <!-- END ABOUT -->
 
+      <!-- START WHAT TO INCLUDE -->
+      <section
+        v-if="type.what_to_include && type.what_to_include.length"
+        class="bg-white pb-14 sm:pb-20 -mt-6"
+      >
+        <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+          <div class="mx-auto max-w-4xl">
+            <h2 class="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50 sm:text-2xl">
+              What to include in {{ type.include_label || type.name.toLowerCase() }}
+            </h2>
+            <ul class="mt-6 grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
+              <li
+                v-for="(item, itemKey) in type.what_to_include"
+                :key="itemKey"
+                class="flex items-start gap-3 text-sm leading-6 font-normal text-neutral-600 dark:text-neutral-300"
+              >
+                <span class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full brand-gradient-warm">
+                  <UIcon name="i-lucide-check" class="h-3 w-3 text-white" />
+                </span>
+                {{ item }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <!-- END WHAT TO INCLUDE -->
+
+      <!-- START HOW TO -->
+      <section
+        v-if="type.how_to_steps && type.how_to_steps.length"
+        class="bg-neutral-50 py-14 sm:py-20 dark:bg-neutral-950"
+      >
+        <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+          <div class="mx-auto max-w-4xl">
+            <h2 class="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50 sm:text-2xl">
+              How to create{{ type.how_to_label ? ' ' + type.how_to_label : ` ${type.name.toLowerCase().replace(/s$/, '')}` }} in SharaForms
+            </h2>
+            <ol class="mt-8 space-y-6">
+              <li
+                v-for="(step, stepKey) in type.how_to_steps"
+                :key="stepKey"
+                class="flex items-start gap-4"
+              >
+                <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-sm font-bold ring-1 ring-inset ring-neutral-200 brand-gradient-text-warm dark:bg-neutral-900 dark:ring-neutral-700">
+                  {{ stepKey + 1 }}
+                </span>
+                <p class="pt-1 text-sm leading-6 font-normal text-neutral-600 dark:text-neutral-300">
+                  {{ step }}
+                </p>
+              </li>
+            </ol>
+
+            <NuxtLink
+              v-if="featuredTemplate"
+              :to="{ name: 'templates-slug', params: { slug: featuredTemplate.slug } }"
+              class="mt-8 flex items-center gap-4 rounded-xl bg-white p-4 ring-1 ring-inset ring-neutral-200 transition-all hover:ring-neutral-300 hover:shadow-sm dark:bg-neutral-900 dark:ring-neutral-700"
+            >
+              <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg brand-gradient-warm">
+                <UIcon name="i-lucide-star" class="h-5 w-5 text-white" />
+              </span>
+              <span class="text-sm leading-6 text-left">
+                <span class="block font-semibold text-neutral-900 dark:text-neutral-100">Most popular pick: {{ featuredTemplate.name }}</span>
+                <span class="font-normal text-neutral-500 dark:text-neutral-400">Skip the blank page and start from a ready-made template.</span>
+              </span>
+              <UIcon name="i-lucide-arrow-right" class="ml-auto h-4 w-4 shrink-0 text-neutral-400" />
+            </NuxtLink>
+          </div>
+        </div>
+      </section>
+      <!-- END HOW TO -->
+
       <templates-list
         class="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto py-12"
         :templates="templates"
@@ -116,6 +187,84 @@
         :filter-types="false"
         :show-industries="false"
       />
+
+      <!-- START PRACTICES -->
+      <section
+        v-if="(type.best_practices && type.best_practices.length) || (type.common_mistakes && type.common_mistakes.length)"
+        class="bg-neutral-50 border-t border-neutral-200 py-14 sm:py-20 dark:bg-neutral-950 dark:border-neutral-800"
+      >
+        <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+          <div class="mx-auto grid max-w-5xl grid-cols-1 gap-10 md:grid-cols-2 md:gap-x-12">
+            <div
+              v-if="type.best_practices && type.best_practices.length"
+            >
+              <h2 class="text-lg font-bold tracking-tight text-neutral-900 dark:text-neutral-50 sm:text-xl">
+                Best practices for building {{ type.name.toLowerCase() }}
+              </h2>
+              <ul class="mt-5 space-y-3">
+                <li
+                  v-for="(item, itemKey) in type.best_practices"
+                  :key="'bp-' + itemKey"
+                  class="flex items-start gap-3 text-sm leading-6 font-normal text-neutral-600 dark:text-neutral-300"
+                >
+                  <span class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full brand-gradient-warm">
+                    <UIcon name="i-lucide-check" class="h-3 w-3 text-white" />
+                  </span>
+                  {{ item }}
+                </li>
+              </ul>
+            </div>
+            <div
+              v-if="type.common_mistakes && type.common_mistakes.length"
+            >
+              <h2 class="text-lg font-bold tracking-tight text-neutral-900 dark:text-neutral-50 sm:text-xl">
+                Common mistakes to avoid
+              </h2>
+              <ul class="mt-5 space-y-3">
+                <li
+                  v-for="(item, itemKey) in type.common_mistakes"
+                  :key="'cm-' + itemKey"
+                  class="flex items-start gap-3 text-sm leading-6 font-normal text-neutral-600 dark:text-neutral-300"
+                >
+                  <span class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-red-100 dark:bg-red-950">
+                    <UIcon name="i-lucide-x" class="h-3 w-3 text-red-600 dark:text-red-400" />
+                  </span>
+                  {{ item }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- END PRACTICES -->
+
+      <!-- START FAQ -->
+      <section
+        v-if="type.faqs && type.faqs.length"
+        class="bg-white border-t border-neutral-200 py-14 sm:py-20 dark:border-neutral-800"
+      >
+        <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+          <div class="mx-auto max-w-3xl">
+            <h2 class="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50 sm:text-2xl">
+              Frequently asked questions about {{ type.name.toLowerCase() }}
+            </h2>
+            <dl class="mt-8 space-y-8">
+              <div
+                v-for="(faq, faqKey) in type.faqs"
+                :key="faqKey"
+              >
+                <dt class="font-semibold leading-6 text-neutral-900 dark:text-neutral-100">
+                  {{ faq.question }}
+                </dt>
+                <dd class="mt-2 leading-7 font-normal text-neutral-600 dark:text-neutral-400">
+                  {{ faq.answer }}
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </section>
+      <!-- END FAQ -->
     </template>
 
     <open-form-footer class="mt-8 border-t" />
@@ -162,6 +311,14 @@ const templates = computed(() => {
       : false
   })
 })
+
+// Contextual hub -> detail internal link (server-rendered, crawlable).
+const featuredTemplate = computed(() => {
+  if (!type.value?.featured_template || !allTemplates.value) return null
+  return allTemplates.value.find(
+    (t) => t.slug === type.value.featured_template,
+  ) || null
+})
 const breadcrumbs = computed(() => {
   if (!type.value) {
     return [{ route: { name: "templates" }, label: "Templates" }]
@@ -181,7 +338,11 @@ useOpnSeoMeta({
   description: () =>
     type.value
       ? type.value.meta_description
-      : "Browse free, no-code SharaForms templates with built-in calculators, quotes, and unlimited submissions.",
+      : "Browse free, no-code SharaForms templates with built-in calculations, conditional logic, and unlimited submissions.",
+  ogImage: () =>
+    type.value
+      ? `/og/type/${encodeURIComponent(route.params.slug)}?title=${encodeURIComponent(type.value.h1 || type.value.name)}&desc=${encodeURIComponent((type.value.meta_description || '').slice(0, 120))}`
+      : '/share-preview.jpg',
   speakable: ["h1", "p"],
   breadcrumbs: [
     { name: "Home", item: "/" },
@@ -213,7 +374,7 @@ useHead(() => ({
         name: type.value?.meta_title || 'Form Templates',
         description: type.value?.meta_description,
         url: resolveSchemaUrl(schemaBaseUrl, `/templates/types/${route.params.slug}`),
-        keywords: `free form templates, ${type.value?.name || 'form'} templates, free form builder, unlimited submissions, built-in calculators, no-code form templates`,
+        keywords: `free form templates, ${type.value?.name || 'form'} templates, free form builder, unlimited submissions, built-in calculations, no-code form templates`,
         isPartOf: {
           '@id': `${resolveSchemaUrl(schemaBaseUrl, '/templates')}#collection`,
         },
@@ -230,6 +391,24 @@ useHead(() => ({
         },
       }),
     },
+    ...(type.value?.faqs && type.value.faqs.length
+      ? [{
+          key: `template-type-faq-schema:${route.params.slug}`,
+          type: 'application/ld+json',
+          textContent: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: type.value.faqs.map((faq) => ({
+              '@type': 'Question',
+              name: faq.question,
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: faq.answer,
+              },
+            })),
+          }),
+        }]
+      : []),
   ],
 }))
 </script>

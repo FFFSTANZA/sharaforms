@@ -1,19 +1,18 @@
 <template>
   <div class="flex flex-1 items-center">
     <div
-      v-if="integration && providerUrl"
-      class="hidden md:block space-y-2"
+      v-if="integration && integration.data?.webhook_url"
+      class="hidden md:block space-y-1"
     >
-      <UButton
-        color="neutral"
-        variant="ghost"
-        size="sm"
-        :href="`${providerUrl}?utm_source=sharaforms-edit`"
-        target="_blank"
-        external
-      >
-        Edit Workflow
-      </UButton>
+      <UTooltip :text="integration.data.webhook_url">
+        <UBadge
+          :label="integration.data.webhook_url"
+          color="neutral"
+          variant="subtle"
+          size="sm"
+          class="max-w-40 block truncate"
+        />
+      </UTooltip>
     </div>
   </div>
 </template>
@@ -30,8 +29,19 @@ const props = defineProps({
   }
 })
 
-const providerUrl = computed(() => {
-  return props.integration?.data?.provider_url || null
+const { invalidateIntegrations } = useFormIntegrations()
+let interval = null
+
+onMounted(() => {
+  if (!props.integration.data || Object.keys(props.integration.data).length === 0) {
+    interval = setInterval(() => invalidateIntegrations(props.form.id), 3000)
+    setTimeout(() => { clearInterval(interval) }, 30000)
+  }
+})
+
+onBeforeUnmount(() => {
+  if (interval) {
+    clearInterval(interval)
+  }
 })
 </script>
-

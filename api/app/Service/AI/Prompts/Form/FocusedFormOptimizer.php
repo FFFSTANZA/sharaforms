@@ -23,7 +23,7 @@ class FocusedFormOptimizer
      */
     public static function optimizeFormProperties(array $formData, string $mode = PresentationRules::MODE_CLASSIC): array
     {
-        if ($mode !== PresentationRules::MODE_FOCUSED) {
+        if ($mode !== PresentationRules::MODE_FOCUSED && $mode !== PresentationRules::MODE_SPOTLIGHT) {
             return $formData;
         }
 

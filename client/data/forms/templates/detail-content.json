@@ -1,0 +1,1202 @@
+{
+  "contact-form-template": {
+    "source_type": "contact_forms",
+    "practices_title": "Best practices for contact forms",
+    "best_practices": [
+      "Limit fields to name, email, topic, and message",
+      "Route topics automatically to the owning inbox",
+      "Enable captcha before your address gets scraped",
+      "Answer fast; speed sets the tone for everything after"
+    ],
+    "common_mistakes": [
+      "Adding phone number fields marked required",
+      "Publishing forms without spam protection of any kind",
+      "Sending every inquiry to one unmonitored address",
+      "Writing confirmation text with no human reply path"
+    ]
+  },
+  "event-registration-template": {
+    "source_type": "event_registration_forms",
+    "practices_title": "Best practices for event registration forms",
+    "best_practices": [
+      "Offer session tracks as clear, priced choices",
+      "Send calendar-ready confirmations within minutes",
+      "Ask one networking question to spark connections later",
+      "Export the guest list weekly and share with your team"
+    ],
+    "common_mistakes": [
+      "Using one generic form for very different ticket types",
+      "Collecting plus-one names you never actually check in",
+      "Announcing venue changes without updating confirmations",
+      "Closing registration silently instead of showing it is full"
+    ]
+  },
+  "customer-feedback-survey-template": {
+    "source_type": "survey_templates",
+    "practices_title": "Best practices for survey templates",
+    "best_practices": [
+      "Open with why the survey matters in one sentence",
+      "Put the core rating question first, demographics last",
+      "Use skip logic so nobody answers irrelevant items",
+      "Share what changed because of the last round"
+    ],
+    "common_mistakes": [
+      "Doubling length with nice-to-know questions",
+      "Mixing two ideas into a single question",
+      "Requiring answers on optional opinion fields",
+      "Sending surveys months after the experience faded"
+    ]
+  },
+  "job-application-form-template": {
+    "source_type": "application_forms",
+    "practices_title": "Best practices for application forms",
+    "best_practices": [
+      "Mirror your published criteria question by question",
+      "Require uploads only where documents truly decide",
+      "Set a hard closing date and communicate it twice",
+      "Score from exports so every reviewer sees identical data"
+    ],
+    "common_mistakes": [
+      "Asking essay questions where a checkbox would do",
+      "Accepting applications with no stated deadline at all",
+      "Reviewing free-text emails alongside structured entries",
+      "Losing supporting documents outside the application record"
+    ]
+  },
+  "appointment-booking-form-template": {
+    "source_type": "appointment_forms",
+    "practices_title": "Best practices for appointment forms",
+    "best_practices": [
+      "List services with honest duration estimates",
+      "Capture preferred windows rather than exact minutes",
+      "Gather intake notes so booked time starts prepared",
+      "Reduce no-shows with policies acknowledged upfront"
+    ],
+    "common_mistakes": [
+      "Offering fifteen options when three would convert more",
+      "Scheduling without checking real staff calendars",
+      "Asking medical history in non-secure general forms",
+      "Never confirming, then blaming the client for forgetting"
+    ]
+  },
+  "online-order-form-template": {
+    "source_type": "order_forms",
+    "practices_title": "Best practices for order forms",
+    "best_practices": [
+      "Anchor each product with a photo and one-line description",
+      "Show a live running total so buyers trust the math",
+      "Cap quantities per order to protect your inventory",
+      "Close with delivery expectations, not just a thank you"
+    ],
+    "common_mistakes": [
+      "Listing products without prices next to the selector",
+      "Asking for account creation before the order details",
+      "Hiding shipping costs until after submission",
+      "Forgetting to limit sizes or variants you cannot supply"
+    ]
+  },
+  "donation-form-template": {
+    "source_type": "donation_forms",
+    "practices_title": "Best practices for donation forms",
+    "best_practices": [
+      "Anchor presets to concrete, relatable outcomes",
+      "Offer monthly giving beside the one-time default",
+      "Send receipts automatically within minutes",
+      "Thank donors personally once campaigns close"
+    ],
+    "common_mistakes": [
+      "Asking for eleven fields before the amount field",
+      "Hiding recurring options behind tiny toggles",
+      "Sending receipts days after the gift was made",
+      "Ignoring lapsed donors until next year appeal"
+    ]
+  },
+  "lead-generation-form-template": {
+    "source_type": "lead_generation_forms",
+    "practices_title": "Best practices for lead generation forms",
+    "best_practices": [
+      "Promise something specific and deliver it instantly",
+      "Qualify with one smart conditional question",
+      "Push leads into CRM within seconds of submit",
+      "A/B test headlines before touching field counts"
+    ],
+    "common_mistakes": [
+      "Trading generic newsletters for precious emails",
+      "Adding company-size fields nobody acts upon",
+      "Leads sitting unread in an unmonitored inbox",
+      "Thank-you pages that forget to deliver the asset"
+    ]
+  },
+  "patient-intake-form-template": {
+    "source_type": "registration_forms",
+    "practices_title": "Best practices for registration forms",
+    "best_practices": [
+      "State what registration includes directly under the title",
+      "Keep the path from landing to submitted under two minutes",
+      "Confirm instantly with dates, times, and locations attached",
+      "Track capacity in the dashboard rather than in your inbox"
+    ],
+    "common_mistakes": [
+      "Collecting phone numbers nobody ever uses afterward",
+      "Leaving registration open past your planning cutoff",
+      "Skipping dietary or accessibility questions entirely",
+      "Burying the submit button below repeated legal text"
+    ]
+  },
+  "real-estate-inquiry-form-template": {
+    "source_type": "contact_forms",
+    "practices_title": "Best practices for contact forms",
+    "best_practices": [
+      "Limit fields to name, email, topic, and message",
+      "Route topics automatically to the owning inbox",
+      "Enable captcha before your address gets scraped",
+      "Answer fast; speed sets the tone for everything after"
+    ],
+    "common_mistakes": [
+      "Adding phone number fields marked required",
+      "Publishing forms without spam protection of any kind",
+      "Sending every inquiry to one unmonitored address",
+      "Writing confirmation text with no human reply path"
+    ]
+  },
+  "course-enrollment-form-template": {
+    "source_type": "enrollment_forms",
+    "practices_title": "Best practices for enrollment forms",
+    "best_practices": [
+      "Present cohorts with seats remaining where possible",
+      "Check prerequisites with simple attestation logic",
+      "Confirm start dates and requirements immediately",
+      "Waitlist overflow automatically instead of losing them"
+    ],
+    "common_mistakes": [
+      "Overselling seats your classroom cannot hold",
+      "Discovering missing transcripts after term begins",
+      "Handling guardianship data as an afterthought",
+      "Leaving waitlisted students without any follow-up"
+    ]
+  },
+  "rsvp-form-template": {
+    "source_type": "rsvp_forms",
+    "practices_title": "Best practices for rsvp forms",
+    "best_practices": [
+      "Make yes-or-no the very first interaction",
+      "Collect meal counts that caterers can act on",
+      "Show the reply-by date beside the submit button",
+      "Tally responses automatically instead of counting texts"
+    ],
+    "common_mistakes": [
+      "Demanding full addresses for a backyard party",
+      "Leaving RSVPs open until the wedding day itself",
+      "Tracking headcounts across scattered message threads",
+      "Punishing late replies before sending any reminder"
+    ]
+  },
+  "file-upload-form-template": {
+    "source_type": "file_upload_forms",
+    "practices_title": "Best practices for file upload forms",
+    "best_practices": [
+      "Restrict file types to formats your team can open",
+      "Name each upload field by its exact purpose",
+      "Keep total upload weight within mobile data comfort",
+      "Reply to every submission with what happens next"
+    ],
+    "common_mistakes": [
+      "Allowing any format and sorting through chaos later",
+      "Requesting five files where one combined PDF would work",
+      "Setting size caps nobody mentions until uploads fail",
+      "Storing submissions without ever assigning an owner"
+    ]
+  },
+  "consent-form-template": {
+    "source_type": "consent_forms",
+    "practices_title": "Best practices for consent forms",
+    "best_practices": [
+      "Explain the agreement in plain, short sentences",
+      "Separate initial acknowledgment from final signature",
+      "Store timestamps alongside every signed record",
+      "Provide a withdrawal route and honor it quickly"
+    ],
+    "common_mistakes": [
+      "Burying scope inside walls of dense legal text",
+      "Treating a checkbox alone as informed consent",
+      "Forgetting guardian sections for underage participants",
+      "Deleting records the moment the activity ends"
+    ]
+  },
+  "questionnaire-template": {
+    "source_type": "questionnaire_templates",
+    "practices_title": "Best practices for questionnaire templates",
+    "best_practices": [
+      "Sequence questions from easy to sensitive gradually",
+      "Match each goal to one specific question type",
+      "Pilot with a handful of people before launch",
+      "Version your questionnaire so results stay comparable"
+    ],
+    "common_mistakes": [
+      "Leading respondents toward the answer you want",
+      "Switching rating scale directions halfway through",
+      "Collecting open text where a choice would analyze better",
+      "Launching long questionnaires with zero progress signals"
+    ]
+  },
+  "abstract-submission-form-template": {
+    "source_type": "abstract_forms",
+    "practices_title": "Best practices for abstract forms",
+    "best_practices": [
+      "State word limits and track themes in the brief",
+      "Require presenting-author contacts for correspondence",
+      "Enforce deadlines with automatic closure, not memory",
+      "Export blind scoring sheets straight from submissions"
+    ],
+    "common_mistakes": [
+      "Accepting abstracts with no declared word ceiling",
+      "Losing author affiliations inside attachment files",
+      "Extending deadlines informally for some submitters",
+      "Scoring against criteria never published to authors"
+    ]
+  },
+  "audit-form-template": {
+    "source_type": "audit_forms",
+    "practices_title": "Best practices for audit forms",
+    "best_practices": [
+      "Write checkpoints observable by any qualified auditor",
+      "Group items by area so walks follow a natural route",
+      "Require evidence photos wherever failures are possible",
+      "Compare scores across sites to expose systemic gaps"
+    ],
+    "common_mistakes": [
+      "Phrasing items so vague that verdicts become opinions",
+      "Running audits that never feed corrective actions",
+      "Skipping severity ratings on recorded findings",
+      "Archiving nothing beyond a final pass-or-fail number"
+    ]
+  },
+  "award-nomination-form-template": {
+    "source_type": "award_forms",
+    "practices_title": "Best practices for award forms",
+    "best_practices": [
+      "Publish scoring criteria before nominations open",
+      "Ask for evidence against each criterion explicitly",
+      "Cap supporting files so judging stays manageable",
+      "Close entries on one firm, communicated date"
+    ],
+    "common_mistakes": [
+      "Accepting free-form pitches with nothing comparable",
+      "Letting nominators nominate themselves unnoticed",
+      "Judging from email attachments instead of exports",
+      "Announcing winners without documenting the scoring"
+    ]
+  },
+  "calculation-form-template": {
+    "source_type": "calculation_forms",
+    "practices_title": "Best practices for calculation forms",
+    "best_practices": [
+      "Show inputs and results together, updating live",
+      "Round outputs the way your quotes actually read",
+      "Capture contact details after the number appears",
+      "Test edge cases: zero, maximums, and odd values"
+    ],
+    "common_mistakes": [
+      "Gating every result behind an email wall",
+      "Writing formulas nobody has sanity-checked",
+      "Hiding units so users guess currency or meters",
+      "Leaving broken calculations live for months"
+    ]
+  },
+  "checklist-form-template": {
+    "source_type": "checklist_forms",
+    "practices_title": "Best practices for checklist forms",
+    "best_practices": [
+      "Order steps exactly as they happen in real life",
+      "Make critical items required, everything else fast",
+      "Post QR codes where the work physically happens",
+      "Review skipped steps weekly with the team involved"
+    ],
+    "common_mistakes": [
+      "Listing twenty micro-steps nobody will sustain",
+      "Allowing silent skips on safety-critical tasks",
+      "Designing checklists only usable at a desk",
+      "Collecting completions no supervisor ever reviews"
+    ]
+  },
+  "content-submission-form-template": {
+    "source_type": "content_forms",
+    "practices_title": "Best practices for content forms",
+    "best_practices": [
+      "Lead with the brief so quality arrives upfront",
+      "Restrict uploads to formats production can ingest",
+      "Collect usage rights alongside the content itself",
+      "Tag entries by campaign while accepting them"
+    ],
+    "common_mistakes": [
+      "Chasing usage permission after publishing",
+      "Accepting gigabyte files through general fields",
+      "Losing contributor names inside filename chaos",
+      "Running new rounds without archiving the previous one"
+    ]
+  },
+  "employee-evaluation-form-template": {
+    "source_type": "evaluation_forms",
+    "practices_title": "Best practices for evaluation forms",
+    "best_practices": [
+      "Define success criteria before writing a question",
+      "Hold one scale style steady throughout the form",
+      "Ask for evidence, not just agreement ratings",
+      "Compare results across periods to spot trends"
+    ],
+    "common_mistakes": [
+      "Rating ten dimensions when three drive outcomes",
+      "Flipping scale directions between adjacent questions",
+      "Collecting scores nobody revisits until disputes",
+      "Evaluating annually with no mid-cycle conversations"
+    ]
+  },
+  "inspection-form-template": {
+    "source_type": "inspection_forms",
+    "practices_title": "Best practices for inspection forms",
+    "best_practices": [
+      "Write checkpoints observable from arm length away",
+      "Require photos precisely where failures occur",
+      "Escalate critical findings the moment they are logged",
+      "Keep inspection history attached to each asset"
+    ],
+    "common_mistakes": [
+      "Designing inspections impossible to complete offline-poor sites",
+      "Accepting fail verdicts without any evidence photo",
+      "Scheduling audits around office convenience only",
+      "Filing reports where field crews never see fixes"
+    ]
+  },
+  "interview-form-template": {
+    "source_type": "interview_forms",
+    "practices_title": "Best practices for interview forms",
+    "best_practices": [
+      "Derive competencies from the role scorecard directly",
+      "Score within the hour while evidence is fresh",
+      "Note candidate answers verbatim where possible",
+      "Debrief from exported cards, not from memories"
+    ],
+    "common_mistakes": [
+      "Improvising questions different per candidate",
+      "Recording verdicts days after the conversation",
+      "Letting one strong answer halo entire scorecards",
+      "Comparing candidates across inconsistent stages"
+    ]
+  },
+  "legal-intake-form-template": {
+    "source_type": "legal_forms",
+    "practices_title": "Best practices for legal forms",
+    "best_practices": [
+      "Screen conflicts before substantive details arrive",
+      "Capture chronology with explicit date fields",
+      "Restrict access to admitted personnel only",
+      "Retain per jurisdictional limitation schedules"
+    ],
+    "common_mistakes": [
+      "Collecting privileged detail before engagement exists",
+      "Routing intake through shared general inboxes",
+      "Mixing client matters inside one public form",
+      "Deleting records before limitation periods expire"
+    ]
+  },
+  "membership-application-form-template": {
+    "source_type": "membership_forms",
+    "practices_title": "Best practices for membership forms",
+    "best_practices": [
+      "Price tiers with honestly distinct benefits",
+      "Collect member interests for future programming",
+      "Process dues inside signup without extra steps",
+      "Track renewal dates from clean exported rosters"
+    ],
+    "common_mistakes": [
+      "Renewing via spreadsheet archaeology each January",
+      "Collecting payments outside any reconcilable record",
+      "Ignoring lapsed members until AGM attendance drops",
+      "Making benefit differences invisible at pricing time"
+    ]
+  },
+  "petition-form-template": {
+    "source_type": "petition_forms",
+    "practices_title": "Best practices for petition forms",
+    "best_practices": [
+      "State the demand in one unforgettable sentence",
+      "Keep signing under fifteen seconds end to end",
+      "Display momentum publicly once consent allows",
+      "Deliver signatures formally and report the outcome"
+    ],
+    "common_mistakes": [
+      "Burying the ask beneath paragraphs of context",
+      "Forcing account creation onto casual supporters",
+      "Ending campaigns silently without any delivery",
+      "Sharing signer details beyond stated consent scope"
+    ]
+  },
+  "poll-form-template": {
+    "source_type": "polls",
+    "practices_title": "Best practices for polls",
+    "best_practices": [
+      "Ask one question worth answering honestly",
+      "Balance options so neither side feels strawmanned",
+      "Decide result visibility before launching anywhere",
+      "Embed where your community already gathers daily"
+    ],
+    "common_mistakes": [
+      "Stacking five questions into something called poll",
+      "Offering eight options nobody can hold in mind",
+      "Revealing live tallies on sensitive topics",
+      "Never sharing results with the people who voted"
+    ]
+  },
+  "quiz-form-template": {
+    "source_type": "quiz_forms",
+    "practices_title": "Best practices for quiz forms",
+    "best_practices": [
+      "Map every question to one learning objective",
+      "Set point values that reflect real importance",
+      "Reveal feedback after submit to protect integrity",
+      "Keep completion under ten questions wherever possible"
+    ],
+    "common_mistakes": [
+      "Writing trick questions that test reading speed",
+      "Leaving answer keys visible before submission",
+      "Announcing pass marks after results arrive",
+      "Reusing one quiz for entirely different audiences"
+    ]
+  },
+  "quote-request-form-template": {
+    "source_type": "quote_forms",
+    "practices_title": "Best practices for quote forms",
+    "best_practices": [
+      "Ask exactly what accurate pricing requires",
+      "Invite site photos; they halve clarification rounds",
+      "Request budget ranges to pre-filter mismatches",
+      "Reply within one business day, always"
+    ],
+    "common_mistakes": [
+      "Interrogating buyers with forty fields upfront",
+      "Quoting precisely from vague single-line briefs",
+      "Hiding response-time expectations from requesters",
+      "Sending identical generic quotes to every enquiry"
+    ]
+  },
+  "recommendation-form-template": {
+    "source_type": "recommendation_forms",
+    "practices_title": "Best practices for recommendation forms",
+    "best_practices": [
+      "Provide candidates context before asking recommenders",
+      "Convert criteria into short specific prompts",
+      "Respect recommender time with visible length estimates",
+      "Attach finished recommendations to candidate records"
+    ],
+    "common_mistakes": [
+      "Sending blank-page requests two days before deadlines",
+      "Asking identical vague questions across different roles",
+      "Exposing confidential letters to candidates accidentally",
+      "Forgetting to thank recommenders once decisions land"
+    ]
+  },
+  "incident-report-form-template": {
+    "source_type": "report_forms",
+    "practices_title": "Best practices for report forms",
+    "best_practices": [
+      "Separate factual fields from narrative interpretation",
+      "Classify severity consistently using published definitions",
+      "Escalate critical reports automatically on arrival",
+      "Review monthly patterns rather than isolated cases"
+    ],
+    "common_mistakes": [
+      "Blaming individuals inside what are system failures",
+      "Letting near-misses go unreported without any channel",
+      "Writing narratives nobody can aggregate later",
+      "Closing reports without recorded corrective actions"
+    ]
+  },
+  "reservation-form-template": {
+    "source_type": "reservation_forms",
+    "practices_title": "Best practices for reservation forms",
+    "best_practices": [
+      "Collect arrival windows instead of false precision",
+      "Capture occasion notes that enable personal touches",
+      "Confirm against real floor plans or calendars",
+      "Export daily sheets your front-of-house actually uses"
+    ],
+    "common_mistakes": [
+      "Accepting bookings beyond operational capacity limits",
+      "Losing special occasions inside general comment boxes",
+      "Confirming nothing until guests chase you down",
+      "Handling modifications through chaotic message threads"
+    ]
+  },
+  "sponsorship-application-form-template": {
+    "source_type": "sponsorship_forms",
+    "practices_title": "Best practices for sponsorship forms",
+    "best_practices": [
+      "Quantify audience reach across verifiable channels",
+      "Price packages against delivered value, not costs",
+      "Specify deliverables sponsors can audit later",
+      "Close rounds early enough for real activation planning"
+    ],
+    "common_mistakes": [
+      "Leading with your needs instead of their returns",
+      "Promising exposure nobody later measures",
+      "Running applications with no stated decision dates",
+      "Treating renewals as automatic rather than earned"
+    ]
+  },
+  "subscription-form-template": {
+    "source_type": "subscription_forms",
+    "practices_title": "Best practices for subscription forms",
+    "best_practices": [
+      "Make the middle plan the obvious value pick",
+      "Show billing frequency and totals transparently",
+      "State cancellation terms in plain language upfront",
+      "Export subscribers into fulfillment automatically"
+    ],
+    "common_mistakes": [
+      "Burying recurring charges in fine print surprises",
+      "Designing cancellations as guilt-trip obstacle courses",
+      "Collecting preferences then ignoring them at delivery",
+      "Celebrating signups while churn quietly compounds"
+    ]
+  },
+  "summer-camp-registration-form-template": {
+    "source_type": "summer_camp_surveys",
+    "practices_title": "Best practices for summer camp surveys",
+    "best_practices": [
+      "Send within two weeks while memories stay vivid",
+      "Split parent and camper versions by age group",
+      "Ask return-intent directly and without hedging",
+      "Publicize improvements made from last season feedback"
+    ],
+    "common_mistakes": [
+      "Surveying families during back-to-school chaos",
+      "Asking eight-year-olds adult-length questionnaires",
+      "Collecting ratings leadership never once reviews",
+      "Repeating unchanged programs despite consistent feedback"
+    ]
+  },
+  "telecommuting-agreement-form-template": {
+    "source_type": "telecommuting_forms",
+    "practices_title": "Best practices for telecommuting forms",
+    "best_practices": [
+      "Document approved schedules and core hours clearly",
+      "Register issued equipment with identifiable serials",
+      "Attest workspace basics: safety, connectivity, confidentiality",
+      "Revisit agreements annually or upon role changes"
+    ],
+    "common_mistakes": [
+      "Leaving remote arrangements entirely undocumented",
+      "Skipping equipment registers until departures turn hostile",
+      "Copying office policies verbatim into home contexts",
+      "Ignoring arrangement drift between annual reviews"
+    ]
+  },
+  "asset-tracking-form-template": {
+    "source_type": "tracking_forms",
+    "practices_title": "Best practices for tracking forms",
+    "best_practices": [
+      "Fix shared status vocabulary before launching anything",
+      "Make each entry completable within thirty seconds",
+      "Place form links at physical handoff points via QR",
+      "Export and reconcile against source systems monthly"
+    ],
+    "common_mistakes": [
+      "Logging fields nobody ever reads again",
+      "Building trackers usable only from a desk",
+      "Allowing free-text status values that fragment data",
+      "Abandoning logs the first busy week of quarter"
+    ]
+  },
+  "voting-form-template": {
+    "source_type": "voting_forms",
+    "practices_title": "Best practices for voting forms",
+    "best_practices": [
+      "Publish rules and candidate statements before opening",
+      "Verify eligibility through controlled distribution channels",
+      "Hide tallies until the polls officially close",
+      "Certify results from exports with witnesses present"
+    ],
+    "common_mistakes": [
+      "Showing live counts during contested elections",
+      "Distributing ballot links through uncontrolled forwarding",
+      "Leaving voting windows open-ended indefinitely",
+      "Announcing outcomes without any auditable tally record"
+    ]
+  },
+  "wedding-rsvp-form-template": {
+    "source_type": "wedding_forms",
+    "practices_title": "Best practices for wedding forms",
+    "best_practices": [
+      "Mirror invitation wording exactly inside RSVP forms",
+      "Collect meal choices your caterer can action directly",
+      "Brief every vendor through identical structured forms",
+      "Export final headcounts straight to venue coordinators"
+    ],
+    "common_mistakes": [
+      "Tracking RSVPs across texts, calls, and memory",
+      "Forgetting dietary needs until seating charts finalize",
+      "Comparing vendor quotes that describe different scopes",
+      "Planning day-of logistics only in someone's head"
+    ]
+  },
+  "volunteer-signup-form-template": {
+    "source_type": "volunteer_forms",
+    "practices_title": "Best practices for volunteer forms",
+    "best_practices": [
+      "Describe roles honestly, including difficult parts",
+      "Match availability to shifts through structured selection",
+      "Require waivers before first-shift confirmations",
+      "Recognize contributions visibly and specifically often"
+    ],
+    "common_mistakes": [
+      "Recruiting broadly then assigning nobody anywhere",
+      "Discovering missing waivers on event morning",
+      "Ghosting applicants who offered their weekend freely",
+      "Burning out reliable regulars with zero succession planning"
+    ]
+  },
+  "alumni-registration-form-template": {
+    "source_type": "registration_forms",
+    "practices_title": "Best practices for registration forms",
+    "best_practices": [
+      "State what registration includes directly under the title",
+      "Keep the path from landing to submitted under two minutes",
+      "Confirm instantly with dates, times, and locations attached",
+      "Track capacity in the dashboard rather than in your inbox"
+    ],
+    "common_mistakes": [
+      "Collecting phone numbers nobody ever uses afterward",
+      "Leaving registration open past your planning cutoff",
+      "Skipping dietary or accessibility questions entirely",
+      "Burying the submit button below repeated legal text"
+    ]
+  },
+  "pet-adoption-application-form-template": {
+    "source_type": "application_forms",
+    "practices_title": "Best practices for application forms",
+    "best_practices": [
+      "Mirror your published criteria question by question",
+      "Require uploads only where documents truly decide",
+      "Set a hard closing date and communicate it twice",
+      "Score from exports so every reviewer sees identical data"
+    ],
+    "common_mistakes": [
+      "Asking essay questions where a checkbox would do",
+      "Accepting applications with no stated deadline at all",
+      "Reviewing free-text emails alongside structured entries",
+      "Losing supporting documents outside the application record"
+    ]
+  },
+  "bank-account-opening-form-template": {
+    "source_type": "application_forms",
+    "practices_title": "Best practices for application forms",
+    "best_practices": [
+      "Mirror your published criteria question by question",
+      "Require uploads only where documents truly decide",
+      "Set a hard closing date and communicate it twice",
+      "Score from exports so every reviewer sees identical data"
+    ],
+    "common_mistakes": [
+      "Asking essay questions where a checkbox would do",
+      "Accepting applications with no stated deadline at all",
+      "Reviewing free-text emails alongside structured entries",
+      "Losing supporting documents outside the application record"
+    ]
+  },
+  "insurance-claim-form-template": {
+    "source_type": "report_forms",
+    "practices_title": "Best practices for report forms",
+    "best_practices": [
+      "Separate factual fields from narrative interpretation",
+      "Classify severity consistently using published definitions",
+      "Escalate critical reports automatically on arrival",
+      "Review monthly patterns rather than isolated cases"
+    ],
+    "common_mistakes": [
+      "Blaming individuals inside what are system failures",
+      "Letting near-misses go unreported without any channel",
+      "Writing narratives nobody can aggregate later",
+      "Closing reports without recorded corrective actions"
+    ]
+  },
+  "photography-booking-form-template": {
+    "source_type": "booking_forms",
+    "practices_title": "Best practices for booking forms",
+    "best_practices": [
+      "Offer time windows that match real availability honestly",
+      "Collect everything needed to confirm in one pass",
+      "Acknowledge instantly, then confirm personally if needed",
+      "Block dates you cannot serve instead of declining later"
+    ],
+    "common_mistakes": [
+      "Promising slots your calendar cannot actually honor",
+      "Splitting booking details across follow-up emails",
+      "Ignoring no-show policy acknowledgment at intake",
+      "Letting peak days stay open until overbooked"
+    ]
+  },
+  "seo-audit-request-form-template": {
+    "source_type": "request_forms",
+    "practices_title": "Best practices for request forms",
+    "best_practices": [
+      "Map categories directly onto owning teams",
+      "Define priorities with consequences everyone knows",
+      "Require completeness before submission succeeds",
+      "Publish SLA progress where requesters can see it"
+    ],
+    "common_mistakes": [
+      "Accepting everything into one undifferentiated queue",
+      "Letting urgency inflation become team culture",
+      "Routing requests through personal direct messages",
+      "Closing tickets without confirming requester satisfaction"
+    ]
+  },
+  "sports-team-registration-form-template": {
+    "source_type": "registration_forms",
+    "practices_title": "Best practices for registration forms",
+    "best_practices": [
+      "State what registration includes directly under the title",
+      "Keep the path from landing to submitted under two minutes",
+      "Confirm instantly with dates, times, and locations attached",
+      "Track capacity in the dashboard rather than in your inbox"
+    ],
+    "common_mistakes": [
+      "Collecting phone numbers nobody ever uses afterward",
+      "Leaving registration open past your planning cutoff",
+      "Skipping dietary or accessibility questions entirely",
+      "Burying the submit button below repeated legal text"
+    ]
+  },
+  "gaming-tournament-registration-form-template": {
+    "source_type": "event_registration_forms",
+    "practices_title": "Best practices for event registration forms",
+    "best_practices": [
+      "Offer session tracks as clear, priced choices",
+      "Send calendar-ready confirmations within minutes",
+      "Ask one networking question to spark connections later",
+      "Export the guest list weekly and share with your team"
+    ],
+    "common_mistakes": [
+      "Using one generic form for very different ticket types",
+      "Collecting plus-one names you never actually check in",
+      "Announcing venue changes without updating confirmations",
+      "Closing registration silently instead of showing it is full"
+    ]
+  },
+  "service-request-form-template": {
+    "source_type": "request_forms",
+    "practices_title": "Best practices for request forms",
+    "best_practices": [
+      "Map categories directly onto owning teams",
+      "Define priorities with consequences everyone knows",
+      "Require completeness before submission succeeds",
+      "Publish SLA progress where requesters can see it"
+    ],
+    "common_mistakes": [
+      "Accepting everything into one undifferentiated queue",
+      "Letting urgency inflation become team culture",
+      "Routing requests through personal direct messages",
+      "Closing tickets without confirming requester satisfaction"
+    ]
+  },
+  "rental-application-form-template": {
+    "source_type": "application_forms",
+    "practices_title": "Best practices for application forms",
+    "best_practices": [
+      "Mirror your published criteria question by question",
+      "Require uploads only where documents truly decide",
+      "Set a hard closing date and communicate it twice",
+      "Score from exports so every reviewer sees identical data"
+    ],
+    "common_mistakes": [
+      "Asking essay questions where a checkbox would do",
+      "Accepting applications with no stated deadline at all",
+      "Reviewing free-text emails alongside structured entries",
+      "Losing supporting documents outside the application record"
+    ]
+  },
+  "webinar-registration-form-template": {
+    "source_type": "event_registration_forms",
+    "practices_title": "Best practices for event registration forms",
+    "best_practices": [
+      "Offer session tracks as clear, priced choices",
+      "Send calendar-ready confirmations within minutes",
+      "Ask one networking question to spark connections later",
+      "Export the guest list weekly and share with your team"
+    ],
+    "common_mistakes": [
+      "Using one generic form for very different ticket types",
+      "Collecting plus-one names you never actually check in",
+      "Announcing venue changes without updating confirmations",
+      "Closing registration silently instead of showing it is full"
+    ]
+  },
+  "leave-request-form-template": {
+    "source_type": "request_forms",
+    "practices_title": "Best practices for request forms",
+    "best_practices": [
+      "Map categories directly onto owning teams",
+      "Define priorities with consequences everyone knows",
+      "Require completeness before submission succeeds",
+      "Publish SLA progress where requesters can see it"
+    ],
+    "common_mistakes": [
+      "Accepting everything into one undifferentiated queue",
+      "Letting urgency inflation become team culture",
+      "Routing requests through personal direct messages",
+      "Closing tickets without confirming requester satisfaction"
+    ]
+  },
+  "expense-report-form-template": {
+    "source_type": "report_forms",
+    "practices_title": "Best practices for report forms",
+    "best_practices": [
+      "Separate factual fields from narrative interpretation",
+      "Classify severity consistently using published definitions",
+      "Escalate critical reports automatically on arrival",
+      "Review monthly patterns rather than isolated cases"
+    ],
+    "common_mistakes": [
+      "Blaming individuals inside what are system failures",
+      "Letting near-misses go unreported without any channel",
+      "Writing narratives nobody can aggregate later",
+      "Closing reports without recorded corrective actions"
+    ]
+  },
+  "timesheet-form-template": {
+    "source_type": "tracking_forms",
+    "practices_title": "Best practices for tracking forms",
+    "best_practices": [
+      "Fix shared status vocabulary before launching anything",
+      "Make each entry completable within thirty seconds",
+      "Place form links at physical handoff points via QR",
+      "Export and reconcile against source systems monthly"
+    ],
+    "common_mistakes": [
+      "Logging fields nobody ever reads again",
+      "Building trackers usable only from a desk",
+      "Allowing free-text status values that fragment data",
+      "Abandoning logs the first busy week of quarter"
+    ]
+  },
+  "purchase-order-form-template": {
+    "source_type": "order_forms",
+    "practices_title": "Best practices for order forms",
+    "best_practices": [
+      "Anchor each product with a photo and one-line description",
+      "Show a live running total so buyers trust the math",
+      "Cap quantities per order to protect your inventory",
+      "Close with delivery expectations, not just a thank you"
+    ],
+    "common_mistakes": [
+      "Listing products without prices next to the selector",
+      "Asking for account creation before the order details",
+      "Hiding shipping costs until after submission",
+      "Forgetting to limit sizes or variants you cannot supply"
+    ]
+  },
+  "reimbursement-claim-form-template": {
+    "source_type": "payment_forms",
+    "practices_title": "Best practices for payment forms",
+    "best_practices": [
+      "Show the payable amount before any card fields appear",
+      "Label every charge exactly as your statement will read",
+      "Test one small live payment before launching publicly",
+      "Reconcile gateway reports against form exports monthly"
+    ],
+    "common_mistakes": [
+      "Collecting billing details before stating the price",
+      "Changing amounts without telling repeat payers",
+      "Assuming refunds happen inside the form tool",
+      "Leaving test mode on during a real campaign"
+    ]
+  },
+  "tshirt-order-form-template": {
+    "source_type": "order_forms",
+    "practices_title": "Best practices for order forms",
+    "best_practices": [
+      "Anchor each product with a photo and one-line description",
+      "Show a live running total so buyers trust the math",
+      "Cap quantities per order to protect your inventory",
+      "Close with delivery expectations, not just a thank you"
+    ],
+    "common_mistakes": [
+      "Listing products without prices next to the selector",
+      "Asking for account creation before the order details",
+      "Hiding shipping costs until after submission",
+      "Forgetting to limit sizes or variants you cannot supply"
+    ]
+  },
+  "catering-order-form-template": {
+    "source_type": "order_forms",
+    "practices_title": "Best practices for order forms",
+    "best_practices": [
+      "Anchor each product with a photo and one-line description",
+      "Show a live running total so buyers trust the math",
+      "Cap quantities per order to protect your inventory",
+      "Close with delivery expectations, not just a thank you"
+    ],
+    "common_mistakes": [
+      "Listing products without prices next to the selector",
+      "Asking for account creation before the order details",
+      "Hiding shipping costs until after submission",
+      "Forgetting to limit sizes or variants you cannot supply"
+    ]
+  },
+  "liability-waiver-form-template": {
+    "source_type": "consent_forms",
+    "practices_title": "Best practices for consent forms",
+    "best_practices": [
+      "Explain the agreement in plain, short sentences",
+      "Separate initial acknowledgment from final signature",
+      "Store timestamps alongside every signed record",
+      "Provide a withdrawal route and honor it quickly"
+    ],
+    "common_mistakes": [
+      "Burying scope inside walls of dense legal text",
+      "Treating a checkbox alone as informed consent",
+      "Forgetting guardian sections for underage participants",
+      "Deleting records the moment the activity ends"
+    ]
+  },
+  "photo-release-form-template": {
+    "source_type": "consent_forms",
+    "practices_title": "Best practices for consent forms",
+    "best_practices": [
+      "Explain the agreement in plain, short sentences",
+      "Separate initial acknowledgment from final signature",
+      "Store timestamps alongside every signed record",
+      "Provide a withdrawal route and honor it quickly"
+    ],
+    "common_mistakes": [
+      "Burying scope inside walls of dense legal text",
+      "Treating a checkbox alone as informed consent",
+      "Forgetting guardian sections for underage participants",
+      "Deleting records the moment the activity ends"
+    ]
+  },
+  "employee-onboarding-form-template": {
+    "source_type": "employment_forms",
+    "practices_title": "Best practices for employment forms",
+    "best_practices": [
+      "Keep one consistent structure across lifecycle stages",
+      "Separate sensitive records into restricted forms",
+      "Timestamp every acknowledgment you collect",
+      "Export into payroll formats without re-typing"
+    ],
+    "common_mistakes": [
+      "Recollecting the same data at every single stage",
+      "Storing medical details in general-purpose forms",
+      "Losing policy acknowledgments when staff rotate",
+      "Conducting exits with zero documented feedback"
+    ]
+  },
+  "exit-interview-form-template": {
+    "source_type": "interview_forms",
+    "practices_title": "Best practices for interview forms",
+    "best_practices": [
+      "Derive competencies from the role scorecard directly",
+      "Score within the hour while evidence is fresh",
+      "Note candidate answers verbatim where possible",
+      "Debrief from exported cards, not from memories"
+    ],
+    "common_mistakes": [
+      "Improvising questions different per candidate",
+      "Recording verdicts days after the conversation",
+      "Letting one strong answer halo entire scorecards",
+      "Comparing candidates across inconsistent stages"
+    ]
+  },
+  "self-evaluation-form-template": {
+    "source_type": "evaluation_forms",
+    "practices_title": "Best practices for evaluation forms",
+    "best_practices": [
+      "Define success criteria before writing a question",
+      "Hold one scale style steady throughout the form",
+      "Ask for evidence, not just agreement ratings",
+      "Compare results across periods to spot trends"
+    ],
+    "common_mistakes": [
+      "Rating ten dimensions when three drive outcomes",
+      "Flipping scale directions between adjacent questions",
+      "Collecting scores nobody revisits until disputes",
+      "Evaluating annually with no mid-cycle conversations"
+    ]
+  },
+  "scholarship-application-form-template": {
+    "source_type": "application_forms",
+    "practices_title": "Best practices for application forms",
+    "best_practices": [
+      "Mirror your published criteria question by question",
+      "Require uploads only where documents truly decide",
+      "Set a hard closing date and communicate it twice",
+      "Score from exports so every reviewer sees identical data"
+    ],
+    "common_mistakes": [
+      "Asking essay questions where a checkbox would do",
+      "Accepting applications with no stated deadline at all",
+      "Reviewing free-text emails alongside structured entries",
+      "Losing supporting documents outside the application record"
+    ]
+  },
+  "grant-application-form-template": {
+    "source_type": "application_forms",
+    "practices_title": "Best practices for application forms",
+    "best_practices": [
+      "Mirror your published criteria question by question",
+      "Require uploads only where documents truly decide",
+      "Set a hard closing date and communicate it twice",
+      "Score from exports so every reviewer sees identical data"
+    ],
+    "common_mistakes": [
+      "Asking essay questions where a checkbox would do",
+      "Accepting applications with no stated deadline at all",
+      "Reviewing free-text emails alongside structured entries",
+      "Losing supporting documents outside the application record"
+    ]
+  },
+  "client-onboarding-form-template": {
+    "source_type": "questionnaire_templates",
+    "practices_title": "Best practices for questionnaire templates",
+    "best_practices": [
+      "Sequence questions from easy to sensitive gradually",
+      "Match each goal to one specific question type",
+      "Pilot with a handful of people before launch",
+      "Version your questionnaire so results stay comparable"
+    ],
+    "common_mistakes": [
+      "Leading respondents toward the answer you want",
+      "Switching rating scale directions halfway through",
+      "Collecting open text where a choice would analyze better",
+      "Launching long questionnaires with zero progress signals"
+    ]
+  },
+  "project-brief-form-template": {
+    "source_type": "questionnaire_templates",
+    "practices_title": "Best practices for questionnaire templates",
+    "best_practices": [
+      "Sequence questions from easy to sensitive gradually",
+      "Match each goal to one specific question type",
+      "Pilot with a handful of people before launch",
+      "Version your questionnaire so results stay comparable"
+    ],
+    "common_mistakes": [
+      "Leading respondents toward the answer you want",
+      "Switching rating scale directions halfway through",
+      "Collecting open text where a choice would analyze better",
+      "Launching long questionnaires with zero progress signals"
+    ]
+  },
+  "bug-report-form-template": {
+    "source_type": "report_forms",
+    "practices_title": "Best practices for report forms",
+    "best_practices": [
+      "Separate factual fields from narrative interpretation",
+      "Classify severity consistently using published definitions",
+      "Escalate critical reports automatically on arrival",
+      "Review monthly patterns rather than isolated cases"
+    ],
+    "common_mistakes": [
+      "Blaming individuals inside what are system failures",
+      "Letting near-misses go unreported without any channel",
+      "Writing narratives nobody can aggregate later",
+      "Closing reports without recorded corrective actions"
+    ]
+  },
+  "maintenance-request-form-template": {
+    "source_type": "request_forms",
+    "practices_title": "Best practices for request forms",
+    "best_practices": [
+      "Map categories directly onto owning teams",
+      "Define priorities with consequences everyone knows",
+      "Require completeness before submission succeeds",
+      "Publish SLA progress where requesters can see it"
+    ],
+    "common_mistakes": [
+      "Accepting everything into one undifferentiated queue",
+      "Letting urgency inflation become team culture",
+      "Routing requests through personal direct messages",
+      "Closing tickets without confirming requester satisfaction"
+    ]
+  },
+  "coaching-intake-form-template": {
+    "source_type": "questionnaire_templates",
+    "practices_title": "Best practices for questionnaire templates",
+    "best_practices": [
+      "Sequence questions from easy to sensitive gradually",
+      "Match each goal to one specific question type",
+      "Pilot with a handful of people before launch",
+      "Version your questionnaire so results stay comparable"
+    ],
+    "common_mistakes": [
+      "Leading respondents toward the answer you want",
+      "Switching rating scale directions halfway through",
+      "Collecting open text where a choice would analyze better",
+      "Launching long questionnaires with zero progress signals"
+    ]
+  },
+  "veterinary-new-client-form-template": {
+    "source_type": "registration_forms",
+    "practices_title": "Best practices for registration forms",
+    "best_practices": [
+      "State what registration includes directly under the title",
+      "Keep the path from landing to submitted under two minutes",
+      "Confirm instantly with dates, times, and locations attached",
+      "Track capacity in the dashboard rather than in your inbox"
+    ],
+    "common_mistakes": [
+      "Collecting phone numbers nobody ever uses afterward",
+      "Leaving registration open past your planning cutoff",
+      "Skipping dietary or accessibility questions entirely",
+      "Burying the submit button below repeated legal text"
+    ]
+  },
+  "nps-survey-template": {
+    "source_type": "survey_templates",
+    "practices_title": "Best practices for survey templates",
+    "best_practices": [
+      "Open with why the survey matters in one sentence",
+      "Put the core rating question first, demographics last",
+      "Use skip logic so nobody answers irrelevant items",
+      "Share what changed because of the last round"
+    ],
+    "common_mistakes": [
+      "Doubling length with nice-to-know questions",
+      "Mixing two ideas into a single question",
+      "Requiring answers on optional opinion fields",
+      "Sending surveys months after the experience faded"
+    ]
+  },
+  "testimonial-form-template": {
+    "source_type": "content_forms",
+    "practices_title": "Best practices for content forms",
+    "best_practices": [
+      "Lead with the brief so quality arrives upfront",
+      "Restrict uploads to formats production can ingest",
+      "Collect usage rights alongside the content itself",
+      "Tag entries by campaign while accepting them"
+    ],
+    "common_mistakes": [
+      "Chasing usage permission after publishing",
+      "Accepting gigabyte files through general fields",
+      "Losing contributor names inside filename chaos",
+      "Running new rounds without archiving the previous one"
+    ]
+  },
+  "gym-membership-form-template": {
+    "source_type": "membership_forms",
+    "practices_title": "Best practices for membership forms",
+    "best_practices": [
+      "Price tiers with honestly distinct benefits",
+      "Collect member interests for future programming",
+      "Process dues inside signup without extra steps",
+      "Track renewal dates from clean exported rosters"
+    ],
+    "common_mistakes": [
+      "Renewing via spreadsheet archaeology each January",
+      "Collecting payments outside any reconcilable record",
+      "Ignoring lapsed members until AGM attendance drops",
+      "Making benefit differences invisible at pricing time"
+    ]
+  }
+}

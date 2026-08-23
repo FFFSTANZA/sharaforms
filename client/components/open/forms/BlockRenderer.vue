@@ -19,7 +19,7 @@
       v-if="block.type === 'nf-text' && block.content"
       :id="block.id"
       :key="'text-' + block.id"
-      class="nf-text w-full my-1.5 break-words whitespace-break-spaces"
+      class="nf-text w-full my-2 break-words whitespace-break-spaces"
       :class="[getFieldAlignClasses(block)]"
     >
       <TextBlock
@@ -42,13 +42,13 @@
       v-else-if="block.type === 'nf-divider'"
       :id="block.id"
       :key="'divider-' + block.id"
-      class="border-b my-4 w-full mx-2"
+      class="border-b border-neutral-200/60 dark:border-neutral-600/30 my-5 w-full mx-2"
     />
     <div
       v-else-if="block.type === 'nf-image' && (isAdminPreview || (!isAdminPreview && block.image_block))"
       :id="block.id"
       :key="'image-' + block.id"
-      class="my-4 w-full"
+      class="my-5 w-full"
       :class="[getFieldAlignClasses(block)]"
       @dblclick="editFieldOptions"
     >
@@ -58,7 +58,7 @@
       >
         <a
           href="#"
-          class="text-blue-800 dark:text-blue-200"
+          class="text-[var(--sf-teal)]"
           @click.prevent="editFieldOptions"
         >Open block settings to upload image.</a>
       </div>
@@ -74,7 +74,7 @@
       v-else-if="block.type === 'nf-video' && (isAdminPreview || (!isAdminPreview && block.video_block))"
       :id="block.id"
       :key="'video-' + block.id"
-      class="my-4 w-full"
+      class="my-5 w-full"
       :class="[getFieldAlignClasses(block)]"
       @dblclick="editFieldOptions"
     >
@@ -84,7 +84,7 @@
       >
         <a
           href="#"
-          class="text-blue-800 dark:text-blue-200"
+          class="text-[var(--sf-teal)]"
           @click.prevent="editFieldOptions"
         >Open block settings to add video URL.</a>
       </div>
@@ -110,6 +110,8 @@ const props = defineProps({
   block: { type: Object, required: false, default: null },
   formManager: { type: Object, required: true }
 })
+
+defineEmits(['input-filled'])
 
 const workingFormStore = useWorkingFormStore()
 
@@ -139,9 +141,9 @@ const componentInfo = computed(() => {
   // Explicit per-field choice: no dropdown -> flat list of options, regardless of presentation style
   else if (['select','multi_select'].includes(field.type) && field.without_dropdown) componentName = 'FlatSelectInput'
   // In focused mode, use FocusedSelectorInput by default unless explicitly disabled
-  else if (['select','multi_select'].includes(field.type) && form.value.presentation_style === 'focused' && field.use_focused_selector !== false) componentName = 'FocusedSelectorInput'
+  else if (['select','multi_select'].includes(field.type) && (form.value.presentation_style === 'focused' || form.value.presentation_style === 'spotlight') && field.use_focused_selector !== false) componentName = 'FocusedSelectorInput'
   // In focused mode, use FocusedToggleInput by default unless explicitly disabled
-  else if (field.type === 'checkbox' && form.value.presentation_style === 'focused' && field.use_focused_toggle !== false) componentName = 'FocusedToggleInput'
+  else if (field.type === 'checkbox' && (form.value.presentation_style === 'focused' || form.value.presentation_style === 'spotlight') && field.use_focused_toggle !== false) componentName = 'FocusedToggleInput'
   else if (field.type === 'checkbox' && field.use_toggle_switch) componentName = 'ToggleSwitchInput'
   else if (field.type === 'signature') componentName = 'SignatureInput'
   else if (field.type === 'phone_number' && !field.use_simple_text_input) componentName = 'PhoneInput'
@@ -200,7 +202,7 @@ const shouldInjectBetweenMedia = computed(() => (
   props.block?.image &&
   props.block.image.url &&
   props.block.image.layout === 'between' &&
-  form.value?.presentation_style === 'focused' &&
+  (form.value?.presentation_style === 'focused' || form.value?.presentation_style === 'spotlight') &&
   !(strategy.value?.display?.forceClassicPresentation === true)
 )) 
 

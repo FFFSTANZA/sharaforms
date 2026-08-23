@@ -84,10 +84,12 @@ class FileUploadPathService
     {
         $component = (string) $component;
 
-        // Check for path traversal attempts or problematic characters
+        // M8 FIX: Check for path traversal attempts, null bytes, and problematic characters.
         if (
             str_contains($component, '/') ||
-            str_contains($component, '\\')
+            str_contains($component, '\\') ||
+            str_contains($component, '..') ||
+            str_contains($component, "\0")
         ) {
             throw new \InvalidArgumentException('Path component contains invalid characters');
         }

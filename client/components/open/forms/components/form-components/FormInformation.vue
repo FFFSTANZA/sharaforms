@@ -1,64 +1,79 @@
 <template>
   <VForm size="sm">
-    <div class="space-y-4">
-      <div class="flex flex-col flex-wrap items-start justify-between gap-4 sm:flex-row sm:items-center">
-        <div>
-          <h3 class="text-lg font-medium text-neutral-900">General</h3>
-          <p class="mt-1 text-sm text-neutral-500">
-            Basic information about your form.
-          </p>
+    <div class="px-1 space-y-4">
+      <!-- Form Details Card -->
+      <div class="rounded-2xl border border-[var(--sf-border-card)] bg-[var(--sf-bg-surface)] p-5 shadow-[var(--sf-shadow-card)]">
+        <div class="flex items-center gap-2.5 mb-5">
+          <div class="w-7 h-7 rounded-lg bg-[var(--sf-nav-active-bg)] flex items-center justify-center flex-shrink-0">
+            <i class="fa-solid fa-circle-info text-[12px] text-[var(--sf-coral-500)]"></i>
+          </div>
+          <h3 class="text-[13px] font-semibold text-[var(--sf-text-primary)]">Form Details</h3>
+        </div>
+
+        <div class="space-y-4">
+          <text-input
+            :form="form"
+            name="title"
+            class="max-w-xs"
+            label="Form Name"
+            placeholder="My form"
+            :max-char-limit="255"
+            :show-char-limit="true"
+          />
+          <select-input
+            name="tags"
+            label="Tags"
+            clearable
+            :form="form"
+            help="To organize your forms"
+            placeholder="Select Tag(s)"
+            class="max-w-xs"
+            :multiple="true"
+            :allow-creation="true"
+            :options="allTagsOptions"
+          />
         </div>
       </div>
 
-      <text-input
-        :form="form"
-        name="title"
-        class="mt-4 max-w-xs"
-        label="Form Name"
-        placeholder="My form"
-        :max-char-limit="255"
-        :show-char-limit="true"
-      />
-      <select-input
-        name="tags"
-        label="Tags"
-        clearable
-        :form="form"
-        help="To organize your forms"
-        placeholder="Select Tag(s)"
-        class="max-w-xs"
-        :multiple="true"
-        :allow-creation="true"
-        :options="allTagsOptions"
-      />
-      <flat-select-input
-        name="visibility"
-        label="Form Visibility"
-        class="max-w-xs"
-        :form="form"
-        placeholder="Select Visibility"
-        :options="visibilityOptions"
-      />
-      <div
-        v-if="isFormClosingOrClosed"
-        class="bg-neutral-50 border rounded-lg px-4 py-2"
-      >
-        <rich-text-area-input
-          name="closed_text"
-          :allow-fullscreen="true"
+      <!-- Visibility Card -->
+      <div class="rounded-2xl border border-[var(--sf-border-card)] bg-[var(--sf-bg-surface)] p-5 shadow-[var(--sf-shadow-card)]">
+        <div class="flex items-center gap-2.5 mb-5">
+          <div class="w-7 h-7 rounded-lg bg-[var(--sf-indigo-light)] flex items-center justify-center flex-shrink-0">
+            <i class="fa-solid fa-eye text-[12px] text-[var(--sf-indigo)]"></i>
+          </div>
+          <h3 class="text-[13px] font-semibold text-[var(--sf-text-primary)]">Visibility</h3>
+        </div>
+
+        <flat-select-input
+          name="visibility"
+          label="Form Visibility"
+          class="max-w-xs"
           :form="form"
-          label="Closed form text"
-          help="This message will be shown when the form will be closed"
-          :required="false"
-          wrapper-class="mb-0"
+          placeholder="Select Visibility"
+          :options="visibilityOptions"
         />
+
+        <div
+          v-if="isFormClosingOrClosed"
+          class="mt-4 bg-[var(--sf-bg-muted)] border border-[var(--sf-border-card)] rounded-xl px-4 py-3"
+        >
+          <rich-text-area-input
+            name="closed_text"
+            :allow-fullscreen="true"
+            :form="form"
+            label="Closed form text"
+            help="This message will be shown when the form will be closed"
+            :required="false"
+            wrapper-class="mb-0"
+          />
+        </div>
       </div>
 
+      <!-- Copy Settings -->
       <UButton
         v-if="copyFormOptions.length > 0"
         color="neutral"
         variant="outline"
-        class="mt-4"
         icon="i-lucide-copy"
         @click.prevent="showCopyFormSettingsModal = true"
       >

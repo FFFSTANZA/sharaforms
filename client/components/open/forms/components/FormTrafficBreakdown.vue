@@ -2,7 +2,7 @@
   <div class="w-full">
     <h3 class="font-medium text-lg mb-4">Traffic Breakdown</h3>
     
-    <div v-if="!canAccessAnalytics" class="border border-neutral-300 rounded-lg shadow-xs p-4 relative overflow-hidden">
+    <div v-if="!canAccessAnalytics" class="border border-[var(--sf-border-card)] rounded-lg shadow-xs p-4 relative overflow-hidden">
       <div class="absolute inset-0 z-10">
         <div class="p-5 max-w-md mx-auto flex flex-col items-center justify-center h-full">
           <p class="text-center">
@@ -27,7 +27,7 @@
     
     <VTransition v-else name="fade">
       <div v-if="isLoading" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div v-for="i in 6" :key="i" class="border border-neutral-300 rounded-lg shadow-xs p-4 space-y-4">
+        <div v-for="i in 6" :key="i" class="border border-[var(--sf-border-card)] rounded-lg shadow-xs p-4 space-y-4">
           <USkeleton class="h-6 w-24" />
           <div class="space-y-4">
             <USkeleton class="h-4 w-full rounded-full" />
@@ -41,11 +41,11 @@
         <div 
           v-for="chart in chartTypes" 
           :key="chart.id"
-          class="border border-neutral-300 rounded-lg shadow-xs p-4"
+          class="border border-[var(--sf-border-card)] rounded-lg shadow-xs p-4"
         >
           <h4 class="font-medium mb-3">{{ chart.title }}</h4>
           
-          <div v-if="Object.keys(metaStats[chart.id] || {}).length === 0" class="text-sm text-gray-500 text-center py-2">
+          <div v-if="Object.keys(metaStats[chart.id] || {}).length === 0" class="text-sm text-[var(--sf-text-caption)] text-center py-2">
             No data available
           </div>
           
@@ -81,7 +81,7 @@
                   </div>
                   
                   <template #content>
-                    <div class="w-72 p-3 max-h-40 overflow-y-auto bg-white shadow-lg rounded-md">
+                    <div class="w-72 p-3 max-h-40 overflow-y-auto bg-[var(--sf-bg-surface)] shadow-lg rounded-md border border-[var(--sf-border-card)]">
                       <div class="space-y-2">
                         <div 
                           v-for="otherItem in getOtherItems(chart.id)" 

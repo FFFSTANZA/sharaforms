@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex flex-wrap items-end mt-5 gap-2">
-      <h3 class="flex-grow font-medium text-lg">
+      <h3 class="flex-grow font-semibold text-[var(--sf-font-size-md)] text-[var(--sf-text-primary)]">
         Views & Submission History
       </h3>
       <VForm size="sm">
@@ -25,7 +25,7 @@
       />
     </div>
     <div
-      class="border border-neutral-300 rounded-lg shadow-xs p-4 mb-5 w-full mx-auto mt-2 select-all"
+      class="border border-[var(--sf-border-card)] rounded-xl shadow-[0_1px_2px_rgba(23,25,35,0.04)] p-4 mb-5 w-full mx-auto mt-2 select-all bg-[var(--sf-bg-surface)]"
     >
       <div
         v-if="!canAccessAnalytics"

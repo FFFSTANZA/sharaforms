@@ -1,68 +1,85 @@
 <template>
   <VForm size="sm">
-    <div class="space-y-4">
-      <div class="flex flex-col flex-wrap items-start justify-between gap-4 sm:flex-row sm:items-center">
-        <div>
-          <h3 class="text-lg font-medium text-neutral-900">Security & Access</h3>
-          <p class="mt-1 text-sm text-neutral-500">
-            Manage who can access your form and when.
-          </p>
+    <div class="px-1 space-y-4">
+      <!-- Password Card -->
+      <div class="rounded-2xl border border-[var(--sf-border-card)] bg-[var(--sf-bg-surface)] p-5 shadow-[var(--sf-shadow-card)]">
+        <div class="flex items-center gap-2.5 mb-5">
+          <div class="w-7 h-7 rounded-lg bg-[var(--sf-nav-active-bg)] flex items-center justify-center flex-shrink-0">
+            <i class="fa-solid fa-shield-halved text-[12px] text-[var(--sf-coral-500)]"></i>
+          </div>
+          <h3 class="text-[13px] font-semibold text-[var(--sf-text-primary)]">Security & Access</h3>
+        </div>
+
+        <TextInput
+          name="password"
+          :form="form"
+          class="max-w-xs"
+          label="Form Password"
+          placeholder="********"
+          help="Leave empty to disable password protection"
+        />
+
+        <div v-if="hasCaptcha" class="mt-4 flex items-start gap-6 flex-wrap">
+          <ToggleSwitchInput
+            name="use_captcha"
+            :form="form"
+            label="Bot Protection"
+            help="Protects your form from spam and abuse with a captcha"
+          />
+          <FlatSelectInput
+            v-if="form.use_captcha"
+            name="captcha_provider"
+            :form="form"
+            :options="captchaOptions"
+            class="w-80"
+            label="Select a captcha provider"
+          />
         </div>
       </div>
 
-      <TextInput
-        name="password"
-        :form="form"
-        class="mt-4 max-w-xs"
-        label="Form Password"
-        placeholder="********"
-        help="Leave empty to disable password protection"
-      />
-
-      <!-- Form Scheduling Section -->
-      <div class="mb-8">
-        <h4 class="font-semibold mt-4 border-t pt-4">
-          Form Scheduling <PlanTag
-            feature="form_scheduling"
-            upgrade-modal-title="Upgrade to schedule your form"
-            upgrade-modal-description="Control exactly when your form opens and closes. Set open dates, closing dates, and recurring availability windows. Upgrade to unlock advanced scheduling."
-          />
-        </h4>
-        <p class="text-neutral-500 text-sm mb-4">
-          Control when your form is available for submissions.
-        </p>
+      <!-- Scheduling Card -->
+      <div class="rounded-2xl border border-[var(--sf-border-card)] bg-[var(--sf-bg-surface)] p-5 shadow-[var(--sf-shadow-card)]">
+        <div class="flex items-center gap-2.5 mb-5">
+          <div class="w-7 h-7 rounded-lg bg-[var(--sf-teal-light)] flex items-center justify-center flex-shrink-0">
+            <i class="fa-solid fa-calendar-days text-[12px] text-[var(--sf-teal)]"></i>
+          </div>
+          <h3 class="text-[13px] font-semibold text-[var(--sf-text-primary)]">
+            Form Scheduling
+            <PlanTag class="ml-1" feature="form_scheduling" upgrade-modal-title="Upgrade to schedule your form" upgrade-modal-description="Control exactly when your form opens and closes." />
+          </h3>
+        </div>
 
         <ToggleSwitchInput
           v-model="enableScheduling"
-          class="mt-4"
           label="Enable form scheduling"
           help="Set when your form opens and/or define recurring availability windows"
         />
 
         <template v-if="enableScheduling">
-          <DateInput
-            :with-time="true"
-            name="opens_at"
-            class="mt-4 max-w-xs"
-            :form="form"
-            label="Opening date"
-            help="Set when the form opens for submissions. Leave empty to open immediately."
-            :required="false"
-          />
-
-          <DateInput
-            :with-time="true"
-            name="closes_at"
-            class="mt-4 max-w-xs"
-            :form="form"
-            label="Closing date"
-            help="Leave empty to keep the form open indefinitely"
-            :required="false"
-          />
+          <div class="mt-4 space-y-4">
+            <DateInput
+              :with-time="true"
+              name="opens_at"
+              class="max-w-xs"
+              :form="form"
+              label="Opening date"
+              help="Set when the form opens for submissions. Leave empty to open immediately."
+              :required="false"
+            />
+            <DateInput
+              :with-time="true"
+              name="closes_at"
+              class="max-w-xs"
+              :form="form"
+              label="Closing date"
+              help="Leave empty to keep the form open indefinitely"
+              :required="false"
+            />
+          </div>
 
           <div
             v-if="form.opens_at || form.closes_at || form.visibility == 'closed'"
-            class="bg-neutral-50 border rounded-lg px-4 py-2"
+            class="mt-4 bg-[var(--sf-bg-muted)] border border-[var(--sf-border-card)] rounded-xl px-4 py-3"
           >
             <rich-text-area-input
               name="closed_text"
@@ -75,37 +92,27 @@
             />
           </div>
 
-          <!-- Recurring Schedule -->
-          <div class="mt-6">
+          <div class="mt-4">
             <ToggleSwitchInput
               v-model="enableRecurringSchedule"
-              class="mt-2"
               label="Recurring availability"
               help="Set weekly recurring windows when the form accepts submissions"
             />
           </div>
 
           <template v-if="enableRecurringSchedule">
-            <div class="bg-neutral-50 border rounded-lg px-4 py-4 mt-2 space-y-4 max-w-lg">
+            <div class="mt-4 bg-[var(--sf-bg-muted)] border border-[var(--sf-border-card)] rounded-xl px-4 py-4 space-y-4 max-w-lg">
               <div
                 v-for="(window, index) in scheduleWindows"
                 :key="index"
-                class="border border-neutral-200 rounded-lg p-3 bg-white"
+                class="border border-[var(--sf-border-card)] rounded-xl p-3 bg-[var(--sf-bg-surface)]"
               >
                 <div class="flex items-center justify-between mb-2">
-                  <span class="text-sm font-medium text-neutral-700">Window {{ index + 1 }}</span>
-                  <UButton
-                    v-if="scheduleWindows.length > 1"
-                    color="error"
-                    variant="ghost"
-                    size="2xs"
-                    icon="i-lucide-x"
-                    @click="removeWindow(index)"
-                  />
+                  <span class="text-sm font-medium text-[var(--sf-text-secondary)]">Window {{ index + 1 }}</span>
+                  <UButton v-if="scheduleWindows.length > 1" color="error" variant="ghost" size="2xs" icon="i-lucide-x" @click="removeWindow(index)" />
                 </div>
-
                 <div class="mb-2">
-                  <label class="text-xs text-neutral-500 block mb-1">Days of the week</label>
+                  <label class="text-xs text-[var(--sf-text-caption)] block mb-1">Days of the week</label>
                   <div class="flex flex-wrap gap-1.5">
                     <UBadge
                       v-for="day in daysOfWeek"
@@ -114,135 +121,93 @@
                       :color="window.days.includes(day.value) ? 'primary' : 'neutral'"
                       class="cursor-pointer select-none"
                       @click="toggleDay(index, day.value)"
-                    >
-                      {{ day.label }}
-                    </UBadge>
+                    >{{ day.label }}</UBadge>
                   </div>
                 </div>
-
                 <div class="flex items-center gap-3 mt-2">
                   <div class="flex-1">
-                    <label class="text-xs text-neutral-500 block mb-1">Start time</label>
-                    <input
-                      type="time"
-                      :value="window.start_time"
-                      class="block w-full rounded-md border-neutral-300 text-sm shadow-xs focus:border-blue-400 focus:ring-blue-400"
-                      @input="updateWindowTime(index, 'start_time', $event.target.value)"
-                    >
+                    <label class="text-xs text-[var(--sf-text-caption)] block mb-1">Start time</label>
+                    <input type="time" :value="window.start_time" class="block w-full rounded-md border-[var(--sf-border-button)] text-sm shadow-xs focus:border-[var(--sf-coral-500)] focus:ring-[var(--sf-coral-500)]" @input="updateWindowTime(index, 'start_time', $event.target.value)" />
                   </div>
                   <div class="flex-1">
-                    <label class="text-xs text-neutral-500 block mb-1">End time</label>
-                    <input
-                      type="time"
-                      :value="window.end_time"
-                      class="block w-full rounded-md border-neutral-300 text-sm shadow-xs focus:border-blue-400 focus:ring-blue-400"
-                      @input="updateWindowTime(index, 'end_time', $event.target.value)"
-                    >
+                    <label class="text-xs text-[var(--sf-text-caption)] block mb-1">End time</label>
+                    <input type="time" :value="window.end_time" class="block w-full rounded-md border-[var(--sf-border-button)] text-sm shadow-xs focus:border-[var(--sf-coral-500)] focus:ring-[var(--sf-coral-500)]" @input="updateWindowTime(index, 'end_time', $event.target.value)" />
                   </div>
                 </div>
               </div>
-
-              <UButton
-                color="neutral"
-                variant="outline"
-                size="sm"
-                icon="i-lucide-plus"
-                @click="addWindow"
-              >
-                Add window
-              </UButton>
-
+              <UButton color="neutral" variant="outline" size="sm" icon="i-lucide-plus" @click="addWindow">Add window</UButton>
               <div class="mt-2">
-                <label class="text-xs text-neutral-500 block mb-1">Timezone</label>
-                <USelect
-                  v-model="scheduleTimezone"
-                  :items="commonTimezones"
-                  class="w-full"
-                />
+                <label class="text-xs text-[var(--sf-text-caption)] block mb-1">Timezone</label>
+                <USelect v-model="scheduleTimezone" :items="commonTimezones" class="w-full" />
               </div>
             </div>
           </template>
         </template>
+
+        <!-- Legacy closing date -->
+        <template v-if="!enableScheduling">
+          <div class="mt-4 space-y-4">
+            <DateInput
+              :with-time="true"
+              name="closes_at"
+              class="max-w-xs"
+              :form="form"
+              label="Closing date"
+              help="Leave empty to keep the form open indefinitely"
+              :required="false"
+            />
+          </div>
+          <div
+            v-if="form.closes_at || form.visibility == 'closed'"
+            class="mt-4 bg-[var(--sf-bg-muted)] border border-[var(--sf-border-card)] rounded-xl px-4 py-3"
+          >
+            <rich-text-area-input
+              name="closed_text"
+              :form="form"
+              :allow-fullscreen="true"
+              label="Closed form text"
+              help="This message will be shown when the form will be closed"
+              :required="false"
+              wrapper-class="mb-0"
+            />
+          </div>
+        </template>
       </div>
 
-      <!-- Closing date & Max submissions (legacy, kept for backward compat) -->
-      <template v-if="!enableScheduling">
-        <DateInput
-          :with-time="true"
-          name="closes_at"
-          class="mt-4 max-w-xs"
+      <!-- Submission Limits Card -->
+      <div class="rounded-2xl border border-[var(--sf-border-card)] bg-[var(--sf-bg-surface)] p-5 shadow-[var(--sf-shadow-card)]">
+        <div class="flex items-center gap-2.5 mb-5">
+          <div class="w-7 h-7 rounded-lg bg-[var(--sf-amber-light)] flex items-center justify-center flex-shrink-0">
+            <i class="fa-solid fa-chart-bar text-[12px] text-[var(--sf-amber)]"></i>
+          </div>
+          <h3 class="text-[13px] font-semibold text-[var(--sf-text-primary)]">Submission Limits</h3>
+        </div>
+
+        <text-input
+          name="max_submissions_count"
+          native-type="number"
+          :min="1"
           :form="form"
-          label="Closing date"
-          help="Leave empty to keep the form open indefinitely"
+          label="Limit number of submissions"
+          placeholder="Max submissions"
+          class="max-w-xs"
+          help="Leave empty for unlimited submissions"
           :required="false"
         />
         <div
-          v-if="form.closes_at || form.visibility == 'closed'"
-          class="bg-neutral-50 border rounded-lg px-4 py-2"
+          v-if="form.max_submissions_count && form.max_submissions_count > 0"
+          class="mt-4 bg-[var(--sf-bg-muted)] border border-[var(--sf-border-card)] rounded-xl px-4 py-3"
         >
           <rich-text-area-input
-            name="closed_text"
-            :form="form"
-            :allow-fullscreen="true"
-            label="Closed form text"
-            help="This message will be shown when the form will be closed"
-            :required="false"
             wrapper-class="mb-0"
+            :allow-fullscreen="true"
+            name="max_submissions_reached_text"
+            :form="form"
+            label="Max Submissions reached text"
+            help="This message will be shown when the form will have the maximum number of submissions"
+            :required="false"
           />
         </div>
-      </template>
-
-      <text-input
-        name="max_submissions_count"
-        native-type="number"
-        :min="1"
-        :form="form"
-        label="Limit number of submissions"
-        placeholder="Max submissions"
-        class="mt-4 max-w-xs"
-        help="Leave empty for unlimited submissions"
-        :required="false"
-      />
-      <div
-        v-if="form.max_submissions_count && form.max_submissions_count > 0"
-        class="bg-neutral-50 border rounded-lg px-4 py-2"
-      >
-        <rich-text-area-input
-          wrapper-class="mb-0"
-          :allow-fullscreen="true"
-          name="max_submissions_reached_text"
-          :form="form"
-          label="Max Submissions reached text"
-          help="This message will be shown when the form will have the maximum number of submissions"
-          :required="false"
-        />
-      </div>
-
-      <h4 class="font-semibold mt-4 border-t pt-4">
-        Security
-      </h4>
-      <p class="text-neutral-500 text-sm">
-        Protect your form, and your sensitive files.
-      </p>
-      <div
-        v-if="hasCaptcha"
-        class="flex items-start gap-6 flex-wrap"
-      >
-        <ToggleSwitchInput
-          name="use_captcha"
-          :form="form"
-          class="mt-4"
-          label="Bot Protection"
-          help="Protects your form from spam and abuse with a captcha"
-        />
-        <FlatSelectInput
-          v-if="form.use_captcha"
-          name="captcha_provider"
-          :form="form"
-          :options="captchaOptions"
-          class="mt-4 w-80"
-          label="Select a captcha provider"
-        />
       </div>
     </div>
   </VForm>

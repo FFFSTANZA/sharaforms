@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex flex-col bg-white h-full">
+  <div class="w-full flex flex-col bg-[var(--sf-bg-surface)] h-full">
     <div class="p-4 border-b">
       <h4 class="font-medium text-gray-900 flex items-center gap-2">
         <Icon name="i-lucide-code" class="w-4 h-4" />

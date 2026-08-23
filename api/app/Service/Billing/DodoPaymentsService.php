@@ -195,7 +195,12 @@ class DodoPaymentsService
     {
         $productId = $this->getProductId($plan, $interval);
 
-        $response = $this->request()->post('/subscriptions/' . $subscription->stripe_id . '/change-plan', [
+        // M12 FIX: Include idempotency key to prevent duplicate plan changes on timeout + retry.
+        $idempotencyKey = 'plan_change_' . $subscription->stripe_id . '_' . Str::random(8);
+
+        $response = $this->request()
+            ->withHeaders(['Idempotency-Key' => $idempotencyKey])
+            ->post('/subscriptions/' . $subscription->stripe_id . '/change-plan', [
             'product_id' => $productId,
             'quantity' => 1,
             'proration_billing_mode' => 'prorated_immediately',
@@ -208,6 +213,10 @@ class DodoPaymentsService
         ]);
 
         $this->throwIfFailed($response, 'Unable to change plan.');
+
+        // H4 FIX: Brief delay to allow Dodo's eventual consistency to propagate the plan change.
+        // Without this, the immediate re-fetch may still see the old product_id.
+        usleep(500_000); // 500ms
 
         $subscriptionData = $this->getSubscriptionDetails($subscription->stripe_id);
 
@@ -304,6 +313,15 @@ class DodoPaymentsService
     public function cancelSubscription(Subscription $subscription): void
     {
         if (!$this->userHasDodoCustomer($subscription->user)) {
+            return;
+        }
+
+        // M13 FIX: Skip API call if subscription is already cancelled or expired.
+        if (in_array($subscription->stripe_status, ['cancelled', 'expired'], true)) {
+            Log::info('Subscription already cancelled/expired, skipping Dodo API call.', [
+                'subscription_id' => $subscription->stripe_id,
+                'status' => $subscription->stripe_status,
+            ]);
             return;
         }
 

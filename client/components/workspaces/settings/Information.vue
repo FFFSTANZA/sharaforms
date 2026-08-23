@@ -1,16 +1,26 @@
 <template>
-  <div class="space-y-4">
-    <div class="flex flex-col flex-wrap items-start justify-between gap-4 sm:flex-row sm:items-center">
-      <div>
-        <h3 class="text-lg font-medium text-neutral-900">Workspace Information</h3>
-        <p class="mt-1 text-sm text-neutral-500">
-          Update your workspace information.
-        </p>
-      </div>
+  <div class="space-y-6">
+    <!-- Page Head -->
+    <div class="sf-page-head">
+      <h2>Information</h2>
+      <p>Update your workspace name and icon.</p>
     </div>
 
-    <VForm @submit.prevent="updateProfile" size="sm">
-   
+    <!-- Workspace Information -->
+    <section class="sf-card sf-card-pad">
+      <div class="flex items-start gap-3 mb-6">
+        <span class="sf-icon-chip-soft sf-icon-chip-soft--muted">
+          <i class="fa-solid fa-building" />
+        </span>
+        <div>
+          <h3 class="text-[15px] font-semibold text-[#1D1F24]">Workspace Information</h3>
+          <p class="text-[13px] text-[#6E7278] mt-0.5">
+            Update your workspace information.
+          </p>
+        </div>
+      </div>
+
+      <VForm @submit.prevent="updateProfile" size="sm">
         <div class="max-w-sm">
           <TextInput
             :disabled="workspace.is_readonly"
@@ -30,53 +40,66 @@
           />
         </div>
 
-        <div class="mt-4">
+        <div class="mt-6">
           <UButton
             :disabled="workspace.is_readonly"
             type="submit"
             :loading="workspaceForm.busy"
             color="primary"
+            class="btn-primary"
           >
             Save Changes
           </UButton>
         </div>
-    </VForm>
+      </VForm>
+    </section>
 
-    <div class="pt-8 border-t border-neutral-200">
-      <div 
-        v-if="workspace.is_admin" 
-        class="space-y-2"
-      >
-        <h4 class="text-red-800 font-medium">Delete Workspace</h4>
-        <p class="text-neutral-500 text-sm">
-          This will permanently delete your entire workspace. All forms created in this workspace will be removed. This cannot be undone.
-        </p>
+    <!-- Danger Zone -->
+    <section class="sf-danger-zone sf-card-pad">
+      <div v-if="workspace.is_admin" class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex items-start gap-3">
+          <span class="sf-icon-chip-soft sf-icon-chip-soft--coral">
+            <i class="fa-solid fa-triangle-exclamation" />
+          </span>
+          <div>
+            <h3 class="sf-danger-title text-[14px] font-semibold">Delete Workspace</h3>
+            <p class="mt-1 text-[13px] text-[#6E7278] max-w-md">
+              This will permanently delete your entire workspace. All forms created in this workspace will be removed. This cannot be undone.
+            </p>
+          </div>
+        </div>
         <UButton
           color="error"
           :loading="removeMutation.isPending.value"
           @click="confirmDeleteWorkspace"
+          class="shrink-0"
         >
           Delete workspace
         </UButton>
       </div>
 
-      <div 
-        v-else
-        class="space-y-2"
-      >
-        <h4 class="text-neutral-900 font-medium">Leave Workspace</h4>
-        <p class="text-neutral-500 text-sm">
-          This will remove you from the workspace. You will lose access to all forms in this workspace.
-        </p>
+      <div v-else class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex items-start gap-3">
+          <span class="sf-icon-chip-soft sf-icon-chip-soft--amber">
+            <i class="fa-solid fa-arrow-right-from-bracket" />
+          </span>
+          <div>
+            <h3 class="sf-danger-title text-[14px] font-semibold">Leave Workspace</h3>
+            <p class="mt-1 text-[13px] text-[#6E7278] max-w-md">
+              This will remove you from the workspace. You will lose access to all forms in this workspace.
+            </p>
+          </div>
+        </div>
         <UButton
           color="error"
           :loading="leaveMutation.isPending.value"
           @click="leaveWorkSpace"
+          class="shrink-0"
         >
           Leave workspace
         </UButton>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -158,4 +181,4 @@ watch(workspace, (newWorkspace) => {
     })
   }
 }, { immediate: true })
-</script> 
+</script>

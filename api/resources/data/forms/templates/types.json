@@ -2,323 +2,2347 @@
   "order_forms": {
     "name": "Order Forms",
     "slug": "order_forms",
-    "meta_title": "Supercharge Your Order Management with SharaForms's Order Form Templates",
-    "meta_description": "Discover how SharaForms's Order Form Templates can streamline your order management process. Create customized order forms with ease, receive email notifications, integrate with popular tools, and more. Start simplifying your ordering process today!",
-    "description": "Looking to streamline your order management process? SharaForms's Order Form Templates are designed to simplify the collection of order details. With SharaForms, you can easily create customized order forms that fit your business needs. Take advantage of features like email notifications, form branding, custom domains, and integrations with popular tools like Slack and Discord. Whether you're running an online store or managing orders for a restaurant, SharaForms's Order Form Templates can help optimize your workflow and upgrade your ordering process."
+    "meta_title": "Free Order Form Templates - Customizable & No-Code | SharaForms",
+    "meta_description": "Create a free order form that captures products, quantities, and totals in minutes. Customizable templates with calculations, notifications, and CSV export.",
+    "description": "An order form collects everything needed to complete a sale: product selections, quantities, variants like size or color, customer contact details, and delivery preferences. Businesses use order forms for merchandise runs, food service, school fundraisers, and internal purchasing when a full storefront is unnecessary. Every SharaForms order template is fully customizable with built-in calculations and instant submission alerts.",
+    "h1": "Free Order Form Templates for Any Product",
+    "include_label": "a high-converting order form",
+    "how_to_label": "an order form",
+    "what_to_include": [
+      "Product or service selection with clear pricing",
+      "Quantity and variant options such as size or color",
+      "Order total with automatic calculations",
+      "Customer contact and delivery details",
+      "Payment method or invoice preference",
+      "Terms acceptance and confirmation copy"
+    ],
+    "how_to_steps": [
+      "Pick an order form template that matches your product type.",
+      "Add your products, variants, prices, and quantity limits.",
+      "Turn on calculations so totals update as buyers make choices.",
+      "Share the link, embed it on your site, and get notified of every order."
+    ],
+    "faqs": [
+      {
+        "question": "What is an order form?",
+        "answer": "An order form is a structured document or web form that captures what a customer wants to buy, including product choices, quantities, variants, and delivery details, so a business can fulfill the order accurately without a shopping cart."
+      },
+      {
+        "question": "Are these order form templates really free?",
+        "answer": "Yes. Every order form template on SharaForms is free to use and customize on the Free plan, which includes unlimited forms and submissions. Paid plans add features like payments, workspaces, and branding removal."
+      },
+      {
+        "question": "Can an order form calculate totals automatically?",
+        "answer": "Yes. SharaForms supports calculated fields, so the form can multiply quantity by price, apply discounts, and show a live order total before the customer submits. This removes manual math and quoting errors."
+      }
+    ],
+    "featured_template": "online-order-form-template",
+    "best_practices": [
+      "Anchor each product with a photo and one-line description",
+      "Show a live running total so buyers trust the math",
+      "Cap quantities per order to protect your inventory",
+      "Close with delivery expectations, not just a thank you"
+    ],
+    "common_mistakes": [
+      "Listing products without prices next to the selector",
+      "Asking for account creation before the order details",
+      "Hiding shipping costs until after submission",
+      "Forgetting to limit sizes or variants you cannot supply"
+    ]
   },
   "registration_forms": {
     "name": "Registration Forms",
     "slug": "registration_forms",
-    "meta_title": "Streamline Your Registration Process with SharaForms's Registration Form Templates",
-    "meta_description": "Looking for an easy way to collect attendee details for your event or workshop? Discover how SharaForms's form builder and Registration Form Templates can simplify your registration process. Fully customizable forms, email notifications, integration options, and more!",
-    "description": "Are you organizing an event or workshop and need to collect attendee details? SharaForms's Registration Form Templates can help streamline your registration process! With our easy-to-use form builder, you can create customized registration forms to suit your specific needs. SharaForms's platform allows you to fully customize and brand your forms, ensuring a seamless experience for your attendees. Additionally, our form builder provides features such as email notifications, integration with popular tools like Slack and Discord, password protection, captcha options, and the ability to add custom code. You can even pre-fill forms via URL parameters and set closing dates or submission limits. Simplify your registration process and make it a breeze with SharaForms and our Registration Form Templates!"
+    "meta_title": "Registration Form Templates - Free, Easy to Customize | SharaForms",
+    "meta_description": "Build a free registration form for events, classes, programs, or memberships. Start from a template, customize fields in minutes, and collect sign-ups instantly.",
+    "description": "A registration form collects sign-up details for events, courses, programs, teams, and memberships: who is registering, their contact information, any preferences or session choices, and required consents. Organizers rely on registration forms to forecast attendance, plan capacity, and communicate with participants. SharaForms templates include confirmation emails, submission limits, and conditional questions out of the box.",
+    "h1": "Registration Form Templates That Fill Fast",
+    "include_label": "a registration form that converts",
+    "how_to_label": "a registration form",
+    "what_to_include": [
+      "Registrant name and contact information",
+      "Ticket, session, or program selection",
+      "Quantity for group or family registrations",
+      "Dietary, accessibility, or special requirements",
+      "Consent checkboxes for terms and communications",
+      "Automatic confirmation with next-step details"
+    ],
+    "how_to_steps": [
+      "Choose a registration template close to your event or program.",
+      "Edit fields to capture exactly the details you need.",
+      "Set capacity limits or closing dates if registration must end.",
+      "Publish, share the link, and track every sign-up in one dashboard."
+    ],
+    "faqs": [
+      {
+        "question": "What should a registration form include?",
+        "answer": "A registration form should capture the registrant's identity and contact details, what they are registering for, quantities or session preferences, special requirements, and consents. Adding automatic confirmation emails reduces duplicate inquiries about attendance details."
+      },
+      {
+        "question": "How do I cap the number of registrations?",
+        "answer": "SharaForms lets you set a submission limit on any form. Once the limit is reached, the form closes automatically, so you never overbook a class, venue, or program capacity."
+      },
+      {
+        "question": "Can registrants edit their details later?",
+        "answer": "Yes. You can enable editable submissions, letting registrants return to the form link and update details such as dietary needs, session choices, or contact information without contacting your team."
+      }
+    ],
+    "featured_template": "event-registration-template",
+    "best_practices": [
+      "State what registration includes directly under the title",
+      "Keep the path from landing to submitted under two minutes",
+      "Confirm instantly with dates, times, and locations attached",
+      "Track capacity in the dashboard rather than in your inbox"
+    ],
+    "common_mistakes": [
+      "Collecting phone numbers nobody ever uses afterward",
+      "Leaving registration open past your planning cutoff",
+      "Skipping dietary or accessibility questions entirely",
+      "Burying the submit button below repeated legal text"
+    ]
   },
   "event_registration_forms": {
     "name": "Event Registration Forms",
     "slug": "event_registration_forms",
-    "meta_title": "Streamline Event Registrations with SharaForms's Templates",
-    "meta_description": "Easily manage event registrations using SharaForms's Event Registration Form Templates. Customize and embed these forms on your website, streamline your registration process, and benefit from SharaForms's powerful features like email notifications, custom branding, and integrations with popular tools. Upgrade your event management with SharaForms!",
-    "description": "Planning an event and need to manage registrations? SharaForms offers Event Registration Form Templates that can simplify your work! With these templates, you can easily collect attendee information, streamline your registration process, and benefit from SharaForms's powerful features. Customize the form to match your event's branding, embed it on your website, and use SharaForms's integrations with tools like Slack and Discord for seamless event management. Upgrade your event registration process with SharaForms!"
+    "meta_title": "Event Registration Form Templates - Free & Instant Setup",
+    "meta_description": "Collect RSVPs, ticket choices, and attendee details with free event registration templates. Confirmation emails, capacity caps, and exportable guest lists included.",
+    "description": "An event registration form is the front door to conferences, workshops, webinars, sports meets, and community gatherings. It gathers attendee names, contact details, ticket or session selections, and special requirements while giving organizers a live headcount. SharaForms event templates pair with notification emails and exportable guest lists so check-in day runs on clean data.",
+    "h1": "Free Event Registration Templates for Every Format",
+    "include_label": "an event registration form",
+    "how_to_label": "an event registration form",
+    "what_to_include": [
+      "Attendee name, email, and phone number",
+      "Ticket type, session track, or time slot",
+      "Plus-one or group registrations",
+      "Accessibility and dietary requirements",
+      "Arrival or check-in preferences",
+      "Confirmation email with venue or join links"
+    ],
+    "how_to_steps": [
+      "Start from an event registration template that fits your format.",
+      "Add sessions, ticket tiers, or workshops as selectable options.",
+      "Enable confirmation emails containing schedules, maps, or join links.",
+      "Watch responses arrive live and export the guest list for check-in."
+    ],
+    "faqs": [
+      {
+        "question": "How far in advance should event registration open?",
+        "answer": "Most organizers open registration six to eight weeks before the event, or immediately once the date and venue are confirmed. Earlier opening gives more data for catering, seating, and staffing decisions."
+      },
+      {
+        "question": "Can one form handle multiple event days?",
+        "answer": "Yes. Add a day or session selector so attendees choose which dates they attend. Responses arrive tagged with their choice, making multi-day check-ins simple to manage."
+      },
+      {
+        "question": "Do attendees get proof of registration?",
+        "answer": "Yes. Automatic confirmation emails serve as receipts, and you can include tickets, QR codes, schedules, or venue instructions directly in the message attendees receive after submitting."
+      }
+    ],
+    "featured_template": "event-registration-template",
+    "best_practices": [
+      "Offer session tracks as clear, priced choices",
+      "Send calendar-ready confirmations within minutes",
+      "Ask one networking question to spark connections later",
+      "Export the guest list weekly and share with your team"
+    ],
+    "common_mistakes": [
+      "Using one generic form for very different ticket types",
+      "Collecting plus-one names you never actually check in",
+      "Announcing venue changes without updating confirmations",
+      "Closing registration silently instead of showing it is full"
+    ]
   },
   "payment_forms": {
     "name": "Payment Forms",
     "slug": "payment_forms",
-    "meta_title": "Accept Payments Online with SharaForms's Payment Form Templates",
-    "meta_description": "SharaForms's Payment Form Templates make it simple for businesses and organizations to collect payments and donations. Discover how you can easily create secure and customizable payment forms, integrate with payment gateways, and accept payments online using SharaForms's form builder and templates.",
-    "description": "Looking to collect payments online? SharaForms offers Payment Form Templates that can make it easy for you to accept payments and donations! With SharaForms, you can create secure and customizable payment forms, allowing you to sell products, collect membership fees, receive event registrations, and more. Benefit from features like email notifications, custom branding, integration with payment gateways, and the ability to embed forms on your website. Start accepting payments effortlessly with SharaForms's Payment Form Templates!"
+    "meta_title": "Payment Form Templates That Accept Cards | SharaForms",
+    "meta_description": "Collect payments and donations with free payment form templates. Connect Stripe, set fixed or payer-chosen amounts, and automate receipts without code.",
+    "description": "A payment form pairs the fields needed to identify a transaction, such as payer details, amount selection, and purpose, with a connected payment gateway that processes cards securely. Businesses use payment forms for invoices, deposits, tuition, dues, and services sold without a storefront. SharaForms forms integrate with Stripe so money lands in your account as submissions arrive.",
+    "h1": "Payment Form Templates with Stripe Built In",
+    "include_label": "a secure payment form",
+    "how_to_label": "a payment form",
+    "what_to_include": [
+      "Payer name, email, and billing reference",
+      "Amount field: fixed price or payer-entered",
+      "Line-item or purpose description",
+      "Stripe-connected card processing",
+      "Receipt or confirmation email on success",
+      "Currency matching your business location"
+    ],
+    "how_to_steps": [
+      "Start from a payment template closest to your use case.",
+      "Set a fixed amount or let payers enter what they owe.",
+      "Connect your Stripe account in the payment field settings.",
+      "Test with a small charge, then publish and start collecting."
+    ],
+    "faqs": [
+      {
+        "question": "How do payment forms work on SharaForms?",
+        "answer": "You add a payment field to your form, connect a Stripe account, and set either a fixed amount or a payer-defined amount. Submissions trigger checkout, and completed payments attach to the submission record."
+      },
+      {
+        "question": "Can customers choose how much to pay?",
+        "answer": "Yes. Payer-entered amounts suit donations, deposits, tips, and open invoices. Minimum amounts can be enforced with validation rules so contributions stay within sensible bounds."
+      },
+      {
+        "question": "Are payment details stored on my form?",
+        "answer": "No. Card data is handled by the payment gateway and never touches your submissions. Your records store the payment status, amount, and payer identity, keeping you outside sensitive card-data compliance scope."
+      }
+    ],
+    "featured_template": "donation-form-template",
+    "best_practices": [
+      "Show the payable amount before any card fields appear",
+      "Label every charge exactly as your statement will read",
+      "Test one small live payment before launching publicly",
+      "Reconcile gateway reports against form exports monthly"
+    ],
+    "common_mistakes": [
+      "Collecting billing details before stating the price",
+      "Changing amounts without telling repeat payers",
+      "Assuming refunds happen inside the form tool",
+      "Leaving test mode on during a real campaign"
+    ]
   },
   "application_forms": {
     "name": "Application Forms",
     "slug": "application_forms",
-    "meta_title": "Simplify Your Application Process with SharaForms's Application Form Templates",
-    "meta_description": "Discover how SharaForms's Application Form Templates can help you collect and manage applications more efficiently. With our form builder, you can easily create and customize application forms for job applications, scholarship applications, or membership applications. Streamline your process, receive email notifications, and integrate with tools like Slack and Discord. Start using SharaForms and our convenient application form templates today!",
-    "description": "Need to streamline your application process? SharaForms's Application Form Templates are designed to simplify the way you collect and manage applications. Whether you're accepting job applications, scholarship applications, or membership applications, SharaForms has you covered. With our form builder, you can easily create and customize application forms to fit your specific needs. Benefit from our email notifications, branding options, embedding capabilities, and integrations with tools like Slack and Discord. Upgrade your application process today with SharaForms and our convenient application form templates!"
+    "meta_title": "Application Form Templates for Any Process | SharaForms",
+    "meta_description": "Streamline applications for jobs, rentals, programs, and grants with free customizable templates. Structured fields, file uploads, and deadline automation included.",
+    "description": "An application form standardizes how people apply for jobs, housing, schools, grants, and programs. It asks every candidate the same structured questions plus supporting documents, giving reviewers comparable submissions instead of scattered emails and PDFs. SharaForms application templates support file uploads, eligibility checkboxes, and exportable shortlists for review panels.",
+    "h1": "Application Form Templates for Fair Screening",
+    "include_label": "an application form that screens fairly",
+    "how_to_label": "an application form",
+    "what_to_include": [
+      "Applicant identity and contact details",
+      "Role, program, or unit being applied for",
+      "Experience, qualifications, or eligibility answers",
+      "Supporting document uploads such as CVs or transcripts",
+      "References or referee contacts",
+      "Declaration and consent checkboxes"
+    ],
+    "how_to_steps": [
+      "Select an application template matching your process.",
+      "List the questions reviewers need for fair comparison.",
+      "Add upload fields for CVs, portfolios, or transcripts.",
+      "Publish with a closing date and review applications in one place."
+    ],
+    "faqs": [
+      {
+        "question": "What is the difference between an application form and a registration form?",
+        "answer": "Application forms screen and select candidates for limited spots, so they collect qualifying detail such as experience or eligibility. Registration forms enroll people into defined offerings where anyone meeting basic criteria can join."
+      },
+      {
+        "question": "Can applicants attach documents?",
+        "answer": "Yes. File upload fields accept resumes, cover letters, transcripts, portfolios, and identification documents, with configurable file size and count limits per applicant."
+      },
+      {
+        "question": "How do I stop applications after a deadline?",
+        "answer": "Schedule form closure in SharaForms. The form accepts submissions until your chosen date and time, then closes automatically without anyone needing to remember to switch it off."
+      }
+    ],
+    "featured_template": "job-application-form-template",
+    "best_practices": [
+      "Mirror your published criteria question by question",
+      "Require uploads only where documents truly decide",
+      "Set a hard closing date and communicate it twice",
+      "Score from exports so every reviewer sees identical data"
+    ],
+    "common_mistakes": [
+      "Asking essay questions where a checkbox would do",
+      "Accepting applications with no stated deadline at all",
+      "Reviewing free-text emails alongside structured entries",
+      "Losing supporting documents outside the application record"
+    ]
   },
   "file_upload_forms": {
     "name": "File Upload Forms",
     "slug": "file_upload_forms",
-    "meta_title": "Simplify File Uploads with SharaForms",
-    "meta_description": "SharaForms's File Upload Form Templates make it simple to collect files from your users. Create fully branded forms, receive email notifications, and integrate with Zapier or webhooks for seamless file management. Explore SharaForms's form builder now!",
-    "description": "Need to collect files from your users? SharaForms's File Upload Form Templates make it easy! Whether you're running a photography contest, accepting job applications, or gathering design submissions, SharaForms has you covered. With SharaForms's form builder, you can create custom file upload forms, fully branded with your own style. Allow your users to easily upload files, while you receive email notifications with the submissions. Use SharaForms's integration with Zapier or webhooks to automatically send the files to your preferred storage solution. Plus, with SharaForms's advanced features like password protection, custom code integration, and form pre-filling, you can create a secure and personalized experience for your users."
+    "meta_title": "Free File Upload Forms - Docs, Photos & Video Intake",
+    "meta_description": "Collect documents, images, videos, and large files through secure upload forms. Set size limits and file types, and get instant alerts on every upload.",
+    "description": "A file upload form collects documents alongside structured details, replacing email attachments and shared-drive chaos. Common uses include quote requests with site photos, design proof approvals, assignment submissions, insurance claims, and casting calls. SharaForms controls accepted file types, counts, and sizes per field, and every upload lands attached to its submission record.",
+    "h1": "File Upload Forms - Free & Size-Smart",
+    "include_label": "a file upload form",
+    "how_to_label": "a file upload form",
+    "what_to_include": [
+      "Submitter name and reply-to email",
+      "Purpose or category of the upload",
+      "One or more file fields with type rules",
+      "Size limits suited to your storage plan",
+      "Description or notes field for context",
+      "Confirmation message with next steps"
+    ],
+    "how_to_steps": [
+      "Pick a template or start from a blank upload form.",
+      "Configure accepted file types, maximum count, and size per field.",
+      "Ask for context fields so files arrive with explanations.",
+      "Share the form and receive uploads organized under each submission."
+    ],
+    "faqs": [
+      {
+        "question": "What file types can an upload form accept?",
+        "answer": "You can restrict fields to common formats such as PDF, DOCX, JPG, PNG, MP4, and ZIP, or allow any type. Rules are configured per field in the form builder."
+      },
+      {
+        "question": "Is there a file size limit?",
+        "answer": "Uploads are capped by workspace settings, typically around 10 MB per file on standard plans. The form shows the limit to users, preventing failed submissions from oversized attachments."
+      },
+      {
+        "question": "Where do uploaded files go?",
+        "answer": "Files attach directly to each submission inside your SharaForms dashboard, where admins can preview, download, or export them together with the rest of the response data."
+      }
+    ],
+    "featured_template": "file-upload-form-template",
+    "best_practices": [
+      "Restrict file types to formats your team can open",
+      "Name each upload field by its exact purpose",
+      "Keep total upload weight within mobile data comfort",
+      "Reply to every submission with what happens next"
+    ],
+    "common_mistakes": [
+      "Allowing any format and sorting through chaos later",
+      "Requesting five files where one combined PDF would work",
+      "Setting size caps nobody mentions until uploads fail",
+      "Storing submissions without ever assigning an owner"
+    ]
   },
   "booking_forms": {
     "name": "Booking Forms",
     "slug": "booking_forms",
-    "meta_title": "Streamline Your Booking Process with SharaForms's Booking Form Templates",
-    "meta_description": "Are you in need of a convenient and efficient way to handle bookings? Look no further! SharaForms's Booking Form Templates are the perfect solution. With SharaForms, you can easily create customized booking forms, integrate them with various tools, and simplify your booking process. Explore our templates today and see how SharaForms can revolutionize your booking experience!",
-    "description": "Planning an event or managing appointments? SharaForms's Booking Form Templates are designed to simplify the booking process. Whether you're a small business owner, a service provider, or an event organizer, our templates make it easy for you to collect booking details, streamline your workflow, and enhance your overall booking experience. With SharaForms, you can fully customize and brand your booking forms, integrate them with your favorite tools like Slack and Discord, and even protect them with passwords and captchas. Whether you need to schedule appointments, reserve tables, or organize events, SharaForms is here to help you make booking a breeze."
+    "meta_title": "Booking Form Templates for Appointments & Rentals | SharaForms",
+    "meta_description": "Take bookings for rooms, studios, equipment, and services with free form templates. Date pickers, availability options, and instant confirmations included.",
+    "description": "A booking form captures reservations for appointments, rentals, facilities, and experiences. Unlike a live scheduling tool, a booking form collects preferred dates, times, party details, and requirements as structured requests your team confirms. SharaForms booking templates include date fields, duration options, and automated acknowledgment emails that reduce scheduling back-and-forth.",
+    "h1": "Booking Form Templates That Stop Phone Tag",
+    "include_label": "a booking form that prevents back-and-forth",
+    "how_to_label": "a booking form",
+    "what_to_include": [
+      "Customer name and contact details",
+      "Preferred date and time selections",
+      "Duration, package, or slot type",
+      "Party size or units required",
+      "Special requests and equipment needs",
+      "Cancellation policy acknowledgment"
+    ],
+    "how_to_steps": [
+      "Choose a booking template aligned with what customers reserve.",
+      "Add date, time, and option fields matching real availability.",
+      "Set cutoffs or blackout dates using form logic and closure settings.",
+      "Confirm requests against your calendar and acknowledge each instantly."
+    ],
+    "faqs": [
+      {
+        "question": "Is a booking form the same as a scheduling tool?",
+        "answer": "No. Scheduling tools show live calendars and book slots instantly. Booking forms collect request details that your team reviews and confirms, which suits variable inventory like venues, equipment, and custom services."
+      },
+      {
+        "question": "Can customers pick specific time slots?",
+        "answer": "Yes. Offer time slots as select options or use date and time fields together. Conditional logic can hide slots on days you never serve, keeping requests realistic."
+      },
+      {
+        "question": "How do I prevent double bookings?",
+        "answer": "Review each incoming request against your calendar before confirming, set the form to notify you instantly, and temporarily close specific dates using form availability settings during peak periods."
+      }
+    ],
+    "featured_template": "appointment-booking-form-template",
+    "best_practices": [
+      "Offer time windows that match real availability honestly",
+      "Collect everything needed to confirm in one pass",
+      "Acknowledge instantly, then confirm personally if needed",
+      "Block dates you cannot serve instead of declining later"
+    ],
+    "common_mistakes": [
+      "Promising slots your calendar cannot actually honor",
+      "Splitting booking details across follow-up emails",
+      "Ignoring no-show policy acknowledgment at intake",
+      "Letting peak days stay open until overbooked"
+    ]
   },
   "survey_templates": {
     "name": "Survey Templates",
     "slug": "survey_templates",
-    "meta_title": "Create Engaging Surveys with SharaForms's Survey Template Collection",
-    "meta_description": "SharaForms's Survey Form Templates are built to simplify your survey creation process. Whether you are conducting customer satisfaction surveys, employee feedback surveys, or market research surveys, SharaForms provides an intuitive and customizable platform. Discover how SharaForms's form builder, email notifications, custom branding, and integrations can enhance your survey experience.",
-    "description": "Looking to collect valuable feedback and insights? SharaForms's Survey Form Templates are designed to help you easily create and distribute surveys. Whether you need to conduct customer satisfaction surveys, employee feedback surveys, or market research surveys, SharaForms has got you covered. With our intuitive and customizable survey templates, you can streamline your data collection process, analyze responses effectively, and gain actionable insights. Take advantage of SharaForms's form builder and leverage features like email notifications, custom branding, integrations with popular tools, and more to create impactful surveys."
+    "meta_title": "Survey Templates - Free Questionnaires That Get Answers",
+    "meta_description": "Launch surveys people actually finish. Free templates for satisfaction, research, and feedback with rating scales, skip logic, and shareable summaries.",
+    "description": "A survey asks a defined audience structured questions to measure opinion, satisfaction, behavior, or knowledge. Good surveys combine closed rating questions for measurable data with open text for the reasoning behind scores. SharaForms survey templates ship with proven scales, skip logic that shortens the path for each respondent, and summary views that surface trends fast.",
+    "h1": "Survey Templates Built for High Completion",
+    "include_label": "a survey people actually finish",
+    "how_to_label": "a survey",
+    "what_to_include": [
+      "A short introduction stating purpose and time needed",
+      "Demographic or segment questions kept minimal",
+      "Rating scales measuring the core metric",
+      "Open-ended questions capturing reasoning",
+      "Skip logic so irrelevant questions never appear",
+      "A thank-you close explaining what happens next"
+    ],
+    "how_to_steps": [
+      "Define the single decision your survey must inform.",
+      "Start from a survey template covering that goal.",
+      "Trim to essential questions and add skip logic.",
+      "Send the link and monitor completion in the results dashboard."
+    ],
+    "faqs": [
+      {
+        "question": "How many questions should a survey have?",
+        "answer": "Aim for five to ten questions, or completion time under three minutes. Every extra question costs completion rate, so cut anything that does not change a decision."
+      },
+      {
+        "question": "What makes survey responses biased?",
+        "answer": "Leading wording, unbalanced answer scales, double-barreled questions, and prompting examples all bias results. Neutral phrasing and balanced scales keep respondents answering honestly rather than agreeing politely."
+      },
+      {
+        "question": "Can I see partial responses?",
+        "answer": "SharaForms stores completed submissions, and you can enable partial-saving so long surveys capture answers even when someone leaves midway, giving you more usable data per send."
+      }
+    ],
+    "featured_template": "customer-feedback-survey-template",
+    "best_practices": [
+      "Open with why the survey matters in one sentence",
+      "Put the core rating question first, demographics last",
+      "Use skip logic so nobody answers irrelevant items",
+      "Share what changed because of the last round"
+    ],
+    "common_mistakes": [
+      "Doubling length with nice-to-know questions",
+      "Mixing two ideas into a single question",
+      "Requiring answers on optional opinion fields",
+      "Sending surveys months after the experience faded"
+    ]
   },
   "consent_forms": {
     "name": "Consent Forms",
     "slug": "consent_forms",
-    "meta_title": "Simplify Consent Forms with SharaForms",
-    "meta_description": "Discover how SharaForms's form builder and Consent Form Templates can streamline your consent form process. Benefit from features like email notifications, customization options, form hosting on your custom domain, integrations with Slack and Discord, and more.",
-    "description": "Need consent forms for your business or organization? SharaForms provides a range of Consent Form Templates to simplify the process. With SharaForms's form builder, you can easily create customized consent forms tailored to your specific needs. Benefit from features such as email notifications for both the form owner and submitter, full customization and branding options, the ability to host forms on your own custom domain, and easy integration with other tools like Slack and Discord via Zapier or webhooks. You can also add password protection, captcha, custom code, and pre-fill forms using URL parameters. Additionally, SharaForms allows you to set form expiration dates or submission limits, and even enables respondents to edit their own submissions. Streamline your consent form process with SharaForms today!"
+    "meta_title": "Consent Form Templates with E-Signature | SharaForms",
+    "meta_description": "Capture informed consent with signature for media releases, waivers, data use, and minors. Free templates that store timestamped proof securely.",
+    "description": "A consent form documents that someone understands and agrees to an activity, data practice, or use of their image before it happens. Typical scenarios include photo releases, activity participation, research participation, and parental permissions. SharaForms consent templates pair plain-language explanations with signature fields, storing timestamped records retrievable if permission is ever questioned.",
+    "h1": "Consent Form Templates with Signed Proof",
+    "include_label": "a consent form with proof attached",
+    "how_to_label": "a consent form",
+    "what_to_include": [
+      "Plain-language explanation of what is being agreed to",
+      "Scope, duration, and any compensation stated explicitly",
+      "Optional parent or guardian section for minors",
+      "Signature field capturing informed agreement",
+      "Withdrawal or opt-out instructions",
+      "Timestamped storage as proof of consent"
+    ],
+    "how_to_steps": [
+      "Describe the activity or use in language a layperson understands.",
+      "State scope, duration, and withdrawal rights explicitly.",
+      "Add a guardian section if participants may be minors.",
+      "Collect signatures and keep every consent stored and searchable."
+    ],
+    "faqs": [
+      {
+        "question": "Does a digital consent form hold up legally?",
+        "answer": "In most jurisdictions yes, provided consent is informed, freely given, and documented. Electronic signature regulations recognize digital signatures, and timestamped storage creates the evidence trail paper often lacks."
+      },
+      {
+        "question": "What is informed consent?",
+        "answer": "Informed consent means the person understands what they agree to, including risks, scope, and their right to withdraw, before signing. Plain language and explicit scope statements are what make consent informed."
+      },
+      {
+        "question": "How long should consent records be kept?",
+        "answer": "Keep consent records at least as long as you use the material or data, plus your jurisdiction's limitation period for claims. Digital storage makes indefinite retention practical."
+      }
+    ],
+    "featured_template": "liability-waiver-form-template",
+    "best_practices": [
+      "Explain the agreement in plain, short sentences",
+      "Separate initial acknowledgment from final signature",
+      "Store timestamps alongside every signed record",
+      "Provide a withdrawal route and honor it quickly"
+    ],
+    "common_mistakes": [
+      "Burying scope inside walls of dense legal text",
+      "Treating a checkbox alone as informed consent",
+      "Forgetting guardian sections for underage participants",
+      "Deleting records the moment the activity ends"
+    ]
   },
   "rsvp_forms": {
     "name": "RSVP Forms",
     "slug": "rsvp_forms",
-    "meta_title": "Simplify RSVP Management with SharaForms's RSVP Form Templates",
-    "meta_description": "Need to manage RSVPs for your event? SharaForms offers RSVP Form Templates that make it easy! Customize the template, embed it on your website, and enjoy features like email notifications, form customization, integrations with tools like Slack, and more. Upgrade your RSVP process with SharaForms today!",
-    "description": "Planning an event or gathering and need to manage RSVPs? SharaForms offers RSVP Form Templates that can simplify your work! With these form templates, you can easily collect RSVP details, streamline your RSVP process, and benefit from SharaForms's advanced features. Customize the RSVP form template to fit your event's needs, embed it on your website, and see how SharaForms can upgrade your RSVP management."
+    "meta_title": "Free RSVP Templates for Weddings, Parties & Events",
+    "meta_description": "Collect RSVPs online with free templates for weddings, dinners, and parties. Track headcounts, meal choices, and plus-ones without spreadsheet chaos.",
+    "description": "An RSVP form asks invitees to confirm attendance, headcount, and preferences such as meal selections for weddings, parties, corporate dinners, and reunions. Digital RSVPs replace reply cards and phone tag with a live guest list. SharaForms RSVP templates tally responses automatically and can close once your venue capacity is reached.",
+    "h1": "RSVP Templates Guests Actually Return",
+    "include_label": "an RSVP form guests actually answer",
+    "how_to_label": "an RSVP form",
+    "what_to_include": [
+      "Guest name and contact details",
+      "Attending yes-or-no response",
+      "Number in party including plus-ones",
+      "Meal or drink selections",
+      "Song requests or well-wishes fields",
+      "Response deadline clearly displayed"
+    ],
+    "how_to_steps": [
+      "Copy an RSVP template matching your occasion.",
+      "List meal options and add a plus-one counter.",
+      "Set a reply-by date and optional capacity cap.",
+      "Share the link on invitations and watch the guest list build."
+    ],
+    "faqs": [
+      {
+        "question": "When should guests be asked to RSVP by?",
+        "answer": "Set the RSVP deadline two to three weeks before the event, enough time to finalize catering numbers and seating while allowing late changes a buffer window."
+      },
+      {
+        "question": "Can couples respond for their whole family?",
+        "answer": "Yes. Include a party-size number field or separate meal selectors per guest so one response covers everyone arriving together, keeping your headcount accurate."
+      },
+      {
+        "question": "How do I chase guests who have not replied?",
+        "answer": "Export submitted responses to see exactly who is missing, then resend invitations with the link. Closing-date reminders in SharaForms can also nudge stragglers automatically."
+      }
+    ],
+    "featured_template": "rsvp-form-template",
+    "best_practices": [
+      "Make yes-or-no the very first interaction",
+      "Collect meal counts that caterers can act on",
+      "Show the reply-by date beside the submit button",
+      "Tally responses automatically instead of counting texts"
+    ],
+    "common_mistakes": [
+      "Demanding full addresses for a backyard party",
+      "Leaving RSVPs open until the wedding day itself",
+      "Tracking headcounts across scattered message threads",
+      "Punishing late replies before sending any reminder"
+    ]
   },
   "appointment_forms": {
     "name": "Appointment Forms",
     "slug": "appointment_forms",
-    "meta_title": "Simplify Your Appointment Scheduling with SharaForms",
-    "meta_description": "Looking for a convenient way to collect appointment requests? Discover SharaForms's Appointment Form Templates and streamline your scheduling process. With SharaForms's form builder, you can easily create customizable appointment forms, receive email notifications, integrate with tools like Slack and Discord, and more. Try SharaForms today and upgrade your appointment scheduling experience.",
-    "description": "Need to schedule appointments? SharaForms offers Appointment Form Templates that can simplify your scheduling process! These templates are targeted at businesses, professionals, and service providers who need to collect appointment requests from clients. With SharaForms, you can easily create customizable appointment forms, streamline your scheduling process, and benefit from features like email notifications, form customization, form embedding, and integrations with tools like Slack and Discord via Zapier or webhooks. Use an appointment form template below, customize it to fit your needs, and see how SharaForms can upgrade your appointment scheduling process."
+    "meta_title": "Appointment Forms - Book Clients Without Phone Tag",
+    "meta_description": "Let clients request appointments online with free templates. Preferred times, service selection, intake details, and instant confirmations in one flow.",
+    "description": "An appointment form collects who needs a meeting, which service or consultation they want, and when they are available. Clinics, salons, consultants, and advisors use appointment forms to replace phone-tag scheduling with structured requests confirmed by staff. SharaForms adds intake questions, reminder-friendly exports, and instant acknowledgments to every appointment template.",
+    "h1": "Appointment Form Templates Clients Love Using",
+    "include_label": "an appointment request form",
+    "how_to_label": "an appointment form",
+    "what_to_include": [
+      "Client name, email, and mobile number",
+      "Service or appointment type selection",
+      "Preferred date and time windows",
+      "New or returning client indicator",
+      "Brief reason or intake note",
+      "Policy acknowledgment such as cancellation terms"
+    ],
+    "how_to_steps": [
+      "Choose an appointment template for your service type.",
+      "List services with expected durations as selectable options.",
+      "Collect preferred time windows rather than exact slots.",
+      "Confirm bookings against your calendar and acknowledge each request."
+    ],
+    "faqs": [
+      {
+        "question": "Should clients book exact times or request windows?",
+        "answer": "Forms work best collecting preferred windows that staff confirm against real calendars. Exact-slot booking needs a live scheduling integration, while window requests suit practices with variable appointment lengths."
+      },
+      {
+        "question": "Can the form collect intake details before the visit?",
+        "answer": "Yes. Add health history, project briefs, or consultation goals as questions so professionals prepare before the first appointment, making booked time dramatically more productive."
+      },
+      {
+        "question": "How do I reduce no-shows?",
+        "answer": "Send instant confirmations, include cancellation policy acknowledgment in the form, and export scheduled appointments for reminder messages the day before each visit."
+      }
+    ],
+    "featured_template": "appointment-booking-form-template",
+    "best_practices": [
+      "List services with honest duration estimates",
+      "Capture preferred windows rather than exact minutes",
+      "Gather intake notes so booked time starts prepared",
+      "Reduce no-shows with policies acknowledged upfront"
+    ],
+    "common_mistakes": [
+      "Offering fifteen options when three would convert more",
+      "Scheduling without checking real staff calendars",
+      "Asking medical history in non-secure general forms",
+      "Never confirming, then blaming the client for forgetting"
+    ]
   },
   "contact_forms": {
     "name": "Contact Forms",
     "slug": "contact_forms",
-    "meta_title": "Supercharge Your Communication with SharaForms Contact Form Templates",
-    "meta_description": "Need a reliable way to collect inquiries from your website? Check out SharaForms's Contact Form Templates. Easily create and customize a contact form that matches your brand. Receive email notifications, integrate with Slack or Discord, and streamline your communication process with SharaForms.",
-    "description": "Looking to improve communication with your clients? SharaForms's Contact Form Templates are designed to help you effortlessly collect and manage inquiries from your website. With SharaForms, you can easily create and customize a contact form that matches your brand. Receive email notifications for every form submission, ensuring you never miss a message. Seamlessly integrate your contact form with tools like Slack or Discord using Zapier or webhooks. Whether you're a small business owner or a blogger, SharaForms's Contact Form Templates empower you to engage with your audience and streamline your communication process."
+    "meta_title": "Contact Form Templates - Spam-Free & Fast to Deploy",
+    "meta_description": "Add a professional contact form to any website in minutes. Free templates with captcha protection, topic routing, and instant notifications.",
+    "description": "A contact form gives website visitors a direct channel to sales, support, or general inquiries without exposing email addresses to scrapers. Effective contact forms stay short: identity, topic, and message. SharaForms contact templates include captcha protection, topic-based routing with conditional logic, and instant email alerts so inquiries reach the right inbox immediately.",
+    "h1": "Contact Form Templates That Block Spam Cold",
+    "include_label": "a spam-free contact form",
+    "how_to_label": "a contact form",
+    "what_to_include": [
+      "Visitor name and email address",
+      "Topic or department selector",
+      "Message body with room for detail",
+      "Optional phone for callback requests",
+      "Company or account field for B2B routing",
+      "Spam protection such as captcha"
+    ],
+    "how_to_steps": [
+      "Copy the contact form template closest to your needs.",
+      "Adjust topics so inquiries route to the right team.",
+      "Enable captcha and notification emails.",
+      "Embed the form on your site or share its direct link."
+    ],
+    "faqs": [
+      {
+        "question": "How do I stop spam on my contact form?",
+        "answer": "Enable captcha protection and consider a hidden honeypot field. SharaForms also logs submission sources, helping you block abusive patterns quickly without blocking genuine visitors."
+      },
+      {
+        "question": "Should contact forms ask for phone numbers?",
+        "answer": "Make phone optional. Requiring it lowers completion rates, while optional capture still serves visitors who prefer callbacks, giving sales teams a second channel without friction."
+      },
+      {
+        "question": "Can different topics go to different inboxes?",
+        "answer": "Yes. Conditional logic can route submissions by topic using webhook integrations or notification rules, so billing questions reach finance while sales inquiries reach your CRM-connected inbox."
+      }
+    ],
+    "featured_template": "contact-form-template",
+    "best_practices": [
+      "Limit fields to name, email, topic, and message",
+      "Route topics automatically to the owning inbox",
+      "Enable captcha before your address gets scraped",
+      "Answer fast; speed sets the tone for everything after"
+    ],
+    "common_mistakes": [
+      "Adding phone number fields marked required",
+      "Publishing forms without spam protection of any kind",
+      "Sending every inquiry to one unmonitored address",
+      "Writing confirmation text with no human reply path"
+    ]
   },
   "questionnaire_templates": {
     "name": "Questionnaire Templates",
     "slug": "questionnaire_templates",
-    "meta_title": "Create Powerful Questionnaires with SharaForms",
-    "meta_description": "Discover how SharaForms's Questionnaire Templates can simplify your data collection process. Customize and analyze your questionnaires, receive email notifications, and integrate with other tools. Start creating powerful questionnaires with SharaForms today!",
-    "description": "Looking to create a comprehensive questionnaire? SharaForms's Questionnaire Templates are designed to make the process simple and efficient. Whether you need to conduct surveys, gather feedback, or collect data, SharaForms provides all the necessary features to create and analyze your questionnaires. With SharaForms, you can easily customize and brand your forms, receive email notifications for both form owners and respondents, and even integrate with other tools like Slack or Discord. Take advantage of SharaForms's form builder to create powerful questionnaires and streamline your data collection process."
+    "meta_title": "Questionnaire Templates for Research & Intake | SharaForms",
+    "meta_description": "Build questionnaires for research, intake, and assessment with free templates. Mix question types, apply branching logic, and analyze results visually.",
+    "description": "A questionnaire is a structured set of questions designed to gather comparable information from many respondents, used for research, client intake, assessments, and program evaluation. Unlike casual surveys, questionnaires follow deliberate question ordering and validated scales. SharaForms questionnaire templates support text, choice, rating, matrix, and file question types with branching logic throughout.",
+    "h1": "Questionnaire Templates from Screening to Research",
+    "include_label": "a well-built questionnaire",
+    "how_to_label": "a questionnaire",
+    "what_to_include": [
+      "Clear respondent instructions up front",
+      "Grouped sections following a logical order",
+      "Mixed question types matched to information goals",
+      "Branching logic for path-dependent questions",
+      "Progress indication on longer questionnaires",
+      "Data export compatible with analysis tools"
+    ],
+    "how_to_steps": [
+      "Write down exactly what decisions the answers must inform.",
+      "Sequence questions from general topics to sensitive ones.",
+      "Apply branching so follow-ups appear only when relevant.",
+      "Pilot with two or three people, then fix friction before launch."
+    ],
+    "faqs": [
+      {
+        "question": "What is the difference between a questionnaire and a survey?",
+        "answer": "A questionnaire is the instrument itself: the ordered set of questions. A survey is the broader process of administering questionnaires to a sample and analyzing responses. The terms overlap in everyday use."
+      },
+      {
+        "question": "Which question types give analyzable data?",
+        "answer": "Closed formats, including single-choice, multiple-choice, rating scales, and matrices, produce quantifiable data. Reserve open text for questions where unexpected answers genuinely inform outcomes."
+      },
+      {
+        "question": "How do I test a questionnaire before sending?",
+        "answer": "Pilot it with a small group matching your audience, watch where they hesitate or drop off, then refine wording and length. Five pilot respondents typically catch most comprehension problems."
+      }
+    ],
+    "featured_template": "questionnaire-template",
+    "best_practices": [
+      "Sequence questions from easy to sensitive gradually",
+      "Match each goal to one specific question type",
+      "Pilot with a handful of people before launch",
+      "Version your questionnaire so results stay comparable"
+    ],
+    "common_mistakes": [
+      "Leading respondents toward the answer you want",
+      "Switching rating scale directions halfway through",
+      "Collecting open text where a choice would analyze better",
+      "Launching long questionnaires with zero progress signals"
+    ]
   },
   "signup_forms": {
     "name": "Signup Forms",
     "slug": "signup_forms",
-    "meta_title": "Supercharge Your Signup Process with SharaForms's Signup Form Templates",
-    "meta_description": "Discover how SharaForms's Signup Form Templates can revolutionize your signup process. Streamline user registrations, collect essential information, and integrate with other tools seamlessly. Build professional and branded signup forms using SharaForms's form builder. Try SharaForms now!",
-    "description": "Looking to build a signup form? SharaForms offers a wide range of Signup Form Templates that can cater to your needs! Whether you're running a small business, organizing an event, or managing a community, SharaForms provides an intuitive and customizable form builder to create professional signup forms. With SharaForms, you can easily collect user information, streamline your signup process, and benefit from seamless integrations with tools like Slack and Discord via Zapier or webhooks. Customize your form's branding, protect it with a password, and embed it on any website. Upgrade your signup process with SharaForms and our versatile Signup Form Templates!"
+    "meta_title": "Sign-Up Form Templates - Memberships, Newsletters & More",
+    "meta_description": "Grow memberships, newsletters, waitlists, and programs with free sign-up templates. Short forms, double opt-in friendly, instant welcome messages.",
+    "description": "A sign-up form enrolls people into newsletters, memberships, classes, beta programs, and waitlists by asking only for essentials: identity, contact, and preferences. Conversion depends on brevity, so strong sign-up forms rarely exceed five fields. SharaForms sign-up templates integrate with notification workflows and export subscriber lists in CSV for your email platform.",
+    "h1": "Sign-Up Form Templates Engineered for Conversion",
+    "include_label": "a sign-up form that maximizes conversion",
+    "how_to_label": "a sign-up form",
+    "what_to_include": [
+      "Name and primary contact field",
+      "Email with communication consent checkbox",
+      "Interest or preference selection",
+      "Referral source question kept optional",
+      "Membership tier or list choice",
+      "Instant welcome or confirmation message"
+    ],
+    "how_to_steps": [
+      "Start with a sign-up template matching your audience.",
+      "Cut every field that does not change what you deliver.",
+      "Add consent language satisfying your region's email regulations.",
+      "Connect notifications or export lists to your marketing tools."
+    ],
+    "faqs": [
+      {
+        "question": "How many fields should a sign-up form have?",
+        "answer": "Three to five fields maximizes conversion: typically name, email, and one preference. Every additional field filters out busy but interested people, so demand each one earns its place."
+      },
+      {
+        "question": "What is double opt-in?",
+        "answer": "Double opt-in confirms subscribers via a follow-up email click before adding them to lists. It improves list quality and satisfies strict consent regulations, though it slightly reduces raw sign-up volume."
+      },
+      {
+        "question": "Can sign-ups trigger welcome emails?",
+        "answer": "Yes. SharaForms sends automatic confirmation emails on submission, and webhook integrations push new sign-ups into platforms like Mailchimp or Customer.io for richer sequences."
+      }
+    ],
+    "featured_template": "volunteer-signup-form-template",
+    "best_practices": [
+      "Trade something valuable for every field you request",
+      "Place consent language exactly beside the email field",
+      "Deliver an immediate welcome that confirms success",
+      "Sync signups to your platform the moment they land"
+    ],
+    "common_mistakes": [
+      "Requesting birthdates nobody will ever use",
+      "Hiding unsubscribe language in tiny footer links",
+      "Celebrating volume while ignoring double opt-in quality",
+      "Leaving welcome emails unwritten until weeks later"
+    ]
   },
   "abstract_forms": {
     "name": "Abstract Forms",
     "slug": "abstract_forms",
-    "meta_title": "Create and Manage Abstract Forms with SharaForms",
-    "meta_description": "Discover how SharaForms, a form builder, simplifies the creation and management of abstract forms. Collect abstract data effortlessly, streamline your process, and benefit from SharaForms's extensive features. Start building your abstract forms with SharaForms's customizable templates today!",
-    "description": "Looking for a versatile form builder for your abstract forms? SharaForms has got you covered! With SharaForms's form builder, you can easily create and customize abstract forms tailored to your needs. Collect abstract data effortlessly, streamline your abstract form process, and benefit from SharaForms's extensive features. With email notifications, custom branding, embeddable forms, and integrations with popular tools like Slack and Discord, SharaForms empowers you to create, manage, and analyze abstract form submissions efficiently."
+    "meta_title": "Abstract Submission Forms for Conferences & Journals",
+    "meta_description": "Collect research abstracts with structured templates: authors, affiliations, keywords, and files. Review-ready exports and deadline automation included.",
+    "description": "An abstract submission form collects presentation or publication proposals for conferences, symposiums, and journals: title, author list, affiliations, keywords, and the abstract text itself. Structured collection lets scientific committees review proposals side by side instead of decoding inconsistent email formats. SharaForms supports word-count guidance, co-author fields, and deadline enforcement.",
+    "h1": "Abstract Submission Forms Committees Can Score",
+    "include_label": "an abstract submission form reviewers love",
+    "how_to_label": "an abstract submission form",
+    "what_to_include": [
+      "Presentation or paper title",
+      "Author names with affiliation details",
+      "Presenting author contact information",
+      "Abstract text within word limits",
+      "Keyword and topic track selection",
+      "Supplementary file uploads where permitted"
+    ],
+    "how_to_steps": [
+      "Choose the abstract template and state your word limit clearly.",
+      "Add tracks or themes as selectable categories.",
+      "Require presenting-author contacts for correspondence.",
+      "Enforce the deadline with automatic closure before review begins."
+    ],
+    "faqs": [
+      {
+        "question": "What word count should an abstract target?",
+        "answer": "Conference abstracts commonly run 250 to 300 words; journal abstracts 150 to 250. State your limit in the form help text so authors self-edit before submitting."
+      },
+      {
+        "question": "How do committees review abstracts fairly?",
+        "answer": "Collect identical fields from every submitter, anonymize where your process requires, then export all abstracts to CSV for blind scoring rounds against published criteria."
+      },
+      {
+        "question": "Can authors revise submitted abstracts?",
+        "answer": "Enable editable submissions so presenters can refine abstracts until the deadline, letting them update their existing entry rather than creating duplicate submissions."
+      }
+    ],
+    "featured_template": "abstract-submission-form-template",
+    "best_practices": [
+      "State word limits and track themes in the brief",
+      "Require presenting-author contacts for correspondence",
+      "Enforce deadlines with automatic closure, not memory",
+      "Export blind scoring sheets straight from submissions"
+    ],
+    "common_mistakes": [
+      "Accepting abstracts with no declared word ceiling",
+      "Losing author affiliations inside attachment files",
+      "Extending deadlines informally for some submitters",
+      "Scoring against criteria never published to authors"
+    ]
   },
   "audit_forms": {
     "name": "Audit Forms",
     "slug": "audit_forms",
-    "meta_title": "Simplify Your Audits with SharaForms's Audit Form Templates",
-    "meta_description": "Looking for a hassle-free way to perform audits? Discover SharaForms's Audit Form Templates and streamline your audit process. With SharaForms's form builder, you can easily create customized audit forms, receive email notifications, integrate with other tools, and embed forms on any website. Start simplifying your audits today!",
-    "description": "Need to perform audits for your business? SharaForms's Audit Form Templates are designed to help you simplify the audit process. With SharaForms, you can easily create custom audit forms tailored to your specific needs. Use our templates as a starting point, customize them with your own questions and sections, and streamline your audit workflow. With features like email notifications, form customization, integration with other tools, and the ability to embed forms on any website, SharaForms is the perfect tool for conducting audits efficiently and effectively."
+    "meta_title": "Audit Form Templates - Safety, Quality & Compliance Checks",
+    "meta_description": "Run consistent audits for safety, quality, and compliance with free checklist templates. Score sections, flag failures, and export evidence.",
+    "description": "An audit form turns inspection standards into repeatable checklists that produce consistent, comparable results across sites, shifts, and auditors. Quality teams, safety officers, and compliance managers use audit forms for facility walks, process reviews, and supplier evaluations. SharaForms supports scored sections, photo evidence, and pass-fail logic that flags nonconformities instantly.",
+    "h1": "Audit Checklist Templates You Can Defend",
+    "include_label": "a repeatable audit checklist",
+    "how_to_label": "an audit form",
+    "what_to_include": [
+      "Audited area, asset, or process identifier",
+      "Checklist items grouped by category",
+      "Pass, fail, or not-applicable responses per item",
+      "Photo or document evidence for findings",
+      "Severity ratings on nonconformities",
+      "Auditor signature and timestamp"
+    ],
+    "how_to_steps": [
+      "Translate your audit standard into grouped checklist items.",
+      "Add evidence uploads for any item that can fail.",
+      "Use logic to require corrective notes on failures.",
+      "Run audits from mobile, then export results for trend reporting."
+    ],
+    "faqs": [
+      {
+        "question": "What is the difference between an audit and an inspection?",
+        "answer": "Inspections examine specific conditions at a point in time, while audits systematically evaluate whether processes conform to standards over a period. Audit forms therefore reference procedures and records, not just physical states."
+      },
+      {
+        "question": "How detailed should audit checklists be?",
+        "answer": "Specific enough that two different auditors reach the same verdict, broad enough to finish within the available time. Ten to thirty grouped items covers most operational audits effectively."
+      },
+      {
+        "question": "Can audits score sections automatically?",
+        "answer": "Yes. Assign points to answers and use calculations to produce section and overall scores on submission, turning subjective walks into trackable quality metrics."
+      }
+    ],
+    "featured_template": "audit-form-template",
+    "best_practices": [
+      "Write checkpoints observable by any qualified auditor",
+      "Group items by area so walks follow a natural route",
+      "Require evidence photos wherever failures are possible",
+      "Compare scores across sites to expose systemic gaps"
+    ],
+    "common_mistakes": [
+      "Phrasing items so vague that verdicts become opinions",
+      "Running audits that never feed corrective actions",
+      "Skipping severity ratings on recorded findings",
+      "Archiving nothing beyond a final pass-or-fail number"
+    ]
   },
   "award_forms": {
     "name": "Award Forms",
     "slug": "award_forms",
-    "meta_title": "Simplify Your Award Process with SharaForms's Award Form Templates",
-    "meta_description": "Looking for a way to streamline your award process? SharaForms's Award Form Templates are designed to help you gather nominations, track submissions, and simplify the selection process. With SharaForms, you can fully customize and brand your award forms, receive email notifications, integrate with other tools, and more. Discover how SharaForms can enhance your award process today!",
-    "description": "Recognizing excellence in your organization? SharaForms offers Award Form Templates that can simplify the process! These form templates are designed to help you gather nominations, track submissions, and streamline the award selection process. With SharaForms's form builder, you can fully customize and brand your award forms to match your organization's identity. You can also take advantage of features like email notifications, custom domains, form embedding, and integration with tools like Slack and Discord. Explore our award form templates below, customize them to fit your requirements, and see how SharaForms can enhance your award process."
+    "meta_title": "Award Nomination Forms - Recognize Excellence Easily",
+    "meta_description": "Collect nominations and entries for awards with free templates. Category selection, criteria statements, supporting docs, and judging-ready exports.",
+    "description": "An award nomination form collects candidates for recognition programs: nominator details, nominee information, category selection, and evidence of achievement. Professional associations, companies, competitions, and industry bodies use them to run fair, documented selection rounds. SharaForms keeps every entry structured so judges compare like with like.",
+    "h1": "Award Nomination Forms Judges Enjoy Reading",
+    "include_label": "an award nomination form",
+    "how_to_label": "an award nomination form",
+    "what_to_include": [
+      "Nominator name and contact details",
+      "Nominee identity and affiliation",
+      "Category or prize being entered",
+      "Achievement statement against published criteria",
+      "Supporting documents or reference letters",
+      "Eligibility declarations and deadlines"
+    ],
+    "how_to_steps": [
+      "List your categories as selectable options.",
+      "Mirror your published criteria in the questions.",
+      "Add uploads for portfolios or endorsements.",
+      "Close entries automatically at the deadline and export for judging."
+    ],
+    "faqs": [
+      {
+        "question": "What makes a strong award nomination?",
+        "answer": "Strong nominations map achievements directly to each published criterion with specific examples and outcomes. Evidence beats adjectives: metrics, milestones, and third-party references persuade judges more than praise."
+      },
+      {
+        "question": "Can one person submit multiple nominations?",
+        "answer": "Yes, and you can control it either way. Leave submissions open for multiple distinct nominees, or use validation rules to restrict duplicate entries per nominator."
+      },
+      {
+        "question": "How do judges score nominations consistently?",
+        "answer": "Export all entries to CSV with identical fields, share scoring rubrics derived from your published criteria, and review blind where possible so scores reflect content rather than familiarity."
+      }
+    ],
+    "featured_template": "award-nomination-form-template",
+    "best_practices": [
+      "Publish scoring criteria before nominations open",
+      "Ask for evidence against each criterion explicitly",
+      "Cap supporting files so judging stays manageable",
+      "Close entries on one firm, communicated date"
+    ],
+    "common_mistakes": [
+      "Accepting free-form pitches with nothing comparable",
+      "Letting nominators nominate themselves unnoticed",
+      "Judging from email attachments instead of exports",
+      "Announcing winners without documenting the scoring"
+    ]
   },
   "calculation_forms": {
     "name": "Calculation Forms",
     "slug": "calculation_forms",
-    "meta_title": "Streamline Your Calculations with SharaForms's Calculation Form Templates",
-    "meta_description": "Discover the power of SharaForms's Calculation Form Templates to simplify your data analysis and advanced calculations. Customize, integrate, and optimize your calculation forms with our form builder. Explore the features of SharaForms, including email notifications, custom branding, form embedding, and integration with various tools. Upgrade your calculation process with SharaForms today!",
-    "description": "Are you in need of advanced calculation forms? Look no further than SharaForms! Our Calculation Form Templates are designed for businesses and individuals who require complex calculations and data analysis. With SharaForms, you can easily create and customize calculation forms to suit your needs. Benefit from our form builder, which allows you to fully customize and brand your forms. You can also integrate your calculation forms with various tools, such as Slack and Discord, via Zapier or webhooks. With features like email notifications, custom domain hosting, password protection, and form pre-filling, SharaForms provides a complete solution for all your calculation form needs."
+    "meta_title": "Calculator Form Templates - Quotes & Cost Estimators Free",
+    "meta_description": "Build quote calculators, cost estimators, and ROI tools with free templates. Live calculations update totals as users type. No code required.",
+    "description": "A calculation form computes live results from user inputs: price quotes, cost estimates, loan repayments, health scores, or savings projections. Interactive calculators convert visitors by answering the buying question instantly instead of gating it behind a sales call. SharaForms calculates across numeric fields with formulas you configure in minutes, no JavaScript required.",
+    "h1": "Calculator Form Templates for Quotes & Estimates",
+    "include_label": "a live calculator form",
+    "how_to_label": "a calculator form",
+    "what_to_include": [
+      "Input fields matching your pricing variables",
+      "Formula-driven output shown live",
+      "Contact capture placed after the result",
+      "Conditional sections based on user selections",
+      "Currency and unit labels for clarity",
+      "A follow-up call to action such as a formal quote"
+    ],
+    "how_to_steps": [
+      "Identify the inputs that drive your price or score.",
+      "Add number fields for each variable.",
+      "Write the calculation once; SharaForms updates it live.",
+      "Show the result freely, then invite the logical next step."
+    ],
+    "faqs": [
+      {
+        "question": "Do I need coding skills to build a calculator form?",
+        "answer": "No. You define inputs and write the formula in plain settings; SharaForms recomputes the result live as users answer. No JavaScript or developer time required."
+      },
+      {
+        "question": "What can calculator forms compute?",
+        "answer": "Anything expressible as math over inputs: service quotes from area and options, financing costs, shipping estimates, nutrition scores, ROI projections, and discount ladders."
+      },
+      {
+        "question": "Should results require an email first?",
+        "answer": "Showing results immediately builds trust and still converts well; add optional email capture alongside the result for follow-up. Gating calculators behind email typically suppresses completion sharply."
+      }
+    ],
+    "featured_template": "calculation-form-template",
+    "best_practices": [
+      "Show inputs and results together, updating live",
+      "Round outputs the way your quotes actually read",
+      "Capture contact details after the number appears",
+      "Test edge cases: zero, maximums, and odd values"
+    ],
+    "common_mistakes": [
+      "Gating every result behind an email wall",
+      "Writing formulas nobody has sanity-checked",
+      "Hiding units so users guess currency or meters",
+      "Leaving broken calculations live for months"
+    ]
   },
   "checklist_forms": {
     "name": "Checklist Forms",
     "slug": "checklist_forms",
-    "meta_title": "Efficient Task Management with SharaForms's Checklist Form Templates",
-    "meta_description": "Utilize SharaForms's Checklist Form Templates to streamline your task management process. With SharaForms, easily create, customize, and track your to-do lists or task checklists. Benefit from features like email notifications, custom branding, form embedding, and integrations with tools like Slack and Discord. Secure your forms with passwords and captchas. Explore our checklist form templates and discover how SharaForms can enhance your task organization and efficiency.",
-    "description": "Managing a to-do list or organizing tasks? SharaForms's Checklist Form Templates are designed to help you stay organized and streamline your workflow. With SharaForms, you can easily create and customize checklist forms, enabling you to track and manage tasks efficiently. Take advantage of SharaForms's email notifications, custom branding, and form embedding capabilities. Integrate your checklist forms with tools like Slack and Discord using Zapier or webhooks. Protect your forms with a password and add a captcha for enhanced security. With SharaForms, you can pre-fill form fields via URL parameters, set deadlines for form submissions, and even allow respondents to edit their own submissions. Explore our checklist form templates below and experience the power of SharaForms in simplifying your task management process."
+    "meta_title": "Checklist Templates - Daily, Safety & Onboarding Lists",
+    "meta_description": "Standardize routines with free checklist templates: opening and closing, safety walks, onboarding steps. Tick items on mobile with timestamped records.",
+    "description": "A checklist form turns any repeatable routine into tick-box steps that get done the same way every time: store openings, safety walks, equipment checks, onboarding tasks, cleaning rounds. Unlike paper checklists, digital versions timestamp each completion and alert supervisors when steps are skipped. SharaForms checklists work on any phone and archive history automatically.",
+    "h1": "Checklist Templates for Routines That Must Stick",
+    "include_label": "an operational checklist",
+    "how_to_label": "a checklist form",
+    "what_to_include": [
+      "Steps ordered in real execution sequence",
+      "Required confirmations for critical items",
+      "Notes fields for exceptions found",
+      "Photos documenting completed conditions",
+      "Assignee and location identifiers",
+      "Automatic timestamping of completions"
+    ],
+    "how_to_steps": [
+      "Walk the actual routine and note every real step.",
+      "Order items exactly as they happen on site.",
+      "Mark safety-critical items as required.",
+      "Post a QR code linking to the form at the point of work."
+    ],
+    "faqs": [
+      {
+        "question": "Is a checklist form better than paper?",
+        "answer": "Digital checklists timestamp completions, capture photo evidence, alert supervisors to skipped steps, and build searchable history. Paper records none of this without manual transcription effort."
+      },
+      {
+        "question": "How do teams access the checklist day to day?",
+        "answer": "Print a QR code linking to the form and post it at the point of work, or pin the link in your team chat. One tap opens today's round."
+      },
+      {
+        "question": "Can managers verify checklists were actually done?",
+        "answer": "Yes. Every submission carries a timestamp, user-entered notes, and photos, giving supervisors verifiable proof rather than a ticked paper sheet nobody can date."
+      }
+    ],
+    "featured_template": "checklist-form-template",
+    "best_practices": [
+      "Order steps exactly as they happen in real life",
+      "Make critical items required, everything else fast",
+      "Post QR codes where the work physically happens",
+      "Review skipped steps weekly with the team involved"
+    ],
+    "common_mistakes": [
+      "Listing twenty micro-steps nobody will sustain",
+      "Allowing silent skips on safety-critical tasks",
+      "Designing checklists only usable at a desk",
+      "Collecting completions no supervisor ever reviews"
+    ]
   },
   "content_forms": {
     "name": "Content Forms",
     "slug": "content_forms",
-    "meta_title": "Boost Your Content Creation with SharaForms's Content Form Templates",
-    "meta_description": "Discover how SharaForms's Content Form Templates can revolutionize your content creation process. Whether you're running a blog, managing a website, or creating online content, SharaForms provides you with the tools to engage your audience, capture valuable feedback, and gather user-generated content. Start using SharaForms's form builder and templates today!",
-    "description": "Looking to create engaging and interactive content? SharaForms's Content Form Templates are designed for content creators, bloggers, and website owners who want to gather valuable feedback, opinions, and user-generated content. With SharaForms, you can easily create stunning forms that capture user responses, embed them on your website, and benefit from advanced customization options. Harness the power of SharaForms's form builder to collect data, interact with your audience, and enhance your content creation process."
+    "meta_title": "Content Submission Forms - Collect Articles, Art & Ideas",
+    "meta_description": "Gather articles, artwork, story pitches, and UGC through organized submission forms. Briefs, formats, and file rules keep quality consistent.",
+    "description": "A content submission form collects creative work against a defined brief: articles, photography, video pitches, design concepts, or user-generated campaigns. Clear structure at intake prevents format mismatches and missing metadata downstream. SharaForms handles large file uploads, license acknowledgments, and contributor details in one organized pipeline.",
+    "h1": "Content Submission Forms with Rights Baked In",
+    "include_label": "a content submission form",
+    "how_to_label": "a content submission form",
+    "what_to_include": [
+      "Contributor name and contact details",
+      "Content title and short summary",
+      "File uploads matched to accepted formats",
+      "License and usage rights acknowledgment",
+      "Category or campaign tagging",
+      "Optional links to portfolios or sources"
+    ],
+    "how_to_steps": [
+      "Publish your brief as the form introduction.",
+      "Restrict uploads to formats your pipeline accepts.",
+      "Require rights acknowledgment before submission.",
+      "Review entries in the dashboard and export selected work."
+    ],
+    "faqs": [
+      {
+        "question": "How do I protect contributors' rights?",
+        "answer": "State exactly which usage rights you request, keep scope narrow, and store the signed acknowledgment with each submission. Contributors retain everything not explicitly granted."
+      },
+      {
+        "question": "What upload sizes work for media submissions?",
+        "answer": "Set realistic caps per channel, such as 10 MB per image batch or larger allowances for video via link. Accept portfolio URLs when files exceed practical limits."
+      },
+      {
+        "question": "Can I run themed submission rounds?",
+        "answer": "Duplicate the form per round with updated briefs and closing dates, keeping archives separated per campaign while your review process stays identical."
+      }
+    ],
+    "featured_template": "content-submission-form-template",
+    "best_practices": [
+      "Lead with the brief so quality arrives upfront",
+      "Restrict uploads to formats production can ingest",
+      "Collect usage rights alongside the content itself",
+      "Tag entries by campaign while accepting them"
+    ],
+    "common_mistakes": [
+      "Chasing usage permission after publishing",
+      "Accepting gigabyte files through general fields",
+      "Losing contributor names inside filename chaos",
+      "Running new rounds without archiving the previous one"
+    ]
   },
   "donation_forms": {
     "name": "Donation Forms",
     "slug": "donation_forms",
-    "meta_title": "Collect Donations Easily with SharaForms's Donation Form Templates",
-    "meta_description": "Looking for a simple and efficient way to collect donations online? Explore SharaForms's Donation Form Templates and discover how you can leverage our form builder to create personalized donation forms, customize them to match your branding, and streamline your fundraising efforts. With features like email notifications, custom domain hosting, and integrations with popular tools like Slack and Zapier, SharaForms is the perfect solution for non-profit organizations seeking to collect donations online.",
-    "description": "Want to collect donations for your non-profit organization? SharaForms offers Donation Form Templates that make it easy to gather donations online. With SharaForms, you can create personalized donation forms, customize them to match your organization's branding, and collect donations securely. Take advantage of SharaForms's email notifications, custom domain hosting, and integrations with popular tools like Slack and Zapier to streamline your donation collection process. Start using one of our donation form templates below, and see how SharaForms can simplify your fundraising efforts."
+    "meta_title": "Donation Form Templates That Raise More | SharaForms",
+    "meta_description": "Accept one-time and recurring donations with free form templates. Preset amounts, Stripe payments, donor receipts, and campaign tracking built in.",
+    "description": "A donation form collects contributions with the least possible friction: amount presets, payer details, gift designation, and card payment through Stripe. Nonprofits, churches, schools, and fundraising organizers use donation pages that load fast and ask little. SharaForms supports recurring options, thank-you automation, and exportable donor reports for receipts and stewardship.",
+    "h1": "Donation Form Templates That Raise More",
+    "include_label": "a donation form that lifts giving",
+    "how_to_label": "a donation form",
+    "what_to_include": [
+      "Preset amounts plus an open option",
+      "One-time or monthly frequency choice",
+      "Designation toward fund, appeal, or project",
+      "Donor contact details for receipts",
+      "Stripe-connected secure card payment",
+      "Instant tax-receipt-friendly confirmation"
+    ],
+    "how_to_steps": [
+      "Pick preset amounts anchored to real impact levels.",
+      "Connect Stripe and test one small live donation.",
+      "Automate thank-you emails with receipt details.",
+      "Embed the form on campaign pages and social bios."
+    ],
+    "faqs": [
+      {
+        "question": "How many amount presets should a donation form offer?",
+        "answer": "Three to five presets covering modest to generous tiers plus an open field performs best. Anchor each preset to concrete impact so donors understand what their gift does."
+      },
+      {
+        "question": "Can donors give monthly automatically?",
+        "answer": "Yes. Offer a frequency selector with monthly recurring processed by Stripe until the donor cancels, ideal for sustaining memberships and regular giving programs."
+      },
+      {
+        "question": "Do we get data for tax receipts?",
+        "answer": "Every donation records amount, date, and donor contact in exportable form, giving your finance team everything needed for year-end receipts and audits."
+      }
+    ],
+    "featured_template": "donation-form-template",
+    "best_practices": [
+      "Anchor presets to concrete, relatable outcomes",
+      "Offer monthly giving beside the one-time default",
+      "Send receipts automatically within minutes",
+      "Thank donors personally once campaigns close"
+    ],
+    "common_mistakes": [
+      "Asking for eleven fields before the amount field",
+      "Hiding recurring options behind tiny toggles",
+      "Sending receipts days after the gift was made",
+      "Ignoring lapsed donors until next year appeal"
+    ]
   },
   "employment_forms": {
     "name": "Employment Forms",
     "slug": "employment_forms",
-    "meta_title": "Simplify Your Hiring Process with SharaForms's Employment Form Templates",
-    "meta_description": "SharaForms's Employment Form Templates are designed to help businesses and organizations streamline their hiring process. With features like email notifications, custom branding, and integrations with popular tools, SharaForms makes it easy to collect employment information and find the right candidates for your team.",
-    "description": "Looking to streamline your hiring process? SharaForms's Employment Form Templates are designed to make it easy for businesses and organizations to collect employment information. With SharaForms's form builder, you can customize and brand your employment forms to match your company's identity. Our templates offer features such as email notifications for both the form owner and the applicant, integration with popular tools like Slack and Discord, and the ability to embed forms on any website. Use SharaForms's Employment Form Templates to simplify your hiring process and find the right candidates for your team."
+    "meta_title": "Employment & HR Form Templates - Job Apps to Exits",
+    "meta_description": "Run hiring and HR on free employment templates: job applications, onboarding details, reviews, exit interviews. Structured, exportable records.",
+    "description": "Employment forms cover the employee lifecycle: job applications, interview scorecards, onboarding details, policy acknowledgments, performance reviews, and exit documentation. Consistent paperwork protects both employer and employee while making people operations auditable. SharaForms HR templates collect structured data you can export into payroll and HRIS systems.",
+    "h1": "Employment Forms from Job Application to Exit",
+    "include_label": "an employment form pack",
+    "how_to_label": "an employment form",
+    "what_to_include": [
+      "Candidate or employee identity details",
+      "Role-specific qualifications and eligibility",
+      "Policy acknowledgments with signatures",
+      "Emergency contacts and key personal info",
+      "Structured review or evaluation ratings",
+      "Lifecycle stage records kept searchable"
+    ],
+    "how_to_steps": [
+      "Map your HR stages from application to offboarding.",
+      "Deploy one template per stage with consistent fields.",
+      "Enable notifications so owners act quickly.",
+      "Export records for payroll, compliance, and audits."
+    ],
+    "faqs": [
+      {
+        "question": "Which HR forms should every company have?",
+        "answer": "At minimum: an application form, offer acknowledgment, emergency contact record, policy acknowledgment, performance review, and exit interview. These six cover hiring through departure defensibly."
+      },
+      {
+        "question": "Are online employment forms safe for personal data?",
+        "answer": "SharaForms stores submissions in your secured workspace with role-based access, and you control retention. Avoid collecting government IDs or bank details in general forms; use dedicated payroll systems."
+      },
+      {
+        "question": "Can we track candidates through hiring stages?",
+        "answer": "Use one form per stage and export combined views, or tag submissions by stage in your workspace. Larger teams typically connect webhooks into their applicant tracking system."
+      }
+    ],
+    "featured_template": "job-application-form-template",
+    "best_practices": [
+      "Keep one consistent structure across lifecycle stages",
+      "Separate sensitive records into restricted forms",
+      "Timestamp every acknowledgment you collect",
+      "Export into payroll formats without re-typing"
+    ],
+    "common_mistakes": [
+      "Recollecting the same data at every single stage",
+      "Storing medical details in general-purpose forms",
+      "Losing policy acknowledgments when staff rotate",
+      "Conducting exits with zero documented feedback"
+    ]
   },
   "enrollment_forms": {
     "name": "Enrollment Forms",
     "slug": "enrollment_forms",
-    "meta_title": "Streamline Your Enrollment Process with SharaForms's Enrollment Form Templates",
-    "meta_description": "Discover how SharaForms's Enrollment Form Templates can simplify the enrollment process for educational institutions and training programs. Capture student or participant information easily, customize the forms to fit your needs, and benefit from SharaForms's advanced features like email notifications, branding options, and integrations. Start using SharaForms today and revolutionize your enrollment management!",
-    "description": "Are you running an educational institution or organizing a training program? SharaForms offers Enrollment Form Templates specifically designed for capturing student or participant information. With SharaForms, you can easily create and customize enrollment forms, streamline the enrollment process, and benefit from our various features. Collect all the necessary details, such as personal information, educational background, and program preferences, using our user-friendly templates. Utilize SharaForms's email notifications, branding options, and integration capabilities to enhance your enrollment management. Start using our Enrollment Form Templates now and enjoy a seamless enrollment experience!"
+    "meta_title": "Enrollment Form Templates for Schools & Courses Free",
+    "meta_description": "Enroll students into classes, courses, and programs with free templates. Capacity limits, prerequisites, document uploads, and confirmations handled.",
+    "description": "An enrollment form registers students into courses, schools, training programs, and workshops: learner details, course selections, prerequisites, guardians where relevant, and fee or scholarship indicators. Education providers use enrollment data for rosters, resourcing, and compliance reporting. SharaForms automates confirmations and enforces capacity so rosters stay accurate.",
+    "h1": "Enrollment Templates for Courses & Programs",
+    "include_label": "a course enrollment form",
+    "how_to_label": "an enrollment form",
+    "what_to_include": [
+      "Student identity and guardian details for minors",
+      "Course, cohort, or class selection",
+      "Prerequisite attestations",
+      "Accessibility and learning requirements",
+      "Document uploads such as transcripts",
+      "Enrollment confirmation with start details"
+    ],
+    "how_to_steps": [
+      "List courses and cohorts as clean selectable options.",
+      "Ask prerequisite and eligibility questions up front.",
+      "Cap seats per cohort using submission limits.",
+      "Auto-send start-date details on successful enrollment."
+    ],
+    "faqs": [
+      {
+        "question": "How do I handle waitlists when a course fills?",
+        "answer": "Keep a second sign-up form labeled waitlist, or reopen capacity manually as spots free up. Exported lists let you admit in order received without favoritism disputes."
+      },
+      {
+        "question": "Can parents enroll multiple children at once?",
+        "answer": "Yes. Add repeating child-detail sections or accept one enrollment per child with shared parent contact carried via pre-filled links for speed."
+      },
+      {
+        "question": "Do enrollment forms support document collection?",
+        "answer": "Upload fields gather transcripts, identification, immunization records, or prior certificates with configurable size limits, attached permanently to each student record."
+      }
+    ],
+    "featured_template": "course-enrollment-form-template",
+    "best_practices": [
+      "Present cohorts with seats remaining where possible",
+      "Check prerequisites with simple attestation logic",
+      "Confirm start dates and requirements immediately",
+      "Waitlist overflow automatically instead of losing them"
+    ],
+    "common_mistakes": [
+      "Overselling seats your classroom cannot hold",
+      "Discovering missing transcripts after term begins",
+      "Handling guardianship data as an afterthought",
+      "Leaving waitlisted students without any follow-up"
+    ]
   },
   "evaluation_forms": {
     "name": "Evaluation Forms",
     "slug": "evaluation_forms",
-    "meta_title": "Revolutionize Performance Evaluation and Feedback Collection with SharaForms",
-    "meta_description": "Looking for an efficient and user-friendly way to conduct performance evaluations and gather feedback? Discover SharaForms's Evaluation Form Templates! With SharaForms, you can easily create customized and branded evaluation forms, streamline the evaluation process, and benefit from integrations with tools like Slack. Join thousands of satisfied users who have upgraded their performance evaluation and feedback collection processes with SharaForms!",
-    "description": "Struggling with evaluating employee performance or gathering feedback from customers? SharaForms's Evaluation Form Templates are here to help! Whether you need to conduct performance reviews, collect customer satisfaction surveys, or gather feedback from event attendees, our templates provide the perfect foundation. With SharaForms, you can easily customize and brand your evaluation forms, ensuring they align with your company's identity. Take advantage of our intuitive form builder, email notifications, and integrations with Slack and other tools to streamline the evaluation process. Start using SharaForms's Evaluation Form Templates today and revolutionize how you assess performance and gather feedback!"
+    "meta_title": "Evaluation Form Templates - Training, Staff & Projects",
+    "meta_description": "Measure training impact, staff performance, and project outcomes with free evaluation templates. Rating scales, comments, and comparable exports.",
+    "description": "An evaluation form applies consistent criteria to judge performance, learning, or outcomes: post-training reaction sheets, employee assessments, vendor reviews, project retrospectives. Standardized scales turn impressions into trends you can track across cohorts and quarters. SharaForms evaluation templates mix rating questions with commentary fields and export cleanly for analysis.",
+    "h1": "Evaluation Form Templates with Comparable Scales",
+    "include_label": "an evaluation form that yields signal",
+    "how_to_label": "an evaluation form",
+    "what_to_include": [
+      "Clear criteria mirroring stated objectives",
+      "A consistent rating scale throughout",
+      "Evidence prompts reducing halo bias",
+      "Open comment space for context",
+      "Evaluator and subject identifiers",
+      "Trend-comparable export format"
+    ],
+    "how_to_steps": [
+      "Define what success looks like before writing questions.",
+      "Convert each success criterion into a rated item.",
+      "Limit yourself to one scale style for comparability.",
+      "Run evaluations on schedule and compare across periods."
+    ],
+    "faqs": [
+      {
+        "question": "Which rating scale works best?",
+        "answer": "Five-point scales balance sensitivity with speed and stay familiar to respondents. Whatever you choose, never mix scale directions between questions mid-form."
+      },
+      {
+        "question": "How often should evaluations run?",
+        "answer": "Align with decision cadence: quarterly for performance, immediately after trainings, at milestones for projects. Consistent timing matters more than frequency for trend quality."
+      },
+      {
+        "question": "Can evaluations stay confidential?",
+        "answer": "Yes. Omit evaluator identity fields and keep the form unlisted; responses remain visible only in your workspace according to member permissions you control."
+      }
+    ],
+    "featured_template": "employee-evaluation-form-template",
+    "best_practices": [
+      "Define success criteria before writing a question",
+      "Hold one scale style steady throughout the form",
+      "Ask for evidence, not just agreement ratings",
+      "Compare results across periods to spot trends"
+    ],
+    "common_mistakes": [
+      "Rating ten dimensions when three drive outcomes",
+      "Flipping scale directions between adjacent questions",
+      "Collecting scores nobody revisits until disputes",
+      "Evaluating annually with no mid-cycle conversations"
+    ]
   },
   "feedback_forms": {
     "name": "Feedback Forms",
     "slug": "feedback_forms",
-    "meta_title": "Collect Valuable Feedback with SharaForms's Feedback Form Templates",
-    "meta_description": "Discover how SharaForms's Feedback Form Templates can help you gather valuable feedback from your customers or website visitors. Create customizable feedback forms with SharaForms's form builder. Embed them on your website or share them via a unique link. Take advantage of features like email notifications, form customization, integrations, and more. Start collecting feedback today!",
-    "description": "Want to gather feedback from your customers or website visitors? SharaForms's Feedback Form Templates are designed to make feedback collection easy! With SharaForms, you can create custom feedback forms that can be embedded on your website or shared via a unique link. Collect valuable feedback, opinions, and suggestions, and improve your products or services. SharaForms's form builder allows you to fully customize your feedback forms and brand them to match your business. You can also take advantage of features like email notifications, form customization, integrations with tools like Slack and Discord, password protection, captcha, custom code, pre-filling forms via URL parameters, form submission editing, and multi-page forms. Start gathering valuable feedback today with SharaForms's Feedback Form Templates!"
+    "meta_title": "Feedback Form Templates for Products & Services Free",
+    "meta_description": "Hear from customers with free feedback templates: product feedback, service ratings, event debriefs. Short forms, honest answers, clear trends.",
+    "description": "A feedback form captures reactions after experiences: product usage, support interactions, deliveries, events, or store visits. The craft is brevity plus one open question that surfaces surprises. SharaForms feedback templates pair star or scale ratings with comment boxes, route negatives for immediate follow-up using logic, and chart sentiment over time.",
+    "h1": "Feedback Forms Customers Complete Willingly",
+    "include_label": "a feedback form customers complete",
+    "how_to_label": "a feedback form",
+    "what_to_include": [
+      "Overall satisfaction rating up top",
+      "Specific dimension questions kept few",
+      "One open text box for anything missed",
+      "Optional contact permission for follow-up",
+      "Context selectors like product or visit date",
+      "Visible thanks and an action promise"
+    ],
+    "how_to_steps": [
+      "Decide the single metric you will improve from answers.",
+      "Ask overall satisfaction first, specifics second.",
+      "Trigger instant alerts on low scores.",
+      "Close the loop publicly so customers see change happen."
+    ],
+    "faqs": [
+      {
+        "question": "When should you ask for feedback?",
+        "answer": "Ask at moments of fresh experience: right after delivery, resolution, checkout, or session end. Delayed requests lose emotional accuracy and response rates together."
+      },
+      {
+        "question": "How do I handle negative feedback?",
+        "answer": "Set logic to flag low scores instantly to your team inbox, respond personally within a day, and treat patterns rather than outliers as your improvement roadmap."
+      },
+      {
+        "question": "Should feedback forms be anonymous?",
+        "answer": "Offer anonymity by default but allow optional contact. Honest critique flows freely when names are optional; follow-ups become possible when people volunteer identity."
+      }
+    ],
+    "featured_template": "customer-feedback-survey-template",
+    "best_practices": [
+      "Arrive within hours of the actual experience",
+      "Lead with one overall rating, then go specific",
+      "Reserve one open box for surprises you never expected",
+      "Act visibly and tell customers what changed"
+    ],
+    "common_mistakes": [
+      "Punishing honesty by demanding named submissions",
+      "Interrogating customers after a single purchase",
+      "Burying negative signals inside averages",
+      "Collecting feedback that never reaches decision makers"
+    ]
   },
   "inspection_forms": {
     "name": "Inspection Forms",
     "slug": "inspection_forms",
-    "meta_title": "Simplify Your Inspections with SharaForms's Inspection Form Templates",
-    "meta_description": "SharaForms offers a range of Inspection Form Templates that can help you streamline your inspection process. Create customized inspection forms with ease and collect all the necessary data. Discover the benefits of SharaForms's features like email notifications, form customization, and integrations with tools like Slack and Discord. Use SharaForms and its inspection form templates to enhance your inspection workflow.",
-    "description": "Are you in the business of conducting inspections? SharaForms provides Inspection Form Templates that can simplify the process for you! With SharaForms, you can easily create and customize inspection forms to collect relevant data. Whether you need to conduct safety inspections, property inspections, or any other type of inspection, SharaForms has got you covered. Benefit from features like email notifications, form customization, form embedding, and integrations with tools like Slack and Discord. Explore our inspection form templates below, customize them to fit your specific requirements, and witness how SharaForms streamlines your inspection process."
+    "meta_title": "Inspection Form Templates - Safety & Quality Checks",
+    "meta_description": "Digitize inspections with free mobile-ready templates: site checks, equipment exams, quality control. Photos, pass-fail logic, timestamped records.",
+    "description": "An inspection form records condition checks against defined standards: construction sites, vehicles, food safety, rental units, manufacturing lines. Inspectors need speed on mobile plus defensible evidence later. SharaForms inspections combine required photo fields, pass-fail responses, automatic timestamps, and instant escalation when failures appear.",
+    "h1": "Inspection Templates Built for the Field",
+    "include_label": "a field-ready inspection form",
+    "how_to_label": "an inspection form",
+    "what_to_include": [
+      "Asset, unit, or site identification",
+      "Standards-based checkpoint list",
+      "Pass, fail, or monitor status per item",
+      "Mandatory photos for failed items",
+      "Inspector identity and timestamp",
+      "Escalation triggers on critical failures"
+    ],
+    "how_to_steps": [
+      "Codify standards into discrete observable checkpoints.",
+      "Make photos mandatory wherever failure claims get disputed.",
+      "Route critical failures straight to responsible managers.",
+      "Archive inspections as your ongoing compliance evidence."
+    ],
+    "faqs": [
+      {
+        "question": "How long should an inspection take on site?",
+        "answer": "Well-designed digital inspections run fifteen to thirty minutes for typical assets. If yours takes hours, checkpoints are too broad or the evidence demands are too heavy."
+      },
+      {
+        "question": "What if our sites have poor connectivity?",
+        "answer": "Test device coverage per location before rollout and schedule submissions where signal exists. For critical audits, prioritize venues with reliable connectivity or portable hotspots."
+      },
+      {
+        "question": "What happens after a failed item?",
+        "answer": "Logic can require corrective notes and photos on failure, notify owners instantly, and mark the record for re-inspection, closing the loop before problems compound."
+      }
+    ],
+    "featured_template": "inspection-form-template",
+    "best_practices": [
+      "Write checkpoints observable from arm length away",
+      "Require photos precisely where failures occur",
+      "Escalate critical findings the moment they are logged",
+      "Keep inspection history attached to each asset"
+    ],
+    "common_mistakes": [
+      "Designing inspections impossible to complete offline-poor sites",
+      "Accepting fail verdicts without any evidence photo",
+      "Scheduling audits around office convenience only",
+      "Filing reports where field crews never see fixes"
+    ]
   },
   "interview_forms": {
     "name": "Interview Forms",
     "slug": "interview_forms",
-    "meta_title": "Simplify Your Hiring Process with SharaForms's Interview Form Templates",
-    "meta_description": "Discover how SharaForms's Interview Form Templates can help you streamline your hiring process. Collect information from job applicants easily and efficiently with our form builder. Customize your forms, integrate with communication tools, and simplify your workflow. Upgrade your interview process with SharaForms's Interview Form Templates now!",
-    "description": "Looking to streamline your hiring process? SharaForms offers Interview Form Templates that can help you efficiently collect information from job applicants. With SharaForms's form builder, you can easily create customized interview forms that match your company's unique requirements. Take advantage of features like email notifications, form customization, custom domains, and form embedding to simplify the interview process. Plus, integrate with popular communication tools like Slack and Discord using Zapier or webhooks. Enhance your hiring process with SharaForms's Interview Form Templates today!"
+    "meta_title": "Interview Form Templates - Scorecards & Prep Sheets",
+    "meta_description": "Structure interviews with free scorecard templates: competency ratings, evidence notes, candidate comparisons. Fairer hiring decisions, faster debriefs.",
+    "description": "Interview forms standardize how panels capture candidate evidence: question sets, competency ratings, and structured notes per meeting. Scorecards reduce bias by forcing behavior-based observations instead of gut verdicts, and they make panel debriefs factual. SharaForms interview templates support per-stage copies and comparison exports for hiring committees.",
+    "h1": "Interview Scorecards for Fairer Hiring Panels",
+    "include_label": "an interview scorecard",
+    "how_to_label": "an interview scorecard form",
+    "what_to_include": [
+      "Candidate and interviewer identifiers",
+      "Stage-specific question set",
+      "Competency ratings on one shared scale",
+      "Evidence notes citing actual answers",
+      "Recommendation with rationale",
+      "Panel comparison-ready exports"
+    ],
+    "how_to_steps": [
+      "Derive competencies from the role definition, not vibes.",
+      "Write behavioral questions mapped to each competency.",
+      "Score during or immediately after every interview.",
+      "Debrief from exported scorecards, not memories."
+    ],
+    "faqs": [
+      {
+        "question": "Why use interview scorecards?",
+        "answer": "Scorecards anchor decisions to observed evidence, reduce individual bias, and create defensible hiring records. They also expose when interviewers diverge wildly on the same candidate."
+      },
+      {
+        "question": "When should interviewers fill out scorecards?",
+        "answer": "Immediately after the interview, ideally within an hour. Memory decays fast and ratings become contaminated by impressions from subsequent conversations."
+      },
+      {
+        "question": "Can different stages have different questions?",
+        "answer": "Yes. Duplicate the template per stage, tailoring questions and competencies: screens verify basics, technical rounds probe depth, final rounds assess culture contribution."
+      }
+    ],
+    "featured_template": "interview-form-template",
+    "best_practices": [
+      "Derive competencies from the role scorecard directly",
+      "Score within the hour while evidence is fresh",
+      "Note candidate answers verbatim where possible",
+      "Debrief from exported cards, not from memories"
+    ],
+    "common_mistakes": [
+      "Improvising questions different per candidate",
+      "Recording verdicts days after the conversation",
+      "Letting one strong answer halo entire scorecards",
+      "Comparing candidates across inconsistent stages"
+    ]
   },
   "lead_generation_forms": {
     "name": "Lead Generation Forms",
     "slug": "lead_generation_forms",
-    "meta_title": "Supercharge Your Lead Generation with SharaForms's Form Templates",
-    "meta_description": "Discover how SharaForms's Lead Generation Form Templates can help you capture high-quality leads for your business. Create custom forms, host them on your own domain, and receive email notifications for every new lead. Integrate with popular tools and streamline your lead management process. Try SharaForms today for better lead generation!",
-    "description": "Looking to generate leads for your business? SharaForms's Lead Generation Form Templates are designed to help you do just that! Whether you're a small startup or a large corporation, these templates provide an efficient way to collect valuable information from potential customers. With SharaForms, you can easily create customized lead generation forms, brand them to match your company's identity, and host them on your own domain. Capture leads effortlessly and receive email notifications for every new submission. Take advantage of our integrations with popular tools like Slack and Discord to streamline your lead management process. Enhance your lead generation efforts with SharaForms and start converting more prospects into customers today!"
+    "meta_title": "Lead Generation Form Templates That Convert | SharaForms",
+    "meta_description": "Capture qualified leads with free templates: gated content, demo requests, quote funnels. Smart qualification, CRM webhooks, instant sales alerts.",
+    "description": "A lead generation form trades something valuable, such as a guide, quote, demo, or callback, for prospect contact details. Conversion lives in the exchange rate: fewer fields, sharper offer. SharaForms lead templates connect to CRMs through webhooks, fire instant sales alerts, and support conditional qualification questions that separate hot leads from browsers.",
+    "h1": "Lead Generation Forms That Convert Traffic",
+    "include_label": "a lead form that converts traffic",
+    "how_to_label": "a lead generation form",
+    "what_to_include": [
+      "The offer stated plainly in the headline",
+      "Minimum viable fields: email plus context",
+      "One qualifying question for prioritization",
+      "Consent checkbox aligned with regulations",
+      "CRM or webhook delivery on submit",
+      "A thank-you message delivering the promised asset"
+    ],
+    "how_to_steps": [
+      "Lead with the outcome your offer delivers.",
+      "Cut fields until only essentials remain.",
+      "Qualify with one smart conditional question.",
+      "Push leads to your CRM instantly via webhook."
+    ],
+    "faqs": [
+      {
+        "question": "How many fields should a lead form have?",
+        "answer": "Start with three: name, email, and company or need. Add fields only when sales confirms they act on the data. Each extra field trades volume for precision."
+      },
+      {
+        "question": "How are leads delivered to sales?",
+        "answer": "Instantly. Email notifications alert owners in real time, and webhooks push full submission data into your CRM or middleware such as Zapier."
+      },
+      {
+        "question": "What is progressive profiling?",
+        "answer": "Asking small questions across successive interactions instead of everything upfront. First touch captures email; later forms enrich company details once trust exists, lifting both conversion and data quality."
+      }
+    ],
+    "featured_template": "lead-generation-form-template",
+    "best_practices": [
+      "Promise something specific and deliver it instantly",
+      "Qualify with one smart conditional question",
+      "Push leads into CRM within seconds of submit",
+      "A/B test headlines before touching field counts"
+    ],
+    "common_mistakes": [
+      "Trading generic newsletters for precious emails",
+      "Adding company-size fields nobody acts upon",
+      "Leads sitting unread in an unmonitored inbox",
+      "Thank-you pages that forget to deliver the asset"
+    ]
   },
   "legal_forms": {
     "name": "Legal Forms",
     "slug": "legal_forms",
-    "meta_title": "Simplify Your Legal Processes with SharaForms's Legal Form Templates",
-    "meta_description": "Need legal forms? SharaForms's form builder and customizable legal form templates can streamline your legal processes. Benefit from features like email notifications, customization options, form embedding, tool integration, and more. Start simplifying your legal document workflow today!",
-    "description": "Need legal forms? SharaForms provides a range of Legal Form Templates to simplify your legal processes! Whether you need a simple contract, a rental agreement, or a non-disclosure agreement, SharaForms has got you covered. With SharaForms's form builder and our customizable legal form templates, you can easily create and manage legal documents. Benefit from features like email notifications for both form owner and submitter, full customization and branding options, custom domain hosting, form embedding, integration with tools like Slack and Discord, password protection, captchas, custom code, pre-filling via URL parameters, form closure options, the ability for respondents to edit submissions, and support for multiple pages. Discover how SharaForms can revolutionize your legal document workflow!"
+    "meta_title": "Legal Form Templates - Intake, Waivers & Acknowledgments",
+    "meta_description": "Collect client intake, case details, and policy acknowledgments with free legal templates. Confidential handling, signatures, and structured exports.",
+    "description": "Legal intake forms gather case facts, party details, and engagement acknowledgments before representation begins, while acknowledgment forms document policy receipt. Firms and legal departments benefit from structured intake because conflict checks and triage depend on consistent facts. SharaForms keeps submissions private to your workspace and captures signatures with timestamps.",
+    "h1": "Legal Intake Templates with Confidential Handling",
+    "include_label": "a legal intake form",
+    "how_to_label": "a legal intake form",
+    "what_to_include": [
+      "Client identity and conflict-check basics",
+      "Matter type and jurisdiction",
+      "Key facts captured chronologically",
+      "Opposing party details where known",
+      "Engagement terms acknowledgment signature",
+      "Confidential submission handling"
+    ],
+    "how_to_steps": [
+      "Define the matter types your intake must triage.",
+      "Ask conflict-critical names early in the flow.",
+      "Capture facts chronologically with date fields.",
+      "Review privately, then export into case management."
+    ],
+    "faqs": [
+      {
+        "question": "Are online legal intake forms confidential?",
+        "answer": "Submissions live in your secured SharaForms workspace with access limited to invited members. For privileged matters, avoid third-party integrations and retain data under your firm's own policies."
+      },
+      {
+        "question": "What should legal intake always collect?",
+        "answer": "Identity of all parties, matter type, jurisdiction, incident chronology, urgency, and any prior representation. These enable conflict checks and realistic scoping before the first consultation."
+      },
+      {
+        "question": "Can clients sign engagement documents here?",
+        "answer": "Signature fields capture agreements with timestamps suitable for acknowledgment records; comprehensive engagement letters should still attach as reviewed documents during signing."
+      }
+    ],
+    "featured_template": "legal-intake-form-template",
+    "best_practices": [
+      "Screen conflicts before substantive details arrive",
+      "Capture chronology with explicit date fields",
+      "Restrict access to admitted personnel only",
+      "Retain per jurisdictional limitation schedules"
+    ],
+    "common_mistakes": [
+      "Collecting privileged detail before engagement exists",
+      "Routing intake through shared general inboxes",
+      "Mixing client matters inside one public form",
+      "Deleting records before limitation periods expire"
+    ]
   },
   "membership_forms": {
     "name": "Membership Forms",
     "slug": "membership_forms",
-    "meta_title": "Simplify Membership Management with SharaForms Membership Form Templates",
-    "meta_description": "Streamline your membership management process with SharaForms's Membership Form Templates. Create customized forms, collect member details, and benefit from features like email notifications, form customization, and integrations with other tools. Try SharaForms today!",
-    "description": "Looking to build a membership form? SharaForms offers Membership Form Templates that can simplify the process of collecting membership details. Whether you run a club, an organization, or any other type of membership-based entity, SharaForms has you covered. With our templates, you can easily create customized membership forms that align with your branding and collect all the necessary information from your members. SharaForms's form builder allows you to fully customize and brand your forms, ensuring a seamless membership form experience. Additionally, you can benefit from features such as email notifications for both the form owner and the submitter, integration with various tools via Zapier or webhooks, and the option to protect your forms with a password. Start building your membership form today and see how SharaForms can elevate your membership management process!"
+    "meta_title": "Membership Form Templates - Sign-Ups & Renewals Free",
+    "meta_description": "Grow organizations with free membership templates: applications, renewals, tier selection, dues via Stripe. Member databases export ready.",
+    "description": "Membership forms onboard new members and renew existing ones: applicant details, tier selection, dues payment through Stripe, and benefits acknowledgments. Associations, clubs, gyms, and professional bodies depend on accurate member records for communications and governance votes. SharaForms consolidates applications into exportable member databases with renewal-friendly history.",
+    "h1": "Membership Forms from Signup to Renewal",
+    "include_label": "a membership sign-up flow",
+    "how_to_label": "a membership form",
+    "what_to_include": [
+      "Member identity and contact details",
+      "Tier or plan selection with pricing",
+      "Dues payment via connected Stripe",
+      "Interest and committee preferences",
+      "Bylaws or constitution acceptance",
+      "Renewal dates tracked in exports"
+    ],
+    "how_to_steps": [
+      "Define tiers with honestly differentiated benefits.",
+      "Collect member details once, completely.",
+      "Process dues inside the form with Stripe.",
+      "Export the member database for mailings and meetings."
+    ],
+    "faqs": [
+      {
+        "question": "How do we handle membership renewals?",
+        "answer": "Send renewal links to exported member lists before expiry, pre-fill known details via URL parameters, and let members pay in two clicks. History stays attached per member."
+      },
+      {
+        "question": "Can members choose payment schedules?",
+        "answer": "Offer tier variants such as annual versus monthly pricing as separate options. Stripe processes each schedule, and your export shows who is active on what cycle."
+      },
+      {
+        "question": "Should memberships require approval first?",
+        "answer": "For vetted associations, split application and payment into two steps: review submissions, then send approved applicants a payment link. Open clubs can skip the gate entirely."
+      }
+    ],
+    "featured_template": "membership-application-form-template",
+    "best_practices": [
+      "Price tiers with honestly distinct benefits",
+      "Collect member interests for future programming",
+      "Process dues inside signup without extra steps",
+      "Track renewal dates from clean exported rosters"
+    ],
+    "common_mistakes": [
+      "Renewing via spreadsheet archaeology each January",
+      "Collecting payments outside any reconcilable record",
+      "Ignoring lapsed members until AGM attendance drops",
+      "Making benefit differences invisible at pricing time"
+    ]
   },
   "petition_forms": {
     "name": "Petition Forms",
     "slug": "petition_forms",
-    "meta_title": "Powerful Petition Form Templates for Your Cause | SharaForms",
-    "meta_description": "Create impactful petition forms with SharaForms's Petition Form Templates. Customize the design, protect the form, and integrate with tools like Slack or Discord. Gather signatures and support for your cause easily with SharaForms.",
-    "description": "Are you trying to make a difference and rally support for a cause? SharaForms's Petition Form Templates are designed to help you gather signatures and support for your petition. By using our easy-to-use form builder, you can create impactful and professional petition forms in minutes. Customize the design and branding, protect the form with a password, and integrate it with tools like Slack or Discord. With SharaForms, you can amplify your message and gain momentum for your cause."
+    "meta_title": "Online Petition Templates - Launch Your Campaign Free",
+    "meta_description": "Launch petitions that spread: free templates with signature goals, comment fields, and shareable links. Track momentum in real time.",
+    "description": "A petition form gathers public signatures behind a cause: signer names, optional affiliations, and supporting statements aggregated toward a visible goal. Campaigns succeed on sharing mechanics as much as wording. SharaForms petitions publish with clean links, tally signatures live, and export deliverable lists when you present results to decision makers.",
+    "h1": "Petition Templates Built to Gather Signatures",
+    "include_label": "a petition built to spread",
+    "how_to_label": "an online petition",
+    "what_to_include": [
+      "A pledge written for the undecided middle",
+      "Signer name and optional location",
+      "Comment field inviting personal stories",
+      "Public display consent checkbox",
+      "Signature goal and progress visibility",
+      "Deliverable export for stakeholders"
+    ],
+    "how_to_steps": [
+      "Write the pledge in one persuasive sentence.",
+      "Keep signing friction near zero.",
+      "Share everywhere your supporters already gather.",
+      "Deliver signatures with a tidy export at handover."
+    ],
+    "faqs": [
+      {
+        "question": "How long should a petition pledge be?",
+        "answer": "Two sentences maximum: the problem and the specific action demanded. Long pledges dilute urgency and measurably depress share rates."
+      },
+      {
+        "question": "Can signers stay anonymous publicly?",
+        "answer": "Yes. Ask display consent separately from identity: you may require real names internally while showing only counts or first names publicly, depending on your checkbox choices."
+      },
+      {
+        "question": "How do petitions gain traction?",
+        "answer": "Seed initial signatures among core supporters before public launch, equip sharers with a short link, and publish milestone updates that give media a reason to cover progress."
+      }
+    ],
+    "featured_template": "petition-form-template",
+    "best_practices": [
+      "State the demand in one unforgettable sentence",
+      "Keep signing under fifteen seconds end to end",
+      "Display momentum publicly once consent allows",
+      "Deliver signatures formally and report the outcome"
+    ],
+    "common_mistakes": [
+      "Burying the ask beneath paragraphs of context",
+      "Forcing account creation onto casual supporters",
+      "Ending campaigns silently without any delivery",
+      "Sharing signer details beyond stated consent scope"
+    ]
   },
   "polls": {
     "name": "Polls",
     "slug": "polls",
-    "meta_title": "Discover the Power of Poll Form Templates with SharaForms",
-    "meta_description": "Looking to gather opinions or insights from your audience? Learn how SharaForms's Poll Form Templates can help you create engaging polls, customize them to match your brand, and gain valuable insights. Harness the power of SharaForms's form builder and start creating interactive polls today!",
-    "description": "Running a blog or website and want to engage your audience? SharaForms offers Poll Form Templates that make it easy for you to create interactive polls and gather valuable insights. With SharaForms, you can customize your poll forms to match your brand, embed them on your site, and leverage features such as multiple pages and custom code integration. Engage your readers, collect valuable data, and enhance your content strategy with SharaForms's Poll Form Templates!"
+    "meta_title": "Online Poll Templates - One-Question Quick Votes",
+    "meta_description": "Create instant polls with free templates. One-tap voting, live tallies, embed anywhere on your site. Zero friction for voters.",
+    "description": "A poll asks one focused question with instant answer options: favorites, positions, priorities, predictions. Polls win engagement because they cost seconds, not minutes, and results feel participatory. SharaForms polls embed on any page, tally votes live, and can reveal results after voting to keep responses unbiased.",
+    "h1": "Poll Templates for Instant Community Pulse",
+    "include_label": "a poll people answer in seconds",
+    "how_to_label": "an online poll",
+    "what_to_include": [
+      "One question phrased neutrally",
+      "Balanced answer options",
+      "Optional why follow-up for depth",
+      "Vote duplication safeguards",
+      "Live or post-vote result display",
+      "Embeddable placement on busy pages"
+    ],
+    "how_to_steps": [
+      "Phrase the question so both sides would call it fair.",
+      "Limit options to five or fewer.",
+      "Choose whether voters see results before or after voting.",
+      "Embed the poll where your audience already visits."
+    ],
+    "faqs": [
+      {
+        "question": "How do I prevent duplicate votes?",
+        "answer": "Enable captcha and limit submissions per person where appropriate; for stronger guarantees, restrict access to signed-in audiences, or accept light imperfection as normal polling reality."
+      },
+      {
+        "question": "When should results be shown?",
+        "answer": "Hide results until after voting on sensitive topics to prevent bandwagon bias; showing live tallies boosts participation for lighter community fun."
+      },
+      {
+        "question": "Polls versus surveys: which should I use?",
+        "answer": "Polls suit single decisions needing fast breadth; surveys suit multi-question understanding. Use polls frequently for pulse checks and reserve surveys for deeper research cycles."
+      }
+    ],
+    "featured_template": "poll-form-template",
+    "best_practices": [
+      "Ask one question worth answering honestly",
+      "Balance options so neither side feels strawmanned",
+      "Decide result visibility before launching anywhere",
+      "Embed where your community already gathers daily"
+    ],
+    "common_mistakes": [
+      "Stacking five questions into something called poll",
+      "Offering eight options nobody can hold in mind",
+      "Revealing live tallies on sensitive topics",
+      "Never sharing results with the people who voted"
+    ]
   },
   "quiz_forms": {
     "name": "Quiz Forms",
     "slug": "quiz_forms",
-    "meta_title": "Create Engaging Quizzes with SharaForms's Quiz Form Templates",
-    "meta_description": "Looking for a user-friendly and customizable solution to create quizzes? SharaForms's Quiz Form Templates offer educators, trainers, and businesses the perfect tool. With email notifications, easy embedding, and integration options, SharaForms and our templates simplify the quiz creation process. Discover how you can streamline your assessments with SharaForms!",
-    "description": "Need to create engaging quizzes? SharaForms offers Quiz Form Templates that are perfect for educators, trainers, and businesses looking to assess knowledge and gather data. With SharaForms's form builder, you can easily create interactive quiz forms, customize them to fit your branding, and harness powerful features to enhance your quiz-taking experience. Enjoy email notifications, seamless form embedding, integration with various tools, and the ability to protect your quizzes with passwords. Take your quizzes to the next level with SharaForms!"
+    "meta_title": "Quiz Templates - Scored Online Quizzes Free | SharaForms",
+    "meta_description": "Create scored quizzes with free templates: trivia, training assessments, exams. Automatic grading, instant results, and embedding anywhere.",
+    "description": "A quiz tests knowledge with scored questions: classroom revision, employee training assessments, fan trivia, and certification preparation. SharaForms quizzes grade automatically using answer-key logic, show instant scores on completion, and can withhold correct answers until submission when assessment integrity matters.",
+    "h1": "Quiz Templates That Teach While They Test",
+    "include_label": "a quiz people finish",
+    "how_to_label": "a quiz",
+    "what_to_include": [
+      "Questions mapped to learning objectives",
+      "An answer key with point values",
+      "Automatic scoring on submit",
+      "Time expectations stated up front",
+      "Pass-mark messaging for assessments",
+      "Feedback revealed after grading"
+    ],
+    "how_to_steps": [
+      "List the knowledge points each question verifies.",
+      "Assign points per question in your answer key.",
+      "Use logic to reveal feedback after submission.",
+      "Share via link or embed in courses and intranets."
+    ],
+    "faqs": [
+      {
+        "question": "Can a quiz grade itself?",
+        "answer": "Yes. Mark correct options in the builder and SharaForms computes scores at submission, showing participants their result instantly without manual marking."
+      },
+      {
+        "question": "How do I limit cheating on open quizzes?",
+        "answer": "Keep the form unlisted, state honor expectations clearly, and treat low-stakes quizzes as learning tools rather than secure examinations. High-stakes exams need proctoring beyond any form tool."
+      },
+      {
+        "question": "What score should count as passing?",
+        "answer": "Set pass marks against consequences: eighty percent for safety-critical knowledge, sixty for general reinforcement. Communicate the threshold before participants begin."
+      }
+    ],
+    "featured_template": "quiz-form-template",
+    "best_practices": [
+      "Map every question to one learning objective",
+      "Set point values that reflect real importance",
+      "Reveal feedback after submit to protect integrity",
+      "Keep completion under ten questions wherever possible"
+    ],
+    "common_mistakes": [
+      "Writing trick questions that test reading speed",
+      "Leaving answer keys visible before submission",
+      "Announcing pass marks after results arrive",
+      "Reusing one quiz for entirely different audiences"
+    ]
   },
   "quote_forms": {
     "name": "Quote Forms",
     "slug": "quote_forms",
-    "meta_title": "Streamline Your Quote Collection Process with SharaForms",
-    "meta_description": "SharaForms is a form builder that offers Quote Form Templates to simplify the process of gathering quotes. With features like email notifications, full customization options, and integrations with popular tools, SharaForms makes it easy to streamline your quote collection process. Try SharaForms and our templates today!",
-    "description": "Are you in need of a quick and easy way to gather quotes? SharaForms provides Quote Form Templates that can simplify the process for you! Whether you're a business owner looking to get quotes from potential vendors or a contractor gathering quotes from clients, SharaForms has got you covered. With our form builder, you can easily create and customize quote forms to suit your specific needs. Benefit from features like email notifications, full customization options, embedding forms on any website, and integrations with popular tools like Slack and Discord. Start streamlining your quote collection process today!"
+    "meta_title": "Quote Request Form Templates - Win More Bids Fast",
+    "meta_description": "Collect detailed quote requests with free templates: scope, dimensions, timelines, budgets. Complete briefs mean faster, sharper quotes.",
+    "description": "A quote request form captures everything needed to price accurately: project scope, measurements, materials, site conditions, timeline, and budget expectations. Service businesses win more work when quotes arrive fast, and fast quotes need complete inputs. SharaForms quote templates ask structured questions so first replies rarely need follow-up emails.",
+    "h1": "Quote Request Templates That Win the Job",
+    "include_label": "a quote request form",
+    "how_to_label": "a quote request form",
+    "what_to_include": [
+      "Contact details for the reply",
+      "Project type and scope description",
+      "Measurements, quantities, or site details",
+      "Photos or plans as attachments",
+      "Preferred timeline and start date",
+      "Budget range expectation"
+    ],
+    "how_to_steps": [
+      "List every fact you need before pricing confidently.",
+      "Make photo uploads optional but encouraged.",
+      "Ask budget ranges to pre-filter mismatches.",
+      "Reply within one business day to convert interest."
+    ],
+    "faqs": [
+      {
+        "question": "Why do quote requests need budget fields?",
+        "answer": "Stated ranges filter impossible matches early and anchor negotiations realistically. Buyers who share budgets get faster, more tailored responses instead of generic menu pricing."
+      },
+      {
+        "question": "Should quote forms ask for phone numbers?",
+        "answer": "Offer both channels and mark phone optional. Complex quotes often resolve faster by call, while email suits buyers comparing several vendors in writing."
+      },
+      {
+        "question": "How fast should businesses respond to quote requests?",
+        "answer": "Within one business day, ideally within hours. Response speed is among the strongest predictors of which vendor wins the job, especially in home services."
+      }
+    ],
+    "featured_template": "quote-request-form-template",
+    "best_practices": [
+      "Ask exactly what accurate pricing requires",
+      "Invite site photos; they halve clarification rounds",
+      "Request budget ranges to pre-filter mismatches",
+      "Reply within one business day, always"
+    ],
+    "common_mistakes": [
+      "Interrogating buyers with forty fields upfront",
+      "Quoting precisely from vague single-line briefs",
+      "Hiding response-time expectations from requesters",
+      "Sending identical generic quotes to every enquiry"
+    ]
   },
   "recommendation_forms": {
     "name": "Recommendation Forms",
     "slug": "recommendation_forms",
-    "meta_title": "Effortless Recommendation Forms with SharaForms",
-    "meta_description": "Discover how SharaForms can simplify the process of collecting recommendations. With a wide range of customizable Recommendation Form Templates, SharaForms offers a form builder with features like email notifications, branding options, integration with popular tools, and more. Start using SharaForms to streamline your recommendation process today!",
-    "description": "Looking for a reliable recommendation form solution? SharaForms offers a range of Recommendation Form Templates designed to make your recommendation process seamless. Whether you need to collect recommendations for products, services, or professionals, SharaForms has you covered. With SharaForms's form builder, you can easily create and customize recommendation forms to suit your needs. Benefit from features like email notifications, fully customizable branding, and the ability to embed forms on any website. Integrate with popular tools like Slack or Discord through Zapier or webhooks. Ensure the security of your recommendation forms with password protection and captcha. Use SharaForms's custom code feature to enhance your forms further. Pre-fill forms via URL parameters, set form closing dates, or limit submissions as needed. Respondents can even edit their own submissions with SharaForms's multiple page functionality."
+    "meta_title": "Recommendation Form Templates - Referrals & Letters Free",
+    "meta_description": "Collect recommendations and referrals systematically: structured prompts, ratings, and letter uploads. Better input quality than blank-page requests.",
+    "description": "A recommendation form structures requests for references, referrals, and endorsement letters: who is recommending whom, in what capacity, against which criteria. Structured prompts produce richer letters than blank-page asks because recommenders know exactly what evidence helps. SharaForms stores completed recommendations attached to candidate or program records.",
+    "h1": "Recommendation Forms That Produce Strong Letters",
+    "include_label": "a recommendation request form",
+    "how_to_label": "a recommendation form",
+    "what_to_include": [
+      "Recommender identity and relationship context",
+      "Capacity and duration of acquaintance",
+      "Prompts tied to selection criteria",
+      "Ratings comparable across candidates",
+      "Letter text or upload field",
+      "Consent for verification contact"
+    ],
+    "how_to_steps": [
+      "State exactly what decisions the recommendation informs.",
+      "Convert criteria into short, specific prompts.",
+      "Keep the time burden under fifteen minutes.",
+      "Attach completed forms to candidate records automatically."
+    ],
+    "faqs": [
+      {
+        "question": "What should I ask recommenders specifically?",
+        "answer": "Ask for observable examples: situations witnessed, contributions measured, growth seen. Specific prompts yield specific evidence; generic prompts yield generic praise."
+      },
+      {
+        "question": "How many recommendations are enough?",
+        "answer": "Two or three typically balances signal with effort. More adds diminishing value unless stakes are high, such as fellowships or senior appointments."
+      },
+      {
+        "question": "Can recommenders stay confidential?",
+        "answer": "Yes. Keep recommender identity visible only to reviewers by omitting it from shared exports, which is standard practice in academic admissions."
+      }
+    ],
+    "featured_template": "recommendation-form-template",
+    "best_practices": [
+      "Provide candidates context before asking recommenders",
+      "Convert criteria into short specific prompts",
+      "Respect recommender time with visible length estimates",
+      "Attach finished recommendations to candidate records"
+    ],
+    "common_mistakes": [
+      "Sending blank-page requests two days before deadlines",
+      "Asking identical vague questions across different roles",
+      "Exposing confidential letters to candidates accidentally",
+      "Forgetting to thank recommenders once decisions land"
+    ]
   },
   "report_forms": {
     "name": "Report Forms",
     "slug": "report_forms",
-    "meta_title": "Simplify Your Reporting with SharaForms's Report Form Templates",
-    "meta_description": "Discover how SharaForms and our Report Form Templates can revolutionize your reporting process. Customize and brand your report forms, receive instant email notifications, and streamline your workflow. Find the perfect template for your needs and start reporting with ease today!",
-    "description": "Are you in need of a simple and efficient way to collect reports? SharaForms's Report Form Templates are here to help! Whether you're a manager, supervisor, or team leader, these templates are designed to streamline the reporting process. With SharaForms, you can easily customize and brand your forms, receive instant email notifications for every submission, and even integrate the forms with tools like Slack or Discord. Simply choose a report form template below, customize it to fit your needs, and experience the convenience of SharaForms for all your reporting needs."
+    "meta_title": "Report Form Templates - Incidents, Status & Field Notes",
+    "meta_description": "Standardize incident, progress, and field reports with free templates. Severity flags, evidence uploads, escalation alerts, searchable history.",
+    "description": "A report form captures structured accounts of events: workplace incidents, near misses, daily site progress, security observations, complaints. Structured reporting converts anecdotes into analyzable data, revealing patterns that drive prevention. SharaForms report templates timestamp entries, attach photos, and escalate critical severity instantly.",
+    "h1": "Incident & Status Report Templates That Surface Truth",
+    "include_label": "an incident or status report form",
+    "how_to_label": "a report form",
+    "what_to_include": [
+      "Reporter identity or anonymity option",
+      "Event date, time, and location",
+      "Category and severity classification",
+      "Factual narrative separated from opinion",
+      "Witness and injury detail sections",
+      "Corrective action tracking fields"
+    ],
+    "how_to_steps": [
+      "Define report categories matching your response playbooks.",
+      "Separate factual fields from narrative boxes.",
+      "Escalate critical severities automatically.",
+      "Review monthly patterns, not just individual cases."
+    ],
+    "faqs": [
+      {
+        "question": "What makes incident reports useful long term?",
+        "answer": "Consistent categories and severities make months of reports aggregable. Pattern analysis reveals systemic risks that individual incidents never show on their own."
+      },
+      {
+        "question": "Should reporters be able to stay anonymous?",
+        "answer": "Yes, particularly for safety and misconduct reporting. Anonymous channels surface issues pressured employees otherwise swallow; just allow contact details optionally for follow-up."
+      },
+      {
+        "question": "How quickly must incidents be reported?",
+        "answer": "Same shift for injuries and near misses, twenty-four hours for property damage are typical baselines. Match stricter regulatory timelines where your industry requires."
+      }
+    ],
+    "featured_template": "incident-report-form-template",
+    "best_practices": [
+      "Separate factual fields from narrative interpretation",
+      "Classify severity consistently using published definitions",
+      "Escalate critical reports automatically on arrival",
+      "Review monthly patterns rather than isolated cases"
+    ],
+    "common_mistakes": [
+      "Blaming individuals inside what are system failures",
+      "Letting near-misses go unreported without any channel",
+      "Writing narratives nobody can aggregate later",
+      "Closing reports without recorded corrective actions"
+    ]
   },
   "request_forms": {
     "name": "Request Forms",
     "slug": "request_forms",
-    "meta_title": "Efficiently Manage Requests with SharaForms's Request Form Templates",
-    "meta_description": "Discover how SharaForms's Request Form Templates can simplify your process of collecting requests. Customize the templates to fit your needs, receive email notifications, integrate with other tools, and streamline your request management with SharaForms.",
-    "description": "Need to collect requests and gather information efficiently? SharaForms offers Request Form Templates that can streamline the process! These templates are designed for individuals, businesses, and organizations looking to manage incoming requests. With SharaForms, you can easily customize these templates, collect data securely, and benefit from various features like email notifications, form customization, integrations with Slack and other tools, and much more. Start using SharaForms's Request Form Templates today and simplify the way you handle requests!"
+    "meta_title": "Request Form Templates - IT, HR & Service Requests",
+    "meta_description": "Route internal and service requests through free structured forms: IT tickets, facilities jobs, access requests. Priority fields keep queues honest.",
+    "description": "A request form funnels asks for help, access, or services into one structured queue: IT support tickets, facilities maintenance, document requests, departmental services. Structured intake means priority, category, and completeness arrive together, letting teams serve fairly instead of serving loudly. SharaForms routes requests by category with notifications to owning teams.",
+    "h1": "Service Request Templates That Triage Themselves",
+    "include_label": "a service request form",
+    "how_to_label": "a request form",
+    "what_to_include": [
+      "Requester contact and team",
+      "Category matched to the owning team",
+      "Priority or business impact selector",
+      "Description with expected outcome",
+      "Deadline or needed-by date",
+      "Attachments such as screenshots"
+    ],
+    "how_to_steps": [
+      "Map request categories to real owning teams.",
+      "Define priority levels teams actually honor.",
+      "Require completion details before submission.",
+      "Review aging requests weekly against agreed SLAs."
+    ],
+    "faqs": [
+      {
+        "question": "How do we stop urgent-everything requests?",
+        "answer": "Define priority definitions publicly and tie them to consequences: true emergencies jump queues, inflated ones lose credibility. Manager approval of top priorities keeps the system honest."
+      },
+      {
+        "question": "Should requests auto-route to teams?",
+        "answer": "Yes. Category-based routing sends submissions directly to owning teams' notification channels, eliminating triage delays that shared inboxes create."
+      },
+      {
+        "question": "What belongs on a request form versus email?",
+        "answer": "Anything needing tracking, prioritization, or an audit trail goes on the form. Email remains for discussion once the request exists, referenced by its ID."
+      }
+    ],
+    "featured_template": "service-request-form-template",
+    "best_practices": [
+      "Map categories directly onto owning teams",
+      "Define priorities with consequences everyone knows",
+      "Require completeness before submission succeeds",
+      "Publish SLA progress where requesters can see it"
+    ],
+    "common_mistakes": [
+      "Accepting everything into one undifferentiated queue",
+      "Letting urgency inflation become team culture",
+      "Routing requests through personal direct messages",
+      "Closing tickets without confirming requester satisfaction"
+    ]
   },
   "reservation_forms": {
     "name": "Reservation Forms",
     "slug": "reservation_forms",
-    "meta_title": "Simplify Your Reservation Management with SharaForms",
-    "meta_description": "Looking for an easy way to manage reservations? Discover how SharaForms's Reservation Form Templates can streamline your booking process. Customize your form, collect reservation details, and leverage powerful features like email notifications, embeddable forms, and integrations with popular tools. Upgrade your reservation management with SharaForms now!",
-    "description": "Planning an event or managing bookings? SharaForms offers Reservation Form Templates to simplify the process! Whether you run a hotel, a restaurant, or any other business that requires reservations, SharaForms has got you covered. With our templates, you can easily collect reservation details, streamline your booking process, and benefit from SharaForms's powerful features. Customize your reservation form to match your branding, embed it on your website, and leverage our integrations with tools like Slack and Discord via Zapier or webhooks. Take advantage of features like email notifications, form customization, password protection, and more. Upgrade your reservation management with SharaForms today!"
+    "meta_title": "Reservation Form Templates - Tables, Rooms & Venues",
+    "meta_description": "Take reservations online with free templates: restaurant tables, hotel rooms, venues, equipment. Party details, occasion notes, confirmations included.",
+    "description": "A reservation form secures bookings for tables, rooms, venues, and equipment: guest details, date and time preferences, party size, and special occasions. Front-of-house teams confirm against availability while guests enjoy instant acknowledgment. SharaForms reservations collect occasion notes like anniversaries and export day sheets for service preparation.",
+    "h1": "Reservation Templates Guests Find Effortless",
+    "include_label": "a reservation form guests understand",
+    "how_to_label": "a reservation form",
+    "what_to_include": [
+      "Guest name and mobile number",
+      "Date, time, and party size",
+      "Seating or room preferences",
+      "Occasion notes for special touches",
+      "Deposit terms if required",
+      "Confirmation with change instructions"
+    ],
+    "how_to_steps": [
+      "Collect realistic arrival windows, not exact minutes.",
+      "Capture occasion notes to personalize service.",
+      "Confirm manually against your floor plan or calendar.",
+      "Export daily reservation sheets each morning."
+    ],
+    "faqs": [
+      {
+        "question": "How far ahead should reservations be accepted?",
+        "answer": "Accept bookings as far out as operations can honor reliably, commonly thirty to ninety days. Longer windows fill prime slots early but complicate staffing forecasts."
+      },
+      {
+        "question": "Do reservation forms help with no-shows?",
+        "answer": "They deter them: cancellation policy acknowledgment, reminder-friendly exports, and optional deposit collection via payment fields all reduce silent absences."
+      },
+      {
+        "question": "Can guests modify reservations themselves?",
+        "answer": "Enable editable submissions so guests adjust party size or time using their confirmation link, cutting amendment calls dramatically during peak service."
+      }
+    ],
+    "featured_template": "reservation-form-template",
+    "best_practices": [
+      "Collect arrival windows instead of false precision",
+      "Capture occasion notes that enable personal touches",
+      "Confirm against real floor plans or calendars",
+      "Export daily sheets your front-of-house actually uses"
+    ],
+    "common_mistakes": [
+      "Accepting bookings beyond operational capacity limits",
+      "Losing special occasions inside general comment boxes",
+      "Confirming nothing until guests chase you down",
+      "Handling modifications through chaotic message threads"
+    ]
   },
   "sponsorship_forms": {
     "name": "Sponsorship Forms",
     "slug": "sponsorship_forms",
-    "meta_title": "Simplify Sponsorship Management with SharaForms's Templates",
-    "meta_description": "SharaForms's Sponsorship Form Templates are the ultimate solution for event organizers, non-profits, and businesses seeking sponsorships. Create customized forms, streamline the application process, and leverage SharaForms's features such as branding, email notifications, integrations, and more. Explore the power of SharaForms today!",
-    "description": "Looking for a hassle-free way to manage sponsorships? SharaForms's Sponsorship Form Templates are designed to simplify the process! These templates are targeted at event organizers, non-profit organizations, and businesses seeking sponsorships. With SharaForms, you can easily create custom sponsorship forms tailored to your needs. Collect important information from potential sponsors, streamline your sponsorship application process, and enjoy the benefits of SharaForms's powerful features. Customize your form's branding, protect it with a password, and even embed it on your website. With email notifications, you'll stay updated on new submissions, while respondents receive confirmation emails. SharaForms also offers integrations with popular tools like Slack, Discord, and more, enabling seamless communication and automation. Discover the possibilities of SharaForms's Sponsorship Form Templates today!"
+    "meta_title": "Sponsorship Application Forms - Events, Teams & Causes",
+    "meta_description": "Manage sponsorship applications with free templates: organization profiles, audience reach, activation plans, tier selection. Review-ready comparisons.",
+    "description": "A sponsorship application form evaluates partners seeking support: organization background, audience demographics, activation proposals, and requested tiers. Sponsors receive dozens of pitches; structured applications separate professional proposals from cold emails. SharaForms collects media kits, compares reach claims consistently, and tracks decisions across cycles.",
+    "h1": "Sponsorship Applications Sponsors Say Yes To",
+    "include_label": "a sponsorship application form",
+    "how_to_label": "a sponsorship application form",
+    "what_to_include": [
+      "Organization profile and history",
+      "Audience size and demographics",
+      "Sponsorship tier requested",
+      "Activation plan for sponsor benefits",
+      "Media kit or supporting uploads",
+      "Clear decision timeline"
+    ],
+    "how_to_steps": [
+      "Publish tiers and benefits before opening applications.",
+      "Ask for verifiable audience metrics.",
+      "Require concrete activation commitments.",
+      "Score against fixed criteria and notify every applicant."
+    ],
+    "faqs": [
+      {
+        "question": "What do sponsors look for first?",
+        "answer": "Audience fit over raw audience size: alignment between their customers and yours, plus credible engagement numbers. Activation commitment signals professionalism more than follower counts."
+      },
+      {
+        "question": "When should sponsorship rounds close?",
+        "answer": "Close eight to twelve weeks before activation to leave contracting and fulfillment lead time. Late cycles force rushed activations nobody measures well."
+      },
+      {
+        "question": "Should sponsorship applications ask about budgets?",
+        "answer": "Applicants describe what they seek, not their finances; your tiers define money conversations. Do ask about in-kind alternatives, which often unlock creative partnerships."
+      }
+    ],
+    "featured_template": "sponsorship-application-form-template",
+    "best_practices": [
+      "Quantify audience reach across verifiable channels",
+      "Price packages against delivered value, not costs",
+      "Specify deliverables sponsors can audit later",
+      "Close rounds early enough for real activation planning"
+    ],
+    "common_mistakes": [
+      "Leading with your needs instead of their returns",
+      "Promising exposure nobody later measures",
+      "Running applications with no stated decision dates",
+      "Treating renewals as automatic rather than earned"
+    ]
   },
   "subscription_forms": {
     "name": "Subscription Forms",
     "slug": "subscription_forms",
-    "meta_title": "Supercharge Your Subscriptions with SharaForms",
-    "meta_description": "Streamline your subscription process with SharaForms's Subscription Form Templates. Collect subscription information easily, customize your forms, and benefit from SharaForms's integrations. Choose a template, make it your own, and see how SharaForms can simplify your subscription management.",
-    "description": "Looking to gather subscriptions? SharaForms's Subscription Form Templates are perfect for anyone who needs to collect subscription information easily and efficiently. Whether you're running a newsletter, membership site, or online service, SharaForms has the tools you need. With features like email notifications, custom branding, and integrations with popular tools, SharaForms can help you streamline your subscription process. Choose a template below, customize it to your needs, and see how SharaForms can simplify your subscription management."
+    "meta_title": "Subscription Form Templates - Recurring Billing Easy",
+    "meta_description": "Launch subscriptions for boxes, memberships, and services with free templates. Plan selection, Stripe recurring billing, subscriber exports.",
+    "description": "A subscription form enrolls customers into recurring products or services: plan selection, billing cycle choice, delivery details, and Stripe-powered recurring payments. Subscription businesses live or die on sign-up friction. SharaForms handles plan variants, trial indicators, and subscriber exports feeding fulfillment and retention workflows.",
+    "h1": "Subscription Sign-Up Templates Built for Retention",
+    "include_label": "a subscription sign-up form",
+    "how_to_label": "a subscription form",
+    "what_to_include": [
+      "Plan or box tier selection",
+      "Billing frequency with transparent pricing",
+      "Subscriber and delivery details",
+      "Preferences that personalize the service",
+      "Terms and cancellation policy acceptance",
+      "Recurring billing through Stripe"
+    ],
+    "how_to_steps": [
+      "Price plans so the middle option anchors value.",
+      "Explain cancellation honestly; trust converts.",
+      "Connect Stripe for automatic recurring charges.",
+      "Export subscribers weekly into fulfillment workflows."
+    ],
+    "faqs": [
+      {
+        "question": "How does recurring billing work?",
+        "answer": "Customers pay through connected Stripe at sign-up and each cycle afterward until canceling. Your exports track active subscribers and their chosen frequencies."
+      },
+      {
+        "question": "Should subscriptions offer trials?",
+        "answer": "Trials reduce perceived risk and lift conversion when product value shows quickly. Add a trial-plan option with explicit conversion terms to avoid surprise-charge complaints."
+      },
+      {
+        "question": "How do subscribers cancel?",
+        "answer": "Publish cancellation steps plainly and honor requests promptly. Easy exits paradoxically increase sign-ups because commitment feels reversible."
+      }
+    ],
+    "featured_template": "subscription-form-template",
+    "best_practices": [
+      "Make the middle plan the obvious value pick",
+      "Show billing frequency and totals transparently",
+      "State cancellation terms in plain language upfront",
+      "Export subscribers into fulfillment automatically"
+    ],
+    "common_mistakes": [
+      "Burying recurring charges in fine print surprises",
+      "Designing cancellations as guilt-trip obstacle courses",
+      "Collecting preferences then ignoring them at delivery",
+      "Celebrating signups while churn quietly compounds"
+    ]
   },
   "summer_camp_surveys": {
     "name": "Summer Camp Surveys",
     "slug": "summer_camp_surveys",
-    "meta_title": "Upgrade Your Summer Camp Surveys with SharaForms!",
-    "meta_description": "If you're an organizer looking to improve your summer camp experience, SharaForms is here to help! Our form builder provides Summer Camp Survey Form Templates that can make collecting feedback a breeze. With SharaForms, you can easily customize and embed these survey forms on your camp's website. Take advantage of features like email notifications and custom domains to streamline your survey process. Upgrade your summer camp surveys today with SharaForms!",
-    "description": "Planning a summer camp and need to gather feedback? SharaForms offers Summer Camp Survey Form Templates that can simplify your work! These templates are designed specifically for summer camp organizers to collect valuable feedback from parents and campers. With SharaForms, you can easily create and customize these survey forms to fit your camp's unique needs. Take advantage of SharaForms's features like email notifications, form customization, custom domains, and form embedding to streamline your survey process. Upgrade your summer camp surveys today with SharaForms!"
+    "meta_title": "Summer Camp Survey Templates - Parents & Campers",
+    "meta_description": "Measure camp season success with free survey templates for parents and campers. Activity ratings, safety confidence, re-enrollment signals.",
+    "description": "A summer camp survey captures family experiences across registration ease, activity quality, safety confidence, staff performance, and food or facility satisfaction. Post-season surveys drive next-year enrollment because parents trust other parents more than brochures. SharaForms separates parent and camper versions, keeping questions age-appropriate.",
+    "h1": "Summer Camp Surveys Parents Actually Answer",
+    "include_label": "a camp survey parents complete",
+    "how_to_label": "a summer camp survey",
+    "what_to_include": [
+      "Registration and communication experience",
+      "Activity enjoyment ratings from campers",
+      "Safety and supervision confidence",
+      "Staff helpfulness observations",
+      "Food and facility satisfaction",
+      "Likelihood to return next season"
+    ],
+    "how_to_steps": [
+      "Send parent surveys within two weeks of session end.",
+      "Keep camper versions short and playful.",
+      "Ask the return-intent question directly.",
+      "Share improvements made from feedback before re-enrollment opens."
+    ],
+    "faqs": [
+      {
+        "question": "When should camps send experience surveys?",
+        "answer": "Within one to two weeks post-session while memories stay vivid, before school routines erase details. Re-enrollment campaigns can then cite changes you already made."
+      },
+      {
+        "question": "How do you survey young campers?",
+        "answer": "Use emoji-scale ratings, very few questions, and verbal administration by counselors for younger groups. Written versions suit teenagers better than ten-year-olds."
+      },
+      {
+        "question": "Which question predicts re-enrollment best?",
+        "answer": "Return intent asked directly: would you enroll again. Pair it with an open why-question to capture the fixable friction behind hesitant answers."
+      }
+    ],
+    "featured_template": "summer-camp-registration-form-template",
+    "best_practices": [
+      "Send within two weeks while memories stay vivid",
+      "Split parent and camper versions by age group",
+      "Ask return-intent directly and without hedging",
+      "Publicize improvements made from last season feedback"
+    ],
+    "common_mistakes": [
+      "Surveying families during back-to-school chaos",
+      "Asking eight-year-olds adult-length questionnaires",
+      "Collecting ratings leadership never once reviews",
+      "Repeating unchanged programs despite consistent feedback"
+    ]
   },
   "telecommuting_forms": {
     "name": "Telecommuting Forms",
     "slug": "telecommuting_forms",
-    "meta_title": "Streamline Telecommuting with SharaForms's Templates",
-    "meta_description": "Transitioning to telecommuting? Discover SharaForms's Telecommuting Form Templates and simplify the process. Customize your forms, collect vital information, and streamline communication. Benefit from SharaForms's features like email notifications, form branding, and integration with collaboration tools such as Slack and Discord. Upgrade your telecommuting experience with SharaForms!",
-    "description": "Are you transitioning your workforce to telecommuting? SharaForms offers Telecommuting Form Templates that can simplify the process! With these form templates, you can easily collect information from your employees, streamline communication, and ensure a smooth transition to remote work. SharaForms, a form builder, provides features such as customizable forms, email notifications, form branding, and integration with collaboration tools like Slack and Discord. Use our Telecommuting Form Templates to gather essential information, communicate effectively, and leverage SharaForms's powerful features to facilitate seamless telecommuting."
+    "meta_title": "Telecommuting Agreement Templates - Remote Work Policy",
+    "meta_description": "Formalize remote work with free telecommuting templates: equipment checklists, workspace attestations, schedule agreements, policy sign-off with signatures.",
+    "description": "A telecommuting agreement form documents remote work arrangements: approved days, equipment provided, workspace standards, security obligations, and availability windows. Written agreements prevent misunderstandings about expectations while supporting insurance and compliance positions. SharaForms captures employee and manager signatures with timestamps for clean records.",
+    "h1": "Telecommuting Agreement Templates Done Properly",
+    "include_label": "a remote work agreement form",
+    "how_to_label": "a telecommuting agreement form",
+    "what_to_include": [
+      "Approved remote days or schedule pattern",
+      "Equipment provided versus personal responsibility",
+      "Workspace safety attestation",
+      "Data security obligations",
+      "Availability and meeting windows",
+      "Employee and manager signatures"
+    ],
+    "how_to_steps": [
+      "Define eligibility rules before accepting applications.",
+      "Spell out equipment and expense responsibilities.",
+      "Include security requirements matching your policies.",
+      "Store signed agreements with review dates attached."
+    ],
+    "faqs": [
+      {
+        "question": "What should telecommuting agreements cover?",
+        "answer": "Schedule expectations, equipment ownership, workspace standards, data protection duties, communication norms, and revocation conditions. Ambiguity in any area becomes tomorrow's dispute."
+      },
+      {
+        "question": "Do remote agreements affect insurance or taxes?",
+        "answer": "They can, since workspace location affects coverage and jurisdiction. Route tax or insurance specifics to specialists rather than deciding inside the form itself."
+      },
+      {
+        "question": "How often should agreements be renewed?",
+        "answer": "Annually works for stable arrangements; review immediately when roles change materially. Renewal reviews also catch drift between documented and actual practice."
+      }
+    ],
+    "featured_template": "telecommuting-agreement-form-template",
+    "best_practices": [
+      "Document approved schedules and core hours clearly",
+      "Register issued equipment with identifiable serials",
+      "Attest workspace basics: safety, connectivity, confidentiality",
+      "Revisit agreements annually or upon role changes"
+    ],
+    "common_mistakes": [
+      "Leaving remote arrangements entirely undocumented",
+      "Skipping equipment registers until departures turn hostile",
+      "Copying office policies verbatim into home contexts",
+      "Ignoring arrangement drift between annual reviews"
+    ]
   },
   "tracking_forms": {
     "name": "Tracking Forms",
     "slug": "tracking_forms",
-    "meta_title": "Simplify Tracking with SharaForms's Tracking Form Templates",
-    "meta_description": "Looking for a simple and efficient way to track shipments and packages? Discover SharaForms's Tracking Form Templates and see how you can leverage our form builder and customizable templates to streamline your tracking process.",
-    "description": "Need to track shipments or packages? SharaForms offers Tracking Form Templates that make it easy to monitor and manage your tracking information. With SharaForms, you can create customized forms to collect tracking details, streamline your tracking process, and benefit from our integration capabilities. Use a tracking form template below, tailor it to your specific needs, and discover how SharaForms can enhance your tracking workflow."
+    "meta_title": "Tracking Form Templates - Assets, Hours & Milestones",
+    "meta_description": "Track assets, hours, deliveries, and milestones with free logging templates. Timestamped entries, status fields, exportable histories.",
+    "description": "A tracking form maintains running logs of anything moving: asset handoffs, work hours, shipment milestones, project statuses, visitor entries. Consistent log formats turn scattered updates into queryable history. SharaForms tracking templates timestamp every entry, enforce required status values, and export timelines ready for reconciliation.",
+    "h1": "Tracking Log Templates That Stay Current",
+    "include_label": "a tracking log form",
+    "how_to_label": "a tracking form",
+    "what_to_include": [
+      "The item or subject being tracked",
+      "A status vocabulary everyone shares",
+      "Timestamps captured automatically",
+      "Responsible person per entry",
+      "Location or handoff details",
+      "Notes for exceptions and context"
+    ],
+    "how_to_steps": [
+      "Fix your status vocabulary before launch.",
+      "Make logging one tap wherever possible.",
+      "Review logs weekly for stuck items.",
+      "Export monthly for audits and planning."
+    ],
+    "faqs": [
+      {
+        "question": "What makes teams actually keep logs updated?",
+        "answer": "Friction decides everything: QR codes at handoff points, minimal required fields, and visible value flowing back to the people logging. Logs that only benefit managers quietly die."
+      },
+      {
+        "question": "How is a tracking form different from a spreadsheet?",
+        "answer": "Forms enforce structure at entry time, timestamp automatically, work on phones, and alert owners, while spreadsheets rely on discipline that erodes under pressure."
+      },
+      {
+        "question": "Can tracking data feed dashboards?",
+        "answer": "Exports load into BI tools directly, and webhooks stream entries into operational dashboards live, giving leadership visibility without manual collation."
+      }
+    ],
+    "featured_template": "asset-tracking-form-template",
+    "best_practices": [
+      "Fix shared status vocabulary before launching anything",
+      "Make each entry completable within thirty seconds",
+      "Place form links at physical handoff points via QR",
+      "Export and reconcile against source systems monthly"
+    ],
+    "common_mistakes": [
+      "Logging fields nobody ever reads again",
+      "Building trackers usable only from a desk",
+      "Allowing free-text status values that fragment data",
+      "Abandoning logs the first busy week of quarter"
+    ]
   },
   "voting_forms": {
     "name": "Voting Forms",
     "slug": "voting_forms",
-    "meta_title": "Streamline Your Voting Process with SharaForms's Voting Form Templates",
-    "meta_description": "Find the perfect solution for your voting needs with SharaForms's Voting Form Templates. Create customizable forms to collect votes, opinions, and feedback easily. Discover the power of SharaForms's form builder, email notifications, form embedding, custom domains, integrations, security features, and more!",
-    "description": "Looking to collect votes and opinions? SharaForms's Voting Form Templates are here to help! Whether you're running an election, conducting a survey, or seeking feedback, SharaForms provides user-friendly templates that simplify the voting process. With SharaForms's form builder, you can fully customize and brand your voting forms. Take advantage of features like email notifications, form embedding, custom domains, and integrations with popular tools like Slack and Discord via Zapier or webhooks. Ensure the security of your voting forms with password protection and captchas. Plus, you can pre-fill forms, set submission limits, allow respondents to edit their submissions, and even create multi-page forms. Discover how SharaForms can enhance your voting experience today!"
+    "meta_title": "Voting Form Templates - Elections, Boards & Contests",
+    "meta_description": "Run internal elections, board votes, and contests with free ballot templates. Candidate statements, choice rules, and auditable tallies.",
+    "description": "A voting form structures decision-making votes: association board elections, committee seats, shareholder resolutions, contest judging. Credible ballots separate candidates cleanly, state rules precisely, and produce auditable tallies. SharaForms supports candidate statements, choice constraints, and exportable results your governance process can verify.",
+    "h1": "Voting Ballot Templates Members Trust",
+    "include_label": "a credible voting ballot form",
+    "how_to_label": "a voting form",
+    "what_to_include": [
+      "Voter eligibility stated clearly",
+      "Candidate names with position statements",
+      "Single-choice or multi-seat rules",
+      "A voting window with a firm close",
+      "Secrecy appropriate to the context",
+      "Exportable tally for certification"
+    ],
+    "how_to_steps": [
+      "Publish rules and the candidate list before voting opens.",
+      "Verify eligibility through your distribution channel.",
+      "Close voting at a stated minute, not vaguely.",
+      "Certify results from exported tallies with witnesses."
+    ],
+    "faqs": [
+      {
+        "question": "Are online votes valid for official elections?",
+        "answer": "Validity depends on your governing documents and jurisdiction, not the software. Many organizations amend bylaws to permit electronic voting, then use exported, witness-verifiable tallies."
+      },
+      {
+        "question": "How do we ensure one person, one vote?",
+        "answer": "Combine controlled link distribution with captcha and duplicate detection, or issue personalized links. For high-stakes elections, pair the form with membership roll verification."
+      },
+      {
+        "question": "Should voters see live results?",
+        "answer": "Never during official elections: live tallies suppress later voters and invite bandwagon effects. Reveal results after close from the certified export instead."
+      }
+    ],
+    "featured_template": "voting-form-template",
+    "best_practices": [
+      "Publish rules and candidate statements before opening",
+      "Verify eligibility through controlled distribution channels",
+      "Hide tallies until the polls officially close",
+      "Certify results from exports with witnesses present"
+    ],
+    "common_mistakes": [
+      "Showing live counts during contested elections",
+      "Distributing ballot links through uncontrolled forwarding",
+      "Leaving voting windows open-ended indefinitely",
+      "Announcing outcomes without any auditable tally record"
+    ]
   },
   "wedding_forms": {
     "name": "Wedding Forms",
     "slug": "wedding_forms",
-    "meta_title": "Simplify Your Wedding Planning with SharaForms's Wedding Form Templates",
-    "meta_description": "SharaForms's Wedding Form Templates make wedding planning a breeze! Collect RSVPs, manage guest details, and send out wedding invitations effortlessly. Customize your forms, protect them with passwords, and embed them on your wedding website. Get started with SharaForms and make your wedding planning experience a memorable one.",
-    "description": "Planning a wedding has never been easier! SharaForms's Wedding Form Templates are designed specifically for those organizing their special day. With SharaForms, you can effortlessly collect RSVPs, manage guest details, and send out wedding invitations. Our form builder offers a range of features to enhance your wedding planning experience. Customize your forms to match your wedding theme, protect them with passwords, and embed them on your wedding website. Plus, with SharaForms's email notifications, you'll never miss a response. Start simplifying your wedding planning process with SharaForms's Wedding Form Templates today!"
+    "meta_title": "Wedding Form Templates - RSVPs, Vendors & Planning",
+    "meta_description": "Plan weddings with free templates: guest RSVPs, meal choices, vendor inquiries, day-of schedules. One organized place for every moving piece.",
+    "description": "Wedding forms tame planning chaos: guest RSVPs with meal selections, vendor inquiry briefs, bridal party details, day-of timelines, and song requests. Couples coordinating across many vendors need one organized source of truth. SharaForms wedding templates tally RSVPs automatically, track dietary needs, and export seating-ready guest lists.",
+    "h1": "Wedding Planning Templates for Calmer Couples",
+    "include_label": "a wedding planning form set",
+    "how_to_label": "a wedding planning form",
+    "what_to_include": [
+      "Guest names grouped by household",
+      "RSVP with meal and plus-one choices",
+      "Dietary requirements collected properly",
+      "Vendor comparison and booking records",
+      "Day-of schedule and contact sheet",
+      "Song requests adding personal flair"
+    ],
+    "how_to_steps": [
+      "Build the master guest list before invitations print.",
+      "Send RSVP links with save-the-dates for early signal.",
+      "Brief vendors through identical inquiry forms.",
+      "Export final counts straight to caterers and venues."
+    ],
+    "faqs": [
+      {
+        "question": "When should wedding RSVPs be due?",
+        "answer": "Set deadlines three to four weeks before the wedding, balancing caterer cutoffs against chronically late responders. Digital reminders nudge gently without awkward phone calls."
+      },
+      {
+        "question": "How do we handle guests who never respond?",
+        "answer": "Export non-responders after the deadline, then follow up once collectively. Plan final numbers assuming most stragglers attend; surprises favor full seats over empty ones."
+      },
+      {
+        "question": "Can one form manage the whole wedding?",
+        "answer": "Use separate focused forms: RSVP, vendor inquiries, day-of coordination. Each stays simple for its audience while your dashboard holds everything together."
+      }
+    ],
+    "featured_template": "wedding-rsvp-form-template",
+    "best_practices": [
+      "Mirror invitation wording exactly inside RSVP forms",
+      "Collect meal choices your caterer can action directly",
+      "Brief every vendor through identical structured forms",
+      "Export final headcounts straight to venue coordinators"
+    ],
+    "common_mistakes": [
+      "Tracking RSVPs across texts, calls, and memory",
+      "Forgetting dietary needs until seating charts finalize",
+      "Comparing vendor quotes that describe different scopes",
+      "Planning day-of logistics only in someone's head"
+    ]
   },
   "volunteer_forms": {
     "name": "Volunteer Forms",
     "slug": "volunteer_forms",
-    "meta_title": "Simplify Volunteer Recruitment with SharaForms's Volunteer Form Templates",
-    "meta_description": "SharaForms's Volunteer Form Templates are the perfect solution for organizations seeking to simplify their volunteer recruitment process. With SharaForms's form builder, you can easily create personalized volunteer forms, customize and brand them to match your organization's identity, and benefit from powerful features like email notifications, integration with popular tools, form protection, and more. Discover how SharaForms can help you streamline your volunteer recruitment today!",
-    "description": "Looking to recruit volunteers? SharaForms offers Volunteer Form Templates that can make the process easier for you! These form templates are designed to help you gather information from potential volunteers, streamline your volunteer recruitment process, and benefit from SharaForms's powerful features. Customize and brand your forms, receive email notifications for new volunteer submissions, integrate with tools like Slack and Discord, and even protect your forms with a password. With SharaForms, you can create engaging and user-friendly volunteer forms that will make it simple for candidates to apply and for you to manage applications."
+    "meta_title": "Volunteer Form Templates - Applications & Shift Signups",
+    "meta_description": "Recruit and coordinate volunteers with free templates: applications, availability, skills, waivers. Roster-ready exports for coordinators.",
+    "description": "Volunteer forms recruit, screen, and organize helpers: applications with skills and availability, role preferences, screening acknowledgments, and waiver acceptance. Coordinators juggling events need rosters, not overflowing inboxes. SharaForms volunteer templates track certifications, match availability to shifts, and export crew lists coordinators can act on immediately.",
+    "h1": "Volunteer Templates Coordinators Swear By",
+    "include_label": "a volunteer recruitment form",
+    "how_to_label": "a volunteer application form",
+    "what_to_include": [
+      "Volunteer identity and emergency contacts",
+      "Skills and interest areas",
+      "Availability patterns and preferred shifts",
+      "Background or reference acknowledgments",
+      "Liability waiver acceptance",
+      "Sizes for event merchandise kits"
+    ],
+    "how_to_steps": [
+      "Describe roles honestly, including the hard parts.",
+      "Collect availability as structured selections.",
+      "Require waivers before confirming first shifts.",
+      "Export confirmed crews per event or week."
+    ],
+    "faqs": [
+      {
+        "question": "How detailed should volunteer applications be?",
+        "answer": "Match depth to responsibility: event-day helpers need basics plus waivers, while youth-facing or financial roles warrant references and screening acknowledgments proportional to risk."
+      },
+      {
+        "question": "Can volunteers pick their own shifts?",
+        "answer": "Yes. List shifts as selectable options and export assignments per slot, then recruit specifically for underserved times instead of blasting everyone repeatedly."
+      },
+      {
+        "question": "Do volunteers need to sign waivers separately?",
+        "answer": "Fold waiver acceptance into the application with a signature field, storing proof with each record. Separately signed waivers remain advisable for high-risk activities."
+      }
+    ],
+    "featured_template": "volunteer-signup-form-template",
+    "best_practices": [
+      "Describe roles honestly, including difficult parts",
+      "Match availability to shifts through structured selection",
+      "Require waivers before first-shift confirmations",
+      "Recognize contributions visibly and specifically often"
+    ],
+    "common_mistakes": [
+      "Recruiting broadly then assigning nobody anywhere",
+      "Discovering missing waivers on event morning",
+      "Ghosting applicants who offered their weekend freely",
+      "Burning out reliable regulars with zero succession planning"
+    ]
   }
 }

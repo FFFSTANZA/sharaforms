@@ -1,25 +1,33 @@
 <template>
   <div class="space-y-4">
-    <div>
-      <h3 class="text-lg font-medium text-neutral-900">Two-Factor Authentication</h3>
-      <p class="text-sm text-neutral-500 mt-1">
-        Add an extra layer of security to your account using an authenticator app.
-      </p>
+    <div class="flex items-start gap-3">
+      <span class="sf-icon-chip-soft sf-icon-chip-soft--green">
+        <i class="fa-solid fa-shield-halved" />
+      </span>
+      <div class="flex-1">
+        <div class="flex items-center gap-2 flex-wrap">
+          <h3 class="text-[15px] font-semibold text-[#1D1F24]">Two-Factor Authentication</h3>
+          <span
+            v-if="twoFactorEnabled"
+            class="pill-live inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold"
+          >
+            <i class="fa-solid fa-circle-check text-[9px]"></i>
+            Enabled
+          </span>
+        </div>
+        <p class="text-[13px] text-[#6E7278] mt-0.5">
+          Add an extra layer of security to your account using an authenticator app.
+        </p>
+      </div>
     </div>
 
     <!-- 2FA Status -->
     <div v-if="twoFactorEnabled" class="space-y-4">
-      <UAlert
-        color="success"
-        variant="subtle"
-        icon="i-lucide-circle-check"
-        description="Two-factor authentication is enabled on your account."
-      />
-
       <div class="flex gap-2">
         <UButton
           color="neutral"
           variant="outline"
+          class="btn-ghost !border-[#DEE1E7]"
           @click="showRegenerateModal = true"
         >
           Regenerate Recovery Codes
@@ -27,6 +35,7 @@
         <UButton
           color="neutral"
           variant="outline"
+          class="btn-ghost !border-[#DEE1E7] !text-[#c2351f] hover:!bg-[#fce7e2]"
           @click="showDisableModal = true"
         >
           Disable 2FA

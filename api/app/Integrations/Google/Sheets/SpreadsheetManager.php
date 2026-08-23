@@ -105,6 +105,27 @@ class SpreadsheetManager
         return $this->setHeaders($id, $headers);
     }
 
+    /**
+     * Rebuild columns only when they changed and sync headers only then.
+     * Called on every submission — avoids a DB write + extra API call
+     * (and quota burn) when the form fields have not changed.
+     */
+    public function syncHeadersIfChanged(string $id): static
+    {
+        $before = json_encode($this->data->columns);
+
+        $this->buildColumns();
+
+        if ($before === json_encode($this->data->columns)) {
+            return $this;
+        }
+
+        return $this->setHeaders($id, array_map(
+            fn ($column) => $column['name'],
+            $this->data->columns
+        ));
+    }
+
     protected function setHeaders(string $id, array $headers): static
     {
         $valueRange = new ValueRange([
@@ -144,7 +165,7 @@ class SpreadsheetManager
 
     public function submit(array $submissionData): static
     {
-        $this->updateHeaders($this->data->spreadsheet_id);
+        $this->syncHeadersIfChanged($this->data->spreadsheet_id);
 
         $row = $this->buildRow($submissionData);
 

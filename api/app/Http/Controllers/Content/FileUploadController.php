@@ -43,7 +43,8 @@ class FileUploadController extends Controller
 
         return response()->json([
             'uuid' => $uuid,
-            'key' => $path,
+            // L2 FIX: Don't expose internal storage structure to the client.
+            'key' => $uuid,
         ], 201);
     }
 }

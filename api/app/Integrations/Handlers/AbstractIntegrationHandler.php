@@ -90,7 +90,9 @@ abstract class AbstractIntegrationHandler
             $this->formIntegration->events()->create([
                 'status' => FormIntegrationsEvent::STATUS_SUCCESS,
             ]);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
+            // Catch Throwable (not just Exception) so a single broken handler
+            // can never abort the remaining integrations for this submission.
             $this->formIntegration->events()->create([
                 'status' => FormIntegrationsEvent::STATUS_ERROR,
                 'data' => $this->extractEventDataFromException($e),
@@ -175,18 +177,70 @@ abstract class AbstractIntegrationHandler
         return $data;
     }
 
-    public function extractEventDataFromException(\Exception $e): array
+    /**
+     * Query parameter keys whose values must never be persisted or logged.
+     * Some APIs authenticate via query params (e.g. Trello key/token,
+     * Pipedrive api_token) and connection-level exceptions embed full URLs.
+     */
+    public const SENSITIVE_QUERY_KEYS = [
+        'key', 'token', 'api_key', 'api_token', 'apikey', 'apikeytoken',
+        'secret', 'signature', 'password', 'access_token', 'client_secret',
+    ];
+
+    public function extractEventDataFromException(\Throwable $e): array
     {
         if ($e instanceof RequestException) {
             return [
-                'message' => $e->getMessage(),
+                'message' => $this->redactSecrets($e->getMessage()),
                 'response' => $e->response->json(),
                 'status' => $e->response->status(),
             ];
         }
         return [
-            'message' => $e->getMessage()
+            'message' => $this->redactSecrets($e->getMessage())
         ];
+    }
+
+    /**
+     * Redact credentials that may appear inside exception message strings:
+     * sensitive query parameters and bot tokens embedded in URL paths.
+     */
+    public function redactSecrets(string $text): string
+    {
+        // Bot tokens in paths, e.g. https://api.telegram.org/bot<token>/sendMessage
+        $text = preg_replace('/(\/bot)[A-Za-z0-9:_\-]{20,}/', '$1REDACTED', $text);
+
+        // Sensitive query parameters on any URL mentioned in the message
+        return (string) preg_replace_callback('/https?:\/\/[^\s"\'<>]+/', function (array $match) {
+            $parts = parse_url($match[0]);
+            if (empty($parts['query'])) {
+                return $match[0];
+            }
+
+            parse_str($parts['query'], $query);
+            $redacted = false;
+            foreach ($query as $key => $value) {
+                if (in_array(strtolower((string) $key), self::SENSITIVE_QUERY_KEYS, true)) {
+                    $query[$key] = 'REDACTED';
+                    $redacted = true;
+                }
+            }
+
+            if (! $redacted) {
+                return $match[0];
+            }
+
+            $rebuilt = ($parts['scheme'] ?? 'https').'://'.($parts['host'] ?? '');
+            if (! empty($parts['path'])) {
+                $rebuilt .= $parts['path'];
+            }
+            $rebuilt .= '?'.http_build_query($query);
+            if (! empty($parts['fragment'])) {
+                $rebuilt .= '#'.$parts['fragment'];
+            }
+
+            return $rebuilt;
+        }, $text);
     }
 
     /**
@@ -195,5 +249,38 @@ abstract class AbstractIntegrationHandler
     public static function formatData(array $data): array
     {
         return $data;
+    }
+
+    /**
+     * Replace {{FieldName}} placeholders in a template string with actual submission values.
+     *
+     * Supports two data formats:
+     * - Array of field objects with 'name' and 'value' keys (from FormSubmissionFormatter::getFieldsWithValue())
+     * - Associative array of field_id => ['name' => ..., 'value' => ...] (from getFormattedSubmissionData())
+     */
+    protected function replaceVariables(string $template, array $data): string
+    {
+        $replacements = [];
+
+        foreach ($data as $key => $field) {
+            if (is_array($field) && isset($field['name'])) {
+                $name = $field['name'];
+                $value = is_array($field['value'] ?? null)
+                    ? implode(', ', $field['value'])
+                    : ($field['value'] ?? '');
+            } elseif (is_string($key)) {
+                // Associative array: key is field_id, value is ['name' => ..., 'value' => ...]
+                $name = $field['name'] ?? $key;
+                $value = is_array($field['value'] ?? null)
+                    ? implode(', ', $field['value'])
+                    : ($field['value'] ?? '');
+            } else {
+                continue;
+            }
+
+            $replacements['{{'.$name.'}}'] = (string) $value;
+        }
+
+        return strtr($template, $replacements);
     }
 }

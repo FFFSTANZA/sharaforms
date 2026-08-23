@@ -221,7 +221,7 @@ export default {
     },
     imageOptionClass() {
       if (this.optionDisplayMode === 'image_only') {
-        return 'flex-col items-center justify-center !p-0 border-2 rounded-lg transition-all'
+        return 'flex-col items-center justify-center !p-0 border-2 transition-all min-h-[44px]'
       }
       return ''
     },

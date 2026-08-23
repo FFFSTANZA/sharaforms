@@ -6,6 +6,7 @@ use App\Integrations\OAuth\Drivers\Contracts\OAuthDriver;
 use App\Integrations\OAuth\Drivers\Contracts\WidgetOAuthDriver;
 use App\Integrations\OAuth\Drivers\OAuthGoogleDriver;
 use App\Integrations\OAuth\Drivers\OAuthGoogleOneTapDriver;
+use App\Integrations\OAuth\Drivers\OAuthNotionDriver;
 use App\Integrations\OAuth\Drivers\OAuthStripeDriver;
 use App\Integrations\OAuth\Drivers\OAuthTelegramDriver;
 use App\Service\OAuth\OAuthFlowOrchestrator;
@@ -14,6 +15,7 @@ enum OAuthProviderService: string
 {
     case Google = 'google';
     case GoogleOneTap = 'google_one_tap';
+    case Notion = 'notion';
     case Stripe = 'stripe';
     case Telegram = 'telegram';
 
@@ -22,6 +24,7 @@ enum OAuthProviderService: string
         return match ($this) {
             self::Google =>  new OAuthGoogleDriver(),
             self::GoogleOneTap => new OAuthGoogleOneTapDriver(),
+            self::Notion => new OAuthNotionDriver(),
             self::Stripe =>  new OAuthStripeDriver(),
             self::Telegram => new OAuthTelegramDriver(),
         };
@@ -32,6 +35,7 @@ enum OAuthProviderService: string
         return match ($this) {
             self::Google => in_array($intent, OAuthFlowOrchestrator::INTENTS),
             self::GoogleOneTap => $intent === OAuthFlowOrchestrator::INTENT_AUTH,
+            self::Notion => $intent === OAuthFlowOrchestrator::INTENT_INTEGRATION,
             self::Stripe => $intent === OAuthFlowOrchestrator::INTENT_INTEGRATION,
             self::Telegram => $intent === OAuthFlowOrchestrator::INTENT_INTEGRATION,
         };

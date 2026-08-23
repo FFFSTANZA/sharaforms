@@ -9,8 +9,8 @@
     >
       <template #body>
         <template v-if="appStore.isUnauthorizedError">
-          <div class="mb-4 p-3 bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-700 rounded-md">
-            <p class="text-amber-800 dark:text-amber-200 text-sm font-medium">
+          <div class="mb-4 p-3 bg-[#FDF6EB] dark:bg-amber-900/30 border border-[#f5dfa8] dark:border-amber-700 rounded-md">
+            <p class="text-[#d97706] dark:text-amber-200 text-[13px] font-medium">
               Your session has expired. Please log in again to continue.
             </p>
           </div>

@@ -9,7 +9,7 @@
     :switch-reasons="switchReasons"
     :feature-comparison="featureComparison"
     :get-competitor-price="getPrice"
-    :summary-line="'SharaForms is the Formbricks alternative for teams that need more than surveys and in-app feedback, with a general-purpose form builder with unlimited submissions on the free plan, built-in calculators, and no steep per-seat pricing, from $0.'"
+    :summary-line="'SharaForms is the Formbricks alternative for teams that need more than surveys and in-app feedback, with a general-purpose form builder with unlimited submissions on the free plan, three presentation modes, built-in calculations, and no steep per-seat pricing, from $0.'"
     :faqs="faqs"
   >
     <template #hero-subtitle>
@@ -154,7 +154,7 @@ const faqs = [
   {
     question: 'Is Formbricks free?',
     answer:
-      'Formbricks has a free hobby tier, but it is limited to a small number of monthly responses and seats, and teams outgrow it quickly. SharaForms is free with unlimited forms and unlimited submissions, with paid plans starting at $12 per month.',
+      'Formbricks has a free hobby tier, but it is limited to a small number of monthly responses and seats, and teams outgrow it quickly. SharaForms is free with unlimited forms and unlimited submissions, with paid plans starting at $15 per month.',
   },
   {
     question: 'Can I import my Formbricks surveys into SharaForms?',
@@ -164,7 +164,7 @@ const faqs = [
   {
     question: 'How does SharaForms pricing compare to Formbricks?',
     answer:
-      'SharaForms is free for unlimited forms and submissions, with paid plans from $12 per month. Formbricks paid plans start at a much higher price and charge per member, so SharaForms is substantially cheaper for growing teams.',
+      'SharaForms is free for unlimited forms and submissions, with paid plans from $15 per month. Formbricks paid plans start at a much higher price and charge per member, so SharaForms is substantially cheaper for growing teams.',
   },
 ]
 

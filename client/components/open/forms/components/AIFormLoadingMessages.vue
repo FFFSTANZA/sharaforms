@@ -1,8 +1,8 @@
 <template>
   <div class="overflow-hidden">
-    <div class="flex min-w-0 items-center gap-2 rounded-lg border border-blue-100 bg-blue-50 px-3 py-2">
-      <span class="relative flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-white text-blue-600 shadow-sm ring-1 ring-blue-100">
-        <span class="absolute inset-1 rounded-sm border border-blue-200/80 ai-loader-scan" />
+    <div class="flex min-w-0 items-center gap-2 rounded-lg border border-[var(--sf-border-card)] bg-[var(--sf-bg-muted)] px-3 py-2">
+      <span class="relative flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-[var(--sf-bg-surface)] text-[var(--sf-coral-500)] shadow-sm ring-1 ring-[var(--sf-border-card)]">
+        <span class="absolute inset-1 rounded-sm border border-[var(--sf-border-card)] ai-loader-scan" />
         <Icon
           :name="currentIcon"
           class="h-4 w-4"
@@ -10,7 +10,7 @@
       </span>
       <span
         :key="currentMessage"
-        class="min-w-0 truncate text-sm font-medium text-neutral-700 ai-message-enter"
+        class="min-w-0 truncate text-sm font-medium text-[var(--sf-text-secondary)] ai-message-enter"
       >
         {{ currentMessage }}
       </span>

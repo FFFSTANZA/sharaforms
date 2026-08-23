@@ -18,8 +18,8 @@
           </h1>
           <p class="text-white/55 mt-4 text-lg font-normal">
              Start with a beautiful, no-code form template, then add unlimited
-            submissions, built-in calculators, conditional logic, and signatures.
-            Forms that close deals.
+            submissions, built-in calculations, conditional logic, and
+            signatures. One form. Three modes.
           </p>
         </div>
       </div>
@@ -62,10 +62,10 @@ if (import.meta.server) {
 }
 
 useOpnSeoMeta({
-  title: "Free Form Templates with Built-In Calculators and Logic",
+  title: "Free Form Templates with Built-In Calculations and Logic",
   description:
-    "Browse 50+ free, no-code form templates for registrations, applications, surveys, orders, events, and feedback. Every template supports built-in calculators, quote forms, conditional logic, and unlimited submissions.",
-  keywords: "free form templates, free form builder, unlimited submissions, form templates with built-in calculators, no-code form templates, online form templates",
+    "Browse 50+ free, no-code form templates for registrations, applications, surveys, orders, events, and feedback. Every template supports built-in calculations, conditional logic, signatures, and unlimited submissions.",
+  keywords: "free form templates, free form builder, unlimited submissions, form templates with built-in calculations, no-code form templates, online form templates",
   speakable: ["h1", "p"],
   breadcrumbs: [
     { name: "Home", item: "/" },
@@ -79,9 +79,9 @@ const templatesCollectionSchema = computed(() => ({
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
   name: 'SharaForms Free Form Templates',
-  description: 'Browse SharaForms free, no-code form templates for registrations, applications, feedback, lead capture, and workflow forms. Every template supports built-in calculators, quote forms, conditional logic, and signatures.',
+  description: 'Browse SharaForms free, no-code form templates for registrations, applications, feedback, lead capture, and workflow forms. Every template supports built-in calculations, conditional logic, signatures, and unlimited submissions.',
   url: resolveSchemaUrl(schemaBaseUrl, '/templates'),
-  keywords: 'free form templates, free form builder, unlimited submissions, no-code form templates, form templates with built-in calculators',
+  keywords: 'free form templates, free form builder, unlimited submissions, no-code form templates, form templates with built-in calculations',
   isFamilyFriendly: true,
   inLanguage: 'en',
   isPartOf: {

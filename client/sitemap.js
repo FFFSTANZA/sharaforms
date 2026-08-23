@@ -2,6 +2,7 @@ import templateIndustries from './data/forms/templates/industries.json'
 import templateTypes from './data/forms/templates/types.json'
 import { integrationGuides } from './data/integration-guides.js'
 import { TEMPLATE_SLUGS } from './data/forms/templates/template-slugs.js'
+import { guides } from './data/guides/index.js'
 
 // Statically-declared template detail URLs (seeded catalog). Guarantees every
 // /templates/{slug} page is present in the sitemap even when the API-backed
@@ -50,6 +51,8 @@ export default {
       ...getCoreMarketingUrls(),
       ...getComparisonUrls(),
       getComparisonHubUrl(),
+      getGuidesHubUrl(),
+      ...getGuideDetailUrls(),
       ...getTemplateIndustriesUrls(),
       ...getTemplateTypesUrls(),
       ...getTemplateDetailUrls(),
@@ -57,6 +60,22 @@ export default {
       ...(await getIntegrationsPages().catch(() => [])),
     ])
   }
+}
+
+function getGuidesHubUrl () {
+  return {
+    url: '/guides',
+    changefreq: 'weekly',
+    priority: 0.85,
+  }
+}
+
+function getGuideDetailUrls () {
+  return guides.map((guide) => ({
+    url: `/guides/${guide.slug}`,
+    changefreq: 'monthly',
+    priority: 0.75,
+  }))
 }
 
 function getCoreMarketingUrls () {

@@ -1,111 +1,133 @@
 <template>
-  <div class="space-y-4">
-    <div class="flex flex-col flex-wrap items-start justify-between gap-4 sm:flex-row sm:items-center">
-      <div class="flex-1">
-        <h3 class="text-lg font-medium text-neutral-900">
-          Custom Code
-        </h3>
-        <p class="mt-1 text-sm text-neutral-500">
-          The code will be injected in the <b>head</b> section of all forms in this workspace. Workspace code is applied first, then form-specific code (if any).
-        </p>
-      </div>
-      <div class="flex gap-2">
-        <UButton
-          label="SDK Docs"
-          icon="i-lucide-code"
-          variant="outline"
-          color="neutral"
-          :to="sharaformsConfig.links.custom_code_docs"
-          target="_blank"
-        />
-        <UButton
-          label="Help"
-          icon="i-lucide-circle-question-mark"
-          variant="outline"
-          color="neutral"
-          @click="crisp.openHelpdeskArticle('how-do-i-add-custom-code-to-my-form-1amadj3')"
-        />
-      </div>
+  <div class="space-y-6">
+    <!-- Page Head -->
+    <div class="sf-page-head">
+      <h2>Custom Code</h2>
+      <p>Inject scripts and styles across all forms in this workspace.</p>
     </div>
 
-    <UAlert
-      v-if="!canAccessCustomCode"
-      icon="i-lucide-lock-keyhole"
-      class="mb-4"
-      color="warning"
-      variant="subtle"
-      :title="upgradeCalloutTitle"
-      :description="upgradeCalloutDescription"
-      :actions="[{
-        label: upgradeCalloutActionLabel,
-        color: 'warning',
-        variant: 'solid',
-        onClick: () => openUpgradeModal()
-      }]"
-    />
-
-    <VForm size="sm">
-      <form
-        @submit.prevent="saveChanges"
-      >
-        <div class="space-y-4">
+    <section class="sf-card sf-card-pad">
+      <div class="flex flex-col flex-wrap items-start justify-between gap-4 sm:flex-row sm:items-center mb-5">
+        <div class="flex items-center gap-3 flex-1">
+          <span class="sf-icon-chip-soft sf-icon-chip-soft--muted">
+            <i class="fa-solid fa-code" />
+          </span>
           <div>
-            <CodeInput
-              :allow-fullscreen="true"
-              name="custom_code"
-              class="mt-4"
-              :form="customCodeForm"
-              :disabled="!canUseCustomCode"
-              :help="customCodeHelp"
-              label="Custom Code"
-              placeholder="<script>console.log('Hello World!')</script>"
-            />
+            <h3 class="text-[15px] font-semibold text-[#1D1F24]">
+              Custom Code
+            </h3>
+            <p class="text-xs text-[#8E9198] font-medium mt-0.5">
+              The code will be injected in the <b>head</b> section of all forms in this workspace. Workspace code is applied first, then form-specific code (if any).
+            </p>
           </div>
+        </div>
+        <div class="flex gap-2 shrink-0">
+          <UButton
+            label="SDK Docs"
+            icon="i-lucide-code"
+            variant="outline"
+            color="neutral"
+            class="btn-ghost !border-[#DEE1E7]"
+            :to="sharaformsConfig.links.custom_code_docs"
+            target="_blank"
+          />
+          <UButton
+            label="Help"
+            icon="i-lucide-circle-question-mark"
+            variant="outline"
+            color="neutral"
+            class="btn-ghost !border-[#DEE1E7]"
+            @click="crisp.openHelpdeskArticle('how-do-i-add-custom-code-to-my-form-1amadj3')"
+          />
+        </div>
+      </div>
 
-          <div class="pt-6">
-            <div class="flex flex-col flex-wrap items-start justify-between gap-4 sm:flex-row sm:items-center">
-              <div>
-                <h3 class="text-lg font-medium text-neutral-900">
-                  Custom CSS
-                </h3>
-                <p class="mt-1 text-sm text-neutral-500">
-                  The CSS will be injected in the <b>head</b> of all forms in this workspace.
-                </p>
-              </div>
-              <UButton
-                label="Help"
-                icon="i-lucide-circle-question-mark"
-                variant="outline"
-                color="neutral"
-                @click="crisp.openHelpdeskArticle('can-i-style-my-form-with-some-custom-css-code-1v3dlr9')"
+      <UAlert
+        v-if="!canAccessCustomCode"
+        icon="i-lucide-lock-keyhole"
+        class="mb-5"
+        color="warning"
+        variant="subtle"
+        :title="upgradeCalloutTitle"
+        :description="upgradeCalloutDescription"
+        :actions="[{
+          label: upgradeCalloutActionLabel,
+          color: 'warning',
+          variant: 'solid',
+          onClick: () => openUpgradeModal()
+        }]"
+      />
+
+      <VForm size="sm">
+        <form
+          @submit.prevent="saveChanges"
+        >
+          <div class="space-y-6">
+            <div>
+              <CodeInput
+                :allow-fullscreen="true"
+                name="custom_code"
+                class="mt-4"
+                :form="customCodeForm"
+                :disabled="!canUseCustomCode"
+                :help="customCodeHelp"
+                label="Custom Code"
+                placeholder="<script>console.log('Hello World!')</script>"
               />
             </div>
-            <CodeInput
-              :allow-fullscreen="true"
-              language-mode="css"
-              name="custom_css"
-              class="mt-4"
-              :form="customCodeForm"
-              :disabled="!canAccessCustomCode"
-              help="CSS only. Example: body { background: #f8fafc }"
-              label="Custom CSS"
-              placeholder="body { background: #f8fafc }"
-            />
-          </div>
-        </div>
 
-        <div class="mt-4">
-          <UButton
-            type="submit"
-            :loading="customCodeForm.busy"
-            :disabled="!canAccessCustomCode"
-            color="primary"
-          >
-            Save Changes
-          </UButton>
-        </div>
-      </form>
-    </VForm>
+            <div class="pt-6 border-t border-[#ECEEF2]">
+              <div class="flex flex-col flex-wrap items-start justify-between gap-4 sm:flex-row sm:items-center">
+                <div class="flex items-center gap-3">
+                  <span class="sf-icon-chip-soft sf-icon-chip-soft--muted">
+                    <i class="fa-solid fa-palette" />
+                  </span>
+                  <div>
+                    <h3 class="text-[15px] font-semibold text-[#1D1F24]">
+                      Custom CSS
+                    </h3>
+                    <p class="text-xs text-[#8E9198] font-medium mt-0.5">
+                      The CSS will be injected in the <b>head</b> of all forms in this workspace.
+                    </p>
+                  </div>
+                </div>
+                <UButton
+                  label="Help"
+                  icon="i-lucide-circle-question-mark"
+                  variant="outline"
+                  color="neutral"
+                  class="btn-ghost !border-[#DEE1E7]"
+                  @click="crisp.openHelpdeskArticle('can-i-style-my-form-with-some-custom-css-code-1v3dlr9')"
+                />
+              </div>
+              <CodeInput
+                :allow-fullscreen="true"
+                language-mode="css"
+                name="custom_css"
+                class="mt-4"
+                :form="customCodeForm"
+                :disabled="!canAccessCustomCode"
+                help="CSS only. Example: body { background: #f8fafc }"
+                label="Custom CSS"
+                placeholder="body { background: #f8fafc }"
+              />
+            </div>
+          </div>
+
+          <div class="mt-6">
+            <UButton
+              type="submit"
+              :loading="customCodeForm.busy"
+              :disabled="!canAccessCustomCode"
+              color="primary"
+              class="btn-primary"
+            >
+              Save Changes
+            </UButton>
+          </div>
+        </form>
+      </VForm>
+    </section>
   </div>
 </template>
 

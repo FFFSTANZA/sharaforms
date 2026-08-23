@@ -8,7 +8,7 @@
     <SettingsModalPage
       id="account"
       label="Account"
-      icon="i-lucide-user"
+      icon="fa-solid fa-user"
     >
       <LazyUsersSettingsAccount />
     </SettingsModalPage>
@@ -16,7 +16,7 @@
     <SettingsModalPage
       id="security"
       label="Security"
-      icon="i-lucide-shield-check"
+      icon="fa-solid fa-key"
     >
       <LazyUsersSettingsSecurity />
     </SettingsModalPage>
@@ -25,7 +25,7 @@
       v-if="workspace && !workspace.is_readonly"
       id="connections"
       label="Connections"
-      icon="i-lucide-link"
+      icon="fa-solid fa-link"
     >
       <LazyUsersSettingsConnections />
     </SettingsModalPage>
@@ -34,7 +34,7 @@
       v-if="workspace && !workspace.is_readonly"
       id="access-tokens"
       label="Access Tokens"
-      icon="i-lucide-key"
+      icon="fa-solid fa-key"
     >
       <LazyUsersSettingsAccessTokens />
     </SettingsModalPage>
@@ -43,7 +43,7 @@
       v-if="!isSelfHosted && user && (user.has_customer_id || user.active_license)"
       id="billing"
       label="Billing"
-      icon="i-lucide-credit-card"
+      icon="fa-solid fa-credit-card"
     >
       <LazyUsersSettingsBilling />
     </SettingsModalPage>

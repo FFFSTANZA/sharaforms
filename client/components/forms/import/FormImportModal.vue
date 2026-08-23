@@ -14,10 +14,10 @@
             />
           </span>
           <div class="min-w-0">
-            <h3 class="text-base font-semibold leading-6 text-neutral-950 dark:text-white">
+            <h3 class="text-base font-semibold leading-6 text-[#1D1F24] dark:text-white">
               Import form
             </h3>
-            <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
+            <p class="mt-1 text-[13px] text-[#6E7278] dark:text-neutral-400">
               Paste a supported form URL and SharaForms will detect the provider.
             </p>
           </div>
@@ -34,11 +34,11 @@
 
     <template #body>
       <form @submit.prevent="submitImport">
-        <div class="overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-[0_20px_55px_-38px_rgba(15,23,42,0.55)]">
-          <div class="flex items-center gap-3 border-b border-neutral-100 bg-neutral-50/80 px-3 py-2">
+        <div class="overflow-hidden rounded-lg border border-[#E6E8EE] bg-white shadow-[0_20px_55px_-38px_rgba(15,23,42,0.55)]">
+          <div class="flex items-center gap-3 border-b border-[#ECEEF2] bg-[#F7F8FA]/80 px-3 py-2">
             <span
               class="flex h-8 w-8 shrink-0 items-center justify-center rounded-md border text-sm shadow-sm"
-              :class="activeSourceConfig ? activeSourceConfig.iconWrapClass : 'border-neutral-200 bg-white text-neutral-500'"
+              :class="activeSourceConfig ? activeSourceConfig.iconWrapClass : 'border-[#E6E8EE] bg-white text-[#8E9198]'"
             >
               <Icon
                 :name="activeSourceConfig?.icon || 'i-lucide-link'"
@@ -85,7 +85,7 @@
             <button
               v-if="importForm.url"
               type="button"
-              class="w-fit text-xs font-medium text-neutral-400 transition hover:text-neutral-700"
+              class="w-fit text-xs font-medium text-[#A7ABB2] transition hover:text-[#383B41]"
               @click="clearUrl"
             >
               Clear
@@ -96,7 +96,7 @@
 
       <div class="mt-4">
         <div class="mb-2 flex items-center justify-between gap-3">
-          <p class="text-xs font-medium uppercase text-neutral-400">
+          <p class="text-[11px] font-medium uppercase tracking-[0.1em] text-[#A0A4AD]">
             Supported imports
           </p>
           <UBadge
@@ -131,9 +131,9 @@
                 class="h-4 w-4 text-blue-600"
               />
             </div>
-            <p class="text-sm font-semibold text-neutral-950">{{ source.label }}</p>
+            <p class="text-[13px] font-semibold text-[#1D1F24]">{{ source.label }}</p>
             <p
-              class="mt-1 max-w-full truncate text-xs leading-5 text-neutral-500"
+              class="mt-1 max-w-full truncate text-xs leading-5 text-[#8E9198]"
               :title="source.domain"
             >
               {{ source.domain }}
@@ -179,7 +179,7 @@ const sourceConfigs = {
     placeholder: 'https://yourname.typeform.com/to/FORM_ID',
     icon: 'i-simple-icons-typeform',
     iconClass: 'h-4 w-4 text-[#262627]',
-    iconWrapClass: 'border-neutral-200 bg-white text-neutral-950',
+    iconWrapClass: 'border-[#E6E8EE] bg-white text-[#1D1F24]',
   },
   tally: {
     id: 'tally',
@@ -187,8 +187,8 @@ const sourceConfigs = {
     domain: 'tally.so/r/...',
     placeholder: 'https://tally.so/r/FORM_ID',
     icon: 'sharaforms:tally',
-    iconClass: 'h-4 w-4 text-neutral-600',
-    iconWrapClass: 'border-neutral-200 bg-neutral-100 text-neutral-600',
+    iconClass: 'h-4 w-4 text-[#565A62]',
+    iconWrapClass: 'border-[#E6E8EE] bg-[#F0F1F4] text-[#565A62]',
   },
   fillout: {
     id: 'fillout',
@@ -196,8 +196,8 @@ const sourceConfigs = {
     domain: 'fillout.com/t/...',
     placeholder: 'https://company.fillout.com/t/FORM_ID',
     icon: 'i-simple-icons-fillout',
-    iconClass: 'h-4 w-4 text-neutral-600',
-    iconWrapClass: 'border-neutral-200 bg-neutral-100 text-neutral-600',
+    iconClass: 'h-4 w-4 text-[#565A62]',
+    iconWrapClass: 'border-[#E6E8EE] bg-[#F0F1F4] text-[#565A62]',
   },
   google_forms: {
     id: 'google_forms',
@@ -205,8 +205,8 @@ const sourceConfigs = {
     domain: 'docs.google.com/forms/d/...',
     placeholder: 'https://docs.google.com/forms/d/FORM_ID/edit',
     icon: 'i-simple-icons-googleforms',
-    iconClass: 'h-4 w-4 text-neutral-600',
-    iconWrapClass: 'border-neutral-200 bg-neutral-100 text-neutral-600',
+    iconClass: 'h-4 w-4 text-[#565A62]',
+    iconWrapClass: 'border-[#E6E8EE] bg-[#F0F1F4] text-[#565A62]',
   },
 }
 
@@ -253,7 +253,7 @@ const statusClass = computed(() => {
     return 'text-blue-600'
   }
 
-  return 'text-neutral-500'
+  return 'text-[#8E9198]'
 })
 
 const statusMessage = computed(() => {
@@ -314,7 +314,7 @@ const sourceCardClass = (source) => {
     return 'border-blue-200 ring-1 ring-blue-100'
   }
 
-  return 'border-neutral-200'
+  return 'border-[#E6E8EE]'
 }
 
 const submitImport = () => {

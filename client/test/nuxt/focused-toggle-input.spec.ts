@@ -71,7 +71,7 @@ describe('FocusedToggleInput Component', () => {
         modelValue: null,
         theme: 'default',
         size: 'md',
-        color: '#3B82F6',
+        color: '#EA6676',
         ...props
       },
       slots

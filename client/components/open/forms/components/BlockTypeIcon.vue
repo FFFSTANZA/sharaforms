@@ -1,11 +1,11 @@
 <template>
   <div
-    class="p-1 rounded-md flex items-center justify-center"
+    class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors duration-150"
     :class="[bgClass, textClass]"
   >
     <Icon
       :name="icon"
-      class="h-4 w-4"
+      class="h-3.5 w-3.5"
     />
   </div>
 </template>
@@ -16,13 +16,13 @@ import blocksTypes from '~/data/blocks_types.json'
 const extraBlocksTypes = {
   status: {
     icon: 'i-lucide-clipboard-check',
-    bg_class: 'bg-neutral-100',
-    text_class: 'text-neutral-600',
+    bg_class: 'bg-[var(--sf-bg-muted)]',
+    text_class: 'text-[var(--sf-text-body)]',
   },
   ip_address: {
     icon: 'i-lucide-globe',
-    bg_class: 'bg-neutral-100',
-    text_class: 'text-neutral-600',
+    bg_class: 'bg-[var(--sf-bg-muted)]',
+    text_class: 'text-[var(--sf-text-body)]',
   },
 }
 

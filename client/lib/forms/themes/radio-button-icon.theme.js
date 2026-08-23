@@ -7,7 +7,7 @@ export const radioButtonIconTheme = {
   slots: {
     checkedIcon: [
       'block',
-      'text-[var(--form-color,#3B82F6)]'
+      'text-[var(--form-color,#EA6676)]'
     ],
     uncheckedIcon: [
       'block'

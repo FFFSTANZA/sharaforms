@@ -6,6 +6,7 @@ class PresentationRules
 {
     public const MODE_CLASSIC = 'classic';
     public const MODE_FOCUSED = 'focused';
+    public const MODE_SPOTLIGHT = 'spotlight';
 
     /**
      * A compact example of the exact field JSON the app expects. Models that
@@ -103,6 +104,13 @@ class PresentationRules
                 'Never use width options — every field is full width.',
                 'Prefer quick inputs: select over long text when choices are limited, rating for satisfaction, checkbox/toggle for yes-no.',
             ];
+        } elseif ($mode === self::MODE_SPOTLIGHT) {
+            $guidanceMode = [
+                'Spotlight mode shows all questions on one page, but only one is active at a time. The active question is prominently displayed; answered questions collapse into compact summaries; upcoming questions appear dimmed in the background.',
+                'Never use width options — every field is full width.',
+                'Keep labels short and scannable since they will be visible in the dimmed state.',
+                'Prefer quick inputs: select over long text when choices are limited, rating for satisfaction, checkbox/toggle for yes-no.',
+            ];
         } else {
             $guidanceMode = [];
         }
@@ -144,6 +152,40 @@ class PresentationRules
                     '- Do not use page breaks (nf-page-break).',
                     '- Do not include image (nf-image) or code (nf-code) blocks.',
                     '- Keep copy concise and engaging for each step.'
+                ])
+            ];
+        }
+
+        if ($mode === self::MODE_SPOTLIGHT) {
+            return [
+                'mode' => self::MODE_SPOTLIGHT,
+                'allowedFieldTypes' => [
+                    'text',
+                    'rich_text',
+                    'date',
+                    'url',
+                    'phone_number',
+                    'email',
+                    'checkbox',
+                    'select',
+                    'multi_select',
+                    'matrix',
+                    'number',
+                    'rating',
+                    'scale',
+                    'slider',
+                    'files',
+                    'signature',
+                    'barcode',
+                    'nf-text'
+                ],
+                'constraintsText' => implode("\n", [
+                    'Spotlight mode (all questions visible, one active):',
+                    '- Display all questions on one page, with one active/spotlit at a time.',
+                    '- Do not use widths (all inputs are full width).',
+                    '- Do not use page breaks (nf-page-break).',
+                    '- Do not include image (nf-image) or code (nf-code) blocks.',
+                    '- Keep labels short and scannable for the dimmed overview state.'
                 ])
             ];
         }

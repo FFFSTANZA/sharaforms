@@ -1,9 +1,10 @@
 <template>
-  <PageContainer spacing="md">
-    <PageSection
-      title="PDF Templates"
-      description="Create PDF documents from your form submissions."
-    >
+  <div class="px-6 py-5">
+    <div class="max-w-5xl mx-auto">
+      <PageSection
+        title="PDF Templates"
+        description="Create PDF documents from your form submissions."
+      >
       <template #actions>
         <UDropdownMenu
           :items="createMenuItems"
@@ -38,13 +39,13 @@
             >
               <div class="animate-pulse flex items-center justify-between">
                 <div class="flex items-center gap-4">
-                  <div class="h-10 w-10 bg-neutral-200 rounded" />
+                  <div class="h-10 w-10 bg-[var(--sf-bg-muted)] rounded" />
                   <div>
-                    <div class="h-4 w-32 bg-neutral-200 rounded mb-2" />
-                    <div class="h-3 w-24 bg-neutral-200 rounded" />
+                    <div class="h-4 w-32 bg-[var(--sf-bg-muted)] rounded mb-2" />
+                    <div class="h-3 w-24 bg-[var(--sf-bg-muted)] rounded" />
                   </div>
                 </div>
-                <div class="h-8 w-20 bg-neutral-200 rounded" />
+                <div class="h-8 w-20 bg-[var(--sf-bg-muted)] rounded" />
               </div>
             </DashboardPanel>
           </div>
@@ -61,17 +62,17 @@
           >
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-4">
-                <div class="h-10 w-10 bg-neutral-100 rounded flex items-center justify-center">
+                <div class="h-10 w-10 bg-[var(--sf-bg-subtle)] rounded flex items-center justify-center">
                   <UIcon
                     name="lucide:file-text"
                     class="h-5 w-5 text-primary-600"
                   />
                 </div>
                 <div class="min-w-0">
-                  <h3 class="font-medium text-neutral-900">
+                  <h3 class="font-medium text-[var(--sf-text-primary)]">
                     {{ template.name }}
                   </h3>
-                  <p class="text-sm text-neutral-500 truncate">
+                  <p class="text-sm text-[var(--sf-text-caption)] truncate">
                     Format: {{ getFilenamePatternPreview(template) }}.pdf •
                     {{ template.page_count }} page{{ template.page_count > 1 ? 's' : '' }} •
                     {{ template.zone_mappings?.length || 0 }} zone{{ template.zone_mappings?.length >= 1 ? 's' : '' }}
@@ -121,12 +122,12 @@
           </template>
         </DashboardEmptyState>
       </DashboardLoadingBlock>
-    </PageSection>
-  </PageContainer>
+      </PageSection>
+    </div>
+  </div>
 </template>
 
 <script setup>
-import PageContainer from '~/components/dashboard/PageContainer.vue'
 import PageSection from '~/components/dashboard/PageSection.vue'
 import DashboardPanel from '~/components/dashboard/DashboardPanel.vue'
 import DashboardLoadingBlock from '~/components/dashboard/states/DashboardLoadingBlock.vue'

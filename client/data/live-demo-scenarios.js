@@ -1,4 +1,4 @@
-const DEFAULT_COLOR = "#7c3aed"
+const DEFAULT_COLOR = "#EA6676"
 const LIVE_DEMO_MEDIA = {
   intro: "/img/live-demo/variants/intro-brand.svg",
   fields: "/img/live-demo/variants/intro-big-soft-blobs-v2.webp",

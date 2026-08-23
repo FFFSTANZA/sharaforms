@@ -73,9 +73,10 @@ export function useFormManager(initialFormConfig, initialMode = FormMode.LIVE, o
   function buildStructureAdapter() {
     const forceClassic = !!strategy.value?.display?.forceClassicPresentation
     const style = forceClassic ? 'classic' : ((toValue(config)?.presentation_style) || 'classic')
-    return style === 'focused'
-      ? useFocusedStructure(config, state, form, fieldState)
-      : useFormStructure(config, state, form, fieldState)
+    if (style === 'focused' || style === 'spotlight') {
+      return useFocusedStructure(config, state, form, fieldState)
+    }
+    return useFormStructure(config, state, form, fieldState)
   }
 
   function replaceStructure() {

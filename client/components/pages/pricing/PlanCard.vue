@@ -9,9 +9,9 @@
   >
     <div
       v-if="plan.highlighted"
-      class="absolute -top-3 left-1/2 z-20 inline-flex -translate-x-1/2 items-center gap-1.5 whitespace-nowrap rounded-full border border-violet-200/70 bg-white px-3 py-1.5 text-xs font-semibold shadow-[0_10px_24px_-10px_rgba(147,51,234,0.35)]"
+      class="absolute -top-3 left-1/2 z-20 inline-flex -translate-x-1/2 items-center gap-1.5 whitespace-nowrap rounded-full border border-[#E6E8EE] bg-white px-3 py-1.5 text-xs font-semibold shadow-[0_10px_24px_-10px_rgba(23,25,35,0.18)]"
     >
-      <UIcon name="i-lucide-star" class="h-3 w-3 text-amber-500" />
+      <UIcon name="i-lucide-star" class="h-3 w-3 text-[#d97706]" />
       <span class="brand-gradient-text-warm">Most popular</span>
     </div>
 
@@ -53,7 +53,7 @@
         </div>
       </div>
 
-      <p class="relative mt-5 text-sm font-medium leading-6 tracking-[-0.6%] text-gray-600">
+      <p class="relative mt-5 text-sm font-medium leading-6 tracking-[-0.6%] text-[#6E7278]">
         {{ plan.description }}
       </p>
 
@@ -64,16 +64,16 @@
         >
           {{ price }}
         </span>
-        <span class="pb-1 text-base font-medium leading-7 tracking-[-1.1%] text-gray-500">
+        <span class="pb-1 text-base font-medium leading-7 tracking-[-1.1%] text-[#8E9198]">
           {{ plan.perLabel }}
         </span>
       </div>
       <p
         v-if="billingNote"
-        class="relative mt-1.5 inline-flex items-center gap-1.5 text-xs font-medium text-gray-500"
+        class="relative mt-1.5 inline-flex items-center gap-1.5 text-xs font-medium text-[#8E9198]"
       >
         <span
-          class="inline-flex h-4 w-4 items-center justify-center rounded-full bg-emerald-100 text-emerald-600"
+          class="inline-flex h-4 w-4 items-center justify-center rounded-full bg-[#EFF8F1] text-[#16a34a]"
         >
           <UIcon name="i-lucide-check" class="h-2.5 w-2.5" />
         </span>
@@ -102,15 +102,15 @@
         />
       </div>
 
-      <div class="relative mt-7 border-t border-neutral-100 pt-6">
-        <p class="text-sm font-semibold leading-5 tracking-[-0.6%] text-gray-900">
+      <div class="relative mt-7 border-t border-[#ECEEF2] pt-6">
+        <p class="text-sm font-semibold leading-5 tracking-[-0.6%] text-[#1D1F24]">
           {{ plan.featuresLabel }}
         </p>
         <ul class="mt-4 space-y-3">
           <li
             v-for="feature in plan.features"
             :key="feature"
-            class="flex items-center gap-2.5 text-sm font-medium leading-5 tracking-[-0.6%] text-gray-600"
+            class="flex items-center gap-2.5 text-sm font-medium leading-5 tracking-[-0.6%] text-[#6E7278]"
           >
             <span
               class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full"
@@ -138,36 +138,36 @@ const emit = defineEmits(["cta"])
 
 const accents = {
   violet: {
-    tile: "bg-gradient-to-br from-violet-500 via-purple-500 to-fuchsia-500",
-    banner: "bg-gradient-to-br from-violet-500 via-purple-500 to-fuchsia-500",
-    glow: "bg-violet-300",
-    glowSoft: "bg-fuchsia-200",
-    price: "brand-gradient-text-warm",
-    check: "bg-violet-100/80 text-violet-600",
+    tile: "bg-[#6366f1]",
+    banner: "bg-[#6366f1]",
+    glow: "bg-[#6366f1]/30",
+    glowSoft: "bg-[#EEF0FD]",
+    price: "text-[#6366f1]",
+    check: "bg-[#EEF0FD] text-[#6366f1]",
   },
   pink: {
-    tile: "brand-gradient-warm",
-    banner: "brand-gradient-warm",
-    glow: "bg-pink-300",
-    glowSoft: "bg-amber-200",
-    price: "brand-gradient-text-warm",
-    check: "bg-pink-100/80 text-pink-600",
+    tile: "bg-gradient-to-br from-[#ff8a4d] to-[#ff5c38]",
+    banner: "bg-gradient-to-br from-[#ff8a4d] to-[#ff5c38]",
+    glow: "bg-[#ff5c38]/30",
+    glowSoft: "bg-[#FDF6EB]",
+    price: "text-[#ff5c38]",
+    check: "bg-[#fce7e2] text-[#ff5c38]",
   },
   blue: {
-    tile: "bg-gradient-to-br from-blue-500 via-indigo-500 to-violet-500",
-    banner: "bg-gradient-to-br from-blue-500 via-indigo-500 to-violet-500",
-    glow: "bg-blue-300",
-    glowSoft: "bg-indigo-200",
-    price: "brand-gradient-text",
-    check: "bg-blue-100/80 text-blue-600",
+    tile: "bg-[#0891b2]",
+    banner: "bg-[#0891b2]",
+    glow: "bg-[#0891b2]/30",
+    glowSoft: "bg-[#E4F4F8]",
+    price: "text-[#0891b2]",
+    check: "bg-[#E4F4F8] text-[#0891b2]",
   },
   sky: {
-    tile: "bg-gradient-to-br from-sky-500 via-cyan-500 to-blue-500",
-    banner: "bg-gradient-to-br from-sky-500 via-cyan-500 to-blue-500",
-    glow: "bg-sky-300",
-    glowSoft: "bg-cyan-200",
-    price: "brand-gradient-text",
-    check: "bg-sky-100/80 text-sky-600",
+    tile: "bg-[#16a34a]",
+    banner: "bg-[#16a34a]",
+    glow: "bg-[#16a34a]/30",
+    glowSoft: "bg-[#EFF8F1]",
+    price: "text-[#16a34a]",
+    check: "bg-[#EFF8F1] text-[#16a34a]",
   },
 }
 

@@ -31,7 +31,7 @@
       class="absolute top-1/2 left-full ml-1.5 hidden -translate-y-1/2 sm:block"
     >
       <div
-        class="inline-flex items-center whitespace-nowrap rounded-[7px] bg-purple-50 px-2 py-1 pr-2.5 text-xs font-medium text-purple-600"
+        class="inline-flex items-center whitespace-nowrap rounded-[7px] bg-[#FDF6EB] px-2 py-1 pr-2.5 text-xs font-medium text-[#d97706]"
       >
         Save 15% with yearly billing
       </div>

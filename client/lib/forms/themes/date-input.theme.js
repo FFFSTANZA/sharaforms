@@ -6,6 +6,7 @@ export const dateInputTheme = {
     input: [
       'w-full border bg-white dark:bg-notion-dark-light',
       'text-neutral-700 dark:text-neutral-300',
+      'min-h-[44px]',
       'focus-visible:outline-none focus-visible:ring-2 focus-visible:border-transparent'
     ],
     clearButton: 'hover:bg-neutral-50 dark:hover:bg-neutral-900 ltr:border-l rtl:border-r px-2 flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-form/100 focus-visible:ring-inset',

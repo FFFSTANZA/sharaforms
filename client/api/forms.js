@@ -39,6 +39,9 @@ export const formsApi = {
   stats: (workspaceId, formId, options) => apiService.get(`/open/workspaces/${workspaceId}/form-stats/${formId}`, options),
   statsDetails: (workspaceId, formId, options) => apiService.get(`/open/workspaces/${workspaceId}/form-stats-details/${formId}`, options),
 
+  // Dashboard stats
+  dashboard: (workspaceId, options) => apiService.get(`/open/workspaces/${workspaceId}/dashboard`, options),
+
   // Form summary
   summary: (workspaceId, formId, options) => apiService.get(`/open/workspaces/${workspaceId}/form-summary/${formId}`, options),
   summaryFieldValues: (workspaceId, formId, fieldId, options) => apiService.get(`/open/workspaces/${workspaceId}/form-summary/${formId}/field/${fieldId}/values`, options),
@@ -71,7 +74,27 @@ export const formsApi = {
     create: (formId, data) => apiService.post(`/open/forms/${formId}/integrations`, data),
     update: (formId, integrationId, data) => apiService.put(`/open/forms/${formId}/integrations/${integrationId}`, data),
     delete: (formId, integrationId) => apiService.delete(`/open/forms/${formId}/integrations/${integrationId}`),
-    events: (formId, integrationId, options) => apiService.get(`/open/forms/${formId}/integrations/${integrationId}/events`, options)
+    events: (formId, integrationId) => apiService.get(`/open/forms/${formId}/integrations/${integrationId}/events`),
+    notionDatabases: (oauthId) => apiService.get('/open/notion/databases', { params: { oauth_id: oauthId } }),
+    notionDatabaseProperties: (databaseId, oauthId) => apiService.get(`/open/notion/databases/${databaseId}/properties`, { params: { oauth_id: oauthId } }),
+    trelloBoards: (apiKey, apiToken) => apiService.get('/open/trello/boards', { params: { api_key: apiKey, api_token: apiToken } }),
+    trelloLists: (apiKey, apiToken, boardId) => apiService.get(`/open/trello/boards/${boardId}/lists`, { params: { api_key: apiKey, api_token: apiToken } }),
+    trelloLabels: (apiKey, apiToken, boardId) => apiService.get(`/open/trello/boards/${boardId}/labels`, { params: { api_key: apiKey, api_token: apiToken } }),
+    supabaseTables: (apiKey, projectUrl) => apiService.get('/open/supabase/tables', { params: { api_key: apiKey, project_url: projectUrl } }),
+    supabaseColumns: (apiKey, projectUrl, tableName) => apiService.get(`/open/supabase/tables/${tableName}/columns`, { params: { api_key: apiKey, project_url: projectUrl } }),
+    baserowWorkspaces: (apiKey, baseUrl) => apiService.get('/open/baserow/workspaces', { params: { api_key: apiKey, base_url: baseUrl || undefined } }),
+    baserowDatabases: (apiKey, baseUrl, workspaceId) => apiService.get(`/open/baserow/workspaces/${workspaceId}/databases`, { params: { api_key: apiKey, base_url: baseUrl || undefined } }),
+    baserowTables: (apiKey, baseUrl, databaseId) => apiService.get(`/open/baserow/databases/${databaseId}/tables`, { params: { api_key: apiKey, base_url: baseUrl || undefined } }),
+    baserowFields: (apiKey, baseUrl, tableId) => apiService.get(`/open/baserow/tables/${tableId}/fields`, { params: { api_key: apiKey, base_url: baseUrl || undefined } }),
+    linearTeams: (apiKey) => apiService.get('/open/linear/teams', { params: { api_key: apiKey } }),
+    linearProjects: (apiKey, teamId) => apiService.get('/open/linear/projects', { params: { api_key: apiKey, team_id: teamId } }),
+    linearStates: (apiKey, teamId) => apiService.get('/open/linear/states', { params: { api_key: apiKey, team_id: teamId } }),
+    linearLabels: (apiKey, teamId) => apiService.get('/open/linear/labels', { params: { api_key: apiKey, team_id: teamId } }),
+    pipedrivePipelines: (apiToken) => apiService.get('/open/pipedrive/pipelines', { params: { api_token: apiToken } }),
+    pipedriveStages: (apiToken, pipelineId) => apiService.get(`/open/pipedrive/pipelines/${pipelineId}/stages`, { params: { api_token: apiToken } }),
+    planeWorkspaces: (apiKey, baseUrl) => apiService.get('/open/plane/workspaces', { params: { api_key: apiKey, base_url: baseUrl || undefined } }),
+    planeProjects: (apiKey, baseUrl, workspaceSlug) => apiService.get(`/open/plane/workspaces/${workspaceSlug}/projects`, { params: { api_key: apiKey, base_url: baseUrl || undefined } }),
+    planeStates: (apiKey, baseUrl, workspaceSlug, projectId) => apiService.get(`/open/plane/workspaces/${workspaceSlug}/projects/${projectId}/states`, { params: { api_key: apiKey, base_url: baseUrl || undefined } }),
   },
 
   // Zapier webhooks

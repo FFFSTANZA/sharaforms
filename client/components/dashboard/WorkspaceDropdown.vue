@@ -9,75 +9,90 @@
     <slot :workspace="workspace" />
     
     <template #content>
-      <div class="w-60 flex flex-col">
+      <div class="w-64 flex flex-col">
         <!-- Workspace Info Header -->
-        <div v-if="workspace" class="p-3 border-b border-neutral-200">
+        <div v-if="workspace" class="p-4 pb-3.5 border-b border-[var(--sf-border-divider)]">
           <div class="flex items-center gap-3">
-            <WorkspaceIcon size="size-8" :workspace="workspace" />
+            <div class="relative shrink-0">
+              <WorkspaceIcon size="size-10" :workspace="workspace" />
+            </div>
             <div class="flex-1 min-w-0">
-              <p class="text-sm font-medium text-neutral-800 truncate">
+              <p class="text-sm font-semibold text-[var(--sf-text-primary)] truncate">
                 {{ workspace.name }}
               </p>
-              <p class="text-xs text-neutral-500">
-                {{ workspacePlanText }} • {{ memberCountText }}
-              </p>
+              <div class="mt-1 flex items-center gap-1.5 min-w-0">
+                <span class="sf-plan-badge shrink-0">
+                  <i class="fa-solid fa-crown text-[8px]" />
+                  {{ workspacePlanText }}
+                </span>
+              </div>
             </div>
           </div>
-          <div class="mt-2 flex items-center gap-2">
-            <UButton
-              icon="i-lucide-settings"
-              size="xs"
-              color="neutral"
-              variant="outline"
+          <p class="mt-2 text-[11px] font-medium text-[var(--sf-text-caption)] flex items-center gap-1.5">
+            <i class="fa-solid fa-user-group text-[9px]" />
+            {{ memberCountText }}
+          </p>
+          <div class="mt-3 flex items-center gap-2">
+            <button
+              class="group flex items-center gap-2 px-3 py-1.5 rounded-lg border border-[var(--sf-border-button)] bg-white text-[12px] font-medium text-[var(--sf-text-body)] hover:bg-[var(--sf-nav-hover-bg)] hover:border-[var(--sf-hover-border)] transition-all cursor-pointer"
               @click="openSettings"
-              label="Settings"
-            />
-            <UButton
+            >
+              <i class="fa-solid fa-gear text-[11px] text-[var(--sf-text-secondary)] group-hover:text-[var(--sf-text-primary)] transition-colors" />
+              Settings
+            </button>
+            <button
               v-if="workspace.is_admin"
-              icon="i-lucide-user-plus"
-              size="xs"
-              color="neutral"
-              variant="outline"
+              class="group flex items-center gap-2 px-3 py-1.5 rounded-lg border border-[var(--sf-border-button)] bg-white text-[12px] font-medium text-[var(--sf-text-body)] hover:bg-[var(--sf-nav-hover-bg)] hover:border-[var(--sf-hover-border)] transition-all cursor-pointer"
               @click="openInviteUserModal"
-              label="Invite Members"
-            />
+            >
+              <i class="fa-solid fa-user-plus text-[11px] text-[var(--sf-text-secondary)] group-hover:text-[var(--sf-text-primary)] transition-colors" />
+              Invite
+            </button>
           </div>
         </div>
 
         <!-- Workspace List (with ScrollableContainer) -->
-        <div v-if="workspaces.length > 1" class="p-1">
+        <div v-if="workspaces.length > 1" class="p-1.5">
+          <p class="px-2.5 pt-1.5 pb-1 text-[11px] font-medium uppercase tracking-[0.08em] text-[var(--sf-text-label)]">
+            Workspaces
+          </p>
           <ScrollableContainer max-height-class="max-h-64" top-fade-height="h-10" bottom-fade-height="h-10">
-            <div class="flex flex-col">
-              <UButton
+            <div class="flex flex-col gap-0.5">
+              <button
                 v-for="worksp in workspaces"
                 :key="worksp.id"
-                class="w-full flex items-center gap-3 p-2 rounded-md text-left"
-                color="neutral"
-                variant="ghost"
+                class="group w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-left transition-all hover:bg-[var(--sf-nav-hover-bg)] cursor-pointer"                  :class="workspace?.id === worksp?.id ? 'bg-[var(--sf-nav-active-bg)]' : ''"
                 @click="switchWorkspace(worksp)"
-                :label="worksp.name"
-                size="sm"
-                :trailing-icon="workspace?.id === worksp?.id ? 'i-lucide-check' : undefined"
               >
-                <template #leading>
-                  <WorkspaceIcon :workspace="worksp" size="size-5" />
-                </template>
-              </UButton>
+                <WorkspaceIcon :workspace="worksp" size="size-6" />
+                <span
+                  class="flex-1 min-w-0 truncate text-[13px] font-medium transition-colors"
+                  :class="workspace?.id === worksp?.id ? 'text-[var(--sf-text-primary)] font-semibold' : 'text-[var(--sf-text-body)] group-hover:text-[var(--sf-text-primary)] group-hover:font-semibold'"
+                >
+                  {{ worksp.name }}
+                </span>
+                <span
+                  v-if="workspace?.id === worksp?.id"
+                  class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-[var(--sf-coral-500)] text-white shrink-0"
+                >
+                  <i class="fa-solid fa-check text-[9px]" />
+                </span>
+              </button>
             </div>
           </ScrollableContainer>
         </div>
 
         <!-- Create Workspace Action -->
-        <div class="border-t border-neutral-200 p-1">
-          <UButton
-            class="w-full flex items-center gap-3 p-2 rounded-md hover:bg-neutral-100 transition-colors text-left"
-            icon="i-lucide-plus"
-            color="neutral"
-            variant="ghost"
+        <div class="border-t border-[var(--sf-border-divider)] p-1.5">
+          <button
+            class="group w-full flex items-center gap-2.5 p-2 rounded-lg text-left transition-all hover:bg-[var(--sf-nav-hover-bg)] cursor-pointer"
             @click="createNewWorkspace"
-            label="Create Workspace"
-            size="sm"
-          />
+          >
+            <i class="fa-solid fa-plus text-[13px] w-4 text-center text-[var(--sf-text-secondary)] group-hover:text-[var(--sf-text-primary)] transition-colors shrink-0" />
+            <span class="text-[13px] font-medium text-[var(--sf-text-body)] group-hover:text-[var(--sf-text-primary)] group-hover:font-semibold transition-colors">
+              Create Workspace
+            </span>
+          </button>
         </div>
       </div>
     </template>
@@ -139,7 +154,8 @@ const isDropdownOpen = ref(false)
 // Computed text for workspace plan
 const workspacePlanText = computed(() => {
   if (!workspace.value) return ''
-  return `${getTierDisplayName(workspace.value.plan_tier)} Plan`
+  const name = getTierDisplayName(workspace.value.plan_tier)
+  return name === 'Free' ? 'Free' : name
 })
 
 // Computed text for member count

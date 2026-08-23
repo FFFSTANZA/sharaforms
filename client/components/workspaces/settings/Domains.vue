@@ -1,95 +1,113 @@
 <template>
-  <div class="space-y-4">
-    <div class="flex flex-col flex-wrap items-start justify-between gap-4 sm:flex-row sm:items-center">
-      <div>
-        <h3 class="text-lg font-medium text-neutral-900">Custom Domains Settings</h3>
-        <p class="mt-1 text-sm text-neutral-500">
-          Manage your custom domains.
-        </p>
-      </div>
+  <div class="space-y-6">
+    <!-- Page Head -->
+    <div class="sf-page-head">
+      <h2>Domains</h2>
+      <p>Connect your own domain to publish forms under your brand.</p>
+    </div>
 
-      <div class="flex shrink-0 items-center gap-2">
+    <section class="sf-card sf-card-pad">
+      <div class="flex flex-col flex-wrap items-start justify-between gap-4 sm:flex-row sm:items-center mb-5">
+        <div class="flex items-center gap-3">
+          <span class="sf-icon-chip-soft sf-icon-chip-soft--muted">
+            <i class="fa-solid fa-globe" />
+          </span>
+          <div>
+            <h3 class="text-[15px] font-semibold text-[#1D1F24]">Custom Domains</h3>
+            <p class="text-xs text-[#8E9198] font-medium mt-0.5">
+              Manage your custom domains.
+            </p>
+          </div>
+        </div>
+
         <UButton
           label="Help"
           icon="i-lucide-circle-question-mark"
           variant="outline"
           color="neutral"
+          class="btn-ghost !border-[#DEE1E7]"
           @click="crisp.openHelpdeskArticle('how-to-use-my-own-domain-9m77g7')"
         />
       </div>
-    </div>
 
-    <UAlert
-      v-if="!canAccessDomains"
-      icon="i-lucide-users"
-      class="mb-4"
-      color="warning"
-      variant="subtle"
-      title="Pro plan required"
-      description="Please upgrade your account to setup a custom domain."
-      :actions="[{
-        label: 'Upgrade to Pro',
-        color: 'warning',
-        variant: 'solid',
-        onClick: () => openSubscriptionModal({
-          modal_title: 'Upgrade to use your own domain',
-          modal_description: 'Upgrade to our Pro plan to unlock custom domains and other premium features such as advanced customization, forms analytics, integrations, and more!'
-        })
-      }]"
-    />
+      <UAlert
+        v-if="!canAccessDomains"
+        icon="i-lucide-users"
+        class="mb-5"
+        color="warning"
+        variant="subtle"
+        title="Pro plan required"
+        description="Please upgrade your account to setup a custom domain."
+        :actions="[{
+          label: 'Upgrade to Pro',
+          color: 'warning',
+          variant: 'solid',
+          onClick: () => openSubscriptionModal({
+            modal_title: 'Upgrade to use your own domain',
+            modal_description: 'Upgrade to our Pro plan to unlock custom domains and other premium features such as advanced customization, forms analytics, integrations, and more!'
+          })
+        }]"
+      />
 
-    <div class="space-y-4">
-      <div class="flex max-w-sm items-center gap-2">
-        <UInput
-          v-model="newDomain"
-          :disabled="!canAccessDomains"
-          :variant="canAccessDomains ? 'outline' : 'subtle'"
-          placeholder="yourdomain.com"
-          class="flex-1"
-          @keydown.enter.prevent="addDomain"
-        />
+      <div class="space-y-5">
+        <div class="flex max-w-sm items-center gap-2">
+          <UInput
+            v-model="newDomain"
+            :disabled="!canAccessDomains"
+            :variant="canAccessDomains ? 'outline' : 'subtle'"
+            placeholder="yourdomain.com"
+            class="flex-1"
+            @keydown.enter.prevent="addDomain"
+          />
+          <UButton
+            :disabled="!canAccessDomains || !newDomain.trim()"
+            icon="i-lucide-plus"
+            class="btn-primary"
+            @click="addDomain"
+          >
+            Add
+          </UButton>
+        </div>
+
+        <div v-if="domains.length > 0" class="max-w-sm space-y-2">
+          <div
+            v-for="(domain, index) in domains"
+            :key="index"
+            class="group flex items-center justify-between rounded-lg border border-[var(--sf-border-card)] bg-white p-2.5 transition-all hover:border-[var(--sf-hover-border)] shadow-[0_1px_2px_rgba(23,25,35,0.04)]"
+          >
+            <span class="flex items-center gap-2 text-[13px] text-[#1D1F24] font-medium min-w-0">
+              <span class="inline-flex items-center justify-center w-6 h-6 rounded-md bg-[var(--sf-bg-subtle)] text-[var(--sf-text-body)] shrink-0">
+                <i class="fa-solid fa-globe text-[9px]" />
+              </span>
+              <span class="truncate">{{ domain }}</span>
+            </span>
+            <UButton
+              :disabled="!canAccessDomains"
+              icon="i-lucide-x"
+              color="red"
+              variant="ghost"
+              class="opacity-0 group-hover:opacity-100 transition-opacity"
+              @click="removeDomain(index)"
+            />
+          </div>
+        </div>
+        <div v-else class="max-w-sm rounded-xl border border-dashed border-[#DEE1E7] bg-[#F7F8FA] p-5 text-center">
+          <p class="text-[13px] text-[#6E7278]">
+            No custom domains added yet.
+          </p>
+        </div>
+
         <UButton
-          :disabled="!canAccessDomains || !newDomain.trim()"
-          icon="i-lucide-plus"
-          @click="addDomain"
+          type="submit"
+          :loading="isLoading"
+          :disabled="!canAccessDomains || !isChanged"
+          class="btn-primary"
+          @click="saveChanges"
         >
-          Add
+          Save Domain(s)
         </UButton>
       </div>
-
-      <div v-if="domains.length > 0" class="max-w-sm space-y-2">
-        <div
-          v-for="(domain, index) in domains"
-          :key="index"
-          class="group flex items-center justify-between rounded-md border border-neutral-200 bg-white p-2"
-        >
-          <span class="text-sm text-neutral-800">{{ domain }}</span>
-          <UButton
-            :disabled="!canAccessDomains"
-            icon="i-lucide-x"
-            color="red"
-            variant="ghost"
-            class="opacity-0 group-hover:opacity-100"
-            @click="removeDomain(index)"
-          />
-        </div>
-      </div>
-      <div v-else class="max-w-sm rounded-xl border border-neutral-200 bg-neutral-50/50 p-4 text-center">
-        <p class="text-sm text-neutral-500">
-          No custom domains added yet.
-        </p>
-      </div>
-    </div>
-    
-    <UButton
-      type="submit"
-      :loading="isLoading"
-      :disabled="!canAccessDomains || !isChanged"
-      @click="saveChanges"
-    >
-      Save Domain(s)
-    </UButton>
-  
+    </section>
   </div>
 </template>
 
@@ -154,7 +172,7 @@ const updateMutation = updateCustomDomains(workspace.value?.id)
 
 const saveChanges = () => {
   if (!workspace.value?.id) return
-  
+
   isLoading.value = true
   updateMutation.mutateAsync({
     custom_domains: domains.value,
@@ -176,4 +194,4 @@ const initCustomDomains = () => {
   }
   isChanged.value = false
 }
-</script> 
+</script>

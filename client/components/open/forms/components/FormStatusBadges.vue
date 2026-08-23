@@ -5,51 +5,34 @@
   >
     <!-- Draft Badge -->
     <UTooltip v-if="form.visibility === 'draft'" text="Not publicly accessible">
-      <UBadge
-        color="warning"
-        variant="subtle"
-        icon="i-lucide-square-pen"
-        :size="size"
-      >
+      <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[var(--sf-status-draft-bg)] text-[var(--sf-status-draft-text)] border border-[var(--sf-status-draft-border)]">
+        <Icon name="i-lucide-square-pen" class="w-3 h-3" />
         Draft
-      </UBadge>
+      </span>
     </UTooltip>
     
     <!-- Closed Badge -->
     <UTooltip v-else-if="form.visibility === 'closed'" text="Won't accept new submissions">
-      <UBadge
-        color="neutral"
-        variant="subtle"
-        icon="i-lucide-lock-keyhole"
-        :size="size"
-      >
+      <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[var(--sf-status-closed-bg)] text-[var(--sf-status-closed-text)] border border-[var(--sf-status-closed-border)]">
+        <Icon name="i-lucide-lock-keyhole" class="w-3 h-3" />
         Closed
-      </UBadge>
+      </span>
     </UTooltip>
     
-    <!-- Time Limited Badge -->
-     <template v-else-if="form.closes_at">
+    <!-- Time Limited Badge -->     <template v-else-if="form.closes_at">
       <UTooltip v-if="!form.is_closed" :text="`Will close on ${closesDate}`">
-        <UBadge
-          color="warning"
-          variant="subtle"
-          icon="i-lucide-clock"
-          :size="size"
-        >
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[var(--sf-status-draft-bg)] text-[var(--sf-status-draft-text)] border border-[var(--sf-status-draft-border)]">
+          <Icon name="i-lucide-clock" class="w-3 h-3" />
           Time limited
-        </UBadge>
+        </span>
       </UTooltip>
       <UTooltip v-else :text="`Closed on ${closesDate}`">
-        <UBadge
-          color="neutral"
-          variant="subtle"
-          icon="i-lucide-clock"
-          :size="size"
-        >
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[var(--sf-status-closed-bg)] text-[var(--sf-status-closed-text)] border border-[var(--sf-status-closed-border)]">
+          <Icon name="i-lucide-clock" class="w-3 h-3" />
           Closed
-        </UBadge>
+        </span>
       </UTooltip>
-  </template>
+    </template>
     
     <!-- Submission Limited Badge -->
     <template v-else-if="form.max_submissions_count > 0">
@@ -57,42 +40,31 @@
         v-if="!form.max_number_of_submissions_reached"
         :text="`Limited to ${form.max_submissions_count} submissions`"
       >
-        <UBadge
-          color="warning"
-          variant="subtle"
-          icon="i-lucide-chart-bar"
-          :size="size"
-        >
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[var(--sf-status-draft-bg)] text-[var(--sf-status-draft-text)] border border-[var(--sf-status-draft-border)]">
+          <Icon name="i-lucide-chart-bar" class="w-3 h-3" />
           Submission limited
-        </UBadge>
+        </span>
       </UTooltip>
       <UTooltip 
         v-else
         :text="`Maximum ${form.max_submissions_count} submissions reached`"
       >
-        <UBadge
-          color="neutral"
-          variant="subtle"
-          icon="i-lucide-lock-keyhole"
-          :size="size"
-        >
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[var(--sf-status-closed-bg)] text-[var(--sf-status-closed-text)] border border-[var(--sf-status-closed-border)]">
+          <Icon name="i-lucide-lock-keyhole" class="w-3 h-3" />
           Limit reached
-        </UBadge>
+        </span>
       </UTooltip>
     </template>
     
     <!-- Tags Badges -->
-    <UBadge
+    <span
       v-if="withTags"
       v-for="tag in form.tags"
       :key="tag"
-      color="neutral"
-      variant="outline"
-      class="capitalize"
-      :size="size"
+      class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium capitalize bg-[var(--sf-bg-muted)] text-[var(--sf-text-body)] border border-[var(--sf-border-card)]"
     >
       {{ tag }}
-    </UBadge>
+    </span>
   </div>
 </template>
 

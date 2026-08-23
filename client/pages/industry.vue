@@ -461,7 +461,6 @@ const integrationApps = [
 
   { icon: "i-simple-icons-zapier", iconClass: "text-[#FF4A00]" },
   { icon: "simple-icons:n8n", iconClass: "text-[#EA4B71]" },
-  { icon: "sharaforms:activepieces", iconClass: "text-[#6366F1]" },
   { icon: "mdi:google-spreadsheet", iconClass: "text-[#34A853]" },
   { icon: "i-simple-icons-zoom", iconClass: "text-[#2D8CFF]" },
 

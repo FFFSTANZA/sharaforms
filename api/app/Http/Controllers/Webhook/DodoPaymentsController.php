@@ -9,6 +9,7 @@ use App\Service\Billing\DodoPaymentsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class DodoPaymentsController extends Controller
@@ -31,7 +32,9 @@ class DodoPaymentsController extends Controller
             return response()->json(['message' => 'Invalid payload.'], 400);
         }
 
-        if ($webhookId && Cache::has('dodo_webhook:' . $webhookId)) {
+        // C1 FIX: Use atomic Cache::add() BEFORE processing to prevent TOCTOU race.
+        // If another concurrent request already added this key, dedup immediately.
+        if ($webhookId && !Cache::add('dodo_webhook:' . $webhookId, true, now()->addDay())) {
             return response()->json(['received' => true]);
         }
 
@@ -47,10 +50,6 @@ class DodoPaymentsController extends Controller
 
                 return response()->json(['message' => 'Webhook could not be processed.'], 400);
             }
-        }
-
-        if ($webhookId) {
-            Cache::add('dodo_webhook:' . $webhookId, true, now()->addDay());
         }
 
         return response()->json(['received' => true]);
@@ -84,6 +83,23 @@ class DodoPaymentsController extends Controller
             throw new \RuntimeException('Unable to resolve user for Dodo subscription webhook.');
         }
 
+        // M10 FIX: Use a user-level lock to prevent concurrent subscription syncs
+        // from creating duplicate active subscriptions for the same user.
+        $lockKey = "dodo_sync_user:{$user->id}";
+        $lock = Cache::lock($lockKey, 30);
+
+        if (!$lock->get()) {
+            Log::warning('Dodo webhook sync lock contention.', [
+                'event_type' => $eventType,
+                'subscription_id' => $subscriptionId,
+                'user_id' => $user->id,
+            ]);
+
+            throw new \RuntimeException('Webhook sync lock contention, will retry.');
+        }
+
+        try {
+
         if ($customerId && $user->stripe_id !== $customerId) {
             if (filled($user->stripe_id)) {
                 Log::warning('Dodo webhook re-attributed a subscription to a different Dodo customer ID.', [
@@ -116,9 +132,13 @@ class DodoPaymentsController extends Controller
             return;
         }
 
-        $trialEndsAt = in_array($newStatus, ['trialing', 'active'], true)
+        // M11 FIX: Only set trial_ends_at when the data explicitly provides it or for active statuses.
+        // Don't force null on cancelled/expired — the original trial end may be needed for grace period calculations.
+        $trialEndsAt = array_key_exists('trial_ends_at', $data)
             ? $this->resolveTrialEndsAt($data)?->toIso8601String()
-            : null;
+            : (in_array($newStatus, ['trialing', 'active'], true)
+                ? $this->resolveTrialEndsAt($data)?->toIso8601String()
+                : null);
 
         $this->dodoPaymentsService->syncSubscription(
             $subscription,
@@ -129,6 +149,9 @@ class DodoPaymentsController extends Controller
             ]),
             $user,
         );
+        } finally {
+            $lock->release();
+        }
     }
 
     private function resolveUser(?string $customerId, ?string $email): ?User
@@ -159,7 +182,10 @@ class DodoPaymentsController extends Controller
     {
         $resolvedStatus = $data['status']
             ?? match ($eventType) {
-                'subscription.created', 'subscription.activated', 'subscription.active', 'subscription.renewed', 'subscription.plan_changed', 'subscription.updated' => 'active',
+                // H1 FIX: subscription.updated is a general event (cancel toggles, metadata changes, etc.)
+                // Only promote to 'active' if status is explicitly in the payload. Otherwise preserve current.
+                'subscription.created', 'subscription.activated', 'subscription.active', 'subscription.renewed', 'subscription.plan_changed' => 'active',
+                'subscription.updated' => $currentStatus ?? 'active',
                 'subscription.cancelled' => 'cancelled',
                 'subscription.failed' => 'failed',
                 'subscription.expired' => 'expired',

@@ -50,6 +50,7 @@ class AppServiceProvider extends ServiceProvider
 
         Event::listen(function (\SocialiteProviders\Manager\SocialiteWasCalled $event) {
             $event->extendSocialite('stripe', \SocialiteProviders\Stripe\Provider::class);
+            $event->extendSocialite('notion', \App\Integrations\OAuth\Drivers\Notion\Provider::class);
         });
 
         // Route model bindings for performance optimization

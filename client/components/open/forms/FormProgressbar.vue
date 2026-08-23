@@ -1,10 +1,10 @@
 <template>
   <div v-if="showProgressBar" :class="wrapperClasses">
-    <div class="w-full bg-neutral-200 dark:bg-neutral-600 relative overflow-hidden" :class="barContainerClasses">
+    <div class="w-full bg-[var(--sf-bg-muted)] relative overflow-hidden" :class="barContainerClasses">
       <div
-        class="h-full transition-all duration-300"
+        class="h-full transition-all duration-500 ease-out"
         :class="[barFillClasses, { 'w-0': formProgress === 0 }]"
-        :style="{ width: formProgress + '%', background: config?.color }"
+        :style="{ width: formProgress + '%', background: `linear-gradient(90deg, ${config?.color || 'var(--sf-coral-500)'}, ${config?.color || 'var(--sf-coral-400)'}dd)` }"
       />
     </div>
   </div>
@@ -30,7 +30,7 @@ const showProgressBar = computed(() => {
 })
 
 const isIframe = useIsIframe()
-const isFocusedMode = computed(() => config.value?.presentation_style === 'focused')
+const isFocusedMode = computed(() => config.value?.presentation_style === 'focused' || config.value?.presentation_style === 'spotlight')
 const isSubmitted = computed(() => props.formManager?.state?.isSubmitted ?? false)
 
 // Wrapper classes - different positioning for iframe vs standalone
@@ -44,16 +44,16 @@ const wrapperClasses = computed(() => {
 const barContainerClasses = computed(() => {
   const heightClass = isIframe.value
     ? (isFocusedMode.value ? 'h-1' : 'h-1')
-    : (isFocusedMode.value ? 'h-1' : 'h-[0.2rem]')
+    : (isFocusedMode.value ? 'h-[0.3rem]' : 'h-[0.25rem]')
   
-  const borderClass = isIframe.value ? 'border rounded-full' : ''
+  const borderClass = isIframe.value ? 'border rounded-full' : 'rounded-full'
   
   return [heightClass, borderClass].filter(Boolean).join(' ')
 })
 
 // Bar fill classes - rounded for iframe
 const barFillClasses = computed(() => {
-  return isIframe.value ? 'rounded-r-full' : ''
+  return isIframe.value ? 'rounded-r-full' : 'rounded-full'
 })
 
 const formProgress = computed(() => {

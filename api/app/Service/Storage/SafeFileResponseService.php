@@ -23,7 +23,9 @@ class SafeFileResponseService
         ];
 
         if (!Str::startsWith($mimeType, 'image/')) {
-            $headers['Content-Disposition'] = 'attachment; filename="' . ($downloadName ?? basename($path)) . '"';
+            // M6 FIX: Sanitize download name to prevent header injection via double-quotes.
+            $safeName = str_replace(['"', "\n", "\r"], '', $downloadName ?? basename($path));
+            $headers['Content-Disposition'] = 'attachment; filename="' . $safeName . '"';
         }
 
         return response()->stream(function () use ($stream) {

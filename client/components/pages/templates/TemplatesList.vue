@@ -22,7 +22,7 @@
                     <span class="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full brand-gradient-warm">
                       <UIcon name="i-lucide-layers" class="h-2.5 w-2.5 text-white" />
                     </span>
-                    <span class="truncate font-medium text-neutral-700 dark:text-neutral-200">
+                    <span class="truncate font-medium text-[#565A62] dark:text-neutral-200">
                       {{ optionName }}
                     </span>
                   </div>
@@ -30,10 +30,10 @@
                 <template #option="{ option, selected }">
                   <div class="flex items-center justify-between gap-2">
                     <span class="flex min-w-0 items-center gap-2 truncate">
-                      <UIcon name="i-lucide-layers" class="h-4 w-4 shrink-0 text-neutral-400" />
+                      <UIcon name="i-lucide-layers" class="h-4 w-4 shrink-0 text-[#A7ABB2]" />
                       <span
                         class="truncate"
-                        :class="selected ? 'font-medium brand-gradient-text-warm' : 'text-neutral-700 dark:text-neutral-200'"
+                        :class="selected ? 'font-medium brand-gradient-text-warm' : 'text-[#565A62] dark:text-neutral-200'"
                       >
                         {{ option.name }}
                       </span>
@@ -63,7 +63,7 @@
                     <span class="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full brand-gradient-warm">
                       <UIcon name="i-lucide-building-2" class="h-2.5 w-2.5 text-white" />
                     </span>
-                    <span class="truncate font-medium text-neutral-700 dark:text-neutral-200">
+                    <span class="truncate font-medium text-[#565A62] dark:text-neutral-200">
                       {{ optionName }}
                     </span>
                   </div>
@@ -71,10 +71,10 @@
                 <template #option="{ option, selected }">
                   <div class="flex items-center justify-between gap-2">
                     <span class="flex min-w-0 items-center gap-2 truncate">
-                      <UIcon name="i-lucide-building-2" class="h-4 w-4 shrink-0 text-neutral-400" />
+                      <UIcon name="i-lucide-building-2" class="h-4 w-4 shrink-0 text-[#A7ABB2]" />
                       <span
                         class="truncate"
-                        :class="selected ? 'font-medium brand-gradient-text-warm' : 'text-neutral-700 dark:text-neutral-200'"
+                        :class="selected ? 'font-medium brand-gradient-text-warm' : 'text-[#565A62] dark:text-neutral-200'"
                       >
                         {{ option.name }}
                       </span>
@@ -94,7 +94,7 @@
             <div class="relative w-full lg:w-72">
               <UIcon
                 name="i-lucide-search"
-                class="pointer-events-none absolute left-3 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-neutral-400 dark:text-neutral-500"
+                class="pointer-events-none absolute left-3 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-[#A7ABB2] dark:text-neutral-500"
               />
               <text-input
                 v-model="search"
@@ -108,7 +108,7 @@
           </VForm>
 
           <div class="mt-4 flex items-center justify-between gap-2">
-            <p class="text-sm text-neutral-500 dark:text-neutral-400">
+            <p class="text-[13px] text-[#6E7278] dark:text-neutral-400">
               <template v-if="loading">
                 Loading templates...
               </template>
@@ -172,12 +172,12 @@
         >
           <UIcon
             name="i-lucide-search-x"
-            class="mx-auto h-10 w-10 text-neutral-300 dark:text-neutral-600"
+            class="mx-auto h-10 w-10 text-[#C7C9CE] dark:text-neutral-600"
           />
-          <p class="mt-4 text-base font-semibold text-neutral-900 dark:text-neutral-100">
+          <p class="mt-4 text-base font-semibold text-[#1D1F24] dark:text-neutral-100">
             No templates found
           </p>
-          <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
+          <p class="mt-1 text-[13px] text-[#6E7278] dark:text-neutral-400">
             Try adjusting your search or filters.
           </p>
           <UButton
@@ -212,12 +212,12 @@
 
     <section
       v-if="showTypes"
-      class="py-12 bg-neutral-50 dark:bg-neutral-900 sm:py-16"
+      class="py-12 bg-[#F7F8FA] dark:bg-neutral-900 sm:py-16"
     >
       <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
         <div class="flex items-center justify-between">
           <h4
-            class="text-xl font-bold tracking-tight text-neutral-900 sm:text-2xl"
+            class="text-xl font-bold tracking-tight text-[#1D1F24] sm:text-2xl"
           >
             All Types
           </h4>
@@ -239,7 +239,7 @@
             :key="row.slug"
             :to="{ params: { slug: row.slug }, name: 'templates-types-slug' }"
             :title="row.name"
-            class="text-neutral-600 dark:text-neutral-400 transition-colors duration-300 brand-gradient-hover"
+            class="text-[#565A62] dark:text-neutral-400 transition-colors duration-300 brand-gradient-hover"
           >
             {{ row.name }}
           </NuxtLink>
@@ -254,7 +254,7 @@
       <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
         <div class="flex items-center justify-between">
           <h4
-            class="text-xl font-bold tracking-tight text-neutral-900 sm:text-2xl"
+            class="text-xl font-bold tracking-tight text-[#1D1F24] sm:text-2xl"
           >
             All Industries
           </h4>
@@ -279,7 +279,7 @@
               name: 'templates-industries-slug',
             }"
             :title="row.name"
-            class="text-neutral-600 dark:text-neutral-400 transition-colors duration-300 brand-gradient-hover"
+            class="text-[#565A62] dark:text-neutral-400 transition-colors duration-300 brand-gradient-hover"
           >
             {{ row.name }}
           </NuxtLink>
@@ -331,10 +331,10 @@ const { industries: industriesMap, types: typesMap } = useTemplateMeta()
 
 const selectUi = {
   slots: {
-    anchor: 'bg-neutral-50 dark:bg-notion-dark-light hover:border-neutral-300 dark:hover:border-neutral-500',
+    anchor: 'bg-[#F7F8FA] dark:bg-notion-dark-light hover:border-[#DEE1E7] dark:hover:border-neutral-500',
     chevronContainer: 'bg-transparent',
     chevronGradient: 'bg-transparent',
-    chevronIcon: 'h-4 w-4 text-neutral-400',
+    chevronIcon: 'h-4 w-4 text-[#A7ABB2]',
     option: 'px-3 py-2',
   },
 }

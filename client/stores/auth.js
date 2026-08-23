@@ -53,7 +53,16 @@ export const useAuthStore = defineStore("auth", {
     setCookie(name, value, options = {}) {
       if (import.meta.client) {
         const secureDefault = (typeof window !== 'undefined') ? window.location.protocol === 'https:' : true
-        const embedded = typeof window !== 'undefined' && window.top !== window.self
+        // M17 FIX: Check both top !== self AND verify the top window's origin matches.
+        // The old check (top !== self) could be bypassed by a malicious embedder.
+        let embedded = false
+        try {
+          embedded = typeof window !== 'undefined' && window.top !== window.self
+            && window.top.location.origin === window.location.origin
+        } catch {
+          // Cross-origin top window — treat as embedded (safe default)
+          embedded = typeof window !== 'undefined' && window.top !== window.self
+        }
         const safeOptions = {
           path: options.path ?? '/',
           sameSite: options.sameSite ?? (embedded ? 'none' : 'lax'),

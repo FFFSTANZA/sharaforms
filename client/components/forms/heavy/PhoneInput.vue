@@ -12,12 +12,16 @@
       :name="name"
       :style="inputStyle"
       class="grid items-stretch w-full"
-      :class="resolvedTheme === 'minimal' ? 'grid-cols-[auto_0.1rem_minmax(0,1fr)]' : 'grid-cols-[auto_minmax(0,1fr)]'"
+      :class="[
+        resolvedTheme === 'minimal' ? 'grid-cols-[auto_0.1rem_minmax(0,1fr)]' : 'grid-cols-[auto_minmax(0,1fr)]',
+        resolvedBorderRadius === 'small' ? 'rounded-lg overflow-hidden' : '',
+        resolvedBorderRadius === 'full' ? 'rounded-[20px] overflow-hidden' : '',
+      ]"
     >
       <v-select
         class="min-w-0"
         v-model="selectedCountryCode"
-        :input-class="resolvedTheme === 'transparent' ? '!rounded-none' : 'ltr-only:rounded-r-none rtl:rounded-l-none!'"
+        :input-class="resolvedTheme === 'transparent' ? '!rounded-none' : '!rounded-none'"
         :data="countries"
         :disabled="disabled || countries.length===1"
         :searchable="true"
@@ -69,7 +73,7 @@
       <input
         v-model="inputVal"
         type="text"
-        class="w-full min-w-0 ltr-only:border-l-0 ltr-only:!rounded-l-none rtl:border-r-0 rtl:rounded-r-none"
+        class="w-full min-w-0 ltr-only:border-l-0 !rounded-none"
         :disabled="disabled?true:null"
         :class="ui.input({ class: props.ui?.slots?.input })"
         :placeholder="placeholder"
@@ -109,7 +113,7 @@ const props = defineProps({
 })
 
 // Composables
-const { compVal, resolvedSize, resolvedTheme, inputStyle, inputWrapperProps, ui } = useFormInput(props, { emit }, {
+const { compVal, resolvedSize, resolvedTheme, resolvedBorderRadius, inputStyle, inputWrapperProps, ui } = useFormInput(props, { emit }, {
   variants: phoneInputTheme
 })
 

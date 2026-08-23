@@ -7,7 +7,7 @@
     <SettingsModalPage
       id="general"
       label="General"
-      icon="i-lucide-info"
+      icon="fa-solid fa-circle-info"
     >
       <FormInformation />
     </SettingsModalPage>
@@ -15,7 +15,7 @@
     <SettingsModalPage
       id="submission"
       label="Submission Settings"
-      icon="i-lucide-send"
+      icon="fa-solid fa-paper-plane"
     >
       <FormSubmissionSettings />
     </SettingsModalPage>
@@ -23,7 +23,7 @@
     <SettingsModalPage
       id="security"
       label="Security & Access"
-      icon="i-lucide-shield-check"
+      icon="fa-solid fa-shield-halved"
     >
       <FormSecurityAccess />
     </SettingsModalPage>
@@ -31,7 +31,7 @@
     <SettingsModalPage
       id="seo"
       label="SEO & Social Sharing"
-      icon="i-lucide-link"
+      icon="fa-solid fa-link"
     >
       <FormCustomSeo />
     </SettingsModalPage>
@@ -39,7 +39,7 @@
     <SettingsModalPage
       id="analytics"
       label="Analytics"
-      icon="i-lucide-chart-bar"
+      icon="fa-solid fa-chart-simple"
     >
       <FormAnalyticsSettings />
     </SettingsModalPage>
@@ -47,7 +47,7 @@
     <SettingsModalPage
       id="custom-code"
       label="Custom Code"
-      icon="i-lucide-code"
+      icon="fa-solid fa-code"
     >
       <FormCustomCode />
     </SettingsModalPage>
@@ -55,7 +55,7 @@
     <SettingsModalPage
       id="variables"
       label="Variables"
-      icon="i-lucide-variable"
+      icon="fa-solid fa-square-root-variable"
     >
       <ComputedVariablesTab />
     </SettingsModalPage>

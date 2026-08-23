@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white border border-neutral-200 rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-200">
+  <div class="bg-[var(--sf-bg-surface)] border border-[var(--sf-border-card)] rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-200">
     <!-- Header -->
     <div class="flex items-center justify-between p-4 border-b border-neutral-100 bg-neutral-50/50">
       <div class="flex items-center gap-3 min-w-0">
@@ -39,7 +39,7 @@
             class="px-2 py-1 rounded-md text-xs font-medium transition-all"
             :class="[
               (mode === 'pie' ? showPieChart : !showPieChart) 
-                ? 'bg-white text-neutral-900 shadow-sm' 
+                ? 'bg-[var(--sf-bg-surface)] text-[var(--sf-text-primary)] shadow-sm' 
                 : 'text-neutral-500 hover:text-neutral-700'
             ]"
             @click="showPieChart = (mode === 'pie')"

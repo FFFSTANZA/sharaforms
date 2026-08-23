@@ -3,39 +3,16 @@
     <div
       v-if="form"
       id="form-editor"
-      class="relative flex w-full flex-col grow max-h-screen"
+      class="relative flex w-full flex-col grow max-h-screen supports-[height:100dvh]:max-h-[100dvh]"
       key="form"
     >
       <!-- Loading overlay -->
       <div
         v-if="form.busy || loading"
-        class="absolute inset-0 bg-white bg-opacity-70 z-50 flex items-center justify-center"
+        class="absolute inset-0 bg-[var(--sf-bg-surface)] bg-opacity-90 z-50 flex items-center justify-center backdrop-blur-sm"
       >
-        <loader class="h-6 w-6 text-blue-500" />
+        <loader class="h-6 w-6 text-[var(--sf-coral-500)]" />
       </div>
-      <div
-        class="border-b bg-white md:hidden fixed inset-0 w-full z-50 flex flex-col items-center justify-center"
-      >
-        <Icon
-          name="lucide:circle-alert"
-          class="w-10 h-10 text-blue-800"
-        />
-        <div class="p-5 text-blue-800 text-center">
-          SharaForms is not optimized for mobile devices. Please open this page on a device with a larger screen.
-        </div>
-        <div>
-          <UButton
-            color="neutral"
-            variant="outline"
-            size="lg"
-            class="w-full"
-            :to="{ name: 'home' }"
-          >
-            Back to dashboard
-          </UButton>
-        </div>
-      </div>
-
       <FormEditorNavbar
         :back-button="backButton"
         :update-form-loading="form.busy"
@@ -48,11 +25,12 @@
         </template>
       </FormEditorNavbar>
 
-      <FormEditorErrorHandler>
-        <div class="w-full flex grow min-h-0 overflow-hidden relative bg-white">
-          <div 
+      <!-- Desktop layout: three-pane (fields panel | preview | sidebar) -->
+      <FormEditorErrorHandler v-if="!isMobile">
+        <div class="w-full flex grow min-h-0 overflow-hidden relative bg-[var(--sf-bg-page)]">
+          <div
             ref="elementRef"
-            class="relative shrink-0 min-h-0 overflow-hidden border-r"
+            class="relative shrink-0 min-h-0 overflow-hidden border-r border-[var(--sf-border-card)] bg-[var(--sf-bg-surface)]"
             :class="isResizable ? '' : 'w-full md:w-1/2 md:max-w-xs lg:w-2/5'"
             :style="isResizable ? dynamicStyles : {}"
           >
@@ -62,7 +40,7 @@
               @start-resize="startResize"
               class="z-20"
             />
-            
+
             <OverlayScrollbarsComponent defer class="h-full">
               <VForm
                 size="sm"
@@ -85,6 +63,56 @@
           <FormEditorPreview />
 
           <FormEditorSidebar />
+        </div>
+      </FormEditorErrorHandler>
+
+      <!-- Mobile layout: single pane + bottom nav; sidebars become full-screen sheets -->
+      <FormEditorErrorHandler v-else>
+        <div class="flex w-full grow min-h-0 flex-col bg-[var(--sf-bg-page)]">
+          <div class="relative grow min-h-0">
+            <div
+              v-show="mobileTab !== 'preview'"
+              class="absolute inset-0 overflow-y-auto overscroll-contain"
+            >
+              <VForm
+                size="sm"
+                @submit.prevent=""
+              >
+                <div v-show="mobileTab === 'build'">
+                  <FormFieldsEditor />
+                </div>
+                <div v-show="mobileTab === 'design'">
+                  <FormCustomization />
+                </div>
+              </VForm>
+            </div>
+
+            <div
+              v-show="mobileTab === 'preview'"
+              class="absolute inset-0 flex flex-col"
+            >
+              <FormEditorPreview embedded />
+            </div>
+          </div>
+
+          <FormEditorMobileNav v-model="mobileTab" />
+
+          <transition name="editor-sheet">
+            <div
+              v-if="mobileSheetOpen"
+              class="fixed inset-0 z-40 flex flex-col bg-[var(--sf-bg-surface)]"
+            >
+              <AddFormBlock
+                v-if="showAddFieldSidebar"
+                class="min-h-0 grow overflow-y-auto overscroll-contain"
+              />
+              <FormFieldEdit
+                v-else-if="showEditFieldSidebar"
+                :key="selectedFieldIndex"
+                class="min-h-0 grow overflow-y-auto overscroll-contain"
+              />
+            </div>
+          </transition>
         </div>
       </FormEditorErrorHandler>
 
@@ -122,10 +150,12 @@ import FormCustomization from "./form-components/FormCustomization.vue"
 import FormEditorPreview from "./form-components/FormEditorPreview.vue"
 import { useFormLogic } from "~/composables/forms/useFormLogic.js"
 import FormEditorErrorHandler from '~/components/open/forms/components/FormEditorErrorHandler.vue'
+import FormEditorMobileNav from './form-components/FormEditorMobileNav.vue'
+import AddFormBlock from './form-components/AddFormBlock.vue'
+import FormFieldEdit from '../fields/FormFieldEdit.vue'
 import { setFormDefaults, ensureSettingsObject } from '~/composables/forms/initForm.js'
 import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
 import LogicConfirmationModal from '~/components/forms/heavy/LogicConfirmationModal.vue'
-import { formsApi } from "~/api"
 import { useResizable } from '~/composables/components/useResizable'
 import ResizeHandle from '~/components/global/ResizeHandle.vue'
 
@@ -183,13 +213,18 @@ const {
   maxWidth: () => Math.min(600, window.innerWidth * 0.6)
 })
 
-// Check if the editor is visible on smaller screens then send an email
+// Mobile layout support: the editor renders a single-pane layout below md
 const breakpoints = useBreakpoints(breakpointsTailwind)
-const isVisible = ref(breakpoints.smaller("md"))
-watch(isVisible, (newValue) => {
-  if (newValue && form?.value && form?.value?.id) {
-    formsApi.mobileEditorEmail(form.value.id)
-  }
+// Starts as false so that SSR and the hydration render both produce the
+// desktop tree (the old gate was CSS-only). Flips after mount, so mobile
+// devices re-render cleanly without a hydration mismatch.
+const isMobile = ref(false)
+const isMobileQuery = breakpoints.smaller('md')
+onMounted(() => {
+  isMobile.value = isMobileQuery.value
+})
+watch(isMobileQuery, (value) => {
+  isMobile.value = value
 })
 
 // Composables
@@ -233,6 +268,22 @@ defineShortcuts({
     }
   }
 })
+
+// Mobile layout switches between Build/Design and Preview via a bottom nav.
+// The mobile panels key off mobileTab directly (never a possibly-stale store
+// value); the immediate watch keeps the shared store activeTab aligned for
+// desktop logic and breakpoint crossings.
+const mobileTab = ref('build')
+watch(mobileTab, (value) => {
+  if (value !== 'preview') {
+    workingFormStore.activeTab = value
+  }
+}, { immediate: true })
+
+const showAddFieldSidebar = computed(() => workingFormStore.showAddFieldSidebar)
+const showEditFieldSidebar = computed(() => workingFormStore.showEditFieldSidebar)
+const selectedFieldIndex = computed(() => workingFormStore.selectedFieldIndex)
+const mobileSheetOpen = computed(() => isMobile.value && (showAddFieldSidebar.value || showEditFieldSidebar.value))
 
 // Computed properties
 const activeTab = computed(() => workingFormStore.activeTab)
@@ -433,8 +484,10 @@ defineExpose({
 onMounted(() => {
   emit("mounted")
   workingFormStore.activeTab = 'build'
-  posthog.logEvent('form_editor_viewed')
-  
+  posthog.logEvent('form_editor_viewed', {
+    platform: isMobile.value ? 'mobile_web' : 'desktop_web',
+  })
+
   if (!props.isEdit) {
     nextTick(() => {
       workingFormStore.openAddFieldSidebar()
@@ -455,5 +508,18 @@ onMounted(() => {
       color: white;
     }
   }
+}
+</style>
+
+<style scoped>
+.editor-sheet-enter-active,
+.editor-sheet-leave-active {
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.editor-sheet-enter-from,
+.editor-sheet-leave-to {
+  transform: translateY(100%);
+  opacity: 0.5;
 }
 </style>

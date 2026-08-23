@@ -27,10 +27,11 @@ export const useFormImagePreloader = (formRef, stateRef) => {
     if (form.value?.logo_picture) urls.push(form.value.logo_picture)
     const properties = form.value?.properties || []
     const start = state.value?.currentPage ?? 0
-    for (let i = start; i < Math.min(properties.length, start + 3); i++) {
-      const url = properties[i]?.image?.url
-      if (url) urls.push(url)
-    }
+    // Only preload the current page's image — preloading N pages ahead causes
+    // "preloaded ... was not used within a few seconds" warnings because the
+    // browser expects those images to appear in the initial paint.
+    const url = properties[start]?.image?.url
+    if (url) urls.push(url)
     return Array.from(new Set(urls))
   })
 

@@ -1,9 +1,10 @@
 <template>
-  <PageContainer spacing="sm">
-    <PageSection
-      title="Share"
-      description="Share your form and embed it on your website."
-    >
+  <div class="px-6 py-5">
+    <div class="max-w-5xl mx-auto">
+      <PageSection
+        title="Share"
+        description="Share your form and embed it on your website."
+      >
       <!-- Status Warning Alert -->
       <UAlert
         v-if="form.visibility === 'draft'"
@@ -27,7 +28,7 @@
       <DashboardPanel padding="sm">
         <div class="space-y-4">
           <div class="flex flex-wrap items-center gap-2">
-            <h2 class="text-xl grow font-semibold">
+            <h2 class="text-xl grow font-semibold text-[var(--sf-text-primary)]">
               Share Your Form
             </h2>
             <div class="flex gap-2">
@@ -37,7 +38,7 @@
               />
             </div>
           </div>
-          <p class="text-neutral-600 text-sm">
+          <p class="text-[var(--sf-text-body)] text-sm">
             Share your form with anyone by copying this link. You can use it on social media,
             in messages, or send it via email to reach your audience.
           </p>
@@ -76,7 +77,7 @@
       <DashboardPanel padding="sm">
         <div class="space-y-4">
           <div class="flex flex-wrap items-center gap-2">
-            <h2 class="text-xl grow font-semibold">
+            <h2 class="text-xl grow font-semibold text-[var(--sf-text-primary)]">
               Embed Form
             </h2>
             <div class="flex gap-2">
@@ -90,7 +91,7 @@
               />
             </div>
           </div>
-          <p class="text-neutral-600 text-sm">
+          <p class="text-[var(--sf-text-body)] text-sm">
             Embed your form on your website by copying the HTML code below.
           </p>
 
@@ -105,12 +106,12 @@
           />
         </div>
       </DashboardPanel>
-    </PageSection>
-  </PageContainer>
+      </PageSection>
+    </div>
+  </div>
 </template>
 
 <script setup>
-import PageContainer from "~/components/dashboard/PageContainer.vue"
 import PageSection from "~/components/dashboard/PageSection.vue"
 import DashboardPanel from "~/components/dashboard/DashboardPanel.vue"
 import EmbedCode from "~/components/pages/forms/show/EmbedCode.vue"

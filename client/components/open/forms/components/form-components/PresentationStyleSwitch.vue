@@ -1,17 +1,17 @@
 <template>
-  <div class="my-4">
+  <div class="style-switch">
     <OptionSelectorInput
       :key="selectorKey"
       :model-value="currentStyle"
       name="presentation_style_switch"
       :options="styleOptions"
       :multiple="false"
-      :columns="2"
+      :columns="3"
       @update:modelValue="onSelectStyle"
     >
       <template #label>
         <div class="flex items-center gap-0.5">
-          <span class="text-neutral-700 font-semibold text-xs">Form Style</span>
+          <span class="text-[var(--sf-text-primary)] font-semibold text-[13px]">Form Style</span>
           <UButton
             color="neutral"
             variant="ghost"
@@ -57,6 +57,20 @@
   
 </template>
 
+<style scoped>
+.style-switch :deep([role="listbox"] > div) {
+  border-radius: 0 !important;
+}
+.style-switch :deep([role="listbox"] > div:first-child) {
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}
+.style-switch :deep([role="listbox"] > div:last-child) {
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+</style>
+
 <script setup>
 import blocksTypes from '~/data/blocks_types.json'
 import BlockTypeIcon from '../BlockTypeIcon.vue'
@@ -75,15 +89,22 @@ const styleOptions = [
     name: 'classic',
     label: 'Classic',
     icon: 'sharaforms:form-style-classic',
-    iconClass: 'w-[91px] h-[65px] rounded shadow *:transition-colors duration-150 ease-out [--icon-fg:#737373] [--icon-muted:#D4D4D4] group-hover:[--icon-fg:#1d4ed8] group-hover:[--icon-muted:#60a5fa] group-aria-selected:[--icon-fg:#1d4ed8] group-aria-selected:[--icon-muted:#60a5fa] group-[aria-selected=true]:[--icon-fg:#1d4ed8] group-[aria-selected=true]:[--icon-muted:#60a5fa]',
+    iconClass: 'w-[65px] h-[46px] rounded shadow *:transition-colors duration-150 ease-out [--icon-fg:#737373] [--icon-muted:#D4D4D4] group-hover:[--icon-fg:#1d4ed8] group-hover:[--icon-muted:#60a5fa] group-aria-selected:[--icon-fg:#1d4ed8] group-aria-selected:[--icon-muted:#60a5fa] group-[aria-selected=true]:[--icon-fg:#1d4ed8] group-[aria-selected=true]:[--icon-muted:#60a5fa]',
     tooltip: 'Classic form: multiple inputs per page, multi-line layout, supports multiple pages and layout blocks.'
   },
   {
     name: 'focused',
     label: 'Focused',
     icon: 'sharaforms:form-style-focused',
-    iconClass: 'w-[91px] h-[65px] rounded shadow *:transition-colors duration-150 ease-out [--icon-fg:#737373] [--icon-muted:#D4D4D4] group-hover:[--icon-fg:#1d4ed8] group-hover:[--icon-muted:#60a5fa] group-aria-selected:[--icon-fg:#1d4ed8] group-aria-selected:[--icon-muted:#60a5fa] group-[aria-selected=true]:[--icon-fg:#1d4ed8] group-[aria-selected=true]:[--icon-muted:#60a5fa]',
+    iconClass: 'w-[65px] h-[46px] rounded shadow *:transition-colors duration-150 ease-out [--icon-fg:#737373] [--icon-muted:#D4D4D4] group-hover:[--icon-fg:#1d4ed8] group-hover:[--icon-muted:#60a5fa] group-aria-selected:[--icon-fg:#1d4ed8] group-aria-selected:[--icon-muted:#60a5fa] group-[aria-selected=true]:[--icon-fg:#1d4ed8] group-[aria-selected=true]:[--icon-muted:#60a5fa]',
     tooltip: 'Typeform-like, one question per step.'
+  },
+  {
+    name: 'spotlight',
+    label: 'Spotlight',
+    icon: 'sharaforms:form-style-spotlight',
+    iconClass: 'w-[65px] h-[46px] rounded shadow *:transition-colors duration-150 ease-out [--icon-fg:#737373] [--icon-muted:#D4D4D4] group-hover:[--icon-fg:#1d4ed8] group-hover:[--icon-muted:#60a5fa] group-aria-selected:[--icon-fg:#1d4ed8] group-aria-selected:[--icon-muted:#60a5fa] group-[aria-selected=true]:[--icon-fg:#1d4ed8] group-[aria-selected=true]:[--icon-muted:#60a5fa]',
+    tooltip: 'All questions visible, one active at a time. Spotlight paradigm.'
   }
 ]
 
@@ -94,13 +115,18 @@ const selectorKey = ref(0)
 
 // No local selection state. Display follows the actual form style (currentStyle).
 
-const pendingStyleLabel = computed(() => pendingStyle.value === 'focused' ? 'Focused' : 'Classic')
+const pendingStyleLabel = computed(() => {
+  if (pendingStyle.value === 'focused') return 'Focused'
+  if (pendingStyle.value === 'spotlight') return 'Spotlight'
+  return 'Classic'
+})
 
 const modalDescription = computed(() => {
   const count = removalList.value.length
+  const targetLabel = pendingStyleLabel.value
   return count > 0
-    ? `Switching to Focused will remove ${count} block${count>1?'s':''} not supported in this mode.`
-    : 'Switch to Focused style.'
+    ? `Switching to ${targetLabel} will remove ${count} block${count>1?'s':''} not supported in this mode.`
+    : `Switch to ${targetLabel} style.`
 })
 
 // Use shared helper to seed first block image for focused mode
@@ -113,7 +139,7 @@ function onSelectStyle(newVal) {
   // Compute blocks to remove for both directions
   const unsupportedIn = (target) => {
     return Object.values(blocksTypes)
-      .filter(def => !(def.available_in || ['classic', 'focused']).includes(target))
+      .filter(def => !(def.available_in || ['classic', 'focused', 'spotlight']).includes(target))
       .map(def => def.name)
   }
 
@@ -134,17 +160,17 @@ function onSelectStyle(newVal) {
     return
   }
 
-  if (newVal === 'focused' && removalList.value.length === 0) {
-    form.value.presentation_style = 'focused'
-    // Ensure large input size in focused mode
+  if ((newVal === 'focused' || newVal === 'spotlight') && removalList.value.length === 0) {
+    form.value.presentation_style = newVal
+    // Ensure large input size in focused/spotlight mode
     form.value.size = 'lg'
     // Ensure settings object is initialized
     ensureSettingsObject(form.value)
-    // Enable navigation arrows by default in focused mode
+    // Enable navigation arrows by default in focused/spotlight mode
     if (form.value.settings.navigation_arrows === undefined) {
       form.value.settings.navigation_arrows = true
     }
-    // Enable auto-next by default in focused mode
+    // Enable auto-next by default in focused/spotlight mode
     if (form.value.settings.auto_next === undefined) {
       form.value.settings.auto_next = true
     }
@@ -167,22 +193,22 @@ function confirmSwitch() {
   const target = pendingStyle.value
   const disallowedNames = new Set(
     Object.values(blocksTypes)
-      .filter(def => !(def.available_in || ['classic', 'focused']).includes(target))
+      .filter(def => !(def.available_in || ['classic', 'focused', 'spotlight']).includes(target))
       .map(def => def.name)
   )
   const props = Array.isArray(form.value.properties) ? form.value.properties : []
   form.value.properties = props.filter(p => !(p && disallowedNames.has(p.type)))
   form.value.presentation_style = target
-  // Ensure large input size in focused mode
-  if (target === 'focused') {
+  // Ensure large input size in focused/spotlight mode
+  if (target === 'focused' || target === 'spotlight') {
     form.value.size = 'lg'
     // Ensure settings object is initialized
     ensureSettingsObject(form.value)
-    // Enable navigation arrows by default in focused mode
+    // Enable navigation arrows by default in focused/spotlight mode
     if (form.value.settings.navigation_arrows === undefined) {
       form.value.settings.navigation_arrows = true
     }
-    // Enable auto-next by default in focused mode
+    // Enable auto-next by default in focused/spotlight mode
     if (form.value.settings.auto_next === undefined) {
       form.value.settings.auto_next = true
     }

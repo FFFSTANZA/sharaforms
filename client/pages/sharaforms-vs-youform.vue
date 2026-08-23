@@ -176,7 +176,7 @@ const faqs = [
   {
     question: 'How does SharaForms pricing compare to Youform?',
     answer:
-      'SharaForms is free with unlimited submissions, and paid plans start at $12 per month for custom branding, custom domains, and advanced workflow features. Youform paid plans add similar limits but typically cost more as volume grows.',
+      'SharaForms is free with unlimited submissions, and paid plans start at $15 per month for custom branding, custom domains, and advanced workflow features. Youform paid plans add similar limits but typically cost more as volume grows.',
   },
 ]
 

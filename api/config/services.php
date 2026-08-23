@@ -52,6 +52,9 @@ return [
     ],
 
     'notion' => [
+        'client_id' => env('NOTION_CLIENT_ID'),
+        'client_secret' => env('NOTION_CLIENT_SECRET'),
+        'redirect' => env('NOTION_REDIRECT_URI', front_url('/oauth/notion/callback')),
         'worker' => env('NOTION_WORKER', 'https://notion-forms-worker.notionforms.workers.dev/v1'),
     ],
 

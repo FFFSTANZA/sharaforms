@@ -1,0 +1,88 @@
+{
+    "universal": {
+        "create": {
+            "question": "How do I create {article} {name}?",
+            "answer": "<p>Start from this ready-made template and customize it in the drag and drop builder, generate one from a short text description with the AI form builder, or assemble fields yourself on a blank canvas. All three routes produce the same editable structure, so you can add logic, calculations, and branding whenever you need them.</p>"
+        },
+        "free": {
+            "question": "Is the {name} free to use?",
+            "answer": "<p>Yes. SharaForms does not charge per form or per response, so this template runs on the free plan with unlimited forms and unlimited submissions. Core features such as conditional logic, calculations, signatures, and all three presentation modes are included at no cost. Paid plans only add optional extras like branding removal and premium integrations.</p>"
+        }
+    },
+    "_rotation": [
+        {
+            "question": "Can I embed the {name} on my website?",
+            "answer": "<p>Yes. Publish the form and either share its direct link or embed it with a small code snippet. The embedded version adapts to your page width, keeps your theme, and submits without sending visitors anywhere else, so it behaves like a native part of your site.</p>"
+        },
+        {
+            "question": "Where do {name} responses go?",
+            "answer": "<p>Every response arrives in your SharaForms dashboard instantly, organized by date with the complete set of answers attached. You can enable email alerts for new submissions, sync results continuously to Google Sheets, or export to CSV whenever you need the data for reporting, backups, or deeper analysis.</p>"
+        },
+        {
+            "question": "Does the {name} work well on mobile devices?",
+            "answer": "<p>Yes. Every layout adapts automatically to phones and tablets, with touch-friendly inputs and readable type sizes, so respondents can complete it from any device without installing an app. You can also preview the mobile experience inside the builder before publishing to confirm everything looks right on small screens.</p>"
+        }
+    ],
+    "categories": {
+        "application_forms": {
+            "question": "How do I review and manage submitted applications?",
+            "answer": "<p>Every application lands in your SharaForms dashboard the moment it is submitted, with a timestamp and full answer history. You can assign entries to teammates for review, leave internal notes, mark decisions as they happen, and export everything to CSV or Google Sheets whenever you need an offline record of your applicants.</p>"
+        },
+        "order_forms": {
+            "question": "Can customers pay directly through the order form?",
+            "answer": "<p>Yes. Add a payment field, connect your Stripe account, and customers can pay by card while placing their order. The form calculates totals with built-in formulas based on quantities and options, sends an automatic confirmation email after checkout, and records every completed order with its payment status for easy reconciliation.</p>"
+        },
+        "request_forms": {
+            "question": "How do requests reach the right person or team?",
+            "answer": "<p>Route every submission automatically using conditional logic and notification rules. Maintenance requests can go straight to facilities, IT tickets to your tech team, and anything marked urgent can trigger an instant email or Slack alert. You set the routing rules once, and all future requests follow them without anyone forwarding emails by hand.</p>"
+        },
+        "questionnaire_templates": {
+            "question": "Can respondents stay anonymous on my questionnaire?",
+            "answer": "<p>Yes, and anonymity stays fully under your control. Remove the name and email fields from this questionnaire and respondents can answer without identifying themselves, which usually increases honesty on sensitive topics. If you need follow-up capability instead, keep contact fields optional so participants decide how much information to share.</p>"
+        },
+        "report_forms": {
+            "question": "How do I export reports for record keeping?",
+            "answer": "<p>Every submitted report is stored in your dashboard and can be exported to CSV at any time, or synced continuously to Google Sheets through the native integration. Many teams schedule a weekly export into their document system so records stay organized automatically instead of piling up inside the dashboard.</p>"
+        },
+        "registration_forms": {
+            "question": "Can I limit how many people can register?",
+            "answer": "<p>Yes. Registration caps pair naturally with conditional logic: once your limit is reached you can swap the sign-up fields for a waitlist message or redirect latecomers to an alternative date. Combined with automatic confirmation emails, this keeps headcounts accurate for venues, classes, and programs without manual tracking.</p>"
+        },
+        "event_registration_forms": {
+            "question": "What happens after someone registers for my event?",
+            "answer": "<p>The attendee receives an instant confirmation email with the details you define, and their registration appears in your dashboard immediately. You can watch sign-ups accumulate in real time, send reminder emails before the date, and export the final guest list to Google Sheets for check-in on the day itself.</p>"
+        },
+        "consent_forms": {
+            "question": "Are electronic signatures on consent forms legally binding?",
+            "answer": "<p>In most jurisdictions, electronic signatures carry the same weight as handwritten ones, provided you can show who signed and when. SharaForms captures a timestamp and the signer's submitted details with every signature field, giving you an auditable record. For regulated industries, confirm your specific compliance requirements before relying on any e-signature.</p>"
+        },
+        "contact_forms": {
+            "question": "How do I stop spam on my contact form?",
+            "answer": "<p>Enable captcha protection in the form settings and automated bots are filtered before they ever reach your inbox. Real submissions include their source, making suspicious patterns easy to spot, and a honeypot field can catch simpler scripts. Both protections run silently, so genuine visitors never face extra friction when reaching out.</p>"
+        },
+        "membership_forms": {
+            "question": "How do I handle membership renewals?",
+            "answer": "<p>Send renewal links through your existing member list, or embed this form on a members-only page where returning members update their details and pay in one pass. With recurring payments enabled through Stripe, renewals bill automatically, and every transaction is recorded alongside the member's updated information for your records.</p>"
+        },
+        "evaluation_forms": {
+            "question": "Can evaluations be scored automatically?",
+            "answer": "<p>Yes. Give rating options and score scales point values in the built-in formula engine, and every evaluation produces a computed result the moment it is submitted. Scores can drive conditional completion messages, appear alongside answers in your dashboard, and export to CSV or Google Sheets so reviewers keep both numbers and context.</p>"
+        },
+        "interview_forms": {
+            "question": "How do interview scorecards stay organized?",
+            "answer": "<p>Each interviewer submits feedback through this form, and results arrive time-stamped in one dashboard instead of scattered reply-all email threads. Responses can stay private between interviewer and hiring manager, export cleanly for debrief meetings, and sit side by side so panel decisions rest on consistent written criteria rather than memory.</p>"
+        },
+        "content_forms": {
+            "question": "What should I ask contributors to include?",
+            "answer": "<p>Add short guidelines directly into field descriptions, such as word counts, file formats, and deadline expectations, so contributors submit usable work the first time. File upload fields accept documents and images up to your plan limits, and required-field rules catch incomplete pitches before they ever reach an editor's inbox.</p>"
+        },
+        "tracking_forms": {
+            "question": "Can people check the status of their request?",
+            "answer": "<p>You can enable editable submissions, which lets people reopen their entry later and update details as circumstances change, reducing duplicate requests. On your side, every response is time-stamped and searchable, so when someone asks about progress you can find their exact submission and give a concrete answer within seconds.</p>"
+        },
+        "survey_templates": {
+            "question": "How long should a survey be?",
+            "answer": "<p>Aim for five to ten questions when measuring satisfaction, because completion rates drop sharply once a survey passes the two minute mark. Put the most important question first, group related items into sections, and use this template's progress bar so respondents always know how close they are to finishing.</p>"
+        }
+    }
+}

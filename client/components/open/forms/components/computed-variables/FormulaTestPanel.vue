@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex flex-col bg-white h-full">
+  <div class="w-full flex flex-col bg-[var(--sf-bg-surface)] h-full">
     <div class="p-4 border-b">
       <h4 class="font-medium text-gray-900 flex items-center gap-2">
         <Icon name="i-lucide-flask-conical" class="w-4 h-4" />
@@ -29,7 +29,7 @@
               Form Field Values
             </h5>
           </div>
-          <div class="p-4 bg-white">
+          <div class="p-4 bg-[var(--sf-bg-surface)]">
             <OpenForm
               v-if="formManagerReady"
               :key="formKey"

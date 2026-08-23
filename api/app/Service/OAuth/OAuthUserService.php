@@ -6,7 +6,9 @@ use App\Integrations\OAuth\OAuthProviderService;
 use App\Models\User;
 use App\Enterprise\Oidc\ExternalUserFactory;
 use App\Service\WorkspaceInviteService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\DB;
 
 /**
  * OAuthUserService
@@ -41,29 +43,58 @@ class OAuthUserService
      */
     public function findOrCreateUser(array $userData, OAuthProviderService $providerService, ?string $inviteToken = null): User
     {
-        $email = strtolower($userData['email']);
-        $user = User::whereEmail($email)->first();
+        // H2 FIX: Handle null/empty email from providers like Telegram.
+        $email = isset($userData['email']) ? strtolower($userData['email']) : null;
 
-        if ($user) {
-            // Check if user has this specific OAuth provider linked
-            $hasOAuthProvider = $user->oauthProviders()
-                ->where('provider', $providerService->getDatabaseProvider())
-                ->where('provider_user_id', $userData['provider_user_id'])
-                ->exists();
-
-            if ($hasOAuthProvider) {
-                // User has this specific OAuth provider linked - allow authentication
-                return $user;
+        // C5 FIX: Wrap find-or-create in a transaction with retry for race conditions.
+        // Two concurrent OAuth logins for the same email could both find no user and try to create.
+        $maxRetries = 2;
+        for ($attempt = 0; $attempt <= $maxRetries; $attempt++) {
+            try {
+                return DB::transaction(function () use ($email, $userData, $providerService, $inviteToken) {
+                    return $this->findOrCreateUserWithinTransaction($email, $userData, $providerService, $inviteToken);
+                });
+            } catch (\Throwable $e) {
+                // If it's a duplicate key error (race condition), retry
+                if ($attempt < $maxRetries && str_contains($e->getMessage(), 'UniqueViolation')) {
+                    continue;
+                }
+                throw $e;
             }
+        }
 
-            // User exists but doesn't have this OAuth provider linked and no password
-            // This prevents account takeover via different OAuth providers with same email
-            throw new HttpResponseException(
-                response()->json([
-                    'message' => 'An account with this email already exists. Please sign in with your original method or contact support.',
-                    'error' => 'email_already_exists_different_provider'
-                ], 409)
-            );
+        // Should never reach here, but safety fallback
+        throw new HttpResponseException(
+            response()->json(['message' => 'Unable to complete authentication. Please try again.'], 500)
+        );
+    }
+
+    private function findOrCreateUserWithinTransaction(?string $email, array $userData, OAuthProviderService $providerService, ?string $inviteToken): User
+    {
+        if ($email) {
+            $user = User::whereEmail($email)->first();
+
+            if ($user) {
+                // Check if user has this specific OAuth provider linked
+                $hasOAuthProvider = $user->oauthProviders()
+                    ->where('provider', $providerService->getDatabaseProvider())
+                    ->where('provider_user_id', $userData['provider_user_id'])
+                    ->exists();
+
+                if ($hasOAuthProvider) {
+                    // User has this specific OAuth provider linked - allow authentication
+                    return $user;
+                }
+
+                // User exists but doesn't have this OAuth provider linked and no password
+                // This prevents account takeover via different OAuth providers with same email
+                throw new HttpResponseException(
+                    response()->json([
+                        'message' => 'An account with this email already exists. Please sign in with your original method or contact support.',
+                        'error' => 'email_already_exists_different_provider'
+                    ], 409)
+                );
+            }
         }
 
         // No existing user - create new account

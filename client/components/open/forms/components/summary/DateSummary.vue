@@ -12,7 +12,7 @@
     <!-- Date Stats -->
     <div v-else class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <div class="flex items-start gap-4 p-4 bg-neutral-50 rounded-xl border border-neutral-100 relative overflow-hidden group">
-        <div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center border border-neutral-200 shadow-sm z-10">
+        <div class="w-10 h-10 rounded-lg bg-[var(--sf-bg-surface)] flex items-center justify-center border border-[var(--sf-border-card)] shadow-sm z-10">
           <UIcon name="i-lucide-clock" class="w-5 h-5 text-neutral-500" />
         </div>
         
@@ -28,7 +28,7 @@
       </div>
 
       <div class="flex items-start gap-4 p-4 bg-neutral-50 rounded-xl border border-neutral-100 relative overflow-hidden group">
-        <div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center border border-neutral-200 shadow-sm z-10">
+        <div class="w-10 h-10 rounded-lg bg-[var(--sf-bg-surface)] flex items-center justify-center border border-[var(--sf-border-card)] shadow-sm z-10">
           <UIcon name="i-lucide-calendar" class="w-5 h-5 text-neutral-500" />
         </div>
         

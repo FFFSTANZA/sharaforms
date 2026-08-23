@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="template"
-    class="relative group border border-neutral-200 dark:border-neutral-800 rounded-[24px] overflow-hidden transition-all duration-300 hover:border-neutral-300 dark:hover:border-neutral-700 hover:shadow-lg hover:shadow-neutral-200/60 dark:hover:shadow-none"
+    class="relative group border border-[#E6E8EE] dark:border-neutral-800 rounded-[24px] overflow-hidden transition-all duration-300 hover:border-[#FFB79A] dark:hover:border-neutral-700 hover:shadow-lg hover:shadow-[#E6E8EE]/60 dark:hover:shadow-none"
   >
     <div v-if="template.is_new" class="absolute top-0 right-0 p-3 z-10">
       <span
@@ -24,7 +24,7 @@
       </span>
     </div>
 
-    <div class="w-full aspect-[4/3] overflow-hidden bg-neutral-100 dark:bg-neutral-800">
+    <div class="w-full aspect-[4/3] overflow-hidden bg-[#F7F8FA] dark:bg-neutral-800">
       <div
         class="group-hover:scale-105 transition-transform duration-300 h-full w-full"
       >
@@ -38,12 +38,12 @@
     </div>
     <div class="px-5 pt-5 pb-4">
       <h3
-        class="text-lg font-semibold leading-snug text-neutral-900 dark:text-neutral-50 group-hover:text-neutral-700 dark:group-hover:text-neutral-200 transition-colors duration-150"
+        class="text-lg font-semibold leading-snug text-[#1D1F24] dark:text-neutral-50 group-hover:text-[#383B41] dark:group-hover:text-neutral-200 transition-colors duration-150"
       >
         {{ template.name }}
       </h3>
       <p
-        class="line-clamp-2 mt-1.5 text-sm leading-relaxed text-neutral-500 dark:text-neutral-400"
+        class="line-clamp-2 mt-1.5 text-sm leading-relaxed text-[#6E7278] dark:text-neutral-400"
       >
         {{ cleanQuotes(template.short_description) }}
       </p>

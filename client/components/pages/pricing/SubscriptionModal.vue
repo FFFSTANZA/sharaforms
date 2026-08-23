@@ -14,8 +14,8 @@
 
           <div class="relative mx-auto max-w-5xl">
             <div class="mx-auto max-w-3xl text-center">
-              <div class="mt-6 inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white/90 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.24em] text-blue-700 shadow-sm">
-                <span class="h-2 w-2 rounded-full bg-emerald-500" />
+              <div class="mt-6 inline-flex items-center gap-2 rounded-full border border-[#E6E8EE] bg-white/90 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.24em] text-[#1D1F24] shadow-sm">
+                <span class="h-2 w-2 rounded-full bg-[#16a34a]" />
                 Upgrade options
               </div>
               <h1 class="mt-5 text-3xl font-semibold tracking-tight text-slate-950 sm:text-5xl">
@@ -47,7 +47,7 @@
                 />
                 <div
                   v-if="planOption.isRequired"
-                  class="absolute inset-x-6 top-0 h-1 rounded-b-full bg-gradient-to-r from-blue-400 via-sky-500 to-cyan-400"
+                  class="absolute inset-x-6 top-0 h-1 rounded-b-full bg-gradient-to-r from-[#ff8a4d] via-[#ff5c38] to-[#d63c26]"
                 />
 
                 <div class="relative flex h-full flex-col">
@@ -62,13 +62,13 @@
                       >
                         <span
                           v-if="planOption.isRequired"
-                          class="rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-blue-700"
+                          class="rounded-full border border-[#E4F4F8] bg-[#E4F4F8] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#0891b2]"
                         >
                           Best fit
                         </span>
                         <span
                           v-else-if="planOption.meetsRequirement"
-                          class="whitespace-nowrap rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-700"
+                          class="whitespace-nowrap rounded-full border border-[#EFF8F1] bg-[#EFF8F1] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#16a34a]"
                         >
                           Also unlocks this
                         </span>
@@ -106,7 +106,7 @@
                       :key="benefit"
                       class="flex items-start gap-3"
                     >
-                      <span class="mt-1 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-white text-blue-600 shadow-sm ring-1 ring-slate-200">
+                      <span class="mt-1 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-white text-[#0891b2] shadow-sm ring-1 ring-[#E6E8EE]">
                         <UIcon name="lucide:check" class="h-3.5 w-3.5" />
                       </span>
                       <span>{{ benefit }}</span>
@@ -197,7 +197,7 @@
                     class="rounded-[1.5rem] border border-slate-200 bg-[linear-gradient(180deg,_#ffffff_0%,_#f8fbff_100%)] p-4 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_14px_32px_rgba(15,23,42,0.08)]"
                   >
                     <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-white shadow-sm ring-1 ring-slate-200">
-                      <UIcon :name="item.icon" class="h-5 w-5 text-sky-600" />
+                      <UIcon :name="item.icon" class="h-5 w-5 text-[#0891b2]" />
                     </div>
                     <div class="mt-4 text-lg font-semibold tracking-tight text-slate-950">
                       {{ item.title }}
@@ -223,24 +223,24 @@ import { computed } from 'vue'
 
 const PLAN_VISUALS = {
   pro: {
-    glowClass: 'bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.18),_transparent_72%)]',
-    cardClass: 'border-blue-200 bg-[linear-gradient(180deg,_rgba(239,246,255,0.96)_0%,_rgba(255,255,255,0.96)_100%)]',
-    selectedCardClass: 'border-blue-400 shadow-[0_18px_50px_rgba(59,130,246,0.18)] ring-1 ring-blue-200',
+    glowClass: 'bg-[radial-gradient(circle_at_top,_rgba(8,145,178,0.18),_transparent_72%)]',
+    cardClass: 'border-[#E4F4F8] bg-[linear-gradient(180deg,_rgba(228,244,248,0.96)_0%,_rgba(255,255,255,0.96)_100%)]',
+    selectedCardClass: 'border-[#0891b2] shadow-[0_18px_50px_rgba(8,145,178,0.18)] ring-1 ring-[#E4F4F8]',
   },
   business: {
-    glowClass: 'bg-[radial-gradient(circle_at_top,_rgba(245,158,11,0.18),_transparent_72%)]',
-    cardClass: 'border-amber-200 bg-[linear-gradient(180deg,_rgba(255,247,237,0.96)_0%,_rgba(255,255,255,0.96)_100%)]',
-    selectedCardClass: 'border-amber-400 shadow-[0_18px_50px_rgba(245,158,11,0.18)] ring-1 ring-amber-200',
+    glowClass: 'bg-[radial-gradient(circle_at_top,_rgba(217,119,6,0.18),_transparent_72%)]',
+    cardClass: 'border-[#FDF6EB] bg-[linear-gradient(180deg,_rgba(253,246,235,0.96)_0%,_rgba(255,255,255,0.96)_100%)]',
+    selectedCardClass: 'border-[#d97706] shadow-[0_18px_50px_rgba(217,119,6,0.18)] ring-1 ring-[#FDF6EB]',
   },
   enterprise: {
-    glowClass: 'bg-[radial-gradient(circle_at_top,_rgba(168,85,247,0.18),_transparent_72%)]',
-    cardClass: 'border-fuchsia-200 bg-[linear-gradient(180deg,_rgba(250,245,255,0.96)_0%,_rgba(255,255,255,0.96)_100%)]',
-    selectedCardClass: 'border-fuchsia-400 shadow-[0_18px_50px_rgba(168,85,247,0.18)] ring-1 ring-fuchsia-200',
+    glowClass: 'bg-[radial-gradient(circle_at_top,_rgba(99,102,241,0.18),_transparent_72%)]',
+    cardClass: 'border-[#EEF0FD] bg-[linear-gradient(180deg,_rgba(238,240,253,0.96)_0%,_rgba(255,255,255,0.96)_100%)]',
+    selectedCardClass: 'border-[#6366f1] shadow-[0_18px_50px_rgba(99,102,241,0.18)] ring-1 ring-[#EEF0FD]',
   },
   self_hosted: {
-    glowClass: 'bg-[radial-gradient(circle_at_top,_rgba(168,85,247,0.18),_transparent_72%)]',
-    cardClass: 'border-fuchsia-200 bg-[linear-gradient(180deg,_rgba(250,245,255,0.96)_0%,_rgba(255,255,255,0.96)_100%)]',
-    selectedCardClass: 'border-fuchsia-400 shadow-[0_18px_50px_rgba(168,85,247,0.18)] ring-1 ring-fuchsia-200',
+    glowClass: 'bg-[radial-gradient(circle_at_top,_rgba(99,102,241,0.18),_transparent_72%)]',
+    cardClass: 'border-[#EEF0FD] bg-[linear-gradient(180deg,_rgba(238,240,253,0.96)_0%,_rgba(255,255,255,0.96)_100%)]',
+    selectedCardClass: 'border-[#6366f1] shadow-[0_18px_50px_rgba(99,102,241,0.18)] ring-1 ring-[#EEF0FD]',
   },
 }
 

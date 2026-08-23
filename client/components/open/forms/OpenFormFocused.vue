@@ -14,7 +14,7 @@
       <img
         :src="form.logo_picture"
         :alt="form.seo_meta?.site_name ? `${form.seo_meta.site_name} logo` : 'Form logo'"
-        class="h-8 md:h-10 max-w-[12rem] md:max-w-[240px] w-auto object-contain"
+        class="h-6 sm:h-8 md:h-10 max-w-[10rem] sm:max-w-[12rem] md:max-w-[240px] w-auto object-contain"
       >
     </header>
 
@@ -29,36 +29,31 @@
       class="grow min-h-0 flex"
       :speed="500"
     >
-      <!-- Password view (exclusive) -->
-      <template v-if="$slots.password && form?.is_password_protected" key="password">
-        <div key="pwd" class="w-full flex items-center px-6 grow min-h-0 z-10">
+      <div :key="focusedViewKey" class="w-full">
+        <!-- Password view (exclusive) -->
+        <div v-if="$slots.password && form?.is_password_protected" key="password" class="w-full flex items-center px-6 grow min-h-0 z-10">
           <div class="w-full max-w-xl mx-auto p-4">
             <slot name="password" />
           </div>
         </div>
-      </template>
-      <!-- Alerts view (exclusive) -->
-      <template v-else-if="$slots.alerts" key="alerts">
-        <div key="alerts" class="w-full flex items-center px-6 grow min-h-0 z-10">
+        <!-- Alerts view (exclusive) -->
+        <div v-else-if="$slots.alerts" key="alerts" class="w-full flex items-center px-6 grow min-h-0 z-10">
           <div class="w-full max-w-2xl mx-auto p-4">
             <slot name="alerts" />
           </div>
         </div>
-      </template>
-      <!-- After-submit view (exclusive) -->
-      <template v-else-if="props.formManager?.state.isSubmitted && $slots['after-submit']" key="submitted">
-        <div key="submitted" class="w-full flex items-center px-6 grow min-h-0 z-10">
+        <!-- After-submit view (exclusive) -->
+        <div v-else-if="props.formManager?.state.isSubmitted && $slots['after-submit']" key="submitted" class="w-full flex items-center px-6 grow min-h-0 z-10">
           <div class="w-full max-w-2xl mx-auto p-4">
             <slot name="after-submit" :submittedData="props.formManager?.form?.data?.()" />
           </div>
         </div>
-      </template>
-      <component v-else :is="currentLayoutComponent" v-bind="currentLayoutProps" :key="currentIndex">
+        <component v-else :is="currentLayoutComponent" v-bind="currentLayoutProps" :key="currentIndex">
         <div
           class="relative"
           :class="[
-            isAdminPreview ? 'group/focusedfield cursor-pointer rounded-md border-dashed border border-transparent box-border transition-colors hover:border-neutral-200 hover:bg-neutral-100/50 dark:hover:border-blue-900 dark:hover:bg-blue-950' : '',
-            beingEdited ? 'bg-blue-50 hover:!bg-blue-50 dark:bg-neutral-700! dark:hover:bg-neutral-700! rounded-md' : ''
+            isAdminPreview ? 'group/focusedfield cursor-pointer rounded-xl border border-transparent box-border transition-all duration-150 hover:border-[var(--sf-border-card)] hover:shadow-sm' : '',
+            beingEdited ? 'bg-[var(--sf-nav-active-bg)]/80 hover:!bg-[var(--sf-nav-active-bg)]/80 rounded-xl ring-1 ring-inset ring-[var(--sf-coral-500)]/15 [&_*]:focus:ring-0 [&_*]:focus-visible:ring-0 [&_*]:focus:border-transparent' : ''
           ]"
           @click="setFieldAsSelected"
           @dblclick="editFieldOptions"
@@ -71,21 +66,21 @@
             <div
               aria-label="Settings"
               role="button"
-              class="flex items-center justify-center w-6 h-6 rounded-md bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 shadow-sm cursor-pointer text-neutral-400 hover:text-neutral-600 dark:text-neutral-500 dark:hover:text-neutral-300 transition-colors"
+              class="flex items-center justify-center w-6 h-6 rounded-md bg-[var(--sf-bg-surface)] border border-[var(--sf-border-card)] shadow-sm cursor-pointer text-[var(--sf-text-muted)] hover:text-[var(--sf-text-body)] transition-colors"
               @click.stop.prevent="editFieldOptions"
             >
               <Icon name="i-lucide-settings" class="w-4 h-4" />
             </div>
           </div>
         </div>
-        <div v-if="!props.formManager?.state.isSubmitted" class="mt-2 flex gap-2" :class="[getFieldAlignClasses(currentBlock), {'flex-col justify-normal! items-center': isLast &&form.use_captcha}]">
+        <div v-if="!props.formManager?.state.isSubmitted" class="mt-3 flex gap-2.5" :class="[getFieldAlignClasses(currentBlock), {'flex-col justify-normal! items-center': isLast &&form.use_captcha}]">
           <!-- Previous (visible from the 2nd page onward, inline-editable in admin preview) -->
           <editable-form-button
             v-if="isAdminPreview && canGoPrev && previousFocusedField"
             :form="form"
             editable
             native-type="button"
-            class="mt-0.5 px-6"
+            class="mt-0.5 px-4 sm:px-6"
             :model-value="previousFocusedField?.previous_btn_text || form?.translations?.focused_previous_button_text"
             :placeholder="$t('forms.buttons.previous')"
             @update:model-value="previousFocusedField.previous_btn_text = $event"
@@ -94,7 +89,7 @@
             v-else-if="canGoPrev && previousFocusedField"
             native-type="button"
             :form="form"
-            class="mt-0.5 px-6"
+            class="mt-0.5 px-4 sm:px-6"
             @click.stop="goPrev"
           >
             {{ previousFocusedField?.previous_btn_text || form?.translations?.focused_previous_button_text || $t('forms.buttons.previous') }}
@@ -106,6 +101,7 @@
               v-if="isAdminPreview"
               :form="form"
               editable
+              class="mt-0.5 px-4 sm:px-6"
               :model-value="form?.translations?.focused_submit_button_text || form.submit_button_text"
               :placeholder="$t('forms.buttons.submit')"
               :loading="isProcessing"
@@ -115,7 +111,7 @@
               v-else
               native-type="button"
               :form="form"
-              class="mt-0.5 px-6"
+              class="mt-0.5 px-4 sm:px-6"
               :loading="isProcessing"
               @click.prevent.stop="handleSubmitClick"
             >
@@ -128,7 +124,7 @@
             :form="form"
             editable
             native-type="button"
-            class="mt-0.5 px-6"
+            class="mt-0.5 px-4 sm:px-6"
             :model-value="currentBlock?.next_btn_text || form?.translations?.focused_next_button_text"
             :placeholder="$t('forms.buttons.next')"
             @update:model-value="currentBlock.next_btn_text = $event"
@@ -137,7 +133,7 @@
             v-else-if="!isLast && currentBlock"
             native-type="button"
             :form="form"
-            class="mt-0.5 px-6"
+            class="mt-0.5 px-4 sm:px-6"
             :loading="isProcessing"
             @click.stop="handleNextClick"
           >
@@ -145,11 +141,12 @@
           </open-form-button>
         </div>
         <div v-if="hasPaymentBlock" class="mt-2">
-          <p class="text-xs text-neutral-400 dark:text-neutral-500 max-w-md">
+          <p class="text-xs text-[var(--sf-text-muted)] max-w-md">
             {{ $t('forms.payment.payment_disclaimer') }}
           </p>
         </div>
       </component>
+      </div>
     </SlidingTransition>
 
     <!-- Cleanings slot -->
@@ -160,12 +157,12 @@
     </div>
 
     <!-- Bottom right controls: arrows and branding -->
-    <div class="flex gap-2 fixed bottom-8 right-8 z-10" aria-label="Form controls">
+    <div class="flex gap-2 fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-10" aria-label="Form controls">
       <!-- Focused nav arrows with fade transition -->
       <Transition name="fade" mode="out-in">
         <div v-if="shouldShowArrows && showArrowsOnCurrentPage" class="flex gap-2">
-          <UButton color="form" square variant="solid" icon="i-lucide-chevron-up" :disabled="!canGoPrev" @click="goPrev" />
-          <UButton color="form" square variant="solid" icon="i-lucide-chevron-down" :disabled="isLast" @click="goNext" />
+          <UButton color="form" square variant="solid" icon="i-lucide-chevron-up" :disabled="!canGoPrev" class="shadow-md hover:shadow-lg transition-shadow duration-200" @click="goPrev" />
+          <UButton color="form" square variant="solid" icon="i-lucide-chevron-down" :disabled="isLast" class="shadow-md hover:shadow-lg transition-shadow duration-200" @click="goNext" />
         </div>
       </Transition>
       <!-- Branding button -->
@@ -211,6 +208,13 @@ const currentFields = computed(() => structure?.value?.getPageFields
   : [])
 const currentBlock = computed(() => currentFields.value?.[0] || null)
 const currentMedia = computed(() => currentBlock.value?.image || null)
+
+// Stable key for the sliding content wrapper — prevents hydration mismatch by
+// ensuring the wrapper div has the same key on server and client.
+const focusedViewKey = computed(() => {
+  if (props.formManager?.state.isSubmitted) return 'submitted'
+  return `page-${currentIndex.value}`
+})
 
 const isLast = computed(() => structure?.value?.isLastPage?.value ?? false)
 const isProcessing = computed(() => props.formManager.state.isProcessing)

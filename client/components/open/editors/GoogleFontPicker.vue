@@ -20,7 +20,7 @@
           <div
             v-for="i in 9"
             :key="`skeleton-${i}`"
-            class="flex flex-col p-3 rounded-md shadow border-neutral-200 border-[0.5px] bg-white"
+            class="flex flex-col p-3 rounded-md shadow border border-[var(--sf-border-card)] bg-[var(--sf-bg-surface)]"
           >
             <div class="flex flex-wrap gap-2 mb-3">
               <USkeleton class="h-5 w-full" />

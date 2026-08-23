@@ -701,7 +701,7 @@ export default {
 
   computed: {
     isFocused() {
-      return this.form?.presentation_style === 'focused'
+      return this.form?.presentation_style === 'focused' || this.form?.presentation_style === 'spotlight'
     },
     hasPlaceholder() {
       return !this.typesWithoutPlaceholder.includes(this.field.type)

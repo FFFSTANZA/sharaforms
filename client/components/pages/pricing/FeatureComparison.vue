@@ -29,29 +29,29 @@
             </colgroup>
             <thead>
               <tr>
-                <th class="border-b border-neutral-200 bg-white py-5 pr-6 text-left align-bottom text-sm font-semibold text-gray-600">
+                <th class="border-b border-[#E6E8EE] bg-white py-5 pr-6 text-left align-bottom text-sm font-semibold text-[#6E7278]">
                   &nbsp;
                 </th>
                 <th
                   v-for="(plan, planIndex) in plans"
                   :key="planIndex"
-                  class="border-b border-neutral-200 p-4 pb-4 text-center align-middle"
-                  :class="planIndex === 1 ? 'bg-fuchsia-50/60' : 'bg-white'"
+                  class="border-b border-[#E6E8EE] p-4 pb-4 text-center align-middle"
+                  :class="planIndex === 1 ? 'bg-[#E4F4F8]/60' : 'bg-white'"
                 >
                   <div class="mx-auto flex flex-col items-center gap-1.5">
                     <span
                       v-if="planIndex === 1"
-                      class="inline-flex items-center gap-1 rounded-full border border-fuchsia-200 bg-white px-2.5 py-0.5 text-[11px] leading-5 font-semibold text-fuchsia-600"
+                      class="inline-flex items-center gap-1 rounded-full border border-[#E4F4F8] bg-white px-2.5 py-0.5 text-[11px] leading-5 font-semibold text-[#0891b2]"
                     >
                       <UIcon name="i-lucide-star" class="h-3 w-3" />
                       Most popular
                     </span>
-                    <div class="text-base leading-6 font-semibold text-gray-950">
+                    <div class="text-base leading-6 font-semibold text-[#1D1F24]">
                       {{ plan.label }}
                     </div>
-                    <div class="text-sm leading-5 text-gray-500">
+                    <div class="text-sm leading-5 text-[#8E9198]">
                       <template v-if="plan.priceLabel">
-                        {{ plan.priceLabel }}<span class="text-gray-400">/mo</span>
+                        {{ plan.priceLabel }}<span class="text-[#A7ABB2]">/mo</span>
                       </template>
                       <template v-else>Custom</template>
                     </div>
@@ -96,11 +96,11 @@
                   v-for="(plan, planIndex) in plans"
                   :key="planIndex"
                   class="px-4 py-4 text-center"
-                  :class="planIndex === 1 ? 'bg-fuchsia-50/40' : ''"
+                  :class="planIndex === 1 ? 'bg-[#E4F4F8]/40' : ''"
                 >
                   <div class="flex min-h-6 items-center justify-center gap-2">
                     <template v-if="row.values?.[planIndex] === true">
-                      <UIcon class="h-4 w-4 text-emerald-600" name="i-lucide-check" />
+                      <UIcon class="h-4 w-4 text-[#16a34a]" name="i-lucide-check" />
                     </template>
 
                     <template
@@ -109,19 +109,19 @@
                         row.values?.[planIndex] == null
                       "
                     >
-                      <span class="text-base font-medium text-neutral-300">—</span>
+                      <span class="text-base font-medium text-[#C7C9CE]">—</span>
                     </template>
 
                     <template v-else-if="row.values?.[planIndex] === 'soon'">
                       <UIcon
                         title="Coming soon..."
-                        class="h-4 w-4 text-amber-500"
+                        class="h-4 w-4 text-[#d97706]"
                         name="i-lucide-clock"
                       />
                     </template>
 
                     <template v-else>
-                      <span class="text-sm leading-5 font-medium text-gray-800">
+                      <span class="text-sm leading-5 font-medium text-[#383B41]">
                         {{ row.values?.[planIndex] }}
                       </span>
                     </template>
@@ -264,11 +264,11 @@ const sections = [
         values: [true, true, true, true],
       },
       {
-        label: "Slack, Discord, Telegram notifications",
+        label: "Slack, Discord, Telegram + Notion, Supabase & Resend",
         values: [false, true, true, true],
       },
       {
-        label: "Advanced integrations (HubSpot, Salesforce, Airtable)",
+        label: "Advanced integrations (Airtable, Pipedrive, Trello, Linear, Teams and more)",
         values: [false, false, true, true],
       },
     ],

@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-layout flex min-h-screen bg-[#F7F8FA] text-[#1D1F24]">
+  <div class="dashboard-layout flex min-h-screen bg-[var(--sf-bg-page)] text-[var(--sf-text-primary)]">
     <!-- Sidebar -->
     <AppSidebar />
     
@@ -13,13 +13,3 @@
 <script setup>
 import AppSidebar from "~/components/layouts/AppSidebar.vue"
 </script>
-
-<style scoped>
-.dashboard-layout {
-  font-family: 'Inter', sans-serif !important;
-}
-.dashboard-layout :deep(*) {
-  font-family: 'Inter', sans-serif !important;
-}
-</style>
- 

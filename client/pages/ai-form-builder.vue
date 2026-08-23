@@ -521,11 +521,11 @@ definePageMeta({
 const config = useRuntimeConfig()
 
 useOpnSeoMeta({
-  title: "Free AI Form Builder for Calculators and Quotes",
+  title: "Free AI Form Builder with Calculations & Logic",
   description:
-    "Turn a prompt into a form that closes deals. SharaForms AI Builder drafts calculators, quote forms, and proposals with formulas and conditional logic.",
+    "Turn a prompt into a complete form. SharaForms AI Builder drafts your fields, formulas, and conditional logic — ready to share in any of the three presentation modes.",
   ogImage: "/share-preview.jpg",
-  keywords: "free ai form builder, ai form builder, forms that close deals, pricing calculator form, quote forms, unlimited forms, unlimited submissions",
+  keywords: "free ai form builder, ai form builder, unlimited forms, conditional logic forms, spotlight forms, multi-page forms, unlimited submissions",
   speakable: ["h1", ".marketing-page > section:first-child p"],
   breadcrumbs: [
     { name: "Home", item: "/" },
@@ -549,7 +549,7 @@ const aiVideoSchema = computed(() => {
     '@type': 'VideoObject',
     '@id': `${siteUrl}/ai-form-builder#video`,
     name: 'SharaForms AI Form Builder Demo',
-    description: 'See how SharaForms AI Builder turns a prompt into a production-ready form with built-in calculators, conditional logic, and dynamic fields.',
+    description: 'See how SharaForms AI Builder turns a prompt into a production-ready form with built-in calculations, conditional logic, and dynamic fields.',
     thumbnailUrl: `${siteUrl}/share-preview.jpg`,
     contentUrl: `${siteUrl}/video/sharaforms-ai.mp4`,
     embedUrl: `${siteUrl}/ai-form-builder`,

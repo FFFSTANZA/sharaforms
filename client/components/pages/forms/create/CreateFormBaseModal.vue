@@ -36,18 +36,44 @@
                   Pick the respondent experience first. You can still change it later.
                 </p>
               </div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <button
+                  type="button"
+                  data-testid="form-style-spotlight"
+                  class="group relative overflow-hidden rounded-lg border border-neutral-200 bg-white p-4 text-left shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-[#0891b2]/20 hover:shadow-[0_18px_45px_-28px_rgba(8,145,178,0.45)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0891b2]/30"
+                  @click="selectStyle('spotlight')"
+                >
+                  <div class="rounded-lg bg-neutral-50 p-3 ring-1 ring-neutral-100">
+                    <Icon
+                      name="sharaforms:form-style-spotlight"
+                      mode="svg"
+                      class="mx-auto h-[84px] w-[120px] rounded-md shadow **:transition-colors duration-150 ease-out [--icon-fg:#737373] [--icon-muted:#D4D4D4] group-hover:[--icon-fg:#0891b2] group-hover:[--icon-muted:#67e8f9]"
+                    />
+                  </div>
+                  <div class="mt-4 flex items-start justify-between gap-3">
+                    <div>
+                      <p class="font-semibold text-neutral-950">Spotlight</p>
+                      <p class="mt-1 text-xs leading-5 text-neutral-500">
+                        All questions visible, one in focus.
+                      </p>
+                    </div>
+                    <Icon
+                      name="i-heroicons:arrow-right"
+                      class="mt-1 h-4 w-4 text-neutral-300 transition group-hover:translate-x-0.5 group-hover:text-[#0891b2]"
+                    />
+                  </div>
+                </button>
                 <button
                   type="button"
                   data-testid="form-style-classic"
-                  class="group relative overflow-hidden rounded-lg border border-neutral-200 bg-white p-4 text-left shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-[0_18px_45px_-28px_rgba(37,99,235,0.45)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/30"
+                  class="group relative overflow-hidden rounded-lg border border-neutral-200 bg-white p-4 text-left shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-[#0891b2]/20 hover:shadow-[0_18px_45px_-28px_rgba(8,145,178,0.45)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0891b2]/30"
                   @click="selectStyle('classic')"
                 >
                   <div class="rounded-lg bg-neutral-50 p-3 ring-1 ring-neutral-100">
                     <Icon
                       name="sharaforms:form-style-classic"
                       mode="svg"
-                      class="mx-auto h-[84px] w-[120px] rounded-md shadow **:transition-colors duration-150 ease-out [--icon-fg:#737373] [--icon-muted:#D4D4D4] group-hover:[--icon-fg:#2563eb] group-hover:[--icon-muted:#93c5fd]"
+                      class="mx-auto h-[84px] w-[120px] rounded-md shadow **:transition-colors duration-150 ease-out [--icon-fg:#737373] [--icon-muted:#D4D4D4] group-hover:[--icon-fg:#0891b2] group-hover:[--icon-muted:#67e8f9]"
                     />
                   </div>
                   <div class="mt-4 flex items-start justify-between gap-3">
@@ -59,21 +85,21 @@
                     </div>
                     <Icon
                       name="i-heroicons:arrow-right"
-                      class="mt-1 h-4 w-4 text-neutral-300 transition group-hover:translate-x-0.5 group-hover:text-blue-500"
+                      class="mt-1 h-4 w-4 text-neutral-300 transition group-hover:translate-x-0.5 group-hover:text-[#0891b2]"
                     />
                   </div>
                 </button>
                 <button
                   type="button"
                   data-testid="form-style-focused"
-                  class="group relative overflow-hidden rounded-lg border border-neutral-200 bg-white p-4 text-left shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-[0_18px_45px_-28px_rgba(37,99,235,0.45)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/30"
+                  class="group relative overflow-hidden rounded-lg border border-neutral-200 bg-white p-4 text-left shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-[#0891b2]/20 hover:shadow-[0_18px_45px_-28px_rgba(8,145,178,0.45)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0891b2]/30"
                   @click="selectStyle('focused')"
                 >
                   <div class="rounded-lg bg-neutral-50 p-3 ring-1 ring-neutral-100">
                     <Icon
                       name="sharaforms:form-style-focused"
                       mode="svg"
-                      class="mx-auto h-[84px] w-[120px] rounded-md shadow **:transition-colors duration-150 ease-out [--icon-fg:#737373] [--icon-muted:#D4D4D4] group-hover:[--icon-fg:#2563eb] group-hover:[--icon-muted:#93c5fd]"
+                      class="mx-auto h-[84px] w-[120px] rounded-md shadow **:transition-colors duration-150 ease-out [--icon-fg:#737373] [--icon-muted:#D4D4D4] group-hover:[--icon-fg:#0891b2] group-hover:[--icon-muted:#67e8f9]"
                     />
                   </div>
                   <div class="mt-4 flex items-start justify-between gap-3">
@@ -85,7 +111,7 @@
                     </div>
                     <Icon
                       name="i-heroicons:arrow-right"
-                      class="mt-1 h-4 w-4 text-neutral-300 transition group-hover:translate-x-0.5 group-hover:text-blue-500"
+                      class="mt-1 h-4 w-4 text-neutral-300 transition group-hover:translate-x-0.5 group-hover:text-[#0891b2]"
                     />
                   </div>
                 </button>
@@ -165,7 +191,7 @@
                       </div>
                       <div class="h-1.5 overflow-hidden rounded-md bg-neutral-100">
                         <div
-                          class="h-full rounded-md bg-blue-600 transition-[width] duration-500 ease-out"
+                          class="h-full rounded-md bg-[#0891b2] transition-[width] duration-500 ease-out"
                           :style="{ width: `${generationProgress}%` }"
                         />
                       </div>
@@ -208,7 +234,7 @@
                     <button
                       type="button"
                       data-testid="form-base-simple-contact"
-                      class="group flex h-full min-h-28 w-full flex-col justify-between rounded-lg border border-neutral-200 bg-white p-4 text-left shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-[0_18px_42px_-30px_rgba(37,99,235,0.38)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/30"
+                      class="group flex h-full min-h-28 w-full flex-col justify-between rounded-lg border border-neutral-200 bg-white p-4 text-left shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-[#0891b2]/20 hover:shadow-[0_18px_42px_-30px_rgba(8,145,178,0.38)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0891b2]/30"
                       @click="startFromContactForm"
                     >
                       <div class="flex items-center justify-between gap-3">
@@ -220,7 +246,7 @@
                         </span>
                         <Icon
                           name="i-heroicons:arrow-right"
-                          class="h-4 w-4 text-neutral-300 transition group-hover:translate-x-0.5 group-hover:text-blue-500"
+                          class="h-4 w-4 text-neutral-300 transition group-hover:translate-x-0.5 group-hover:text-[#0891b2]"
                         />
                       </div>
                       <div class="mt-4">
@@ -369,7 +395,7 @@ watch([currentStep, () => props.show], () => {
 watch(() => props.show, (open) => {
   if (open) {
     currentStep.value = 1
-    selectedStyle.value = 'classic'
+    selectedStyle.value = 'spotlight'
     loading.value = false
     showImportModal.value = !!props.defaultImportSource
     aiForm.form_prompt = ''
@@ -392,7 +418,9 @@ const importSourcesLabel = computed(() => {
 })
 
 const selectedStyleLabel = computed(() => {
-  return selectedStyle.value === 'focused' ? 'Focused' : 'Classic'
+  if (selectedStyle.value === 'focused') return 'Focused'
+  if (selectedStyle.value === 'spotlight') return 'Spotlight'
+  return 'Classic'
 })
 
 function selectStyle(style) {
@@ -406,11 +434,11 @@ function applySelectedStyleToWorkingForm() {
   if (workingFormStore?.content) {
     workingFormStore.content.presentation_style = selectedStyle.value
     ensureSettingsObject(workingFormStore.content)
-    if (selectedStyle.value === 'focused') {
+    if (selectedStyle.value === 'focused' || selectedStyle.value === 'spotlight') {
       workingFormStore.content.size = 'lg'
-      // Enable navigation arrows by default in focused mode
+      // Enable navigation arrows by default in focused/spotlight mode
       workingFormStore.content.settings.navigation_arrows = true
-      // Enable auto-next by default in focused mode
+      // Enable auto-next by default in focused/spotlight mode
       workingFormStore.content.settings.auto_next = true
       // Seed first block image to highlight focused mode
       const firstBlock = workingFormStore.content.properties?.[0]
@@ -504,7 +532,7 @@ const fetchGeneratedForm = (generationId, attempt = 0) => {
           }
           useAlert().success(data.message)
           // Apply seeding based on user's style choice in the modal
-          if (selectedStyle.value === 'focused') {
+          if (selectedStyle.value === 'focused' || selectedStyle.value === 'spotlight') {
             seedFocusedFirstBlockImage(generated)
           }
           completeGenerationProgress()

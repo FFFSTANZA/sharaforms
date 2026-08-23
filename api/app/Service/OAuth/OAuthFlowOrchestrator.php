@@ -141,7 +141,9 @@ class OAuthFlowOrchestrator
 
         $intent = $context['intent'];
         $invitedEmail = $context['invited_email'] ?? null;
-        $inviteToken = $params['invite_token'] ?? $context['invite_token'] ?? null;
+        // H3 FIX: Always use the invite_token from the validated context (stored during redirect),
+        // never from request params which could be tampered with.
+        $inviteToken = $context['invite_token'] ?? null;
 
         $result = $this->handleIntent($intent, $providerService, $userData, $inviteToken, $invitedEmail);
         $this->contextService->clearContext($stateToken);

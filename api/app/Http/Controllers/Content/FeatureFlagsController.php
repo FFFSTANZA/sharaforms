@@ -34,6 +34,9 @@ class FeatureFlagsController extends Controller
                     'picker_api_key' => config('services.google.picker_api_key'),
                     'picker_app_id' => config('services.google.picker_app_id'),
                 ],
+                'notion' => [
+                    'auth' => !empty(config('services.notion.client_id')) && !empty(config('services.notion.client_secret')),
+                ],
                 'telegram' => [
                     'bot_id' => $this->extractTelegramBotId(),
                 ],
@@ -41,7 +44,14 @@ class FeatureFlagsController extends Controller
             'integrations' => [
                 'zapier' => config('services.zapier.enabled'),
                 'google_sheets' => !empty(config('services.google.client_id')) && !empty(config('services.google.client_secret')),
+                'notion' => !empty(config('services.notion.client_id')) && !empty(config('services.notion.client_secret')),
                 'telegram' => !empty(config('services.telegram.bot_token')),
+                'microsoft_teams' => true,
+                'google_chat' => true,
+                'ntfy' => true,
+                'airtable' => true,
+                'trello' => true,
+                'supabase' => true,
             ],
             'custom_code' => [
                 'enable_self_hosted' => false,

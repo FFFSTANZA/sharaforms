@@ -32,8 +32,21 @@
     --color-light-gray: #f8fafc;
 
     /* Form color variable */
-    --bg-form-color: var(--color-blue-500);
-    --form-color: var(--color-blue-500);
+    --bg-form-color: #EA6676;
+    --form-color: #EA6676;
+
+    /* Sunkist Coral palette for Tailwind utilities */
+    --color-coral-50: #fdf2f4;
+    --color-coral-100: #fce7ea;
+    --color-coral-200: #fad0d6;
+    --color-coral-300: #f6aab5;
+    --color-coral-400: #f0818c;
+    --color-coral-500: #EA6676;
+    --color-coral-600: #d04a5e;
+    --color-coral-700: #b83d52;
+    --color-coral-800: #a3354a;
+    --color-coral-900: #8d2e43;
+    --color-coral-950: #4d1520;
 
     /* Create color utility for form color (enables ring-form, bg-form, etc.) */
     --color-form: var(--form-color, --bg-form-color);
@@ -398,6 +411,11 @@
         color: var(--color-neutral-800);
     }
 
+    /* Restore Font Awesome icon rendering — #app's !important font-family overrides FA's font-family */
+    .fa-solid, .fa-regular, .fa-brands, .fa-classic, .fas, .far, .fab {
+        font-family: "Font Awesome 7 Free", "Font Awesome 6 Free", var(--fa-family-classic), var(--fa-family-brands), sans-serif !important;
+    }
+
     :where(.dark) #app {
         color: white;
     }
@@ -617,4 +635,13 @@ body.dark * {
 
 .crisp-client {
     pointer-events: auto;
+}
+
+/* Prevent iOS Safari auto-zoom on form inputs (requires font-size >= 16px) */
+@media screen and (max-width: 768px) {
+    input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]),
+    textarea,
+    select {
+        font-size: 16px !important;
+    }
 }

@@ -158,7 +158,7 @@ const props = defineProps({
   }
 })
 
-const isFocused = computed(() => props.form?.presentation_style === 'focused')
+const isFocused = computed(() => props.form?.presentation_style === 'focused' || props.form?.presentation_style === 'spotlight')
 
 watch(() => props.field?.width, (val) => {
   if (val === undefined || val === null) {

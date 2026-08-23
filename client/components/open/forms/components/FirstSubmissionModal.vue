@@ -5,14 +5,14 @@
     title="🎉 Your first submission!"
   >
     <template #body>
-      <div class="text-sm text-neutral-500 mb-6">
+      <div class="text-sm text-[var(--sf-text-caption)] mb-6">
         Congratulations! Your form is now live and ready for action. Share it with others or check your submissions below.
       </div>
 
       <!-- Quick Actions -->
       <div class="space-y-3 mb-6">
         <div class="flex gap-3 items-center">
-          <p class="text-sm w-36 text-neutral-500 flex-shrink-0">
+          <p class="text-sm w-36 text-[var(--sf-text-caption)] flex-shrink-0">
             Share form URL:
           </p>
           <ShareFormUrl
@@ -21,7 +21,7 @@
           />
         </div>
         <div class="flex items-center">
-          <p class="text-sm w-36 text-neutral-500 flex-shrink-0">
+          <p class="text-sm w-36 text-[var(--sf-text-caption)] flex-shrink-0">
             Check submissions:
           </p>
           <UButton
@@ -35,15 +35,15 @@
       </div>
 
       <!-- Integrations Section -->
-      <div class="border-t border-neutral-200 dark:border-neutral-700 pt-5">
+      <div class="border-t border-[var(--sf-border-divider)] pt-5">
         <div class="flex items-center justify-between mb-3">
-          <p class="text-neutral-700 dark:text-neutral-200 font-semibold text-sm">
+          <p class="text-[var(--sf-text-secondary)] font-semibold text-sm">
             🔗 Connect your form to other apps
           </p>
           <NuxtLink
             :to="integrationsPageUrl"
             target="_blank"
-            class="text-xs text-blue-600 hover:text-blue-700 dark:text-blue-400 hover:underline flex items-center gap-1"
+            class="text-xs text-[var(--sf-teal)] hover:underline flex items-center gap-1"
             @click="trackIntegrationsLinkClick"
           >
             View all integrations
@@ -53,27 +53,27 @@
             />
           </NuxtLink>
         </div>
-        <p class="text-xs text-neutral-500 mb-4">
+        <p class="text-xs text-[var(--sf-text-caption)] mb-4">
           Get notified instantly when someone submits your form, or sync data to your favorite tools.
         </p>
 
         <!-- Featured Integration: Email -->
         <div
           role="button"
-          class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-4 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors cursor-pointer group"
+          class="bg-[var(--sf-teal-light)] border border-[var(--sf-border-card)] rounded-lg p-4 mb-4 hover:bg-[var(--sf-teal-light)] transition-colors cursor-pointer group"
           @click="openEmailIntegration"
         >
           <div class="flex items-start gap-3">
-            <div class="flex-shrink-0 w-10 h-10 bg-blue-100 dark:bg-blue-800 rounded-lg flex items-center justify-center">
+            <div class="flex-shrink-0 w-10 h-10 bg-[var(--sf-teal-light)] rounded-lg flex items-center justify-center">
               <Icon
                 name="lucide:mail"
-                class="text-blue-600 dark:text-blue-300"
+                class="text-[var(--sf-teal)]"
                 size="20px"
               />
             </div>
             <div class="flex-grow">
               <div class="flex items-center gap-2">
-                <p class="text-sm font-semibold text-neutral-800 dark:text-white">
+                <p class="text-sm font-semibold text-[var(--sf-text-primary)]">
                   Email Notification
                 </p>
                 <UBadge
@@ -84,20 +84,20 @@
                   Recommended
                 </UBadge>
               </div>
-              <p class="text-xs text-neutral-600 dark:text-neutral-400 mt-1">
+              <p class="text-xs text-[var(--sf-text-body)] mt-1">
                 Get an email every time someone submits your form. Perfect for staying on top of responses.
               </p>
             </div>
             <Icon
               name="lucide:chevron-right"
-              class="text-neutral-400 group-hover:text-blue-600 transition-colors flex-shrink-0"
+              class="text-[var(--sf-text-muted)] group-hover:text-[var(--sf-teal)] transition-colors flex-shrink-0"
               size="20px"
             />
           </div>
         </div>
 
         <!-- Other Popular Integrations -->
-        <p class="text-xs text-neutral-500 mb-2">
+        <p class="text-xs text-[var(--sf-text-caption)] mb-2">
           Other popular integrations:
         </p>
         <div class="grid grid-cols-4 gap-2">
@@ -105,14 +105,14 @@
             v-for="(integration, i) in popularIntegrations"
             :key="i"
             role="button"
-            class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg p-3 flex flex-col items-center justify-center hover:bg-neutral-50 dark:hover:bg-neutral-700 transition-colors cursor-pointer group relative"
+            class="bg-[var(--sf-bg-surface)] border border-[var(--sf-border-card)] rounded-lg p-3 flex flex-col items-center justify-center hover:bg-[var(--sf-bg-muted)] transition-colors cursor-pointer group relative"
             @click="openIntegrationPage(integration)"
           >
             <Icon
               :name="integration.icon"
-              class="w-6 h-6 text-neutral-500 group-hover:text-neutral-700 dark:group-hover:text-white transition-colors"
+              class="w-6 h-6 text-[var(--sf-text-caption)] group-hover:text-[var(--sf-text-primary)] transition-colors"
             />
-            <p class="text-xs text-neutral-600 dark:text-neutral-400 mt-1.5 text-center font-medium truncate w-full">
+            <p class="text-xs text-[var(--sf-text-body)] mt-1.5 text-center font-medium truncate w-full">
               {{ integration.name }}
             </p>
             <PlanTag
@@ -182,7 +182,7 @@ const popularIntegrations = computed(() => [
   {
     id: 'zapier',
     name: 'Zapier',
-    icon: 'cib:zapier',
+    icon: 'sharaforms:zapier',
     required_tier: 'free'
   },
   {

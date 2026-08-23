@@ -15,7 +15,7 @@ describe('useBillingUpsell', () => {
     globalThis.usePlanCatalog = () => ({
       tiers: computed(() => ({
         free: { order: 0, name: 'Free', price_monthly: 0, price_yearly_per_month: 0 },
-        pro: { order: 1, name: 'Pro', price_monthly: 12, price_yearly_per_month: 10 },
+        pro: { order: 1, name: 'Pro', price_monthly: 15, price_yearly_per_month: 12.50 },
         business: { order: 2, name: 'Business', price_monthly: 48, price_yearly_per_month: 41 },
         enterprise: { order: 3, name: 'Enterprise', price_monthly: 125, price_yearly_per_month: 106 },
         self_hosted: { order: 4, name: 'Self-hosted Enterprise', price_monthly: 100, price_yearly_per_month: 85 },

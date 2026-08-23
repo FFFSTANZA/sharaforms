@@ -20,7 +20,9 @@ class FormIntegrationsEventListener implements ShouldQueue
     {
         if ($event->formIntegrationsEvent->status === FormIntegrationsEvent::STATUS_ERROR) {
             $form = $event->formIntegrationsEvent->integration->form;
-            Mail::to($form->creator)->send(new FormIntegrationsEventCreationConfirmationMail($event->formIntegrationsEvent));
+            // M2 FIX: Use Mail::queue() instead of send() — the mailable implements ShouldQueue.
+            // send() executes synchronously, blocking the queue worker during SMTP delivery.
+            Mail::to($form->creator)->queue(new FormIntegrationsEventCreationConfirmationMail($event->formIntegrationsEvent));
         }
     }
 }

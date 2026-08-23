@@ -58,7 +58,7 @@ class Form extends Model implements CachableAttributes, VersionableNestedDiff
 
     public const THEMES = ['default', 'simple', 'notion', 'minimal', 'transparent'];
 
-    public const PRESENTATION_STYLES = ['classic', 'focused'];
+    public const PRESENTATION_STYLES = ['classic', 'focused', 'spotlight'];
 
     public const WIDTHS = ['centered', 'full'];
 

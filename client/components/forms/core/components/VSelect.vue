@@ -286,7 +286,7 @@ export default {
     searchKeys: { type: Array, default: () => ['name'] },
     optionKey: { type: String, default: 'id' },
     emitKey: { type: String, default: null },
-    color: { type: String, default: '#3B82F6' },
+    color: { type: String, default: '#EA6676' },
     placeholder: { type: String, default: null },
     uppercaseLabels: { type: Boolean, default: true },
     showClearButton: { type: Boolean, default: true },

@@ -4,7 +4,7 @@
 export const fileInputTheme = {
   slots: {
     container: [
-      'flex flex-col w-full items-center justify-center transition-colors duration-40',
+      'flex flex-col w-full items-center justify-center transition-colors duration-100',
       'border border-dashed',
       'shadow-none',
       'hover:bg-neutral-50 dark:hover:bg-notion-dark-light',

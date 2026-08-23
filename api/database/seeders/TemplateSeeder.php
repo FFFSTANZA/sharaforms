@@ -63,19 +63,48 @@ class TemplateSeeder extends Seeder
             $this->sportsRegistration(),
             $this->gamingTournament(),
             $this->requestForm(),
+            $this->rentalApplication(),
+            $this->webinarRegistration(),
+            $this->leaveRequest(),
+            $this->expenseReport(),
+            $this->timesheetForm(),
+            $this->purchaseOrder(),
+            $this->reimbursementClaim(),
+            $this->tshirtOrder(),
+            $this->cateringOrder(),
+            $this->liabilityWaiver(),
+            $this->photoRelease(),
+            $this->employeeOnboarding(),
+            $this->exitInterview(),
+            $this->selfEvaluation(),
+            $this->scholarshipApplication(),
+            $this->grantApplication(),
+            $this->clientOnboarding(),
+            $this->projectBrief(),
+            $this->bugReport(),
+            $this->maintenanceRequest(),
+            $this->coachingIntake(),
+            $this->vetNewClient(),
+            $this->npsSurvey(),
+            $this->testimonialForm(),
+            $this->gymMembership(),
         ];
     }
 
     public function run(): void
     {
         $user = User::first();
+        $questionsCatalog = $this->questionsCatalog();
 
         $slugs = [];
         foreach ($this->templates as $data) {
             $data['slug'] ??= \Illuminate\Support\Str::slug($data['name']);
             $data['creator_id'] ??= $user?->id;
             $data['publicly_listed'] = true;
-            $data['questions'] ??= $this->defaultQuestions($data['name']);
+            // Curated per-slug FAQs win over inline sets and generic defaults so
+            // every template detail page ships unique, search-shaped questions.
+            $data['questions'] = $questionsCatalog[$data['slug']]
+                ?? ($data['questions'] ?? $this->defaultQuestions($data['name']));
             $data['structure'] = $this->normalizeStructure($data['structure']);
             $slugs[] = $data['slug'];
 
@@ -122,6 +151,26 @@ class TemplateSeeder extends Seeder
 
             Template::where('slug', $slug)->update(['related_templates' => $related]);
         }
+    }
+
+    /**
+     * Curated FAQ overrides keyed by template slug, sourced from
+     * resources/data/forms/templates/questions.json. Keeps long-tail FAQ
+     * content out of the builder methods so every detail page carries
+     * unique, search-shaped questions instead of shared defaults.
+     */
+    private function questionsCatalog(): array
+    {
+        $path = resource_path('data/forms/templates/questions.json');
+        if (! is_file($path)) {
+            return [];
+        }
+
+        $decoded = json_decode((string) file_get_contents($path), true);
+
+        return is_array($decoded)
+            ? array_map(static fn ($entry) => $entry['questions'] ?? [], $decoded)
+            : [];
     }
 
     public function defaultQuestions(string $name): array
@@ -1495,6 +1544,934 @@ class TemplateSeeder extends Seeder
                 ['id' => 'location', 'type' => 'text', 'title' => 'Location (if applicable)', 'required' => false, 'help' => ''],
                 ['id' => 'photos', 'type' => 'files', 'title' => 'Attach Photos (Optional)', 'required' => false, 'help' => 'Optional', 'max_number_of_files' => 4, 'max_file_size' => 20]
             ], '#6366f1'),
+        ];
+    }
+
+    private function rentalApplication(): array
+    {
+        return [
+            'name' => 'Rental Application Form Template',
+            'slug' => 'rental-application-form-template',
+            'short_description' => 'A rental application form template for landlords and property managers to screen prospective tenants quickly and fairly.',
+            'description' => '<p>Our Rental Application Form Template helps landlords and property managers collect everything needed to screen prospective tenants in one place.</p><h2>Why and when to use a rental application</h2><p>Every tenancy starts with reliable information. A structured rental application captures identity, employment and income details, rental history, and screening consent so you can compare applicants on the same terms and document your decision process.</p><h2>Who is this template for</h2><p>Independent landlords, property management companies, and real estate agencies that lease apartments, houses, or commercial units.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms gives every applicant a simple link or embedded form, notifies you the moment an application arrives, accepts document uploads such as proof of income and ID, and keeps all applications organized in one dashboard.</p>',
+            'types' => ['application_forms'],
+            'industries' => ['real_estate_forms'],
+            'questions' => [
+                [
+                    'question' => 'What should a rental application include?',
+                    'answer' => '<p>A complete rental application gathers the applicant\'s contact details, current and previous addresses, employment and income information, number of occupants and pets, references from prior landlords, and written consent for credit or background checks.</p>',
+                ],
+                [
+                    'question' => 'Can applicants upload supporting documents?',
+                    'answer' => '<p>Yes. This template includes a file upload field so applicants can attach proof of income, identification, or reference letters. You can limit the number and size of files to keep submissions manageable.</p>',
+                ],
+                [
+                    'question' => 'How do I share the application with prospective tenants?',
+                    'answer' => '<p>Publish your form and share the unique link by email, SMS, or listing sites, or embed it directly on your property website. Every submission triggers an instant notification so you can follow up while an applicant is still interested.</p>',
+                ],
+            ],
+            'structure' => $this->structure('Rental Application', [
+                ['id' => 'full_name', 'type' => 'text', 'title' => 'Full Legal Name', 'required' => true, 'help' => ''],
+                ['id' => 'email', 'type' => 'email', 'title' => 'Email', 'required' => true, 'help' => ''],
+                ['id' => 'phone', 'type' => 'phone_number', 'title' => 'Phone Number', 'required' => true, 'help' => ''],
+                ['id' => 'property_interest', 'type' => 'text', 'title' => 'Property / Unit of Interest', 'required' => true, 'help' => ''],
+                ['id' => 'move_in_date', 'type' => 'date', 'title' => 'Desired Move-in Date', 'required' => true, 'help' => ''],
+                ['id' => 'occupants', 'type' => 'number', 'title' => 'Number of Occupants', 'required' => true, 'help' => ''],
+                ['id' => 'pets', 'type' => 'select', 'title' => 'Pets', 'required' => true, 'help' => '', 'options' => [['value' => 'none', 'text' => 'No pets'], ['value' => 'dog', 'text' => 'Dog'], ['value' => 'cat', 'text' => 'Cat'], ['value' => 'other', 'text' => 'Other']]],
+                ['id' => 'employment_status', 'type' => 'select', 'title' => 'Employment Status', 'required' => true, 'help' => '', 'options' => [['value' => 'employed', 'text' => 'Employed'], ['value' => 'self_employed', 'text' => 'Self-employed'], ['value' => 'student', 'text' => 'Student'], ['value' => 'retired', 'text' => 'Retired'], ['value' => 'unemployed', 'text' => 'Other']]],
+                ['id' => 'monthly_income', 'type' => 'number', 'title' => 'Gross Monthly Income', 'required' => true, 'help' => ''],
+                ['id' => 'current_landlord', 'type' => 'text', 'title' => 'Current Landlord Contact', 'required' => false, 'help' => 'Name and phone or email'],
+                ['id' => 'documents', 'type' => 'files', 'title' => 'Proof of Income / ID Uploads', 'required' => false, 'help' => 'Pay stubs, employment letter, or ID', 'max_number_of_files' => 5, 'max_file_size' => 10],
+                ['id' => 'screening_consent', 'type' => 'checkbox', 'title' => 'I consent to a credit and background screening check', 'required' => true, 'help' => '']
+            ], '#2563eb'),
+        ];
+    }
+
+    private function webinarRegistration(): array
+    {
+        return [
+            'name' => 'Webinar Registration Form Template',
+            'slug' => 'webinar-registration-form-template',
+            'short_description' => 'A webinar registration form template that captures sign-ups, session preferences, and audience questions before the event.',
+            'description' => '<p>Our Webinar Registration Form Template helps marketing teams and speakers register attendees, capture qualifying details, and collect questions ahead of the live session.</p><h2>Why and when to use a webinar registration form</h2><p>Webinars succeed on preparation. Knowing attendee count, job roles, and submitted questions lets you tailor the presentation and plan follow-up campaigns. A registration form replaces scattered email sign-ups with clean, structured data.</p><h2>Who is this template for</h2><p>Marketing teams, SaaS companies, educators, consultants, and community managers hosting online events.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms sends automatic confirmation emails with your join link, works with conditional logic to show different questions per session, and pushes registrations to Slack or your CRM through Zapier and webhooks.</p>',
+            'types' => ['event_registration_forms', 'registration_forms'],
+            'industries' => ['marketing_forms', 'business_forms'],
+            'questions' => [
+                [
+                    'question' => 'What details should a webinar registration form collect?',
+                    'answer' => '<p>At minimum: full name, email address, and company or role if relevant for segmentation. Optional fields such as session preference or a question box help you personalize the event content.</p>',
+                ],
+                [
+                    'question' => 'Do attendees receive a confirmation automatically?',
+                    'answer' => '<p>Yes. SharaForms can send an instant confirmation email to every registrant, which you can use to deliver the calendar invite or join link right after sign-up.</p>',
+                ],
+                [
+                    'question' => 'Can I cap the number of attendees?',
+                    'answer' => '<p>You can set a submission limit on the form so registration closes automatically once your seat cap is reached, keeping attendance within platform limits.</p>',
+                ],
+            ],
+            'structure' => $this->structure('Webinar Registration', [
+                ['id' => 'full_name', 'type' => 'text', 'title' => 'Full Name', 'required' => true, 'help' => ''],
+                ['id' => 'email', 'type' => 'email', 'title' => 'Work Email', 'required' => true, 'help' => ''],
+                ['id' => 'company', 'type' => 'text', 'title' => 'Company', 'required' => false, 'help' => ''],
+                ['id' => 'role', 'type' => 'select', 'title' => 'Job Role', 'required' => false, 'help' => '', 'options' => [['value' => 'founder', 'text' => 'Founder / C-level'], ['value' => 'marketing', 'text' => 'Marketing'], ['value' => 'sales', 'text' => 'Sales'], ['value' => 'product', 'text' => 'Product'], ['value' => 'other', 'text' => 'Other']]],
+                ['id' => 'session', 'type' => 'select', 'title' => 'Preferred Session', 'required' => true, 'help' => '', 'options' => [['value' => 'session_1', 'text' => 'Session 1 - Morning (10:00 AM CET)'], ['value' => 'session_2', 'text' => 'Session 2 - Evening (6:00 PM CET)']]],
+                ['id' => 'questions', 'type' => 'text', 'title' => 'What would you like to learn?', 'required' => false, 'help' => '', 'multi_lines' => true],
+                ['id' => 'marketing_optin', 'type' => 'checkbox', 'title' => 'Send me future event invitations', 'required' => false, 'help' => '']
+            ], '#7c3aed'),
+        ];
+    }
+
+    private function leaveRequest(): array
+    {
+        return [
+            'name' => 'Leave Request Form Template',
+            'slug' => 'leave-request-form-template',
+            'short_description' => 'A leave request form template for employees to submit PTO, sick leave, and other absence requests for manager approval.',
+            'description' => '<p>Our Leave Request Form Template standardizes how employees request vacation, sick days, parental leave, and other absences.</p><h2>Why and when to use a leave request form</h2><p>Ad-hoc messages get lost and create scheduling conflicts. A structured request captures leave type, dates, and coverage plans in one record, giving HR a clear audit trail and managers the context they need to approve quickly.</p><h2>Who is this template for</h2><p>HR teams, people operations, and team leads at companies of any size that track employee absences.</p><h2>Why SharaForms is the best tool for this form</h2><p>Submissions trigger instant notifications to the approving manager, responses are timestamped for compliance, and you can embed the form in your intranet so it is always one click away.</p>',
+            'types' => ['request_forms', 'employment_forms'],
+            'industries' => ['human_resources_forms'],
+            'questions' => [
+                [
+                    'question' => 'What is the difference between PTO and sick leave on this form?',
+                    'answer' => '<p>The leave type dropdown separates vacation or PTO, sick leave, personal days, parental leave, and unpaid leave so HR can categorize absences accurately without follow-up questions.</p>',
+                ],
+                [
+                    'question' => 'Can employees request leave for a date range?',
+                    'answer' => '<p>Yes. The template includes start and end date fields, and employees state the total number of working days requested so payroll stays accurate.</p>',
+                ],
+                [
+                    'question' => 'How do managers approve requests?',
+                    'answer' => '<p>Each submission sends an immediate notification to the manager or HR inbox. Approvals happen outside the form, but every request stays logged with its submission time for records.</p>',
+                ],
+            ],
+            'structure' => $this->structure('Leave Request', [
+                ['id' => 'employee_name', 'type' => 'text', 'title' => 'Employee Name', 'required' => true, 'help' => ''],
+                ['id' => 'email', 'type' => 'email', 'title' => 'Work Email', 'required' => true, 'help' => ''],
+                ['id' => 'department', 'type' => 'select', 'title' => 'Department', 'required' => true, 'help' => '', 'options' => [['value' => 'engineering', 'text' => 'Engineering'], ['value' => 'sales', 'text' => 'Sales'], ['value' => 'marketing', 'text' => 'Marketing'], ['value' => 'support', 'text' => 'Support'], ['value' => 'operations', 'text' => 'Operations'], ['value' => 'other', 'text' => 'Other']]],
+                ['id' => 'leave_type', 'type' => 'select', 'title' => 'Leave Type', 'required' => true, 'help' => '', 'options' => [['value' => 'pto', 'text' => 'Vacation / PTO'], ['value' => 'sick', 'text' => 'Sick Leave'], ['value' => 'personal', 'text' => 'Personal Day'], ['value' => 'parental', 'text' => 'Parental Leave'], ['value' => 'unpaid', 'text' => 'Unpaid Leave']]],
+                ['id' => 'start_date', 'type' => 'date', 'title' => 'First Day of Leave', 'required' => true, 'help' => ''],
+                ['id' => 'end_date', 'type' => 'date', 'title' => 'Last Day of Leave', 'required' => true, 'help' => ''],
+                ['id' => 'days_requested', 'type' => 'number', 'title' => 'Working Days Requested', 'required' => true, 'help' => ''],
+                ['id' => 'coverage', 'type' => 'text', 'title' => 'Coverage / Handover Plan', 'required' => false, 'help' => '', 'multi_lines' => true],
+                ['id' => 'policy_ack', 'type' => 'checkbox', 'title' => 'I have read the time-off policy', 'required' => true, 'help' => '']
+            ], '#059669'),
+        ];
+    }
+
+    private function expenseReport(): array
+    {
+        return [
+            'name' => 'Expense Report Form Template',
+            'slug' => 'expense-report-form-template',
+            'short_description' => 'An expense report form template for employees to submit business expenses with receipts for fast reimbursement.',
+            'description' => '<p>Our Expense Report Form Template lets employees log business expenses, attach receipts, and route everything to finance in a consistent format.</p><h2>Why and when to use an expense report</h2><p>Manual spreadsheets slow down reimbursements and hide policy breaches. A structured report captures amount, category, purpose, and receipts per claim, letting finance approve faster and spot out-of-policy spending early.</p><h2>Who is this template for</h2><p>Finance teams, controllers, and any business that reimburses employee spending on travel, meals, software, or supplies.</p><h2>Why SharaForms is the best tool for this form</h2><p>Receipt photos can be uploaded from mobile, numeric fields feed totals into built-in calculations, and completed reports land in your finance inbox instantly with all documentation attached.</p>',
+            'types' => ['report_forms', 'payment_forms'],
+            'industries' => ['business_forms', 'human_resources_forms'],
+            'questions' => [
+                [
+                    'question' => 'What counts as a valid receipt?',
+                    'answer' => '<p>Most policies require an itemized receipt showing vendor, date, and amount. The file upload field accepts photos or PDFs so employees can submit receipts straight from their phone.</p>',
+                ],
+                [
+                    'question' => 'Can this form replace our expense spreadsheet?',
+                    'answer' => '<p>Yes for most small teams. Every submission is stored with timestamps and attachments, and you can export submissions to CSV for bookkeeping instead of maintaining a manual sheet.</p>',
+                ],
+                [
+                    'question' => 'How detailed should the business purpose be?',
+                    'answer' => '<p>A short sentence is usually enough, for example "Client dinner - Q3 renewal". Clear purposes speed up approval and simplify tax reporting for deductible expenses.</p>',
+                ],
+            ],
+            'structure' => $this->structure('Expense Report', [
+                ['id' => 'employee_name', 'type' => 'text', 'title' => 'Employee Name', 'required' => true, 'help' => ''],
+                ['id' => 'email', 'type' => 'email', 'title' => 'Work Email', 'required' => true, 'help' => ''],
+                ['id' => 'department', 'type' => 'text', 'title' => 'Department / Cost Center', 'required' => true, 'help' => ''],
+                ['id' => 'expense_category', 'type' => 'select', 'title' => 'Expense Category', 'required' => true, 'help' => '', 'options' => [['value' => 'travel', 'text' => 'Travel'], ['value' => 'meals', 'text' => 'Meals & Entertainment'], ['value' => 'software', 'text' => 'Software / Subscriptions'], ['value' => 'accommodation', 'text' => 'Accommodation'], ['value' => 'supplies', 'text' => 'Office Supplies'], ['value' => 'other', 'text' => 'Other']]],
+                ['id' => 'amount', 'type' => 'number', 'title' => 'Total Amount Claimed', 'required' => true, 'help' => ''],
+                ['id' => 'currency', 'type' => 'select', 'title' => 'Currency', 'required' => true, 'help' => '', 'options' => [['value' => 'usd', 'text' => 'USD'], ['value' => 'eur', 'text' => 'EUR'], ['value' => 'gbp', 'text' => 'GBP'], ['value' => 'inr', 'text' => 'INR']]],
+                ['id' => 'purpose', 'type' => 'text', 'title' => 'Business Purpose', 'required' => true, 'help' => '', 'multi_lines' => true],
+                ['id' => 'receipts', 'type' => 'files', 'title' => 'Receipt Attachments', 'required' => true, 'help' => 'Photos or PDFs', 'max_number_of_files' => 8, 'max_file_size' => 10],
+                ['id' => 'declaration', 'type' => 'checkbox', 'title' => 'I confirm these expenses comply with company policy', 'required' => true, 'help' => '']
+            ], '#d97706'),
+        ];
+    }
+
+    private function timesheetForm(): array
+    {
+        return [
+            'name' => 'Timesheet Form Template',
+            'slug' => 'timesheet-form-template',
+            'short_description' => 'A weekly timesheet form template for teams to log hours per project and keep payroll and billing accurate.',
+            'description' => '<p>Our Timesheet Form Template gives teams a simple weekly form to log hours worked per project, client, or task.</p><h2>Why and when to use a timesheet form</h2><p>Accurate hours drive payroll, client billing, and project costing. A weekly submission rhythm keeps records current without forcing everyone into heavyweight time-tracking software.</p><h2>Who is this template for</h2><p>Agencies, consultancies, contractors, and internal teams that bill clients or run payroll from tracked hours.</p><h2>Why SharaForms is the best tool for this form</h2><p>Numeric hour fields validate input, the week-ending date keeps submissions aligned to pay periods, and exports give payroll a clean CSV at the end of every cycle.</p>',
+            'types' => ['tracking_forms'],
+            'industries' => ['human_resources_forms', 'business_forms'],
+            'questions' => [
+                [
+                    'question' => 'How often should timesheets be submitted?',
+                    'answer' => '<p>Weekly is the most common cadence because it balances accurate recall against admin overhead. The week-ending date field anchors every submission to the correct pay period.</p>',
+                ],
+                [
+                    'question' => 'Can we split hours across multiple projects?',
+                    'answer' => '<p>Yes. Duplicate the project-hours fields for each project or client, or ask employees to list them in the notes area. For heavy multi-project tracking, submit one form per project per week.</p>',
+                ],
+                [
+                    'question' => 'Does this work for remote and field staff?',
+                    'answer' => '<p>Yes. The form is mobile-friendly and can be filled from anywhere, and submissions arrive with timestamps so nothing depends on office presence.</p>',
+                ],
+            ],
+            'structure' => $this->structure('Weekly Timesheet', [
+                ['id' => 'employee_name', 'type' => 'text', 'title' => 'Employee Name', 'required' => true, 'help' => ''],
+                ['id' => 'week_ending', 'type' => 'date', 'title' => 'Week Ending Date', 'required' => true, 'help' => ''],
+                ['id' => 'project', 'type' => 'text', 'title' => 'Project / Client', 'required' => true, 'help' => ''],
+                ['id' => 'hours_mon', 'type' => 'number', 'title' => 'Monday Hours', 'required' => true, 'help' => ''],
+                ['id' => 'hours_tue', 'type' => 'number', 'title' => 'Tuesday Hours', 'required' => true, 'help' => ''],
+                ['id' => 'hours_wed', 'type' => 'number', 'title' => 'Wednesday Hours', 'required' => true, 'help' => ''],
+                ['id' => 'hours_thu', 'type' => 'number', 'title' => 'Thursday Hours', 'required' => true, 'help' => ''],
+                ['id' => 'hours_fri', 'type' => 'number', 'title' => 'Friday Hours', 'required' => true, 'help' => ''],
+                ['id' => 'notes', 'type' => 'text', 'title' => 'Notes / Overtime Explanation', 'required' => false, 'help' => '', 'multi_lines' => true],
+                ['id' => 'accuracy_ack', 'type' => 'checkbox', 'title' => 'I confirm these hours are accurate', 'required' => true, 'help' => '']
+            ], '#0891b2'),
+        ];
+    }
+
+    private function purchaseOrder(): array
+    {
+        return [
+            'name' => 'Purchase Order Form Template',
+            'slug' => 'purchase-order-form-template',
+            'short_description' => 'A purchase order form template for teams to request purchases, capture approvals, and keep procurement auditable.',
+            'description' => '<p>Our Purchase Order Form Template standardizes purchase requests with supplier details, line items, budget codes, and required approvals.</p><h2>Why and when to use a purchase order form</h2><p>Untracked spending causes budget overruns and duplicate orders. A PO form creates one auditable record per purchase: what is being bought, from whom, at what cost, and who approved it.</p><h2>Who is this template for</h2><p>Procurement teams, office managers, and finance departments in companies that want spend discipline without enterprise ERP overhead.</p><h2>Why SharaForms is the best tool for this form</h2><p>Requests notify procurement instantly, quantity and unit-price fields support basic calculations, and every approved order remains searchable with its full history.</p>',
+            'types' => ['order_forms', 'request_forms'],
+            'industries' => ['ecommerce_forms', 'business_forms'],
+            'questions' => [
+                [
+                    'question' => 'What information does a purchase order need?',
+                    'answer' => '<p>A supplier name, item description, quantity, unit price, required-by date, budget code, and the requester\'s department. Approval checkboxes make sign-off explicit.</p>',
+                ],
+                [
+                    'question' => 'Can finance calculate order totals automatically?',
+                    'answer' => '<p>Yes. SharaForms supports number fields and calculations, so total cost can be computed from quantity multiplied by unit price as the requester types.</p>',
+                ],
+                [
+                    'question' => 'How do we keep an audit trail?',
+                    'answer' => '<p>Every submission is stored with a timestamp and the requester\'s details, and can be exported to CSV for reconciliation during month-end close or audits.</p>',
+                ],
+            ],
+            'structure' => $this->structure('Purchase Order Request', [
+                ['id' => 'requester_name', 'type' => 'text', 'title' => 'Requested By', 'required' => true, 'help' => ''],
+                ['id' => 'email', 'type' => 'email', 'title' => 'Work Email', 'required' => true, 'help' => ''],
+                ['id' => 'department', 'type' => 'text', 'title' => 'Department', 'required' => true, 'help' => ''],
+                ['id' => 'supplier', 'type' => 'text', 'title' => 'Supplier / Vendor', 'required' => true, 'help' => ''],
+                ['id' => 'items', 'type' => 'text', 'title' => 'Item Description & Line Items', 'required' => true, 'help' => '', 'multi_lines' => true],
+                ['id' => 'quantity', 'type' => 'number', 'title' => 'Total Quantity', 'required' => true, 'help' => ''],
+                ['id' => 'unit_price', 'type' => 'number', 'title' => 'Unit Price', 'required' => true, 'help' => ''],
+                ['id' => 'needed_by', 'type' => 'date', 'title' => 'Required By', 'required' => true, 'help' => ''],
+                ['id' => 'budget_code', 'type' => 'text', 'title' => 'Budget Code (Optional)', 'required' => false, 'help' => ''],
+                ['id' => 'manager_approval', 'type' => 'checkbox', 'title' => 'Manager approval obtained', 'required' => true, 'help' => '']
+            ], '#4f46e5'),
+        ];
+    }
+
+    private function reimbursementClaim(): array
+    {
+        return [
+            'name' => 'Reimbursement Claim Form Template',
+            'slug' => 'reimbursement-claim-form-template',
+            'short_description' => 'A reimbursement claim form template for mileage, medical, training, and out-of-pocket claims with receipt uploads.',
+            'description' => '<p>Our Reimbursement Claim Form Template covers out-of-pocket claims such as mileage, medical costs, training fees, and client entertainment expenses.</p><h2>Why and when to use a reimbursement claim form</h2><p>When people pay first and claim back later, consistency matters. A dedicated claim form separates these costs from regular expense reports, applies the right policy limits, and speeds up payout.</p><h2>Who is this template for</h2><p>HR and finance teams handling employee reimbursements, plus nonprofits reimbursing volunteer expenses.</p><h2>Why SharaForms is the best tool for this form</h2><p>Claimants attach receipts digitally, choose a claim category up front, and receive email confirmation with a copy of their claim, cutting "did you get my request" emails to zero.</p>',
+            'types' => ['payment_forms', 'request_forms'],
+            'industries' => ['business_forms', 'charity_forms'],
+            'questions' => [
+                [
+                    'question' => 'Which claims belong on this form?',
+                    'answer' => '<p>Mileage, parking and tolls, medical or wellness benefits, course and certification fees, and any pre-approved out-of-pocket purchase. Routine business expenses usually go on a separate expense report.</p>',
+                ],
+                [
+                    'question' => 'How is mileage calculated?',
+                    'answer' => '<p>Enter trip distance and your policy rate; the amount claimed can be computed with a calculation or entered manually. Attach route screenshots if your policy requires evidence.</p>',
+                ],
+                [
+                    'question' => 'When will the claim be paid?',
+                    'answer' => '<p>That depends on your payment cycle, not the form. Most teams review claims weekly and pay with the next payroll or supplier run. Instant email confirmation means claimants always know their submission arrived.</p>',
+                ],
+            ],
+            'structure' => $this->structure('Reimbursement Claim', [
+                ['id' => 'claimant_name', 'type' => 'text', 'title' => 'Claimant Name', 'required' => true, 'help' => ''],
+                ['id' => 'email', 'type' => 'email', 'title' => 'Email for Payment Confirmation', 'required' => true, 'help' => ''],
+                ['id' => 'claim_type', 'type' => 'select', 'title' => 'Claim Type', 'required' => true, 'help' => '', 'options' => [['value' => 'mileage', 'text' => 'Mileage / Travel'], ['value' => 'medical', 'text' => 'Medical / Wellness'], ['value' => 'training', 'text' => 'Training / Course Fee'], ['value' => 'client_costs', 'text' => 'Client Entertainment'], ['value' => 'other', 'text' => 'Other Pre-approved Cost']]],
+                ['id' => 'amount_claimed', 'type' => 'number', 'title' => 'Amount Claimed', 'required' => true, 'help' => ''],
+                ['id' => 'expense_date_range', 'type' => 'text', 'title' => 'Date(s) of Expense', 'required' => true, 'help' => 'e.g. 12-14 Aug 2026'],
+                ['id' => 'explanation', 'type' => 'text', 'title' => 'Explanation', 'required' => true, 'help' => '', 'multi_lines' => true],
+                ['id' => 'receipts', 'type' => 'files', 'title' => 'Receipts / Evidence', 'required' => true, 'help' => 'Photos or PDFs', 'max_number_of_files' => 6, 'max_file_size' => 10],
+                ['id' => 'policy_ack', 'type' => 'checkbox', 'title' => 'I confirm this claim follows the reimbursement policy', 'required' => true, 'help' => '']
+            ], '#0f766e'),
+        ];
+    }
+
+    private function tshirtOrder(): array
+    {
+        return [
+            'name' => 'T-Shirt Order Form Template',
+            'slug' => 'tshirt-order-form-template',
+            'short_description' => 'A t-shirt order form template for merch drops, team shirts, events, and fundraisers with sizes and quantities.',
+            'description' => '<p>Our T-Shirt Order Form Template handles apparel orders for teams, events, merch stores, and fundraisers without a storefront.</p><h2>Why and when to use a t-shirt order form</h2><p>Printing runs need exact size breakdowns and quantities before production starts. An order form collects every choice per buyer and aggregates cleanly, so you order the right inventory mix the first time.</p><h2>Who is this template for</h2><p>Sports teams, schools, event organizers, clothing brands doing limited drops, and fundraising campaigns.</p><h2>Why SharaForms is the best tool for this form</h2><p>Size and color dropdowns prevent invalid combinations, quantity fields feed order totals, and submissions can be exported to CSV for your printer with zero retyping.</p>',
+            'types' => ['order_forms'],
+            'industries' => ['ecommerce_forms', 'sports_forms'],
+            'questions' => [
+                [
+                    'question' => 'Can buyers order multiple shirts in different sizes?',
+                    'answer' => '<p>Yes. Buyers pick size and color per shirt and adjust the quantity, or submit separate entries per design. Exports show exactly how many units of each size to produce.</p>',
+                ],
+                [
+                    'question' => 'Can I collect payment with the order?',
+                    'answer' => '<p>SharaForms supports payment fields on paid plans, so buyers can pay at checkout. On free forms, collect cash or transfer outside the form and use it purely for order collection.</p>',
+                ],
+                [
+                    'question' => 'How do buyers receive their shirts?',
+                    'answer' => '<p>The delivery method field lets buyers choose pickup or shipping, and an optional address field appears for shipping orders so fulfillment has everything in one record.</p>',
+                ],
+            ],
+            'structure' => $this->structure('T-Shirt Order', [
+                ['id' => 'buyer_name', 'type' => 'text', 'title' => 'Full Name', 'required' => true, 'help' => ''],
+                ['id' => 'email', 'type' => 'email', 'title' => 'Email', 'required' => true, 'help' => ''],
+                ['id' => 'design', 'type' => 'select', 'title' => 'Design', 'required' => true, 'help' => '', 'options' => [['value' => 'classic_logo', 'text' => 'Classic Logo'], ['value' => 'anniversary', 'text' => 'Anniversary Edition'], ['value' => 'minimal', 'text' => 'Minimal Print']]],
+                ['id' => 'size', 'type' => 'select', 'title' => 'Size', 'required' => true, 'help' => '', 'options' => [['value' => 'xs', 'text' => 'XS'], ['value' => 's', 'text' => 'S'], ['value' => 'm', 'text' => 'M'], ['value' => 'l', 'text' => 'L'], ['value' => 'xl', 'text' => 'XL'], ['value' => 'xxl', 'text' => 'XXL']]],
+                ['id' => 'color', 'type' => 'select', 'title' => 'Color', 'required' => true, 'help' => '', 'options' => [['value' => 'black', 'text' => 'Black'], ['value' => 'white', 'text' => 'White'], ['value' => 'navy', 'text' => 'Navy'], ['value' => 'heather', 'text' => 'Heather Grey']]],
+                ['id' => 'quantity', 'type' => 'number', 'title' => 'Quantity', 'required' => true, 'help' => ''],
+                ['id' => 'delivery_method', 'type' => 'select', 'title' => 'Delivery Method', 'required' => true, 'help' => '', 'options' => [['value' => 'pickup', 'text' => 'Pickup at event'], ['value' => 'ship', 'text' => 'Ship to me']]],
+                ['id' => 'shipping_address', 'type' => 'text', 'title' => 'Shipping Address', 'required' => false, 'help' => 'Only if shipping', 'multi_lines' => true]
+            ], '#e11d48'),
+        ];
+    }
+
+    private function cateringOrder(): array
+    {
+        return [
+            'name' => 'Catering Order Form Template',
+            'slug' => 'catering-order-form-template',
+            'short_description' => 'A catering order form template for restaurants and caterers to capture event menus, headcounts, and delivery details.',
+            'description' => '<p>Our Catering Order Form Template helps caterers and restaurants take event food orders with menu selections, guest counts, dietary notes, and delivery logistics.</p><h2>Why and when to use a catering order form</h2><p>Catering quotes fall apart when details arrive over scattered calls. One structured order captures the date, headcount, package, and dietary restrictions up front, so quoting and kitchen prep start immediately.</p><h2>Who is this template for</h2><p>Catering companies, restaurants with corporate lunch programs, bakeries, and food trucks serving events.</p><h2>Why SharaForms is the best tool for this form</h2><p>Orders arrive with instant notifications, guests counts and package choices keep quoting consistent, and repeat customers re-order in seconds since their details are saved.</p>',
+            'types' => ['order_forms', 'booking_forms'],
+            'industries' => ['services_forms', 'business_forms'],
+            'questions' => [
+                [
+                    'question' => 'What details should a catering order include?',
+                    'answer' => '<p>Event date and time, guest count, chosen menu package or items, dietary restrictions, delivery or pickup preference, and the venue address. Contact details let you confirm the quote quickly.</p>',
+                ],
+                [
+                    'question' => 'Can customers request custom menus?',
+                    'answer' => '<p>Yes. The dietary restrictions and notes fields capture special requests, and you can follow up by phone or email before finalizing the quote.</p>',
+                ],
+                [
+                    'question' => 'How far in advance should orders be placed?',
+                    'answer' => '<p>State your cutoff in the form description, for example 72 hours before the event. The date field makes it obvious which orders are too late to accept.</p>',
+                ],
+            ],
+            'structure' => $this->structure('Catering Order', [
+                ['id' => 'contact_name', 'type' => 'text', 'title' => 'Contact Name', 'required' => true, 'help' => ''],
+                ['id' => 'company', 'type' => 'text', 'title' => 'Company (if applicable)', 'required' => false, 'help' => ''],
+                ['id' => 'email', 'type' => 'email', 'title' => 'Email', 'required' => true, 'help' => ''],
+                ['id' => 'phone', 'type' => 'phone_number', 'title' => 'Phone Number', 'required' => true, 'help' => ''],
+                ['id' => 'event_date', 'type' => 'date', 'title' => 'Event Date', 'required' => true, 'help' => ''],
+                ['id' => 'guest_count', 'type' => 'number', 'title' => 'Guest Count', 'required' => true, 'help' => ''],
+                ['id' => 'menu_package', 'type' => 'select', 'title' => 'Menu Package', 'required' => true, 'help' => '', 'options' => [['value' => 'breakfast', 'text' => 'Breakfast Spread'], ['value' => 'lunch_buffet', 'text' => 'Lunch Buffet'], ['value' => 'finger_food', 'text' => 'Finger Food & Canapés'], ['value' => 'formal_dinner', 'text' => 'Formal Dinner'], ['value' => 'custom', 'text' => 'Custom Menu']]],
+                ['id' => 'dietary_needs', 'type' => 'text', 'title' => 'Dietary Restrictions & Allergies', 'required' => false, 'help' => '', 'multi_lines' => true],
+                ['id' => 'service_type', 'type' => 'select', 'title' => 'Delivery or Pickup', 'required' => true, 'help' => '', 'options' => [['value' => 'delivery', 'text' => 'Delivery to venue'], ['value' => 'pickup', 'text' => 'Pickup'], ['value' => 'onsite_staff', 'text' => 'Delivery + On-site Staff']]],
+                ['id' => 'venue_address', 'type' => 'text', 'title' => 'Venue Address', 'required' => false, 'help' => 'Required for delivery', 'multi_lines' => true]
+            ], '#ca8a04'),
+        ];
+    }
+
+    private function liabilityWaiver(): array
+    {
+        return [
+            'name' => 'Liability Waiver Form Template',
+            'slug' => 'liability-waiver-form-template',
+            'short_description' => 'A liability waiver form template with e-signature for gyms, events, rentals, and activities that carry physical risk.',
+            'description' => '<p>Our Liability Waiver Form Template captures signed acknowledgments of risk from participants before they take part in an activity.</p><h2>Why and when to use a liability waiver</h2><p>Any activity with physical risk deserves a documented acknowledgment: gyms and fitness classes, adventure sports, equipment rentals, volunteer events, and youth programs. Paper waivers get lost; a digital waiver creates a timestamped record with a signature every time.</p><h2>Who is this template for</h2><p>Gyms and studios, event organizers, tour and rental operators, sports leagues, and nonprofits running activities.</p><h2>Why SharaForms is the best tool for this form</h2><p>The built-in signature field captures legally styled e-consent, guardian fields support minors, and every signed waiver is stored and searchable if a question ever arises later.</p>',
+            'types' => ['consent_forms'],
+            'industries' => ['sports_forms', 'entertainment_forms'],
+            'questions' => [
+                [
+                    'question' => 'Is an electronic signature valid for waivers?',
+                    'answer' => '<p>In most jurisdictions, yes. E-signature regulations such as ESIGN (US) and eIDAS (EU) recognize electronic signatures, provided the signer clearly indicates agreement. This template pairs a signature field with explicit consent checkboxes and stores the submission time as evidence.</p>',
+                ],
+                [
+                    'question' => 'How do I handle minors?',
+                    'answer' => '<p>Include the optional parent or guardian section: a minor indicator plus guardian name and signature. Many organizations require a guardian-signed waiver for anyone under 18.</p>',
+                ],
+                [
+                    'question' => 'Does this template replace legal advice?',
+                    'answer' => '<p>No. The template provides the structure, but the waiver language itself should be reviewed by a lawyer for your jurisdiction and activity type. You can edit every field and text block after copying.</p>',
+                ],
+            ],
+            'structure' => $this->structure('Activity Waiver & Release', [
+                ['id' => 'participant_name', 'type' => 'text', 'title' => 'Participant Full Name', 'required' => true, 'help' => ''],
+                ['id' => 'email', 'type' => 'email', 'title' => 'Email', 'required' => true, 'help' => ''],
+                ['id' => 'activity_date', 'type' => 'date', 'title' => 'Activity Date', 'required' => true, 'help' => ''],
+                ['id' => 'is_minor', 'type' => 'checkbox', 'title' => 'Participant is under 18', 'required' => false, 'help' => ''],
+                ['id' => 'guardian_name', 'type' => 'text', 'title' => 'Parent / Guardian Name', 'required' => false, 'help' => 'Required for minors'],
+                ['id' => 'emergency_contact', 'type' => 'phone_number', 'title' => 'Emergency Contact Number', 'required' => true, 'help' => ''],
+                ['id' => 'health_notes', 'type' => 'text', 'title' => 'Medical Conditions We Should Know About', 'required' => false, 'help' => '', 'multi_lines' => true],
+                ['id' => 'risk_acknowledgment', 'type' => 'checkbox', 'title' => 'I understand the activity involves inherent risks and voluntarily assume them', 'required' => true, 'help' => ''],
+                ['id' => 'release_acknowledgment', 'type' => 'checkbox', 'title' => 'I release the organizer from liability for injuries arising from participation', 'required' => true, 'help' => ''],
+                ['id' => 'signature', 'type' => 'signature', 'title' => 'Signature', 'required' => true, 'help' => 'Sign here']
+            ], '#dc2626'),
+        ];
+    }
+
+    private function photoRelease(): array
+    {
+        return [
+            'name' => 'Photo Release Form Template',
+            'slug' => 'photo-release-form-template',
+            'short_description' => 'A photo release form template with e-signature covering model consent and media usage rights.',
+            'description' => '<p>Our Photo Release Form Template documents how photos or videos of a person may be used: scope, duration, and compensation, all captured with a signature.</p><h2>Why and when to use a photo release</h2><p>Publishing someone\'s image without documented permission creates legal risk. Photographers, marketers, schools, and nonprofits use releases before images appear on websites, social media, ads, or print.</p><h2>Who is this template for</h2><p>Photographers, marketing teams, agencies, schools, event organizers, and content creators.</p><h2>Why SharaForms is the best tool for this form</h2><p>Usage scope and duration are structured fields instead of free text, signatures are captured digitally, and completed releases stay attached to your project records forever.</p>',
+            'types' => ['consent_forms'],
+            'industries' => ['photography_forms', 'advertising_forms'],
+            'questions' => [
+                [
+                    'question' => 'What usage rights should a release cover?',
+                    'answer' => '<p>Define where images may appear (website, social media, print, advertising), for how long, and whether use is compensated. Structured selections prevent misunderstandings that broad "all media" wording can cause.</p>',
+                ],
+                [
+                    'question' => 'Can I customize which rights are requested?',
+                    'answer' => '<p>Yes. After copying the template you can edit options, add your own terms text, or restrict the form to a single usage type for one-off shoots.</p>',
+                ],
+                [
+                    'question' => 'Do parents need to sign for children?',
+                    'answer' => '<p>Yes, releases for minors must be signed by a parent or guardian. Include the guardian name and signature fields exactly as this template does.</p>',
+                ],
+            ],
+            'structure' => $this->structure('Photo & Media Release', [
+                ['id' => 'model_name', 'type' => 'text', 'title' => 'Full Name', 'required' => true, 'help' => ''],
+                ['id' => 'email', 'type' => 'email', 'title' => 'Email', 'required' => true, 'help' => ''],
+                ['id' => 'shoot_reference', 'type' => 'text', 'title' => 'Shoot / Project Reference', 'required' => false, 'help' => ''],
+                ['id' => 'usage_scope', 'type' => 'select', 'title' => 'Permitted Usage', 'required' => true, 'help' => '', 'options' => [['value' => 'website_social', 'text' => 'Website & Social Media'], ['value' => 'marketing_print', 'text' => 'Marketing & Print'], ['value' => 'all_media', 'text' => 'All Media Including Ads'], ['value' => 'internal', 'text' => 'Internal Use Only']]],
+                ['id' => 'usage_duration', 'type' => 'select', 'title' => 'Duration of Rights', 'required' => true, 'help' => '', 'options' => [['value' => 'one_year', 'text' => '1 Year'], ['value' => 'five_years', 'text' => '5 Years'], ['value' => 'indefinite', 'text' => 'Indefinite']]],
+                ['id' => 'compensation', 'type' => 'select', 'title' => 'Compensation', 'required' => true, 'help' => '', 'options' => [['value' => 'uncompensated', 'text' => 'Uncompensated'], ['value' => 'fee', 'text' => 'One-time Fee']]],
+                ['id' => 'is_minor', 'type' => 'checkbox', 'title' => 'Subject is under 18', 'required' => false, 'help' => ''],
+                ['id' => 'guardian_signature_note', 'type' => 'text', 'title' => 'Parent / Guardian Name (if minor)', 'required' => false, 'help' => ''],
+                ['id' => 'consent_ack', 'type' => 'checkbox', 'title' => 'I grant the usage rights selected above and waive inspection approval', 'required' => true, 'help' => ''],
+                ['id' => 'signature', 'type' => 'signature', 'title' => 'Signature', 'required' => true, 'help' => 'Sign here']
+            ], '#db2777'),
+        ];
+    }
+
+    private function employeeOnboarding(): array
+    {
+        return [
+            'name' => 'Employee Onboarding Form Template',
+            'slug' => 'employee-onboarding-form-template',
+            'short_description' => 'An employee onboarding form template collecting new-hire details, equipment needs, and first-week logistics.',
+            'description' => '<p>Our Employee Onboarding Form Template collects everything HR and IT need before day one: personal details, equipment requests, emergency contacts, and intro blurb.</p><h2>Why and when to use an employee onboarding form</h2><p>Great first weeks are engineered. Sending one form right after offer acceptance means laptops arrive configured, accounts exist, teammates know the new face, and nothing depends on chasing details by email.</p><h2>Who is this template for</h2><p>HR teams, people operations, and IT departments preparing for new joiners.</p><h2>Why SharaForms is the best tool for this form</h2><p>Equipment choices route to IT via notifications, bio and photo feed straight into team-page templates, and submissions export cleanly into your HRIS import format.</p>',
+            'types' => ['employment_forms'],
+            'industries' => ['human_resources_forms'],
+            'questions' => [
+                [
+                    'question' => 'When should the onboarding form be sent?',
+                    'answer' => '<p>Ideally within days of offer acceptance, at least two weeks before start date. That leaves time for equipment orders and account setup based on the responses.</p>',
+                ],
+                [
+                    'question' => 'Should the form collect bank or tax details?',
+                    'answer' => '<p>We recommend keeping sensitive payroll data out of general forms and using your dedicated, secured payroll portal for it. This template covers everything else needed for day one.</p>',
+                ],
+                [
+                    'question' => 'Can different roles get different questions?',
+                    'answer' => '<p>Yes. Conditional logic can show extra questions based on department or role selection, for example developer tooling for engineers or sales software access for account executives.</p>',
+                ],
+            ],
+            'structure' => $this->structure('New Employee Onboarding', [
+                ['id' => 'full_name', 'type' => 'text', 'title' => 'Full Name', 'required' => true, 'help' => ''],
+                ['id' => 'preferred_name', 'type' => 'text', 'title' => 'Preferred Name', 'required' => false, 'help' => ''],
+                ['id' => 'personal_email', 'type' => 'email', 'title' => 'Personal Email', 'required' => true, 'help' => 'Before company account exists'],
+                ['id' => 'start_date', 'type' => 'date', 'title' => 'Start Date', 'required' => true, 'help' => ''],
+                ['id' => 'role', 'type' => 'text', 'title' => 'Role / Title', 'required' => true, 'help' => ''],
+                ['id' => 'equipment', 'type' => 'multi_select', 'title' => 'Equipment Needed', 'required' => true, 'help' => '', 'options' => [['value' => 'laptop', 'text' => 'Laptop'], ['value' => 'monitor', 'text' => 'Monitor'], ['value' => 'headset', 'text' => 'Headset'], ['value' => 'phone', 'text' => 'Company Phone'], ['value' => 'dock', 'text' => 'Docking Station']]],
+                ['id' => 'emergency_contact', 'type' => 'phone_number', 'title' => 'Emergency Contact Number', 'required' => true, 'help' => ''],
+                ['id' => 'bio', 'type' => 'text', 'title' => 'Short Intro Bio', 'required' => false, 'help' => 'For the team page - hobbies, background, fun fact', 'multi_lines' => true],
+                ['id' => 'photo', 'type' => 'files', 'title' => 'Profile Photo', 'required' => false, 'help' => 'Optional', 'max_number_of_files' => 1, 'max_file_size' => 5]
+            ], '#0d9488'),
+        ];
+    }
+
+    private function exitInterview(): array
+    {
+        return [
+            'name' => 'Exit Interview Form Template',
+            'slug' => 'exit-interview-form-template',
+            'short_description' => 'An exit interview form template to capture honest departure feedback and reduce future attrition.',
+            'description' => '<p>Our Exit Interview Form Template gathers candid feedback from departing employees about their experience, reasons for leaving, and what the company could improve.</p><h2>Why and when to use an exit interview form</h2><p>Departing employees give the most honest feedback you will ever receive. Capturing it consistently turns individual departures into patterns you can fix: management issues, pay gaps, or growth ceilings show up across multiple exits.</p><h2>Who is this template for</h2><p>HR teams and people operations at companies that want retention driven by evidence rather than guesswork.</p><h2>Why SharaForms is the best tool for this form</h2><p>Anonymous-friendly design encourages honesty, satisfaction scales quantify sentiment over time, and exports let HR analyze themes across many exits.</p>',
+            'types' => ['interview_forms', 'survey_templates'],
+            'industries' => ['human_resources_forms'],
+            'questions' => [
+                [
+                    'question' => 'Should exit interviews be anonymous?',
+                    'answer' => '<p>Name fields can be removed entirely so responses cannot be linked to individuals. Many companies keep role and tenure but drop identity to increase candor while preserving context.</p>',
+                ],
+                [
+                    'question' => 'When should the form be sent?',
+                    'answer' => '<p>During the final week, after the resignation decision is final but while the experience is fresh. Avoid the very last day when attention has already moved on.</p>',
+                ],
+                [
+                    'question' => 'What should we do with the results?',
+                    'answer' => '<p>Aggregate quarterly. Single exits are anecdotes; three people citing the same manager or pay band is a signal worth acting on. CSV export makes that analysis straightforward.</p>',
+                ],
+            ],
+            'structure' => $this->structure('Exit Interview', [
+                ['id' => 'department', 'type' => 'select', 'title' => 'Department', 'required' => true, 'help' => '', 'options' => [['value' => 'engineering', 'text' => 'Engineering'], ['value' => 'sales', 'text' => 'Sales'], ['value' => 'marketing', 'text' => 'Marketing'], ['value' => 'support', 'text' => 'Support'], ['value' => 'operations', 'text' => 'Operations'], ['value' => 'other', 'text' => 'Other']]],
+                ['id' => 'tenure', 'type' => 'select', 'title' => 'Tenure at Company', 'required' => true, 'help' => '', 'options' => [['value' => 'lt_1y', 'text' => 'Less than 1 year'], ['value' => '1_3y', 'text' => '1-3 years'], ['value' => '3_5y', 'text' => '3-5 years'], ['value' => 'gt_5y', 'text' => 'More than 5 years']]],
+                ['id' => 'primary_reason', 'type' => 'select', 'title' => 'Primary Reason for Leaving', 'required' => true, 'help' => '', 'options' => [['value' => 'new_opportunity', 'text' => 'New Opportunity'], ['value' => 'compensation', 'text' => 'Compensation & Benefits'], ['value' => 'management', 'text' => 'Management'], ['value' => 'career_growth', 'text' => 'Limited Career Growth'], ['value' => 'culture', 'text' => 'Culture / Work Environment'], ['value' => 'relocation', 'text' => 'Relocation / Personal']]],
+                ['id' => 'satisfaction', 'type' => 'scale', 'title' => 'How satisfied were you working here overall?', 'required' => true, 'help' => '1 = not satisfied, 10 = extremely satisfied', 'scale_min_value' => 1, 'scale_max_value' => 10, 'scale_step_value' => 1],
+                ['id' => 'what_improve', 'type' => 'text', 'title' => 'What could we improve for the team you leave behind?', 'required' => false, 'help' => '', 'multi_lines' => true],
+                ['id' => 'would_recommend', 'type' => 'select', 'title' => 'Would you recommend us as an employer?', 'required' => true, 'help' => '', 'options' => [['value' => 'yes', 'text' => 'Yes'], ['value' => 'maybe', 'text' => 'Maybe'], ['value' => 'no', 'text' => 'No']]],
+                ['id' => 'comments', 'type' => 'text', 'title' => 'Anything else you would like to share?', 'required' => false, 'help' => '', 'multi_lines' => true]
+            ], '#64748b'),
+        ];
+    }
+
+    private function selfEvaluation(): array
+    {
+        return [
+            'name' => 'Self-Evaluation Form Template',
+            'slug' => 'self-evaluation-form-template',
+            'short_description' => 'A self-evaluation form template for employees to reflect on achievements, challenges, and goals ahead of performance reviews.',
+            'description' => '<p>Our Self-Evaluation Form Template structures employee reflection before performance reviews: achievements, challenges, skill ratings, and next-period goals.</p><h2>Why and when to use a self-evaluation form</h2><p>Reviews go better when employees arrive prepared. A written self-assessment gives managers context they would otherwise miss, surfaces wins employees remember and managers forgot, and makes the review conversation two-sided.</p><h2>Who is this template for</h2><p>People teams and managers running quarterly or annual review cycles.</p><h2>Why SharaForms is the best tool for this form</h2><p>Structured sections keep reflections comparable across the team, rating scales quantify skill confidence, and submissions pair naturally with your existing review docs.</p>',
+            'types' => ['evaluation_forms'],
+            'industries' => ['human_resources_forms'],
+            'questions' => [
+                [
+                    'question' => 'What belongs in the achievements section?',
+                    'answer' => '<p>Concrete outcomes with numbers where possible: projects shipped, targets beaten, problems solved, or praise received. Specifics make reviews fairer than generic effort statements.</p>',
+                ],
+                [
+                    'question' => 'Is the skills rating visible to my manager?',
+                    'answer' => '<p>Submissions go to whoever receives form notifications, typically your manager or HR. Check with your people team on how results are shared in your company.</p>',
+                ],
+                [
+                    'question' => 'How long should answers be?',
+                    'answer' => '<p>Two to four sentences per prompt works well. The goal is honest reflection, not essay writing. Bullet points are fine.</p>',
+                ],
+            ],
+            'structure' => $this->structure('Self-Evaluation', [
+                ['id' => 'employee_name', 'type' => 'text', 'title' => 'Name', 'required' => true, 'help' => ''],
+                ['id' => 'review_period', 'type' => 'select', 'title' => 'Review Period', 'required' => true, 'help' => '', 'options' => [['value' => 'q1', 'text' => 'Q1'], ['value' => 'q2', 'text' => 'Q2'], ['value' => 'q3', 'text' => 'Q3'], ['value' => 'q4', 'text' => 'Q4'], ['value' => 'annual', 'text' => 'Full Year']]],
+                ['id' => 'achievements', 'type' => 'text', 'title' => 'Key Achievements This Period', 'required' => true, 'help' => '', 'multi_lines' => true],
+                ['id' => 'challenges', 'type' => 'text', 'title' => 'Challenges & Lessons Learned', 'required' => true, 'help' => '', 'multi_lines' => true],
+                ['id' => 'skills_confidence', 'type' => 'rating', 'title' => 'Confidence in Core Skills', 'required' => true, 'help' => '1 = still learning, 5 = very confident', 'rating_max_value' => 5],
+                ['id' => 'goals_next', 'type' => 'text', 'title' => 'Goals for Next Period', 'required' => true, 'help' => '', 'multi_lines' => true],
+                ['id' => 'support_needed', 'type' => 'text', 'title' => 'Support or Resources Needed', 'required' => false, 'help' => '', 'multi_lines' => true]
+            ], '#3b82f6'),
+        ];
+    }
+
+    private function scholarshipApplication(): array
+    {
+        return [
+            'name' => 'Scholarship Application Form Template',
+            'slug' => 'scholarship-application-form-template',
+            'short_description' => 'A scholarship application form template capturing student details, essays, transcripts, and references.',
+            'description' => '<p>Our Scholarship Application Form Template collects applicant details, financial need statements, essays, transcripts, and referee contacts in one organized submission.</p><h2>Why and when to use a scholarship application form</h2><p>Scholarship committees compare dozens of candidates fairly only when applications arrive in the same shape. One form standardizes essays, documents, and eligibility declarations so reviewers score applicants, not formatting choices.</p><h2>Who is this template for</h2><p>Universities, foundations, employers awarding education grants, community organizations, and alumni associations.</p><h2>Why SharaForms is the best tool for this form</h2><p>File uploads accept transcripts and recommendation letters, closing dates enforce deadlines automatically, and every application lands in one dashboard instead of a chaotic inbox.</p>',
+            'types' => ['application_forms'],
+            'industries' => ['education_forms', 'charity_forms'],
+            'questions' => [
+                [
+                    'question' => 'What documents should applicants attach?',
+                    'answer' => '<p>Most scholarships ask for academic transcripts, proof of enrollment, and sometimes recommendation letters. The file upload field accepts PDFs and images up to your size limits.</p>',
+                ],
+                [
+                    'question' => 'How do we enforce the deadline?',
+                    'answer' => '<p>SharaForms supports scheduled form closure. Set the closing date once and late submissions are blocked automatically, with no manual switching off.</p>',
+                ],
+                [
+                    'question' => 'Can multiple committee members review applications?',
+                    'answer' => '<p>Yes. Export all submissions to CSV for blind scoring rounds, or share the form workspace with committee members so everyone sees the same complete applications.</p>',
+                ],
+            ],
+            'structure' => $this->structure('Scholarship Application', [
+                ['id' => 'applicant_name', 'type' => 'text', 'title' => 'Applicant Full Name', 'required' => true, 'help' => ''],
+                ['id' => 'email', 'type' => 'email', 'title' => 'Email', 'required' => true, 'help' => ''],
+                ['id' => 'phone', 'type' => 'phone_number', 'title' => 'Phone Number', 'required' => true, 'help' => ''],
+                ['id' => 'institution', 'type' => 'text', 'title' => 'School / University', 'required' => true, 'help' => ''],
+                ['id' => 'program', 'type' => 'text', 'title' => 'Program of Study', 'required' => true, 'help' => ''],
+                ['id' => 'gpa', 'type' => 'number', 'title' => 'Current GPA', 'required' => false, 'help' => ''],
+                ['id' => 'financial_need', 'type' => 'text', 'title' => 'Financial Need Statement', 'required' => true, 'help' => 'Briefly describe your circumstances', 'multi_lines' => true],
+                ['id' => 'essay', 'type' => 'text', 'title' => 'Personal Statement', 'required' => true, 'help' => 'Up to 500 words: your goals and why you deserve this scholarship', 'multi_lines' => true],
+                ['id' => 'transcript', 'type' => 'files', 'title' => 'Transcript / Supporting Documents', 'required' => true, 'help' => 'PDF preferred', 'max_number_of_files' => 4, 'max_file_size' => 15],
+                ['id' => 'eligibility_consent', 'type' => 'checkbox', 'title' => 'I confirm I meet the eligibility criteria', 'required' => true, 'help' => '']
+            ], '#7c3aed'),
+        ];
+    }
+
+    private function grantApplication(): array
+    {
+        return [
+            'name' => 'Grant Application Form Template',
+            'slug' => 'grant-application-form-template',
+            'short_description' => 'A grant application form template for foundations collecting project proposals, budgets, and impact plans.',
+            'description' => '<p>Our Grant Application Form Template helps foundations and grant programs collect structured proposals: organization profile, project summary, funding request, budget, and expected impact.</p><h2>Why and when to use a grant application form</h2><p>Reviewing proposals from email attachments wastes committee time. A structured form normalizes every application to your criteria, makes side-by-side comparison possible, and keeps the full history for reporting to your own board.</p><h2>Who is this template for</h2><p>Foundations, corporate giving programs, government funds, accelerators, and any organization distributing grants.</p><h2>Why SharaForms is the best tool for this form</h2><p>Budget files attach directly to applications, numeric funding fields enable clean sorting, and closed-date scheduling enforces round deadlines without manual policing.</p>',
+            'types' => ['application_forms'],
+            'industries' => ['charity_forms', 'education_forms'],
+            'questions' => [
+                [
+                    'question' => 'What should a strong project summary contain?',
+                    'answer' => '<p>The problem being addressed, who benefits, what the grant will fund specifically, and the measurable outcome you expect. Reviewers should grasp the project in under a minute.</p>',
+                ],
+                [
+                    'question' => 'Can organizations apply for multiple grants?',
+                    'answer' => '<p>Yes, each program gets its own copy of the form with tailored questions and amounts, while all submissions live under your SharaForms workspace.</p>',
+                ],
+                [
+                    'question' => 'How much budget detail is required?',
+                    'answer' => '<p>This template asks for a budget document upload plus the headline funding amount. Adjust both fields to match your round requirements, from light-touch micro-grants to full financial reviews.</p>',
+                ],
+            ],
+            'structure' => $this->structure('Grant Application', [
+                ['id' => 'organization_name', 'type' => 'text', 'title' => 'Organization Name', 'required' => true, 'help' => ''],
+                ['id' => 'contact_person', 'type' => 'text', 'title' => 'Primary Contact', 'required' => true, 'help' => ''],
+                ['id' => 'email', 'type' => 'email', 'title' => 'Email', 'required' => true, 'help' => ''],
+                ['id' => 'org_type', 'type' => 'select', 'title' => 'Organization Type', 'required' => true, 'help' => '', 'options' => [['value' => 'nonprofit', 'text' => 'Nonprofit / NGO'], ['value' => 'social_enterprise', 'text' => 'Social Enterprise'], ['value' => 'startup', 'text' => 'Startup'], ['value' => 'academic', 'text' => 'Academic Institution'], ['value' => 'community', 'text' => 'Community Group']]],
+                ['id' => 'project_title', 'type' => 'text', 'title' => 'Project Title', 'required' => true, 'help' => ''],
+                ['id' => 'funding_amount', 'type' => 'number', 'title' => 'Funding Amount Requested', 'required' => true, 'help' => ''],
+                ['id' => 'project_summary', 'type' => 'text', 'title' => 'Project Summary', 'required' => true, 'help' => 'Problem, beneficiaries, and requested use of funds', 'multi_lines' => true],
+                ['id' => 'impact_plan', 'type' => 'text', 'title' => 'Expected Impact & Measurement', 'required' => true, 'help' => '', 'multi_lines' => true],
+                ['id' => 'budget_document', 'type' => 'files', 'title' => 'Budget & Supporting Documents', 'required' => true, 'help' => 'PDF preferred', 'max_number_of_files' => 4, 'max_file_size' => 15],
+                ['id' => 'accuracy_declaration', 'type' => 'checkbox', 'title' => 'I confirm the information provided is accurate', 'required' => true, 'help' => '']
+            ], '#16a34a'),
+        ];
+    }
+
+    private function clientOnboarding(): array
+    {
+        return [
+            'name' => 'Client Onboarding Form Template',
+            'slug' => 'client-onboarding-form-template',
+            'short_description' => 'A client onboarding form template for agencies to gather brand assets, goals, and access details before kickoff.',
+            'description' => '<p>Our Client Onboarding Form Template collects the goals, brand materials, audience details, and preferences agencies need before project kickoff.</p><h2>Why and when to use a client onboarding form</h2><p>Kickoff calls stall when basic facts are unknown. Sending one structured form after signing turns week one from information gathering into actual work, and clients love how professional it feels.</p><h2>Who is this template for</h2><p>Marketing agencies, design studios, consultancies, freelancers, and service businesses starting new client engagements.</p><h2>Why SharaForms is the best tool for this form</h2><p>Brand asset uploads land with the rest of the brief, URL fields capture websites and social profiles cleanly, and everything arrives searchable in one place instead of scattered threads.</p>',
+            'types' => ['questionnaire_templates'],
+            'industries' => ['services_forms', 'marketing_forms'],
+            'questions' => [
+                [
+                    'question' => 'When should clients receive the onboarding form?',
+                    'answer' => '<p>Immediately after contract signature, ideally with your welcome email. Early responses mean real work can begin at kickoff instead of after it.</p>',
+                ],
+                [
+                    'question' => 'What brand assets should we request?',
+                    'answer' => '<p>Logos in vector formats if available, brand guidelines, fonts, photography, and past campaign examples. The file field accepts multiple uploads so everything arrives together.</p>',
+                ],
+                [
+                    'question' => 'Can the form adapt to different service types?',
+                    'answer' => '<p>Yes. Use conditional logic to show SEO-specific questions for search clients or platform questions for social clients, keeping every form relevant to the engagement.</p>',
+                ],
+            ],
+            'structure' => $this->structure('Client Onboarding', [
+                ['id' => 'business_name', 'type' => 'text', 'title' => 'Business Name', 'required' => true, 'help' => ''],
+                ['id' => 'website_url', 'type' => 'url', 'title' => 'Website', 'required' => true, 'help' => ''],
+                ['id' => 'industry', 'type' => 'text', 'title' => 'Industry', 'required' => true, 'help' => ''],
+                ['id' => 'primary_contact', 'type' => 'text', 'title' => 'Primary Contact Name', 'required' => true, 'help' => ''],
+                ['id' => 'email', 'type' => 'email', 'title' => 'Contact Email', 'required' => true, 'help' => ''],
+                ['id' => 'goals', 'type' => 'text', 'title' => 'Primary Goals for This Engagement', 'required' => true, 'help' => 'What does success look like?', 'multi_lines' => true],
+                ['id' => 'target_audience', 'type' => 'text', 'title' => 'Target Audience', 'required' => true, 'help' => '', 'multi_lines' => true],
+                ['id' => 'competitors', 'type' => 'text', 'title' => 'Main Competitors', 'required' => false, 'help' => '', 'multi_lines' => true],
+                ['id' => 'brand_assets', 'type' => 'files', 'title' => 'Brand Assets Upload', 'required' => false, 'help' => 'Logos, guidelines, fonts, photos', 'max_number_of_files' => 10, 'max_file_size' => 20],
+                ['id' => 'communication_pref', 'type' => 'select', 'title' => 'Preferred Communication Channel', 'required' => true, 'help' => '', 'options' => [['value' => 'email', 'text' => 'Email'], ['value' => 'slack', 'text' => 'Slack'], ['value' => 'whatsapp', 'text' => 'WhatsApp'], ['value' => 'calls', 'text' => 'Scheduled Calls']]]
+            ], '#ea580c'),
+        ];
+    }
+
+    private function projectBrief(): array
+    {
+        return [
+            'name' => 'Project Brief Form Template',
+            'slug' => 'project-brief-form-template',
+            'short_description' => 'A project brief form template for creative and web projects capturing objectives, deliverables, budgets, and deadlines.',
+            'description' => '<p>Our Project Brief Form Template turns scattered kickoff notes into one structured brief: objectives, audience, deliverables, budget range, and deadline.</p><h2>Why and when to use a project brief form</h2><p>Scope creep starts with vague briefs. Collecting the essentials in a structured form forces decisions before work begins, gives every stakeholder the same reference point, and protects margins when requests drift beyond scope.</p><h2>Who is this template for</h2><p>Web design studios, branding agencies, video producers, marketing teams briefing internal creatives, and freelancers.</p><h2>Why SharaForms is the best tool for this form</h2><p>Budget ranges stay structured for quoting, deliverable multiselects map directly to statements of work, and completed briefs export cleanly into your project management tool.</p>',
+            'types' => ['questionnaire_templates', 'content_forms'],
+            'industries' => ['web_design_forms', 'advertising_forms', 'marketing_forms'],
+            'questions' => [
+                [
+                    'question' => 'What makes a good project brief?',
+                    'answer' => '<p>A clear objective, a defined audience, specific deliverables, an honest budget range, and a real deadline. If any of those are missing, the brief will generate questions instead of answers.</p>',
+                ],
+                [
+                    'question' => 'Who should fill out the brief?',
+                    'answer' => '<p>The person who owns the outcome, usually the client contact or product owner. You can pre-fill known fields by sharing a pre-filled link so clients only complete what you do not know yet.</p>',
+                ],
+                [
+                    'question' => 'Should the budget field be optional?',
+                    'answer' => '<p>We recommend keeping it required but offering ranges rather than exact numbers. Ranges feel less exposing for clients while still anchoring scope conversations.</p>',
+                ],
+            ],
+            'structure' => $this->structure('Project Brief', [
+                ['id' => 'client_company', 'type' => 'text', 'title' => 'Client / Company', 'required' => true, 'help' => ''],
+                ['id' => 'contact_person', 'type' => 'text', 'title' => 'Contact Person', 'required' => true, 'help' => ''],
+                ['id' => 'email', 'type' => 'email', 'title' => 'Email', 'required' => true, 'help' => ''],
+                ['id' => 'project_name', 'type' => 'text', 'title' => 'Project Name', 'required' => true, 'help' => ''],
+                ['id' => 'project_type', 'type' => 'select', 'title' => 'Project Type', 'required' => true, 'help' => '', 'options' => [['value' => 'website', 'text' => 'Website'], ['value' => 'branding', 'text' => 'Branding / Identity'], ['value' => 'campaign', 'text' => 'Marketing Campaign'], ['value' => 'video', 'text' => 'Video / Motion'], ['value' => 'other', 'text' => 'Other']]],
+                ['id' => 'objectives', 'type' => 'text', 'title' => 'Objectives & Success Criteria', 'required' => true, 'help' => '', 'multi_lines' => true],
+                ['id' => 'deliverables', 'type' => 'multi_select', 'title' => 'Deliverables Needed', 'required' => true, 'help' => '', 'options' => [['value' => 'logo', 'text' => 'Logo / Identity'], ['value' => 'website', 'text' => 'Website'], ['value' => 'copywriting', 'text' => 'Copywriting'], ['value' => 'video', 'text' => 'Video Content'], ['value' => 'social_kit', 'text' => 'Social Media Kit']]],
+                ['id' => 'budget_range', 'type' => 'select', 'title' => 'Budget Range', 'required' => true, 'help' => '', 'options' => [['value' => 'lt_5k', 'text' => 'Under $5,000'], ['value' => '5k_15k', 'text' => '$5,000 - $15,000'], ['value' => '15k_50k', 'text' => '$15,000 - $50,000'], ['value' => 'gt_50k', 'text' => '$50,000+']]],
+                ['id' => 'deadline', 'type' => 'date', 'title' => 'Target Launch Date', 'required' => true, 'help' => ''],
+                ['id' => 'references_url', 'type' => 'url', 'title' => 'Reference Links', 'required' => false, 'help' => 'Examples you like']
+            ], '#0d9488'),
+        ];
+    }
+
+    private function bugReport(): array
+    {
+        return [
+            'name' => 'Bug Report Form Template',
+            'slug' => 'bug-report-form-template',
+            'short_description' => 'A bug report form template that captures reproducible steps, severity, environment, and screenshots for faster fixes.',
+            'description' => '<p>Our Bug Report Form Template captures everything engineers need to reproduce and fix issues: summary, steps, expected vs actual behavior, environment, and evidence.</p><h2>Why and when to use a bug report form</h2><p>"It does not work" emails cost engineering time in back-and-forth. A structured report front-loads the details that separate a ten-minute fix from a three-day investigation, and severity triage keeps critical issues at the top of the queue.</p><h2>Who is this template for</h2><p>SaaS product teams, QA departments, IT helpdesks, and open-source maintainers collecting issue reports from non-technical users.</p><h2>Why SharaForms is the best tool for this form</h2><p>Screenshots and log files attach directly to reports, severity and environment dropdowns enable instant triage, and reports can stream into Slack or your issue tracker via webhooks.</p>',
+            'types' => ['report_forms', 'file_upload_forms'],
+            'industries' => ['it_forms', 'business_forms'],
+            'questions' => [
+                [
+                    'question' => 'What should a good bug report contain?',
+                    'answer' => '<p>Numbered steps to reproduce, what you expected to happen, what actually happened, where it happened (environment), and screenshots or logs. Reproducible reports get fixed fastest.</p>',
+                ],
+                [
+                    'question' => 'How is severity different from priority?',
+                    'answer' => '<p>Severity measures impact: a crash on checkout is critical even if it affects few users; a typo is minor even if visible to everyone. This template captures severity so your team sets priority during triage.</p>',
+                ],
+                [
+                    'question' => 'Can we send reports straight into our tracker?',
+                    'answer' => '<p>Yes. Webhooks or Zapier can push each submission into Jira, Linear, GitHub, or Slack as soon as it arrives, so nothing waits in an inbox.</p>',
+                ],
+            ],
+            'structure' => $this->structure('Bug Report', [
+                ['id' => 'reporter_email', 'type' => 'email', 'title' => 'Your Email (for follow-up)', 'required' => false, 'help' => ''],
+                ['id' => 'area', 'type' => 'select', 'title' => 'Product Area', 'required' => true, 'help' => '', 'options' => [['value' => 'dashboard', 'text' => 'Dashboard'], ['value' => 'forms', 'text' => 'Forms'], ['value' => 'billing', 'text' => 'Billing'], ['value' => 'integrations', 'text' => 'Integrations'], ['value' => 'mobile', 'text' => 'Mobile'], ['value' => 'other', 'text' => 'Other']]],
+                ['id' => 'environment', 'type' => 'select', 'title' => 'Environment', 'required' => true, 'help' => '', 'options' => [['value' => 'production', 'text' => 'Production'], ['value' => 'staging', 'text' => 'Staging'], ['value' => 'development', 'text' => 'Development']]],
+                ['id' => 'severity', 'type' => 'select', 'title' => 'Severity', 'required' => true, 'help' => '', 'options' => [['value' => 'critical', 'text' => 'Critical - blocked, no workaround'], ['value' => 'major', 'text' => 'Major - feature unusable, workaround exists'], ['value' => 'minor', 'text' => 'Minor - annoying but usable'], ['value' => 'trivial', 'text' => 'Trivial - cosmetic']]],
+                ['id' => 'summary', 'type' => 'text', 'title' => 'One-line Summary', 'required' => true, 'help' => ''],
+                ['id' => 'steps', 'type' => 'text', 'title' => 'Steps to Reproduce', 'required' => true, 'help' => '1... 2... 3...', 'multi_lines' => true],
+                ['id' => 'expected_vs_actual', 'type' => 'text', 'title' => 'Expected vs Actual Result', 'required' => true, 'help' => '', 'multi_lines' => true],
+                ['id' => 'device_info', 'type' => 'text', 'title' => 'Device / Browser / OS', 'required' => false, 'help' => 'e.g. Chrome 126 on Windows 11'],
+                ['id' => 'evidence', 'type' => 'files', 'title' => 'Screenshots / Logs', 'required' => false, 'help' => 'Optional but helpful', 'max_number_of_files' => 6, 'max_file_size' => 15]
+            ], '#9f1239'),
+        ];
+    }
+
+    private function maintenanceRequest(): array
+    {
+        return [
+            'name' => 'Maintenance Request Form Template',
+            'slug' => 'maintenance-request-form-template',
+            'short_description' => 'A maintenance request form template for tenants to report repairs with photos, urgency, and access permissions.',
+            'description' => '<p>Our Maintenance Request Form Template lets tenants report repair issues with location, category, urgency, photos, and entry permission in one submission.</p><h2>Why and when to use a maintenance request form</h2><p>Tenants text photos at midnight and details get lost. A structured request records what broke, where, how urgent it is, and whether the tenant grants entry permission, creating a documented trail that protects both landlord and tenant.</p><h2>Who is this template for</h2><p>Property managers, landlords, HOAs, facilities teams, and co-working operators maintaining physical spaces.</p><h2>Why SharaForms is the best tool for this form</h2><p>New requests notify your maintenance line instantly, photo uploads document condition before repairs, and the full history per property stays searchable for compliance and deposit disputes.</p>',
+            'types' => ['request_forms'],
+            'industries' => ['real_estate_forms', 'services_forms'],
+            'questions' => [
+                [
+                    'question' => 'What counts as a maintenance emergency?',
+                    'answer' => '<p>Burst pipes, gas smells, total power loss, security failures, or anything posing immediate safety risk. Set expectations in the form description: emergencies should also trigger a phone call, not just the form.</p>',
+                ],
+                [
+                    'question' => 'Why ask for entry permission up front?',
+                    'answer' => '<p>Most jurisdictions require notice or consent before entering occupied units. Capturing permission in the request itself removes a whole round of phone tag before scheduling contractors.</p>',
+                ],
+                [
+                    'question' => 'Can tenants track their request status?',
+                    'answer' => '<p>Submitters receive an instant confirmation email, and you can reply from the same thread as work progresses. For larger portfolios, webhook updates can feed status changes into tenant communication tools.</p>',
+                ],
+            ],
+            'structure' => $this->structure('Maintenance Request', [
+                ['id' => 'tenant_name', 'type' => 'text', 'title' => 'Tenant Name', 'required' => true, 'help' => ''],
+                ['id' => 'phone', 'type' => 'phone_number', 'title' => 'Contact Number', 'required' => true, 'help' => ''],
+                ['id' => 'unit_address', 'type' => 'text', 'title' => 'Property / Unit Address', 'required' => true, 'help' => ''],
+                ['id' => 'category', 'type' => 'select', 'title' => 'Issue Category', 'required' => true, 'help' => '', 'options' => [['value' => 'plumbing', 'text' => 'Plumbing'], ['value' => 'electrical', 'text' => 'Electrical'], ['value' => 'hvac', 'text' => 'Heating / Cooling'], ['value' => 'appliance', 'text' => 'Appliance'], ['value' => 'lock_security', 'text' => 'Locks / Security'], ['value' => 'pest', 'text' => 'Pest Control'], ['value' => 'other', 'text' => 'Other']]],
+                ['id' => 'urgency', 'type' => 'select', 'title' => 'Urgency', 'required' => true, 'help' => '', 'options' => [['value' => 'emergency', 'text' => 'Emergency - safety risk, call us too'], ['value' => 'high', 'text' => 'High - needs fixing within 24-48h'], ['value' => 'medium', 'text' => 'Medium - within a week'], ['value' => 'low', 'text' => 'Low - whenever convenient']]],
+                ['id' => 'description', 'type' => 'text', 'title' => 'Describe the Issue', 'required' => true, 'help' => 'What happened, where exactly, since when', 'multi_lines' => true],
+                ['id' => 'photos', 'type' => 'files', 'title' => 'Photos', 'required' => false, 'help' => 'Up to 4 photos help contractors quote faster', 'max_number_of_files' => 4, 'max_file_size' => 10],
+                ['id' => 'access_time', 'type' => 'select', 'title' => 'Preferred Access Time', 'required' => true, 'help' => '', 'options' => [['value' => 'morning', 'text' => 'Mornings (8-12)'], ['value' => 'afternoon', 'text' => 'Afternoons (12-17)'], ['value' => 'evening', 'text' => 'Evenings (17-20)'], ['value' => 'anytime', 'text' => 'Anytime']]],
+                ['id' => 'entry_permission', 'type' => 'checkbox', 'title' => 'I authorize entry to carry out the repair (notice will be given)', 'required' => true, 'help' => '']
+            ], '#0284c7'),
+        ];
+    }
+
+    private function coachingIntake(): array
+    {
+        return [
+            'name' => 'Coaching Intake Form Template',
+            'slug' => 'coaching-intake-form-template',
+            'short_description' => 'A coaching intake form template capturing client goals, context, and session preferences before the first session.',
+            'description' => '<p>Our Coaching Intake Form Template gathers the context a coach needs before session one: goals, current situation, past coaching experience, and logistics preferences.</p><h2>Why and when to use a coaching intake form</h2><p>First sessions spent collecting basics waste paid time. An intake form sent after booking means the opening conversation starts at insight level, and goal patterns across clients become visible over time.</p><h2>Who is this template for</h2><p>Career coaches, executive and leadership coaches, life coaches, business mentors, and health coaches.</p><h2>Why SharaForms is the best tool for this form</h2><p>Responses arrive before the session automatically, confidentiality consent is captured explicitly, and every client history stays organized in one dashboard instead of email threads.</p>',
+            'types' => ['questionnaire_templates'],
+            'industries' => ['services_forms', 'human_resources_forms'],
+            'questions' => [
+                [
+                    'question' => 'When should clients complete the intake form?',
+                    'answer' => '<p>Ideally right after booking and at least two days before the first session. That gives you time to prepare questions and lets clients answer reflectively rather than on the spot.</p>',
+                ],
+                [
+                    'question' => 'Is the information confidential?',
+                    'answer' => '<p>The template includes an explicit confidentiality acknowledgment, making your professional boundary clear from the start. Submissions live in your secured workspace, visible only to you and anyone you invite.</p>',
+                ],
+                [
+                    'question' => 'Can I use this for group programs?',
+                    'answer' => '<p>Yes. Copy the form per participant or add fields for group name and program cohort, keeping individual goals tied to the right program.</p>',
+                ],
+            ],
+            'structure' => $this->structure('Coaching Intake', [
+                ['id' => 'full_name', 'type' => 'text', 'title' => 'Full Name', 'required' => true, 'help' => ''],
+                ['id' => 'email', 'type' => 'email', 'title' => 'Email', 'required' => true, 'help' => ''],
+                ['id' => 'phone', 'type' => 'phone_number', 'title' => 'Phone Number', 'required' => false, 'help' => ''],
+                ['id' => 'coaching_area', 'type' => 'select', 'title' => 'Coaching Area', 'required' => true, 'help' => '', 'options' => [['value' => 'career', 'text' => 'Career'], ['value' => 'leadership', 'text' => 'Leadership / Executive'], ['value' => 'business', 'text' => 'Business / Entrepreneurship'], ['value' => 'life', 'text' => 'Life & Relationships'], ['value' => 'health', 'text' => 'Health & Wellbeing']]],
+                ['id' => 'current_situation', 'type' => 'text', 'title' => 'Where Are You Right Now?', 'required' => true, 'help' => 'Context on your situation today', 'multi_lines' => true],
+                ['id' => 'goals', 'type' => 'text', 'title' => 'What Do You Want to Achieve?', 'required' => true, 'help' => 'Be as specific as you can', 'multi_lines' => true],
+                ['id' => 'past_coaching', 'type' => 'select', 'title' => 'Previous Coaching Experience', 'required' => true, 'help' => '', 'options' => [['value' => 'none', 'text' => 'None - first time'], ['value' => 'some', 'text' => 'Some experience'], ['value' => 'extensive', 'text' => 'Extensive experience']]],
+                ['id' => 'session_format', 'type' => 'select', 'title' => 'Preferred Session Format', 'required' => true, 'help' => '', 'options' => [['value' => 'virtual', 'text' => 'Virtual (video call)'], ['value' => 'in_person', 'text' => 'In person'], ['value' => 'hybrid', 'text' => 'Mix of both']]],
+                ['id' => 'availability', 'type' => 'text', 'title' => 'Your Availability', 'required' => false, 'help' => 'Days and times that usually work', 'multi_lines' => true],
+                ['id' => 'confidentiality_consent', 'type' => 'checkbox', 'title' => 'I agree to the confidentiality terms of this coaching engagement', 'required' => true, 'help' => '']
+            ], '#9333ea'),
+        ];
+    }
+
+    private function vetNewClient(): array
+    {
+        return [
+            'name' => 'Veterinary New Client Registration Form Template',
+            'slug' => 'veterinary-new-client-form-template',
+            'short_description' => 'A veterinary new client form template registering pets and owners with medical history and vaccination records.',
+            'description' => '<p>Our Veterinary New Client Form Template registers new patients properly: owner contact details, pet profile, medical history, vaccination records, and treatment authorization.</p><h2>Why and when to use a veterinary new client form</h2><p>Front-desk clipboard registration slows appointments and loses handwriting. A digital registration arrives before the visit, so reception confirms insurance and history instead of typing it while the pet waits.</p><h2>Who is this template for</h2><p>Veterinary clinics, mobile vets, animal hospitals, and rescue organizations processing new intakes.</p><h2>Why SharaForms is the best tool for this form</h2><p>Vaccination records upload as files, species-specific profiles keep histories organized per animal, and authorization checkboxes create documented consent for treatment decisions.</p>',
+            'types' => ['registration_forms'],
+            'industries' => ['veterinary_service_forms'],
+            'questions' => [
+                [
+                    'question' => 'Can I register multiple pets on one form?',
+                    'answer' => '<p>This template registers one pet per submission so each animal builds its own clean medical profile. For multi-pet households, submit the form once per pet; owner details repeat but histories stay separate.</p>',
+                ],
+                [
+                    'question' => 'What records should be uploaded?',
+                    'answer' => '<p>Previous vaccination certificates, recent lab results, and current medication lists. Photos or PDFs both work and give the treating veterinarian full context before the first exam.</p>',
+                ],
+                [
+                    'question' => 'Does the authorization cover emergency treatment?',
+                    'answer' => '<p>The consent checkbox documents general authorization to treat. Clinics typically still call for approval on major procedures unless the owner opts into an emergency-treatment clause; adjust the wording with your practice policy.</p>',
+                ],
+            ],
+            'structure' => $this->structure('New Client & Pet Registration', [
+                ['id' => 'owner_name', 'type' => 'text', 'title' => 'Owner Full Name', 'required' => true, 'help' => ''],
+                ['id' => 'email', 'type' => 'email', 'title' => 'Email', 'required' => true, 'help' => ''],
+                ['id' => 'phone', 'type' => 'phone_number', 'title' => 'Phone Number', 'required' => true, 'help' => ''],
+                ['id' => 'address', 'type' => 'text', 'title' => 'Home Address', 'required' => true, 'help' => '', 'multi_lines' => true],
+                ['id' => 'pet_name', 'type' => 'text', 'title' => 'Pet Name', 'required' => true, 'help' => ''],
+                ['id' => 'species', 'type' => 'select', 'title' => 'Species', 'required' => true, 'help' => '', 'options' => [['value' => 'dog', 'text' => 'Dog'], ['value' => 'cat', 'text' => 'Cat'], ['value' => 'bird', 'text' => 'Bird'], ['value' => 'rabbit', 'text' => 'Rabbit'], ['value' => 'exotic', 'text' => 'Exotic / Other']]],
+                ['id' => 'breed', 'type' => 'text', 'title' => 'Breed', 'required' => false, 'help' => ''],
+                ['id' => 'birth_year', 'type' => 'number', 'title' => 'Approximate Age (years)', 'required' => false, 'help' => ''],
+                ['id' => 'gender', 'type' => 'select', 'title' => 'Sex', 'required' => true, 'help' => '', 'options' => [['value' => 'male_intact', 'text' => 'Male (intact)'], ['value' => 'male_neutered', 'text' => 'Male (neutered)'], ['value' => 'female_intact', 'text' => 'Female (intact)'], ['value' => 'female_spayed', 'text' => 'Female (spayed)']]],
+                ['id' => 'medical_history', 'type' => 'text', 'title' => 'Medical History & Current Medications', 'required' => false, 'help' => '', 'multi_lines' => true],
+                ['id' => 'vaccination_records', 'type' => 'files', 'title' => 'Vaccination Records Upload', 'required' => false, 'help' => 'PDF or photos', 'max_number_of_files' => 5, 'max_file_size' => 10],
+                ['id' => 'treatment_authorization', 'type' => 'checkbox', 'title' => 'I authorize the clinic to provide necessary treatment', 'required' => true, 'help' => '']
+            ], '#65a30d'),
+        ];
+    }
+
+    private function npsSurvey(): array
+    {
+        return [
+            'name' => 'NPS Survey Template',
+            'slug' => 'nps-survey-template',
+            'short_description' => 'An NPS survey template measuring customer loyalty with the standard 0-10 recommend score and follow-up questions.',
+            'description' => '<p>Our NPS Survey Template implements the classic Net Promoter Score question with the 0-10 scale, plus follow-up prompts that turn scores into actionable feedback.</p><h2>Why and when to use an NPS survey</h2><p>NPS is the fastest loyalty signal there is: one question customers always answer, one number leadership tracks quarterly. Send it after meaningful milestones such as onboarding completion, renewal, or support resolution.</p><h2>Who is this template for</h2><p>Customer success teams, product managers, founders tracking retention signals, and agencies reporting client satisfaction.</p><h2>Why SharaForms is the best tool for this form</h2><p>The 0-10 scale renders perfectly on mobile, scores export to CSV for trend analysis, and conditional logic can show different follow-ups for promoters versus detractors.</p>',
+            'types' => ['survey_templates', 'feedback_forms'],
+            'industries' => ['customer_service_forms', 'business_forms'],
+            'questions' => [
+                [
+                    'question' => 'How is NPS calculated?',
+                    'answer' => '<p>Respondents answering 9 or 10 count as promoters, 7 or 8 as passives, and 0 through 6 as detractors. NPS equals the percentage of promoters minus the percentage of detractors, producing a score between -100 and +100.</p>',
+                ],
+                [
+                    'question' => 'When is the best time to send an NPS survey?',
+                    'answer' => '<p>After a meaningful experience moment: 30 days post-onboarding, after a renewal, or following a resolved support ticket. Avoid batching everyone at once; tie sends to experience moments for honest scores.</p>',
+                ],
+                [
+                    'question' => 'Should respondents be anonymous?',
+                    'answer' => '<p>Making email optional is the sweet spot: anonymity increases honesty, but an attached email lets you follow up personally with detractors, which often saves the relationship.</p>',
+                ],
+            ],
+            'structure' => $this->structure('Net Promoter Score Survey', [
+                ['id' => 'nps_score', 'type' => 'scale', 'title' => 'How likely are you to recommend us to a friend or colleague?', 'required' => true, 'help' => '0 = not at all likely, 10 = extremely likely', 'scale_min_value' => 0, 'scale_max_value' => 10, 'scale_step_value' => 1],
+                ['id' => 'score_reason', 'type' => 'text', 'title' => "What is the main reason for your score?", 'required' => false, 'help' => '', 'multi_lines' => true],
+                ['id' => 'improvement', 'type' => 'text', 'title' => 'What could we do to earn a higher score?', 'required' => false, 'help' => '', 'multi_lines' => true],
+                ['id' => 'email', 'type' => 'email', 'title' => 'Your Email (optional)', 'required' => false, 'help' => 'Only if you would like a personal follow-up'],
+                ['id' => 'follow_up_ok', 'type' => 'checkbox', 'title' => 'You may contact me about my feedback', 'required' => false, 'help' => '']
+            ], '#2563eb'),
+        ];
+    }
+
+    private function testimonialForm(): array
+    {
+        return [
+            'name' => 'Testimonial Submission Form Template',
+            'slug' => 'testimonial-form-template',
+            'short_description' => 'A testimonial submission form template collecting customer quotes, ratings, photos, and publishing permission.',
+            'description' => '<p>Our Testimonial Submission Form Template makes collecting social proof painless: customer quotes, star ratings, headshots, and explicit publishing rights in one flow.</p><h2>Why and when to use a testimonial form</h2><p>Testimonials requested over email die in draft folders. A friendly form with a rating widget and clear publishing permission lowers friction, and structured submissions drop straight into your marketing pipeline ready to publish.</p><h2>Who is this template for</h2><p>SaaS companies, agencies, course creators, service businesses, and event organizers gathering post-experience proof.</p><h2>Why SharaForms is the best tool for this form</h2><p>Ratings quantify sentiment alongside words, headshot uploads make published quotes look credible, and the permission checkbox keeps your legal basis documented.</p>',
+            'types' => ['content_forms', 'feedback_forms'],
+            'industries' => ['marketing_forms', 'customer_service_forms'],
+            'questions' => [
+                [
+                    'question' => 'What makes a testimonial persuasive?',
+                    'answer' => '<p>Specific outcomes beat generic praise: "we cut onboarding time in half" converts better than "great tool". The prompt text nudges customers toward concrete results and numbers.</p>',
+                ],
+                [
+                    'question' => 'Can customers submit anonymously?',
+                    'answer' => '<p>The display name preference field lets people choose how they appear, from full name down to initials. Fully anonymous testimonials convert poorly, so we recommend requiring at least a first name and role.</p>',
+                ],
+                [
+                    'question' => 'Do I have permission to publish what I receive?',
+                    'answer' => '<p>The required publishing-permission checkbox documents explicit consent at submission time, which is exactly the record you want if usage is ever questioned.</p>',
+                ],
+            ],
+            'structure' => $this->structure('Share Your Experience', [
+                ['id' => 'full_name', 'type' => 'text', 'title' => 'Your Name', 'required' => true, 'help' => ''],
+                ['id' => 'company_role', 'type' => 'text', 'title' => 'Company & Role', 'required' => true, 'help' => 'e.g. Head of Ops at Acme'],
+                ['id' => 'testimonial', 'type' => 'text', 'title' => 'Your Testimonial', 'required' => true, 'help' => 'What result did we help you achieve?', 'multi_lines' => true],
+                ['id' => 'rating', 'type' => 'rating', 'title' => 'Overall Rating', 'required' => true, 'help' => '', 'rating_max_value' => 5],
+                ['id' => 'display_preference', 'type' => 'select', 'title' => 'How Should We Show Your Name?', 'required' => true, 'help' => '', 'options' => [['value' => 'full', 'text' => 'Full name + company'], ['value' => 'first_name', 'text' => 'First name + role only'], ['value' => 'initials', 'text' => 'Initials only']]],
+                ['id' => 'headshot', 'type' => 'files', 'title' => 'Headshot Photo', 'required' => false, 'help' => 'Optional - makes published quotes look great', 'max_number_of_files' => 1, 'max_file_size' => 5],
+                ['id' => 'video_link', 'type' => 'url', 'title' => 'Video Testimonial Link', 'required' => false, 'help' => 'YouTube, Vimeo, or Loom'],
+                ['id' => 'publish_permission', 'type' => 'checkbox', 'title' => 'I grant permission to publish my testimonial and rating', 'required' => true, 'help' => '']
+            ], '#be185d'),
+        ];
+    }
+
+    private function gymMembership(): array
+    {
+        return [
+            'name' => 'Gym Membership Form Template',
+            'slug' => 'gym-membership-form-template',
+            'short_description' => 'A gym membership form template handling sign-ups, plan selection, health declarations, and waiver acceptance.',
+            'description' => '<p>Our Gym Membership Form Template covers the full sign-up flow for fitness businesses: member details, plan selection, fitness goals, emergency contacts, and waiver acceptance.</p><h2>Why and when to use a gym membership form</h2><p>Sign-ups happen at the front desk, on the sidewalk QR code, and from your website at midnight. One digital form handles all three consistently, captures the health declaration gyms need for safe programming, and gets waiver acceptance documented before the first workout.</p><h2>Who is this template for</h2><p>Gyms, CrossFit boxes, yoga and pilates studios, martial arts schools, and personal training studios.</p><h2>Why SharaForms is the best tool for this form</h2><p>Plan selection feeds your billing process, goal multiselects inform program recommendations, and pairing with our liability waiver template gives you complete risk documentation from day one.</p>',
+            'types' => ['membership_forms', 'registration_forms'],
+            'industries' => ['sports_forms'],
+            'questions' => [
+                [
+                    'question' => 'Which membership plans should I offer?',
+                    'answer' => '<p>Most gyms offer monthly, annual, student, and family tiers plus a trial pass. Adjust the plan options to match your pricing; annual options reduce churn while trials lower the barrier to first visits.</p>',
+                ],
+                [
+                    'question' => 'Do I still need a separate liability waiver?',
+                    'answer' => '<p>Yes, ideally. The acceptance checkbox here acknowledges your terms, while our dedicated liability waiver template captures risk acknowledgment and signature for the activities themselves. Use both for complete coverage.</p>',
+                ],
+                [
+                    'question' => 'Why collect health conditions?',
+                    'answer' => '<p>Trainers need contraindications before programming sessions, and the declaration protects your facility by documenting disclosure. Responses stay confidential within your workspace.</p>',
+                ],
+            ],
+            'structure' => $this->structure('Gym Membership Sign-up', [
+                ['id' => 'member_name', 'type' => 'text', 'title' => 'Member Full Name', 'required' => true, 'help' => ''],
+                ['id' => 'email', 'type' => 'email', 'title' => 'Email', 'required' => true, 'help' => ''],
+                ['id' => 'phone', 'type' => 'phone_number', 'title' => 'Phone Number', 'required' => true, 'help' => ''],
+                ['id' => 'plan', 'type' => 'select', 'title' => 'Membership Plan', 'required' => true, 'help' => '', 'options' => [['value' => 'monthly', 'text' => 'Monthly'], ['value' => 'annual', 'text' => 'Annual (save 20%)'], ['value' => 'student', 'text' => 'Student'], ['value' => 'family', 'text' => 'Family'], ['value' => 'trial', 'text' => '7-Day Trial']]],
+                ['id' => 'start_date', 'type' => 'date', 'title' => 'Preferred Start Date', 'required' => true, 'help' => ''],
+                ['id' => 'fitness_goals', 'type' => 'multi_select', 'title' => 'Fitness Goals', 'required' => true, 'help' => '', 'options' => [['value' => 'strength', 'text' => 'Strength'], ['value' => 'cardio', 'text' => 'Cardio / Endurance'], ['value' => 'flexibility', 'text' => 'Flexibility / Mobility'], ['value' => 'weight_loss', 'text' => 'Weight Management'], ['value' => 'rehab', 'text' => 'Rehabilitation'], ['value' => 'general', 'text' => 'General Fitness']]],
+                ['id' => 'emergency_contact', 'type' => 'phone_number', 'title' => 'Emergency Contact Number', 'required' => true, 'help' => ''],
+                ['id' => 'health_conditions', 'type' => 'text', 'title' => 'Injuries or Health Conditions', 'required' => false, 'help' => 'Heart conditions, joint injuries, medication considerations', 'multi_lines' => true],
+                ['id' => 'waiver_acceptance', 'type' => 'checkbox', 'title' => 'I accept the membership terms and gym rules', 'required' => true, 'help' => '']
+            ], '#047857'),
         ];
     }
 }

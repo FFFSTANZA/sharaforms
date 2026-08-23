@@ -7,7 +7,7 @@
   >
     <v-transition name="fade" mode="out-in">
       <div v-if="isAutoSubmit" key="auto-submit" class="text-center p-6">
-        <Loader class="h-6 w-6 text-blue-500 mx-auto" />
+        <Loader class="h-6 w-6 text-[var(--sf-coral-500)] mx-auto" />
       </div>
 
       <component
@@ -76,7 +76,7 @@
         <template #after-submit>
           <TextBlock
             v-if="form.submitted_text"
-            class="form-description text-neutral-700 dark:text-neutral-300 whitespace-pre-wrap"
+            class="form-description text-[var(--sf-text-secondary)] whitespace-pre-wrap"
             :content="form.submitted_text"
             :mentions-allowed="true"
             :form="form"
@@ -129,6 +129,7 @@ import { useFormManager } from '~/lib/forms/composables/useFormManager'
 import { FormMode } from "~/lib/forms/FormModeStrategy.js"
 import OpenForm from './OpenForm.vue'
 import OpenFormFocused from './OpenFormFocused.vue'
+import OpenFormSpotlight from './OpenFormSpotlight.vue'
 import OpenFormButton from './OpenFormButton.vue'
 import FormCleanings from '../../pages/forms/show/FormCleanings.vue'
 import VTransition from '~/components/global/transitions/VTransition.vue'
@@ -292,7 +293,10 @@ const formStyle = computed(() => {
 })
 
 const FormComponent = computed(() => {
-  return props.form?.presentation_style === 'focused' ? OpenFormFocused : OpenForm
+  const style = props.form?.presentation_style
+  if (style === 'focused') return OpenFormFocused
+  if (style === 'spotlight') return OpenFormSpotlight
+  return OpenForm
 })
 
 // Conditionally add font link to the page head (SSR-friendly)

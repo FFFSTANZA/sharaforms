@@ -139,9 +139,19 @@ class EmailIntegration extends AbstractIntegrationHandler
         ]);
 
         $recipients->each(function ($subscriber) {
-            Notification::route('mail', $subscriber)->notify(
-                new FormEmailNotification($this->event, $this->integrationData)
-            );
+            // M3 FIX: Wrap notification dispatch in try/catch so transient SMTP failures
+            // don't silently kill the integration handler. Log and continue with remaining recipients.
+            try {
+                Notification::route('mail', $subscriber)->notify(
+                    new FormEmailNotification($this->event, $this->integrationData)
+                );
+            } catch (\Throwable $e) {
+                Log::error('Email integration notification failed.', [
+                    'form_id' => $this->form->id,
+                    'subscriber' => $subscriber,
+                    'error' => $e->getMessage(),
+                ]);
+            }
         });
     }
 }

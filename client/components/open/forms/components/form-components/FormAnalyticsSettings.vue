@@ -1,31 +1,29 @@
 <template>
   <VForm size="sm">
-    <div class="space-y-4">
-      <div class="flex flex-col flex-wrap items-start justify-between gap-4 sm:flex-row sm:items-center">
-        <div>
-          <h3 class="text-lg font-medium text-neutral-900">
-            Analytics
-            <PlanTag
-              class="ml-2"
-              upgrade-modal-title="Upgrade to Unlock Analytics"
-              upgrade-modal-description="Track form views and conversions with your preferred analytics platform. Integrate with Meta Pixel, Google Analytics, or Google Tag Manager."
-            />
-          </h3>
-          <p class="mt-1 text-sm text-neutral-500">
-            Add your analytics tracking code to measure form performance.
-          </p>
+    <div class="px-1 space-y-4">
+      <!-- Analytics Card -->
+      <div class="rounded-2xl border border-[var(--sf-border-card)] bg-[var(--sf-bg-surface)] p-5 shadow-[var(--sf-shadow-card)]">
+        <div class="flex items-center justify-between mb-5">
+          <div class="flex items-center gap-2.5">
+            <div class="w-7 h-7 rounded-lg bg-[var(--sf-nav-active-bg)] flex items-center justify-center flex-shrink-0">
+              <i class="fa-solid fa-chart-simple text-[12px] text-[var(--sf-coral-500)]"></i>
+            </div>
+            <h3 class="text-[13px] font-semibold text-[var(--sf-text-primary)]">
+              Analytics
+              <PlanTag class="ml-1" upgrade-modal-title="Upgrade to Unlock Analytics" upgrade-modal-description="Track form views and conversions with your preferred analytics platform." />
+            </h3>
+          </div>
+          <UButton
+            label="Help"
+            icon="i-lucide-circle-question-mark"
+            variant="outline"
+            color="neutral"
+            size="xs"
+            @click="crisp.openHelpdeskArticle('how-to-add-analytics-in-my-form-151nkc9')"
+          />
         </div>
-        <UButton
-          label="Help"
-          icon="i-lucide-circle-question-mark"
-          variant="outline"
-          color="neutral"
-          @click="crisp.openHelpdeskArticle('how-to-add-analytics-in-my-form-151nkc9')"
-        />
-      </div>
 
-      <div class="flex flex-col lg:flex-row gap-8 mt-4 lg:items-start">
-        <div v-if="form.analytics" class="flex-1 space-y-4 max-w-xs">
+        <div v-if="form.analytics" class="space-y-4 max-w-xs">
           <FlatSelectInput
             v-model="form.analytics.provider"
             name="provider"
@@ -38,7 +36,6 @@
             v-if="form.analytics.provider"
             v-model="form.analytics.tracking_id"
             name="tracking_id"
-            class="mt-4"
             :label="trackingIdConfig.label"
             :placeholder="trackingIdConfig.placeholder"
             :help="trackingIdConfig.help"

@@ -9,6 +9,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class FormIntegrationsRequest extends FormRequest
 {
@@ -31,7 +32,9 @@ class FormIntegrationsRequest extends FormRequest
                 return;
             }
         }
-        throw new \Exception('Unknown Integration.');
+        throw ValidationException::withMessages([
+            'integration_id' => ['The selected integration type is not supported.'],
+        ]);
     }
 
     /**

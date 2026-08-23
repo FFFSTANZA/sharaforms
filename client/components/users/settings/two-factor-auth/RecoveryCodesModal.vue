@@ -21,12 +21,12 @@
             <div
               v-for="(codeItem, index) in codes"
               :key="index"
-              class="flex items-center justify-center p-2 bg-neutral-50 rounded font-mono text-sm text-center"
+              class="flex items-center justify-center p-2 bg-[#F7F8FA] rounded font-mono text-[13px] text-center"
             >
               <span>{{ typeof codeItem === 'string' ? codeItem : codeItem.code }}</span>
               <span
                 v-if="typeof codeItem === 'object' && codeItem.used_at"
-                class="text-xs text-neutral-500 ml-2 font-sans"
+                class="text-xs text-[#8E9198] ml-2 font-sans"
               >
                 Used {{ formatDate(codeItem.used_at) }}
               </span>

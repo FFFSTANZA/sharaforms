@@ -1,7 +1,7 @@
 <template>
   <div class="w-80 max-h-96 flex flex-col">
     <!-- Sticky Header: Search + Category Tabs -->
-    <div class="sticky top-0 bg-white z-10 border-b">
+    <div class="sticky top-0 bg-[var(--sf-bg-surface)] z-10 border-b border-[var(--sf-border-divider)]">
       <!-- Search -->
       <div class="p-2">
         <UInput

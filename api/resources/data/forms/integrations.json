@@ -46,7 +46,7 @@
   },
   "zapier": {
     "name": "Zapier",
-    "icon": "cib:zapier",
+    "icon": "sharaforms:zapier",
     "section_name": "Automation",
     "file_name": "ZapierIntegration",
     "required_tier": "free",
@@ -62,20 +62,7 @@
     "file_name": "N8nIntegration",
     "actions_file_name": "N8nIntegrationActions",
     "required_tier": "free",
-    "is_external": true,
-    "is_editable": false,
-    "url": "https://n8n.io/integrations/sharaforms-trigger/"
-  },
-  "activepieces": {
-    "name": "Activepieces",
-    "icon": "sharaforms:activepieces",
-    "section_name": "Automation",
-    "file_name": "ActivepiecesIntegration",
-    "actions_file_name": "ActivepiecesIntegrationActions",
-    "required_tier": "free",
-    "is_external": true,
-    "is_editable": false,
-    "url": "https://www.activepieces.com/pieces/sharaforms"
+    "crisp_help_page_slug": "connect-sharaforms-to-n8n-with-webhooks"
   },
   "google_sheets": {
     "name": "Google Sheets",
@@ -85,5 +72,101 @@
     "actions_file_name": "GoogleSheetsIntegrationActions",
     "required_tier": "free",
     "crisp_help_page_slug": "how-do-i-integrate-google-sheets-for-my-database-goefny"
+  },
+  "notion": {
+    "name": "Notion",
+    "icon": "simple-icons:notion",
+    "section_name": "Databases",
+    "file_name": "NotionIntegration",
+    "actions_file_name": "NotionIntegrationActions",
+    "required_tier": "free"
+  },
+  "microsoft_teams": {
+    "name": "Microsoft Teams",
+    "icon": "mdi:microsoft-teams",
+    "section_name": "Notifications",
+    "file_name": "MicrosoftTeamsIntegration",
+    "actions_file_name": "MicrosoftTeamsIntegrationActions",
+    "required_tier": "free"
+  },
+  "google_chat": {
+    "name": "Google Chat",
+    "icon": "simple-icons:googlechat",
+    "section_name": "Notifications",
+    "file_name": "GoogleChatIntegration",
+    "actions_file_name": "GoogleChatIntegrationActions",
+    "required_tier": "free"
+  },
+  "ntfy": {
+    "name": "ntfy",
+    "icon": "mdi:bell-ring-outline",
+    "section_name": "Notifications",
+    "file_name": "NtfyIntegration",
+    "actions_file_name": "NtfyIntegrationActions",
+    "required_tier": "free"
+  },
+  "airtable": {
+    "name": "Airtable",
+    "icon": "simple-icons:airtable",
+    "section_name": "Databases",
+    "file_name": "AirtableIntegration",
+    "actions_file_name": "AirtableIntegrationActions",
+    "required_tier": "pro"
+  },
+  "trello": {
+    "name": "Trello",
+    "icon": "sharaforms:trello",
+    "section_name": "Databases",
+    "file_name": "TrelloIntegration",
+    "actions_file_name": "TrelloIntegrationActions",
+    "required_tier": "pro"
+  },
+  "supabase": {
+    "name": "Supabase",
+    "icon": "simple-icons:supabase",
+    "section_name": "Databases",
+    "file_name": "SupabaseIntegration",
+    "actions_file_name": "SupabaseIntegrationActions",
+    "required_tier": "pro"
+  },
+  "baserow": {
+    "name": "Baserow",
+    "icon": "simple-icons:baserow",
+    "section_name": "Databases",
+    "file_name": "BaserowIntegration",
+    "actions_file_name": "BaserowIntegrationActions",
+    "required_tier": "pro"
+  },
+  "linear": {
+    "name": "Linear",
+    "icon": "simple-icons:linear",
+    "section_name": "Productivity",
+    "file_name": "LinearIntegration",
+    "actions_file_name": "LinearIntegrationActions",
+    "required_tier": "pro"
+  },
+  "resend": {
+    "name": "Resend",
+    "icon": "simple-icons:resend",
+    "section_name": "Email",
+    "file_name": "ResendIntegration",
+    "actions_file_name": "ResendIntegrationActions",
+    "required_tier": "pro"
+  },
+  "pipedrive": {
+    "name": "Pipedrive",
+    "icon": "sharaforms:pipedrive",
+    "section_name": "CRM",
+    "file_name": "PipedriveIntegration",
+    "actions_file_name": "PipedriveIntegrationActions",
+    "required_tier": "pro"
+  },
+  "plane": {
+    "name": "Plane",
+    "icon": "simple-icons:plane",
+    "section_name": "Productivity",
+    "file_name": "PlaneIntegration",
+    "actions_file_name": "PlaneIntegrationActions",
+    "required_tier": "pro"
   }
 }

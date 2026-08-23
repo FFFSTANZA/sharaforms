@@ -23,7 +23,7 @@ const props = defineProps({
   },
   color: {
     type: String,
-    default: "#3B82F6", // Default blue
+    default: "#EA6676", // Default coral
   },
 })
 

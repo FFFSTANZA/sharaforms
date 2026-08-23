@@ -6,7 +6,7 @@
         variant="ghost"
         size="xs"
         icon="i-lucide-arrow-down-to-line"
-        class="text-neutral-500"
+        class="text-[var(--sf-text-caption)]"
         @click="showCopyFormModal = true"
       >
         Copy from
@@ -16,7 +16,7 @@
         variant="ghost"
         size="xs"
         icon="i-lucide-arrow-up-to-line"
-        class="text-neutral-500"
+        class="text-[var(--sf-text-caption)]"
         @click="showCopyToModal = true"
       >
         Copy to
@@ -26,7 +26,7 @@
         variant="ghost"
         size="xs"
         icon="i-lucide-x"
-        class="text-neutral-500"
+        class="text-[var(--sf-text-caption)]"
         @click="clearAll"
       >
         Clear
@@ -34,7 +34,7 @@
       <UButton
         color="neutral"
         variant="ghost"
-        class="text-neutral-500"
+        class="text-[var(--sf-text-caption)]"
         size="xs"
         icon="i-lucide-circle-question-mark"
         @click="openHelpArticle"
@@ -43,11 +43,11 @@
 
     <!-- Validation Rules Card -->
     <div class="mt-4">
-      <p class="text-xs font-medium text-gray-600 mb-2">When should this field be valid?</p>
-      <p class="text-neutral-500 text-xs mb-3">
+      <p class="text-xs font-medium text-[var(--sf-text-secondary)] mb-2">When should this field be valid?</p>
+      <p class="text-[var(--sf-text-caption)] text-xs mb-3">
         Set <span class="font-semibold">rules that make this field valid</span>. If rules aren't met, the field shows an error.
       </p>
-      <div class="p-3 border border-gray-200 rounded-lg bg-gray-50/50 hover:bg-gray-50 transition-colors">
+      <div class="p-3 border border-[var(--sf-border-card)] rounded-lg bg-[var(--sf-bg-muted)]/50 hover:bg-[var(--sf-bg-muted)] transition-colors">
         <UPopover
           :content="{ 
             align: 'start', 
@@ -64,7 +64,7 @@
             :variant="hasConditions ? 'subtle' : 'outline'"
             :icon="hasConditions ? 'i-lucide-settings' : 'i-lucide-plus'"
             size="sm"
-            class="w-full justify-start font-medium hover:bg-white transition-colors"
+            class="w-full justify-start font-medium hover:bg-[var(--sf-bg-surface)] transition-colors"
           >
           {{ hasConditions ? `${conditionsCount} rule${conditionsCount > 1 ? 's' : ''}` : 'Add rule' }}
           </UButton>
@@ -102,11 +102,11 @@
 
     <!-- Error Message Card -->
     <div>
-      <p class="text-xs font-medium text-gray-600 mb-2">What message to show if validation fails?</p>
-      <p class="text-neutral-500 text-xs mb-3">
+      <p class="text-xs font-medium text-[var(--sf-text-secondary)] mb-2">What message to show if validation fails?</p>
+      <p class="text-[var(--sf-text-caption)] text-xs mb-3">
         This message appears when <span class="font-semibold">validation rules aren't met</span>.
       </p>
-      <div class="p-3 border border-gray-200 rounded-lg bg-gray-50/50 hover:bg-gray-50 transition-colors">
+      <div class="p-3 border border-[var(--sf-border-card)] rounded-lg bg-[var(--sf-bg-muted)]/50 hover:bg-[var(--sf-bg-muted)] transition-colors">
         <text-input
           name="error_message"
           :form="field.validation"

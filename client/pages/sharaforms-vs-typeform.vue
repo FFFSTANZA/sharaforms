@@ -8,7 +8,7 @@
     :switch-reasons="switchReasons"
     :feature-comparison="featureComparison"
     :get-competitor-price="getPrice"
-    :summary-line="'SharaForms is the Typeform alternative for teams that want Typeform\'s polished, conversational forms without the free-plan caps, with unlimited forms, unlimited submissions, built-in calculators, and self-hosting from $0.'"
+    :summary-line="'SharaForms is the Typeform alternative for teams that want Typeform\'s polished, conversational forms without the free-plan caps, with unlimited forms, unlimited submissions, three presentation modes, built-in calculations, and self-hosting from $0.'"
     :faqs="faqs"
   >
     <template #hero-subtitle>
@@ -175,7 +175,7 @@ const faqs = [
   {
     question: 'Is SharaForms a good Typeform alternative?',
     answer:
-      'Yes. SharaForms keeps the polished, conversational form experience Typeform is known for, then adds unlimited forms and submissions on the free plan, built-in calculators, custom domains and branding, and self-hosting, so you are not forced onto a paid plan as your forms grow.',
+      'Yes. SharaForms keeps the polished, conversational form experience Typeform is known for, then adds unlimited forms and submissions on the free plan, three presentation modes, built-in calculations, custom domains and branding, and self-hosting, so you are not forced onto a paid plan as your forms grow.',
   },
   {
     question: 'Is Typeform free?',
@@ -190,7 +190,7 @@ const faqs = [
   {
     question: 'How much does SharaForms cost compared to Typeform?',
     answer:
-      'SharaForms is free with unlimited forms and submissions, and paid plans start at $12 per month. Typeform paid plans start higher and still enforce response caps, so SharaForms generally costs less as your volume grows.',
+      'SharaForms is free with unlimited forms and submissions, and paid plans start at $15 per month. Typeform paid plans start higher and still enforce response caps, so SharaForms generally costs less as your volume grows.',
   },
 ]
 

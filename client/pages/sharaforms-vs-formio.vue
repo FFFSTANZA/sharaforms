@@ -161,7 +161,7 @@ const faqs = [
   {
     question: 'Is Form.io free?',
     answer:
-      'Form.io is open source if you self-host, but running it means managing servers, databases, and upgrades yourself. SharaForms is free and fully hosted, with unlimited forms and unlimited submissions, no servers to operate, and paid plans from $12 per month for advanced features.',
+      'Form.io is open source if you self-host, but running it means managing servers, databases, and upgrades yourself. SharaForms is free and fully hosted, with unlimited forms and unlimited submissions, no servers to operate, and paid plans from $15 per month for advanced features.',
   },
   {
     question: 'Can I import my Form.io forms into SharaForms?',
@@ -171,7 +171,7 @@ const faqs = [
   {
     question: 'How does SharaForms pricing compare to Form.io?',
     answer:
-      'SharaForms is free with unlimited submissions; paid plans start at $12 per month. Form.io requires self-hosting infrastructure or expensive hosted plans, so the total cost of ownership is typically far higher.',
+      'SharaForms is free with unlimited submissions; paid plans start at $15 per month. Form.io requires self-hosting infrastructure or expensive hosted plans, so the total cost of ownership is typically far higher.',
   },
 ]
 

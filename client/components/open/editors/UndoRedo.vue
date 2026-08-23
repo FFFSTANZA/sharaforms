@@ -1,23 +1,21 @@
 <template>
-  <UButtonGroup
-    size="sm"
-    orientation="horizontal"
-    class="shadow-none"
-  >
+  <div class="flex items-center gap-0.5 bg-[var(--sf-bg-muted)]/60 rounded-lg p-0.5">
     <UTooltip
       text="Undo"
       :kbds="['meta','Z']"
       :content="{ side: 'left' }"
       arrow
     >
-      <UButton
+      <button
         :disabled="!canUndo"
-        color="neutral"
-        variant="outline"
-        icon="i-lucide-undo"
-        class="disabled:text-neutral-500 shadow-none"
+        class="flex items-center justify-center w-7 h-7 rounded-md transition-all duration-150"
+        :class="canUndo
+          ? 'text-[var(--sf-text-body)] hover:text-[var(--sf-text-primary)] hover:bg-[var(--sf-bg-surface)]'
+          : 'text-[var(--sf-text-disabled)] cursor-not-allowed'"
         @click="undo"
-      />
+      >
+        <Icon name="i-lucide-undo" class="w-3.5 h-3.5" />
+      </button>
     </UTooltip>
     <UTooltip
       text="Redo"
@@ -25,16 +23,18 @@
       :content="{ side: 'right' }"
       arrow
     >
-      <UButton
+      <button
         :disabled="!canRedo"
-        icon="i-lucide-redo"
-        color="neutral"
-        variant="outline"
-        class="disabled:text-neutral-500 shadow-none"
+        class="flex items-center justify-center w-7 h-7 rounded-md transition-all duration-150"
+        :class="canRedo
+          ? 'text-[var(--sf-text-body)] hover:text-[var(--sf-text-primary)] hover:bg-[var(--sf-bg-surface)]'
+          : 'text-[var(--sf-text-disabled)] cursor-not-allowed'"
         @click="redo"
-      />
+      >
+        <Icon name="i-lucide-redo" class="w-3.5 h-3.5" />
+      </button>
     </UTooltip>
-  </UButtonGroup>
+  </div>
 </template>
 
 <script setup>

@@ -1,9 +1,9 @@
 <template>
-  <div class="group h-full rounded-xl border border-neutral-200 bg-white p-4 shadow-sm transition hover:shadow-md">
+  <div class="group h-full rounded-xl border border-[var(--sf-border-card)] bg-white p-4 shadow-[var(--sf-shadow-card)] transition hover:shadow-md">
     <div class="flex items-center justify-between gap-2">
       <div>
-        <p class="text-sm font-semibold text-neutral-900">{{ connection.name }}</p>
-        <p class="text-xs uppercase tracking-wide text-neutral-400">{{ connection.slug }}</p>
+        <p class="text-[13px] font-semibold text-[var(--sf-text-primary)]">{{ connection.name }}</p>
+        <p class="text-[11px] uppercase tracking-wide text-[#A7ABB2]">{{ connection.slug }}</p>
       </div>
       <div class="flex items-center gap-2">
         <UButton
@@ -31,19 +31,19 @@
       </div>
     </div>
 
-    <p class="mt-3 text-sm text-neutral-600">
+    <p class="mt-3 text-[13px] text-[var(--sf-text-description)]">
       Issuer URL
-      <span class="block font-medium text-neutral-900 truncate">{{ connection.issuer }}</span>
+      <span class="block font-medium text-[var(--sf-text-primary)] truncate">{{ connection.issuer }}</span>
     </p>
 
-    <p class="mt-2 text-sm text-neutral-600">
+    <p class="mt-2 text-[13px] text-[var(--sf-text-description)]">
       Redirect URL
-      <span class="block text-xs text-neutral-500 truncate">{{ connection.redirect_url }}</span>
+      <span class="block text-xs text-[#8E9198] truncate">{{ connection.redirect_url }}</span>
     </p>
 
-    <p class="mt-2 text-sm text-neutral-600">
+    <p class="mt-2 text-[13px] text-[var(--sf-text-description)]">
       Email domain
-      <span class="block font-medium text-neutral-900">{{ connection.domain ?? '—' }}</span>
+      <span class="block font-medium text-[var(--sf-text-primary)]">{{ connection.domain ?? '—' }}</span>
     </p>
   </div>
 </template>

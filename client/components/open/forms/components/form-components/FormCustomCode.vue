@@ -1,88 +1,60 @@
 <template>
   <VForm size="sm">
-    <div class="space-y-4">
-      <div class="flex flex-col flex-wrap items-start justify-between gap-4 sm:flex-row sm:items-center">
-        <div>
-          <h3 class="text-lg font-medium text-neutral-900">
-            Custom Code <PlanTag
-              class="mb-2 block"
-              upgrade-modal-title="Upgrade to Unlock Custom Code Capabilities"
-              upgrade-modal-description="On the Free plan, you can explore custom code features within the form editor. Upgrade your plan to implement custom scripts, styles, and advanced tracking in live forms. Elevate your form's functionality and design with unlimited customization options."
-            />
-            <PlanTag
-              v-if="isSelfHosted"
-              required-tier="self_hosted"
-              class="mb-2 block"
-              upgrade-modal-title="Upgrade to Unlock Custom Code"
-            />
-          </h3>
-          <p class="mt-1 text-sm text-neutral-500">
-            The code will be injected in the <b>head</b> section of your form page.
-          </p>
-        </div>
-        <div class="flex gap-2">
-          <UButton
-            label="SDK Docs"
-            icon="i-lucide-code"
-            variant="outline"
-            color="neutral"
-            :to="sharaformsConfig.links.custom_code_docs"
-            target="_blank"
-          />
-          <UButton
-            label="Help"
-            icon="i-lucide-circle-question-mark"
-            variant="outline"
-            color="neutral"
-            @click="crisp.openHelpdeskArticle('how-do-i-add-custom-code-to-my-form-1amadj3')"
-          />
-        </div>
-      </div>
-      
-      <CodeInput
-        :allow-fullscreen="true"
-        name="custom_code"
-        class="mt-4"
-        :form="form"
-        :disabled="!canUseCustomCode"
-        :help="customCodeHelp"
-        label="Custom Code"
-        placeholder="<script>console.log('Hello World!')</script>"
-      />
-
-      <div class="pt-6">
-        <div class="flex flex-col flex-wrap items-start justify-between gap-4 sm:flex-row sm:items-center">
-          <div>
-            <h3 class="text-lg font-medium text-neutral-900">
-              Custom CSS <PlanTag
-                class="mb-2 block"
-                upgrade-modal-title="Upgrade to Unlock Custom CSS"
-                upgrade-modal-description="On the Free plan, you can explore custom CSS within the editor. Upgrade to apply custom styles to your live forms."
-              />
-              <PlanTag
-                v-if="isSelfHosted"
-                required-tier="self_hosted"
-                class="mb-2 block"
-                upgrade-modal-title="Upgrade to Unlock Custom CSS"
-              />
+    <div class="px-1 space-y-4">
+      <!-- Custom Code Card -->
+      <div class="rounded-2xl border border-[var(--sf-border-card)] bg-[var(--sf-bg-surface)] p-5 shadow-[var(--sf-shadow-card)]">
+        <div class="flex items-center justify-between mb-5">
+          <div class="flex items-center gap-2.5">
+            <div class="w-7 h-7 rounded-lg bg-[var(--sf-nav-active-bg)] flex items-center justify-center flex-shrink-0">
+              <i class="fa-solid fa-code text-[12px] text-[var(--sf-coral-500)]"></i>
+            </div>
+            <h3 class="text-[13px] font-semibold text-[var(--sf-text-primary)]">
+              Custom Code
+              <PlanTag class="ml-1" upgrade-modal-title="Upgrade to Unlock Custom Code Capabilities" upgrade-modal-description="Implement custom scripts, styles, and advanced tracking in live forms." />
+              <PlanTag v-if="isSelfHosted" required-tier="self_hosted" class="ml-1" upgrade-modal-title="Upgrade to Unlock Custom Code" />
             </h3>
-            <p class="mt-1 text-sm text-neutral-500">
-              The CSS will be injected in the <b>head</b> of your form page.
-            </p>
           </div>
-          <UButton
-            label="Help"
-            icon="i-lucide-circle-question-mark"
-            variant="outline"
-            color="neutral"
-            @click="crisp.openHelpdeskArticle('can-i-style-my-form-with-some-custom-css-code-1v3dlr9')"
-          />
+          <div class="flex gap-2">
+            <UButton label="SDK Docs" icon="i-lucide-code" variant="outline" color="neutral" size="xs" :to="sharaformsConfig.links.custom_code_docs" target="_blank" />
+            <UButton label="Help" icon="i-lucide-circle-question-mark" variant="outline" color="neutral" size="xs" @click="crisp.openHelpdeskArticle('how-do-i-add-custom-code-to-my-form-1amadj3')" />
+          </div>
         </div>
+        <p class="text-[var(--sf-text-caption)] text-sm mb-4">
+          The code will be injected in the <b>head</b> section of your form page.
+        </p>
+        <CodeInput
+          :allow-fullscreen="true"
+          name="custom_code"
+          :form="form"
+          :disabled="!canUseCustomCode"
+          :help="customCodeHelp"
+          label="Custom Code"
+          placeholder="<script>console.log('Hello World!')</script>"
+        />
+      </div>
+
+      <!-- Custom CSS Card -->
+      <div class="rounded-2xl border border-[var(--sf-border-card)] bg-[var(--sf-bg-surface)] p-5 shadow-[var(--sf-shadow-card)]">
+        <div class="flex items-center justify-between mb-5">
+          <div class="flex items-center gap-2.5">
+            <div class="w-7 h-7 rounded-lg bg-[var(--sf-indigo-light)] flex items-center justify-center flex-shrink-0">
+              <i class="fa-solid fa-palette text-[12px] text-[var(--sf-indigo)]"></i>
+            </div>
+            <h3 class="text-[13px] font-semibold text-[var(--sf-text-primary)]">
+              Custom CSS
+              <PlanTag class="ml-1" upgrade-modal-title="Upgrade to Unlock Custom CSS" upgrade-modal-description="Apply custom styles to your live forms." />
+              <PlanTag v-if="isSelfHosted" required-tier="self_hosted" class="ml-1" upgrade-modal-title="Upgrade to Unlock Custom CSS" />
+            </h3>
+          </div>
+          <UButton label="Help" icon="i-lucide-circle-question-mark" variant="outline" color="neutral" size="xs" @click="crisp.openHelpdeskArticle('can-i-style-my-form-with-some-custom-css-code-1v3dlr9')" />
+        </div>
+        <p class="text-[var(--sf-text-caption)] text-sm mb-4">
+          The CSS will be injected in the <b>head</b> of your form page.
+        </p>
         <CodeInput
           :allow-fullscreen="true"
           language-mode="css"
           name="custom_css"
-          class="mt-4"
           :form="form"
           help="CSS only. Example: body { background: #f8fafc }"
           label="Custom CSS"

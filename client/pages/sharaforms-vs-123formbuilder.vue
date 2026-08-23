@@ -8,7 +8,7 @@
     :switch-reasons="switchReasons"
     :feature-comparison="featureComparison"
     :get-competitor-price="getPrice"
-    :summary-line="'SharaForms is the modern 123FormBuilder alternative, a cleaner builder with unlimited forms, unlimited submissions, built-in calculators, dynamic PDFs, and custom domains from $0.'"
+    :summary-line="'SharaForms is the modern 123FormBuilder alternative, a cleaner builder with unlimited forms, unlimited submissions, three presentation modes, built-in calculations, dynamic PDFs, and custom domains from $0.'"
     :faqs="faqs"
   >
     <template #hero-subtitle>
@@ -167,7 +167,7 @@ const faqs = [
   {
     question: 'Is SharaForms a good 123FormBuilder alternative?',
     answer:
-      'Yes. 123FormBuilder has been around a long time, but its interface and limits feel dated. SharaForms gives you a modern builder with unlimited forms and unlimited submissions on the free plan, built-in calculators, dynamic PDFs, custom domains, and a much cleaner editing experience.',
+      'Yes. 123FormBuilder has been around a long time, but its interface and limits feel dated. SharaForms gives you a modern builder with unlimited forms and unlimited submissions on the free plan, three presentation modes, built-in calculations, dynamic PDFs, custom domains, and a much cleaner editing experience.',
   },
   {
     question: 'Is 123FormBuilder free?',
@@ -182,7 +182,7 @@ const faqs = [
   {
     question: 'How does SharaForms pricing compare to 123FormBuilder?',
     answer:
-      'SharaForms is free with unlimited submissions; paid plans start at $12 per month. 123FormBuilder paid plans start at a similar price but enforce submission and storage caps, so SharaForms tends to cost less as usage grows.',
+      'SharaForms is free with unlimited submissions; paid plans start at $15 per month. 123FormBuilder paid plans start at a similar price but enforce submission and storage caps, so SharaForms tends to cost less as usage grows.',
   },
 ]
 

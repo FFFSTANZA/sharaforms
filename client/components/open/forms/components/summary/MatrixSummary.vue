@@ -12,7 +12,7 @@
       <table class="w-full border-separate border-spacing-0">
         <thead>
           <tr>
-            <th class="sticky left-0 bg-white z-10 p-3 border-b border-r border-neutral-100 w-1/4 min-w-[150px]">
+            <th class="sticky left-0 bg-[var(--sf-bg-surface)] z-10 p-3 border-b border-r border-neutral-100 w-1/4 min-w-[150px]">
               <span class="text-xs font-medium text-neutral-400 uppercase tracking-wider">Rows / Columns</span>
             </th>
             <th

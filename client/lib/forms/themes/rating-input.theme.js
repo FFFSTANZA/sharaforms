@@ -1,14 +1,17 @@
 /**
  * RatingInput tailwind-variants configuration
+ * Typeform-inspired: smoother hover transitions, refined star sizing
  */
 export const ratingInputTheme = {
   slots: {
-    icon: 'transition-transform duration-200 ease-out',
+    icon: 'transition-all duration-200 ease-out',
     star: [
-      'cursor-pointer inline-block select-none transition-all duration-200 ease-out',
+      'cursor-pointer inline-block select-none',
+      'transition-all duration-200 ease-out',
       'text-neutral-300 dark:text-neutral-600',
-      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-form/60 focus-visible:rounded-full',
-      'hover:scale-110 active:scale-90'
+      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-form/40 focus-visible:rounded-full',
+      'hover:scale-110 active:scale-95',
+      'min-h-[44px] min-w-[44px] flex items-center justify-center p-1'
     ].join(' ')
   },
   variants: {
@@ -18,13 +21,13 @@ export const ratingInputTheme = {
       }
     },
     size: {
-      xs: { icon: 'w-4 h-4' },
+      xs: { icon: 'w-5 h-5' },
       sm: { icon: 'w-6 h-6' },
       md: { icon: 'w-8 h-8' },
       lg: { icon: 'w-10 h-10' }
     },
     disabled: {
-      true: { star: '!cursor-not-allowed !opacity-60 pointer-events-none hover:scale-100 active:scale-100' },
+      true: { star: '!cursor-not-allowed !opacity-50 pointer-events-none hover:scale-100 active:scale-100' },
       false: {}
     },
     isActive: {

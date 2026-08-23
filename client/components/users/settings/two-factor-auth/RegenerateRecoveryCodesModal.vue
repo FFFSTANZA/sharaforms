@@ -16,7 +16,7 @@
         />
 
         <div>
-          <p class="text-sm font-medium text-neutral-900 mb-2">
+          <p class="text-[13px] font-semibold text-[#1D1F24] mb-2">
             Enter the 6-digit code from your authenticator app:
           </p>
           <div class="flex justify-center mb-4">

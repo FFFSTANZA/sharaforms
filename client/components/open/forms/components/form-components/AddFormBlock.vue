@@ -4,61 +4,57 @@
     @keydown="handleKeydown"
     tabindex="-1"
   >
-    <div class="p-2 border-b border-neutral-300 sticky top-0 z-10 bg-white">
-      <div class="flex items-center">
-        <UButton
-          size="sm"
-          color="neutral"
-          icon="i-lucide-x"
-          variant="outlint"
-          @click="closeSidebar"
-        />
-        <div class="font-medium inline ml-2 flex-grow truncate">
+    <div class="px-4 py-3 border-b border-[var(--sf-border-divider)] sticky top-0 z-10 bg-[var(--sf-bg-surface)]">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="font-semibold text-[14px] text-[var(--sf-text-primary)]">
           Add Block
-        </div>
+        </h3>
+        <button
+          class="flex items-center justify-center w-7 h-7 rounded-lg text-[var(--sf-text-caption)] hover:text-[var(--sf-text-primary)] hover:bg-[var(--sf-nav-hover-bg)] transition-all duration-150"
+          @click="closeSidebar"
+        >
+          <Icon name="i-lucide-x" class="w-4 h-4" />
+        </button>
+      </div>
+      <div class="relative">
+        <Icon name="i-lucide-search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--sf-text-disabled)]" />
+        <input
+          ref="searchInput"
+          v-model="searchTerm"
+          :autofocus="canAutofocus"
+          class="w-full pl-9 pr-8 py-2 rounded-xl border border-[var(--sf-border-button)] bg-[var(--sf-bg-muted)]/50 text-[13px] text-[var(--sf-text-primary)] placeholder:text-[var(--sf-text-disabled)] focus:outline-none focus:ring-2 focus:ring-[var(--sf-coral-500)]/20 focus:border-[var(--sf-coral-500)] transition-all duration-150"
+          placeholder="Search blocks..."
+          @keydown.down.prevent="handleKeydown"
+          @keydown.up.prevent="handleKeydown"
+          @keydown.enter.prevent="handleKeydown"
+          @keydown.esc="handleKeydown"
+        />
+        <button
+          v-if="searchTerm?.length"
+          class="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-5 h-5 rounded-full text-[var(--sf-text-disabled)] hover:text-[var(--sf-text-body)] hover:bg-[var(--sf-nav-hover-bg)] transition-colors"
+          @click="searchTerm = ''"
+        >
+          <Icon name="i-lucide-circle-x" class="w-3.5 h-3.5" />
+        </button>
+      </div>
+      <div class="mt-3">
         <AiFieldGenerator
-          class="py-2 px-4"
+          class="w-full"
         />
       </div>
     </div>
 
-    <div class="py-2 px-4">
-      <UInput
-        ref="searchInput"
-        v-model="searchTerm"
-        autofocus
-        variant="outline"
-        class="w-full"
-        placeholder="Search for a block..."
-        icon="i-lucide-search"
-        :ui="{ trailing: 'pe-1' }"
-        @keydown.down.prevent="handleKeydown"
-        @keydown.up.prevent="handleKeydown"
-        @keydown.enter.prevent="handleKeydown"
-        @keydown.esc="handleKeydown"
-      >
-        <template v-if="searchTerm?.length" #trailing>
-          <UButton
-            color="neutral"
-            variant="link"
-            size="sm"
-            icon="i-lucide-circle-x"
-            aria-label="Clear"
-            title="Clear"
-            @click="searchTerm = ''"
-          />
-        </template>
-      </UInput>
-    </div>
-
-    <div class="py-2 px-4">
-      <p class="text-neutral-500 text-xs font-medium my-2">
+    <div class="py-3 px-4">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--sf-text-label)] mb-2">
         Input Blocks
       </p>
       <VueDraggable
         :model-value="filteredInputBlocks"
         :group="{ name: 'form-elements', pull: 'clone', put: false }"
-        class="flex flex-col -mx-2"
+        class="flex flex-col -mx-1"
+        :delay="150"
+        :delay-on-touch-only="true"
+        :touch-start-threshold="3"
         :sort="false"
         :clone="handleInputClone"
         ghost-class="ghost-item"
@@ -73,8 +69,10 @@
             :ref="(el) => setBlockRef(el, index)"
             :data-block-index="index"
             :class="[
-              'flex rounded-md items-center gap-2 p-2 group',
-              selectedIndex === index ? 'bg-blue-100 dark:bg-blue-900' : 'hover:bg-neutral-50'
+              'flex rounded-xl items-center gap-2.5 px-3 py-2.5 group cursor-pointer transition-all duration-150',
+              selectedIndex === index
+                ? 'bg-[var(--sf-nav-active-bg)] ring-1 ring-inset ring-[var(--sf-coral-500)]/20'
+                : 'hover:bg-[var(--sf-nav-hover-bg)]'
             ]"
             role="button"
             :tabindex="selectedIndex === index ? 0 : -1"
@@ -82,32 +80,35 @@
             @keydown.enter.prevent="addBlock(element.name)"
           >
             <BlockTypeIcon :type="element.name" />
-            <p class="w-full text-sm text-neutral-500">
+            <span class="flex-1 text-[13px] font-medium text-[var(--sf-text-body)] group-hover:text-[var(--sf-text-primary)] transition-colors">
               {{ element.title }}
-            </p>
+            </span>
             <Icon
               v-if="element.auth_required && !authenticated"
               name="lucide:lock-keyhole"
-              class="text-neutral-400 w-4 h-4"
+              class="text-[var(--sf-text-disabled)] w-3.5 h-3.5"
             />
           </div>
           <p
             v-if="searchTerm && filteredInputBlocks.length === 0"
-            class="text-neutral-400 text-xs px-2 py-1"
+            class="text-[var(--sf-text-disabled)] text-xs px-3 py-2 text-center"
           >
             No input blocks match your search.
           </p>
         </template>
       </VueDraggable>
     </div>
-    <div class="px-4 border-t mb-4">
-      <p class="text-neutral-500 text-xs font-medium my-2">
+    <div class="px-4 border-t border-[var(--sf-border-divider)] mb-4 pt-3">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--sf-text-label)] mb-2">
         Layout Blocks
       </p>
       <VueDraggable
         :model-value="filteredLayoutBlocks"
         :group="{ name: 'form-elements', pull: 'clone', put: false }"
-        class="flex flex-col -mx-2"
+        class="flex flex-col -mx-1"
+        :delay="150"
+        :delay-on-touch-only="true"
+        :touch-start-threshold="3"
         :sort="false"
         :clone="handleInputClone"
         ghost-class="ghost-item"
@@ -122,8 +123,10 @@
             :ref="(el) => setBlockRef(el, filteredInputBlocks.length + index)"
             :data-block-index="filteredInputBlocks.length + index"
             :class="[
-              'flex rounded-md items-center gap-2 p-2',
-              selectedIndex === (filteredInputBlocks.length + index) ? 'bg-blue-100 dark:bg-blue-900' : 'hover:bg-neutral-50'
+              'flex rounded-xl items-center gap-2.5 px-3 py-2.5 group cursor-pointer transition-all duration-150',
+              selectedIndex === (filteredInputBlocks.length + index)
+                ? 'bg-[var(--sf-nav-active-bg)] ring-1 ring-inset ring-[var(--sf-coral-500)]/20'
+                : 'hover:bg-[var(--sf-nav-hover-bg)]'
             ]"
             role="button"
             :tabindex="selectedIndex === (filteredInputBlocks.length + index) ? 0 : -1"
@@ -131,18 +134,18 @@
             @keydown.enter.prevent="addBlock(element.name)"
           >
             <BlockTypeIcon :type="element.name" />
-            <p class="w-full text-sm text-neutral-500">
+            <span class="flex-1 text-[13px] font-medium text-[var(--sf-text-body)] group-hover:text-[var(--sf-text-primary)] transition-colors">
               {{ element.title }}
-            </p>
+            </span>
             <Icon
               v-if="element.auth_required && !authenticated"
               name="lucide:lock-keyhole"
-              class="text-neutral-400 w-4 h-4"
+              class="text-[var(--sf-text-disabled)] w-3.5 h-3.5"
             />
           </div>
           <p
             v-if="searchTerm && filteredLayoutBlocks.length === 0"
-            class="text-neutral-400 text-xs px-2 py-1"
+            class="text-[var(--sf-text-disabled)] text-xs px-3 py-2 text-center"
           >
             No layout blocks match your search.
           </p>
@@ -164,10 +167,16 @@ const { isAuthenticated: authenticated } = useIsAuthenticated()
 
 const formStyle = computed(() => workingFormStore.content?.presentation_style || 'classic')
 
+// Auto-focusing the search input pops the on-screen keyboard on touch
+// devices, covering the block palette. Only autofocus with a mouse.
+const canAutofocus = import.meta.client
+  ? window.matchMedia('(hover: hover) and (pointer: fine)').matches
+  : false
+
 const allowedBlocks = computed(() => {
   const all = Object.values(blocksTypes)
   return all.filter(block => {
-    const modes = block.available_in || ['classic', 'focused']
+    const modes = block.available_in || ['classic', 'focused', 'spotlight']
     return modes.includes(formStyle.value)
   })
 })
@@ -323,6 +332,7 @@ workingFormStore.resetBlockForm()
 
 <style lang="scss" scoped>
 .ghost-item {
-  @apply bg-blue-100 dark:bg-blue-900 rounded-md w-full col-span-full;
+  @apply rounded-md w-full col-span-full;
+  background: var(--sf-nav-active-bg);
 }
 </style>

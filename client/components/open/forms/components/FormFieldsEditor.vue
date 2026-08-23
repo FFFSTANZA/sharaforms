@@ -1,31 +1,29 @@
 <template>
   <div class="relative min-h-0">
-    <div class="flex gap-2 sticky top-0 bg-white border-b z-10 p-4">
-      <UTooltip
-        text="Shortcut"
-        :kbds="['meta', 'B']"
-        arrow
+    <div class="sticky top-0 bg-[var(--sf-bg-surface)] border-b border-[var(--sf-border-card)] z-10 p-3">
+      <button
+        class="w-full flex items-center justify-center gap-2 py-2 rounded-xl border-2 border-dashed border-[var(--sf-border-button)] text-[var(--sf-text-caption)] hover:border-[var(--sf-coral-500)] hover:text-[var(--sf-coral-500)] hover:bg-[var(--sf-nav-active-bg)]/50 transition-all duration-150 text-[13px] font-medium"
+        @click.prevent="openAddFieldSidebar"
       >
-        <UButton
-          color="neutral"
-          variant="subtle"
-          icon="i-lucide-plus"
-          class="flex-grow justify-center"
-          @click.prevent="openAddFieldSidebar"
-        >
-          Add Block
-        </UButton>
-      </UTooltip>
+        <Icon name="i-lucide-plus" class="w-4 h-4" />
+        Add Block
+        <span class="hidden sm:inline text-[11px] text-[var(--sf-text-disabled)] font-normal ml-1">
+          <UKbd value="meta" size="xs" /> <UKbd value="B" size="xs" />
+        </span>
+      </button>
     </div>
 
-    <div class="p-4">
+    <div class="p-3">
       <VueDraggable
         :model-value="form.properties"
         group="form-elements"
         item-key="id"
-        class="mx-auto w-full overflow-hidden rounded-md border border-neutral-300 bg-white transition-colors dark:bg-notion-dark-light"
-        ghost-class="bg-blue-100"
+        class="mx-auto w-full overflow-hidden rounded-xl border border-[var(--sf-border-card)] bg-[var(--sf-bg-surface)] transition-colors shadow-[0_1px_2px_rgba(23,25,35,0.04)]"
+        ghost-class="bg-[var(--sf-nav-active-bg)]"
         :animation="200"
+        :delay="150"
+        :delay-on-touch-only="true"
+        :touch-start-threshold="3"
         @add="handleDragAdd"
         @update="handleDragUpdate"
       >
@@ -33,29 +31,29 @@
           <div
             v-for="(element, index) in form.properties"
             :key="element.id || index"
-            class="mx-auto w-full border-neutral-300 transition-colors cursor-grab"
+            class="mx-auto w-full border-[var(--sf-border-card)] transition-all duration-150 cursor-grab"
             :class="{
-              'bg-neutral-100 ': element.hidden && !isBeingEdited(index),
-              'bg-white ': !element.hidden && !isBeingEdited(index),
-              'border-b': index !== form.properties.length - 1,
-              ' !border-blue-400 border-b-2': element.type === 'nf-page-break',
-              'bg-blue-50 dark:bg-neutral-700': isBeingEdited(index),
+              'bg-[var(--sf-bg-muted)]/60': element.hidden && !isBeingEdited(index),
+              'bg-[var(--sf-bg-surface)] hover:bg-[var(--sf-bg-muted)]/30': !element.hidden && !isBeingEdited(index),
+              'border-b border-[var(--sf-border-divider)]': index !== form.properties.length - 1,
+              '!border-l-2 !border-l-[var(--sf-coral-500)] !border-b !border-b-[var(--sf-border-divider)]': element.type === 'nf-page-break',
+              'bg-[var(--sf-nav-active-bg)] ring-1 ring-inset ring-[var(--sf-coral-500)]/20': isBeingEdited(index),
             }"
             @click="selectField(element)"
           >
             <div
               v-if="element"
-              class="group flex items-center gap-x-0.5 py-1.5 pr-1"
+              class="group flex items-center gap-x-1 py-2 px-2 pr-1.5"
             >
               <BlockTypeIcon
                 v-if="element.type && typeof element.type === 'string'"
                 :type="element.type"
-                class="ml-2"
+                class="ml-1"
               />
               <!-- Field name and type -->
-              <div class="flex grow flex-col truncate">
+              <div class="flex grow flex-col truncate min-w-0">
                 <EditableTag
-                  class="truncate text-neutral-700 min-w-16 min-h-6"
+                  class="truncate text-[var(--sf-text-secondary)] text-[13px] min-w-16 min-h-5 font-medium"
                   :model-value="element.name"
                   @update:model-value="onChangeName(element, $event)"
                 >
@@ -63,62 +61,38 @@
                     {{ element.name }}
                   </label>
                 </EditableTag>
+                <span class="text-[11px] text-[var(--sf-text-disabled)] font-medium capitalize">
+                  {{ element.type?.replace('nf-', '') }}
+                </span>
               </div>
 
-              <UTooltip arrow :text="element.hidden ? 'Show Block' : 'Hide Block'">
+              <!-- Inline action buttons (always visible on touch screens, hover-revealed on desktop) -->
+              <div class="flex items-center gap-0.5 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-150">
                 <button
-                  class="hidden !cursor-pointer rounded-sm p-1 transition-colors hover:bg-blue-100 items-center justify-center"
-                  :class="{
-                    'text-neutral-300 hover:text-blue-500 md:group-hover:flex': !element.hidden,
-                    'text-neutral-300 hover:text-neutral-500 md:flex': element.hidden,
-                  }"
-                  @click.stop="toggleHidden(element)"
-                >
-                  <template v-if="!element.hidden">
-                    <Icon
-                      name="tabler:eye"
-                      class="h-5 w-5"
-                    />
-                  </template>
-                  <template v-else>
-                    <Icon
-                      name="tabler:eye-off"
-                      class="h-5 w-5"
-                    />
-                  </template>
-                </button>
-              </UTooltip>
-              <UTooltip
-                v-if="element.type && typeof element.type === 'string' && !element.type.startsWith('nf-')"
-                :text="element.required ? 'Make it optional' : 'Make it required'"
-                arrow
-              >
-                <button
-                  class="hidden cursor-pointer rounded-sm p-0.5 transition-colors hover:bg-blue-100 items-center px-1 justify-center"
-                  :class="{
-                    'md:group-hover:flex text-neutral-300 hover:text-red-500': !element.required,
-                    'md:flex text-red-500': element.required,
-                  }"
+                  v-if="element.type && typeof element.type === 'string' && !element.type.startsWith('nf-')"
+                  class="!cursor-pointer rounded-md p-1 transition-colors hover:bg-[var(--sf-nav-hover-bg)] items-center justify-center"
+                  :class="element.required ? 'text-[var(--sf-coral-500)]' : 'text-[var(--sf-text-muted)] hover:text-[var(--sf-text-body)]'"
+                  :title="element.required ? 'Make optional' : 'Make required'"
                   @click.stop="toggleRequired(element)"
                 >
-                  <div
-                    class="h-6 text-center text-3xl font-bold text-inherit -mt-0.5"
-                  >
-                    *
-                  </div>
+                  <Icon name="i-lucide-asterisk" class="w-3.5 h-3.5" />
                 </button>
-              </UTooltip>
-              <UTooltip arrow text="Open settings">
                 <button
-                  class="cursor-pointer rounded-sm p-1 transition-colors hover:bg-blue-100 text-neutral-300 hover:text-blue-500 flex items-center justify-center field-settings-button"
+                  class="!cursor-pointer rounded-md p-1 transition-colors hover:bg-[var(--sf-nav-hover-bg)] items-center justify-center"
+                  :class="element.hidden ? 'text-[var(--sf-amber)]' : 'text-[var(--sf-text-muted)] hover:text-[var(--sf-text-body)]'"
+                  :title="element.hidden ? 'Show block' : 'Hide block'"
+                  @click.stop="toggleHidden(element)"
+                >
+                  <Icon :name="element.hidden ? 'tabler:eye-off' : 'tabler:eye'" class="w-3.5 h-3.5" />
+                </button>
+                <button
+                  class="cursor-pointer rounded-md p-1 transition-colors hover:bg-[var(--sf-nav-hover-bg)] text-[var(--sf-text-muted)] hover:text-[var(--sf-text-primary)] flex items-center justify-center field-settings-button"
+                  title="Open settings"
                   @click.stop="editOptions(index)"
                 >
-                  <Icon
-                    name="lucide:settings"
-                    class="h-5 w-5"
-                  />
+                  <Icon name="lucide:settings" class="w-3.5 h-3.5" />
                 </button>
-              </UTooltip>
+              </div>
             </div>
           </div>
         </template>

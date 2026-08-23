@@ -16,19 +16,22 @@
             Built for Teams & Enterprises
           </NuxtLink>
           <h1
-            class="text-white text-4xl sm:text-[56px] sm:leading-16 tracking-[-1%] font-semibold my-5"
+            class="text-white text-4xl sm:text-[56px] sm:leading-16 tracking-[-1%] font-semibold mt-5 mb-4"
           >
-            Forms that
-            <span class="brand-gradient-text">close deals.</span>
-            Not just collect.
+            See every question.
+            <span class="brand-gradient-text">Focus on one.</span>
+            <span
+              class="mt-4 block text-base sm:text-xl leading-7 font-normal tracking-normal text-white/80"
+            >
+              Spotlight mode. Focused flows. Classic pages.
+            </span>
           </h1>
 
           <p
-            class="text-white/55 text-lg sm:text-xl leading-7 tracking-[-1.5%] sm:leading-8 font-normal max-w-2xl mx-auto"
+            class="text-white/55 text-lg sm:text-xl leading-7 sm:leading-8 font-normal max-w-2xl mx-auto"
           >
-            The form builder with built-in calculators, quotes, and proposals.
-            Unlimited responses, formulas, conditional logic, and dynamic
-            documents in one platform.
+            Built-in calculations, conditional logic, signatures, file uploads,
+            and PDF generation. Unlimited forms, unlimited responses.
           </p>
 
           <div class="relative mt-9">
@@ -105,11 +108,12 @@ definePageMeta({
 const { isAuthenticated: authenticated } = useIsAuthenticated()
 
 useOpnSeoMeta({
-  title: "Forms That Close Deals | Free Form Builder",
+  // Keyword-first; the global titleTemplate appends the brand suffix.
+  title: "Free Form Builder with Calculations & Conditional Logic",
   description:
-    "SharaForms is the free form builder that closes deals. Build pricing calculators, instant quotes, and proposals with conditional logic on a generous free plan.",
+    "Classic pages, focused flows, or spotlight mode. Built-in calculations, conditional logic, signatures, file uploads, and PDF generation. Unlimited forms, unlimited responses. Free.",
   ogImage: "/share-preview.jpg",
-  keywords: "free form builder, forms that close deals, pricing calculator form, instant quote form, proposal form builder, online calculator forms, unlimited forms, unlimited submissions",
+  keywords: "free form builder, spotlight forms, one question at a time form, multi-page forms, form builder with calculations, conditional logic forms, signature forms, payment forms, unlimited forms, unlimited submissions",
   speakable: ["h1", ".marketing-page > section:first-child p", ".faq-answer p"],
   breadcrumbs: [
     { name: "Home" },
@@ -120,49 +124,34 @@ const homepageFaqs = [
   {
     question: "Is SharaForms free?",
     answer:
-      "Yes. The Free plan is free forever with unlimited forms and submissions and no credit card required. Paid plans add advanced features like custom branding and premium integrations.",
+      "Yes. The Free plan is free forever and includes unlimited forms, unlimited submissions, all three presentation modes, and core features like conditional logic and calculations. You never need a credit card to start. Paid plans exist for teams that want extras such as custom branding removal, premium integrations, and priority support.",
   },
   {
     question: "Are there limits on forms or submissions?",
     answer:
-      "No. Both forms and submissions are unlimited on all plans.",
+      "No. Every plan, including the free plan, comes with unlimited forms and unlimited submissions. There are no per-response charges, monthly caps, or surprise overages, so you can collect as many responses as your audience generates. If your volume grows from ten responses a month to fifty thousand, nothing changes on your bill.",
   },
   {
-    question: "Can I build pricing calculators, quotes, and proposals?",
+    question: "What are the three presentation modes?",
     answer:
-      "Yes. SharaForms has built-in calculators, instant quotes, and proposals, so you can collect answers and deliver a result in one flow.",
+      "Every form can be presented three ways: Classic shows your form across multiple pages, Focused shows one question at a time, and Spotlight keeps all questions visible while the active question takes focus. You can switch modes anytime without rebuilding your form.",
   },
   {
     question: "Does SharaForms support conditional logic and formulas?",
     answer:
-      "Yes. Show or hide fields based on answers with conditional logic, and use formula fields to compute totals, prices, and scores automatically.",
+      "Yes. Conditional logic shows or hides fields based on earlier answers, and formula fields calculate totals, prices, scores, and discounts automatically at fill time. Both work in every template and every presentation mode, require no coding, and support hidden fields and answer piping, so you can build quote calculators, scored quizzes, and dynamic multi-step flows without plugins.",
   },
   {
     question: "Where is my data stored?",
     answer:
-      "On the managed cloud, data is stored in India with SSL encryption in transit and at rest. You can also self-host SharaForms to keep data fully within your control.",
+      "On the managed cloud, data is stored in India and protected with SSL encryption in transit and at rest. Submissions stay private to your account, and role-based access controls decide who on your team can view them. Teams that need full data control can self-host SharaForms on their own infrastructure instead of the managed cloud.",
   },
   {
     question: "Can I connect SharaForms to my other tools?",
     answer:
-      "Yes. SharaForms offers API access, webhooks, and integrations with tools like Zapier, n8n, Google Sheets, and more.",
+      "Yes. SharaForms connects to popular tools through native integrations, Zapier, n8n, Make, webhooks, and a full REST API. Route new submissions to Slack or Discord, append rows to Google Sheets, trigger automations, or push data into any custom system. Integrations run automatically after each submission, so your workflow keeps moving without manual exports or copy-paste steps.",
   },
 ]
-
-const homepageSoftwareSchema = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "@id": `${useRuntimeConfig().public.appUrl.replace(/\/+$/, '')}/#software`,
-  name: "SharaForms",
-  applicationCategory: "BusinessApplication",
-  operatingSystem: "Web",
-  offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "USD",
-    description: "Free form builder with built-in calculators, quotes, and proposals",
-  },
-}
 
 const homepageFaqSchema = {
   "@context": "https://schema.org",
@@ -180,11 +169,6 @@ const homepageFaqSchema = {
 
 useHead({
   script: [
-    {
-      key: "homepage-software",
-      type: "application/ld+json",
-      textContent: JSON.stringify(homepageSoftwareSchema),
-    },
     {
       key: "homepage-faq-schema",
       type: "application/ld+json",

@@ -4,7 +4,7 @@
       id="app"
       class="bg-white dark:bg-notion-dark"
     >
-      <NuxtLoadingIndicator color="#2563eb" />
+      <NuxtLoadingIndicator color="#EA6676" />
       <NuxtLayout>
         <NuxtPage />
       </NuxtLayout>
@@ -46,7 +46,7 @@ const isPublicFormPage = computed(() => route.name === 'forms-slug')
 useOpnSeoMeta({
   title: "Free Form Builder with Unlimited Forms and Submissions",
   description:
-    "SharaForms is a free form builder with unlimited forms and submissions, built-in calculators, instant quotes, and proposals for teams that need more than basic forms.",
+    "SharaForms is a free form builder with three presentation modes: Classic (multi-page), Focused (one question at a time), and Spotlight (all questions visible, one in focus). Includes built-in calculations, conditional logic, signatures, and payments, with unlimited forms and submissions.",
   ogImage: "/share-preview.jpg",
   robots: () => {
     return config.public.env === "production" ? null : "noindex, nofollow"
@@ -70,7 +70,7 @@ const globalStructuredData = computed(() => {
         name: "SharaForms",
         url: `${baseUrl}/`,
         description:
-          "SharaForms helps teams build free online forms with unlimited forms and submissions, built-in calculators, dynamic documents, and workflow-ready automations.",
+          "SharaForms helps teams build free online forms with unlimited forms and submissions, three presentation modes, built-in calculations, dynamic documents, and workflow-ready automations.",
         logo: {
           "@type": "ImageObject",
           url: `${baseUrl}/img/sharaforms-logo.png`,
@@ -83,7 +83,7 @@ const globalStructuredData = computed(() => {
         name: "SharaForms",
         alternateName: "SharaForms Free Form Builder",
         description:
-          "SharaForms is a free form builder for teams that need unlimited forms and submissions, built-in calculators, dynamic documents, and automation-ready integrations.",
+          "SharaForms is a free form builder for teams that need unlimited forms and submissions, three presentation modes, built-in calculations, dynamic documents, and automation-ready integrations.",
         publisher: {
           "@id": `${baseUrl}/#organization`,
         },
@@ -100,8 +100,8 @@ const globalStructuredData = computed(() => {
         url: `${baseUrl}/`,
         image: `${baseUrl}/share-preview.jpg`,
         description:
-          "A free form builder that closes deals with built-in calculators, instant quotes, and proposals. Unlimited forms and submissions, formulas, conditional logic, PDFs, signatures, and integrations.",
-        keywords: "free form builder, forms that close deals, pricing calculator forms, quote forms, proposal form builder, unlimited forms, unlimited submissions, online calculator forms, no-code forms, conditional logic forms, workflow automation, lead generation forms, order forms, registration forms",
+          "A free form builder with three presentation modes: Classic (multi-page), Focused (one question at a time), and Spotlight (all questions visible, one in focus). Includes built-in calculations, conditional logic, PDFs, signatures, payments, and integrations.",
+        keywords: "free form builder, spotlight forms, one question at a time forms, multi-page forms, form builder with calculations, conditional logic forms, signature forms, payment forms, unlimited forms, unlimited submissions, no-code forms, online forms",
         isAccessibleForFree: true,
         offers: {
           "@type": "Offer",
@@ -112,13 +112,13 @@ const globalStructuredData = computed(() => {
         },
         featureList: [
           "Unlimited forms and submissions on the free plan",
-          "Built-in calculators for quotes, scores, pricing, and approvals",
-          "Instant quote forms and proposal templates",
+          "Three presentation modes: Classic (multi-page), Focused (one question at a time), Spotlight (all questions visible, one in focus)",
+          "Built-in calculations with a native formula engine",
           "Conditional logic and dynamic workflows",
           "Integrations and API access",
           "Dynamic document and PDF generation",
           "AI-powered form generation",
-          "Multi-page and single-page forms",
+          "Payments collection via Stripe",
           "File uploads and signature capture",
           "Custom domains and branding controls",
         ],
@@ -160,7 +160,14 @@ const currentHref = computed(() => {
 
 useHead({
   titleTemplate: (titleChunk) => {
-    return titleChunk ? `${titleChunk} - SharaForms` : "SharaForms"
+    if (!titleChunk) {
+      return "SharaForms"
+    }
+    // Avoid appending the brand when the page title already contains it
+    // (e.g. "SharaForms vs Typeform", or titles that embed the brand).
+    return titleChunk.includes("SharaForms")
+      ? titleChunk
+      : `${titleChunk} - SharaForms`
   },
   meta: [
     {
@@ -175,7 +182,7 @@ useHead({
   link: [
     {
       rel: 'stylesheet',
-      href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css'
+      href: '/fontawesome/css/all.min.css'
     },
     {
       rel: 'icon',
@@ -237,6 +244,7 @@ useHead({
       ]
     : [],
   htmlAttrs: () => ({
+    lang: locale.value || 'en',
     dir: locale.value?.startsWith('ar') ? 'rtl' : 'ltr'
   })
 })

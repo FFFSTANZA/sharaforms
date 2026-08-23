@@ -1,81 +1,94 @@
 <template>
-  <div class="space-y-4">
+  <div class="space-y-6">
+    <section class="sf-card sf-card-pad">
+      <div class="flex flex-col flex-wrap items-start justify-between gap-4 sm:flex-row sm:items-center mb-5">
+        <div class="flex items-center gap-3 flex-1">
+          <span class="sf-icon-chip-soft sf-icon-chip-soft--muted">
+            <i class="fa-solid fa-fingerprint" />
+          </span>
+          <div>
+            <h3 class="text-[15px] font-semibold text-[var(--sf-text-primary)]">OIDC Settings</h3>
+            <p class="text-xs text-[#8E9198] font-medium mt-0.5">
+              Configure OpenID Connect (OIDC) single sign-on for your workspace.
+            </p>
+          </div>
+        </div>
 
-    <UAlert
-      :icon="alertConfig.icon"
-      :color="alertConfig.color"
-      variant="subtle"
-      :title="alertConfig.title"
-      :description="alertConfig.description"
-      :actions="alertConfig.actions"
-    />
+        <UButton
+          v-if="canManageConnections && canAccessFeature"
+          label="Add Connection"
+          icon="i-lucide-plus"
+          class="btn-primary"
+          @click="showCreateModal = true"
+        />
+        <UButton
+          v-else-if="canManageConnections && !canAccessFeature"
+          label="Add Connection"
+          icon="i-lucide-plus"
+          class="btn-primary"
+          @click="openUpgradeModal"
+        />
+      </div>
 
-    <div class="flex flex-col flex-wrap items-start justify-between gap-4 sm:flex-row sm:items-center">
-      <div>
-        <h3 class="text-lg font-medium text-neutral-900">OIDC Settings</h3>
-        <p class="mt-1 text-sm text-neutral-500">
-          Configure OpenID Connect (OIDC) single sign-on for your workspace.
+      <UAlert
+        :icon="alertConfig.icon"
+        :color="alertConfig.color"
+        variant="subtle"
+        class="mb-5"
+        :title="alertConfig.title"
+        :description="alertConfig.description"
+        :actions="alertConfig.actions"
+      />
+
+      <!-- Connections List -->
+      <div v-if="connectionsData && connectionsData.length > 0" class="space-y-3">
+        <p class="text-[13px] text-[var(--sf-text-description)] max-w-xl">
+          Each connection can be tied to one verified email domain, which we use to route incoming users to the
+          correct workspace when they start login. Manage multiple clients from here and toggle them on or off without
+          losing their configuration details.
         </p>
+        <div class="grid gap-3 sm:grid-cols-2">
+          <OidcConnectionCard
+          v-for="connection in connectionsData"
+          :key="connection.id"
+            :connection="connection"
+            :can-edit="canManageConnections && canAccessFeature"
+            @edit="editConnection"
+            @delete="deleteConnection"
+            />
+        </div>
       </div>
 
-      <UButton
-        v-if="canManageConnections && canAccessFeature"
-        label="Add Connection"
-        icon="i-lucide-plus"
-        @click="showCreateModal = true"
-      />
-      <UButton
-        v-else-if="canManageConnections && !canAccessFeature"
-        label="Add Connection"
-        icon="i-lucide-plus"
-        @click="openUpgradeModal"
-      />
-    </div>
-
-    <!-- Connections List -->
-    <div v-if="connectionsData && connectionsData.length > 0" class="space-y-3">
-      <p class="text-sm text-neutral-500 max-w-xl">
-        Each connection can be tied to one verified email domain, which we use to route incoming users to the
-        correct workspace when they start login. Manage multiple clients from here and toggle them on or off without
-        losing their configuration details.
-      </p>
-      <div class="grid gap-3 sm:grid-cols-2">
-        <OidcConnectionCard
-        v-for="connection in connectionsData"
-        :key="connection.id"
-          :connection="connection"
-          :can-edit="canManageConnections && canAccessFeature"
-          @edit="editConnection"
-          @delete="deleteConnection"
+      <!-- Empty State -->
+      <div v-else-if="!isConnectionsLoading" class="text-center py-10 rounded-xl border border-dashed border-[var(--sf-border-button)] bg-[var(--sf-bg-page)]">
+        <div class="mx-auto mb-4 flex items-center justify-center w-14 h-14 rounded-2xl bg-[#F0F1F4]">
+          <UIcon
+            name="i-lucide-key"
+            class="w-6 h-6 text-[#8E9198]"
           />
+        </div>
+        <h4 class="text-[15px] font-semibold text-[var(--sf-text-primary)] mb-1">
+          No OIDC connections yet
+        </h4>
+        <p class="text-[13px] text-[var(--sf-text-description)] mb-5">
+          Configure your first OIDC connection to enable single sign-on for your workspace.
+        </p>
+        <UButton
+          v-if="canManageConnections && canAccessFeature"
+          label="Add Your First Connection"
+          icon="i-lucide-plus"
+          class="btn-primary"
+          @click="showCreateModal = true"
+        />
+        <UButton
+          v-else-if="canManageConnections && !canAccessFeature"
+          label="Add Your First Connection"
+          icon="i-lucide-plus"
+          class="btn-primary"
+          @click="openUpgradeModal"
+        />
       </div>
-    </div>
-
-    <!-- Empty State -->
-    <div v-else-if="!isConnectionsLoading" class="text-center py-12">
-      <UIcon 
-        name="i-lucide-key" 
-        class="w-12 h-12 text-neutral-400 mx-auto mb-4" 
-      />
-      <h4 class="text-lg font-medium text-neutral-900 mb-2">
-        No OIDC connections yet
-      </h4>
-      <p class="text-neutral-500 mb-4">
-        Configure your first OIDC connection to enable single sign-on for your workspace.
-      </p>
-      <UButton
-        v-if="canManageConnections && canAccessFeature"
-        label="Add Your First Connection"
-        icon="i-lucide-plus"
-        @click="showCreateModal = true"
-      />
-      <UButton
-        v-else-if="canManageConnections && !canAccessFeature"
-        label="Add Your First Connection"
-        icon="i-lucide-plus"
-        @click="openUpgradeModal"
-      />
-    </div>
+    </section>
 
     <!-- Create/Edit Modal -->
     <OidcConnectionModal

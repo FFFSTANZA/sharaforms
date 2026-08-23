@@ -1,7 +1,7 @@
 import clonedeep from 'clone-deep'
 import { isReadonly } from 'vue'
 import { generateUUID } from "~/lib/utils.js"
-export const DEFAULT_COLOR = '#3B82F6'
+export const DEFAULT_COLOR = '#EA6676'
 
 export const initForm = (defaultValue = {}, withDefaultProperties = false) => {
   return useForm({
@@ -108,7 +108,7 @@ export function setFormDefaults(formData) {
     size: 'md',
     border_radius: 'small',
     dark_mode: 'light',
-    color: '#3B82F6',
+    color: '#EA6676',
     uppercase_labels: false,
     no_branding: false,
     transparent_background: false,

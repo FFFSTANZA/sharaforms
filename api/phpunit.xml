@@ -26,6 +26,7 @@
     <server name="FILESYSTEM_DISK" value="local"/>
     <server name="SESSION_DRIVER" value="array"/>
     <server name="SELF_HOSTED" value="false"/>
+    <server name="WEBHOOKS_ALLOW_PRIVATE_URLS" value="false"/>
     <server name="TEMPLATE_EDITOR_EMAILS" value="support@sharaforms.com"/>
     <server name="JWT_SECRET" value="9K6whOetAFaokQgSIdbMQZuJuDV5uS2Y"/>
     <server name="STRIPE_KEY" value="TEST_KEY"/>

@@ -16,8 +16,8 @@
     </div>
 
     <!-- Content -->
-    <div class="w-full @3xl:w-1/2 flex items-center @3xl:items-start px-6 @3xl:h-[var(--form-focused-step-height,100svh)] @3xl:overflow-y-auto">
-      <div class="w-full max-w-2xl mx-auto mt-4 @3xl:mt-auto @3xl:mb-auto py-4 @2xl:px-8 @3xl:px-4 @4xl:px-8">
+    <div class="w-full @3xl:w-1/2 flex items-center @3xl:items-center px-6 @3xl:h-[var(--form-focused-step-height,100svh)] @3xl:overflow-y-auto">
+      <div class="w-full max-w-2xl mx-auto mt-4 @3xl:mt-auto @3xl:mb-auto py-6 @2xl:px-8 @3xl:px-6 @4xl:px-10">
         <slot />
       </div>
     </div>

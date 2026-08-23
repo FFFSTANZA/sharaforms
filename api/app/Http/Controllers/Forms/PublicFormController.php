@@ -118,6 +118,18 @@ class PublicFormController extends Controller
 
     public function showAsset(string $assetFileName, SafeFileResponseService $safeFileResponseService)
     {
+        // C4 FIX: Prevent path traversal by rejecting .. and encoded variants.
+        $decoded = rawurldecode($assetFileName);
+        if (
+            str_contains($decoded, '..')
+            || str_contains($decoded, "\0")
+            || $decoded !== basename($decoded)
+        ) {
+            return $this->error([
+                'message' => 'Invalid file name.',
+            ]);
+        }
+
         $path = FormController::ASSETS_UPLOAD_PATH . '/' . $assetFileName;
         if (!Storage::exists($path)) {
             return $this->error([

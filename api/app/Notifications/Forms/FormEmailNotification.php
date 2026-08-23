@@ -52,6 +52,13 @@ class FormEmailNotification extends Notification
         return $this->computedValues;
     }
 
+    /**
+     * Track which workspace mailers have already been registered to avoid
+     * re-registering them on every notification (which would be expensive).
+     * @var array<int, bool>
+     */
+    private static array $registeredWorkspaceMailers = [];
+
     private function getMailer(): string
     {
         $workspace = $this->event->form->workspace;
@@ -65,19 +72,26 @@ class FormEmailNotification extends Notification
             && !empty($emailSettings['username'])
             && !empty($emailSettings['password'])
         ) {
-            config([
-                'mail.mailers.custom_smtp.host' => $emailSettings['host'],
-                'mail.mailers.custom_smtp.port' => $emailSettings['port'],
-                'mail.mailers.custom_smtp.encryption' => array_key_exists('encryption', $emailSettings) ? $emailSettings['encryption'] : 'tls',
-                'mail.mailers.custom_smtp.username' => $emailSettings['username'],
-                'mail.mailers.custom_smtp.password' => $emailSettings['password']
-            ]);
+            // M1 FIX: Instead of mutating the shared 'custom_smtp' mailer config which
+            // clobbers concurrent Horizon workers, create a unique mailer per workspace.
+            // This prevents Workspace A's SMTP settings from overwriting Workspace B's.
+            $mailerName = 'custom_smtp_ws_' . $workspace->id;
 
-            // Laravel caches mailer instances (and their transport) in long-lived processes
-            // like queue workers (Horizon). If workspace SMTP settings change, we must purge
-            // the cached mailer so the next send uses the updated config.
-            Mail::purge('custom_smtp');
-            return 'custom_smtp';
+            if (!isset(self::$registeredWorkspaceMailers[$workspace->id])) {
+                config([
+                    "mail.mailers.{$mailerName}.transport" => 'smtp',
+                    "mail.mailers.{$mailerName}.host" => $emailSettings['host'],
+                    "mail.mailers.{$mailerName}.port" => $emailSettings['port'],
+                    "mail.mailers.{$mailerName}.encryption" => array_key_exists('encryption', $emailSettings) ? $emailSettings['encryption'] : 'tls',
+                    "mail.mailers.{$mailerName}.username" => $emailSettings['username'],
+                    "mail.mailers.{$mailerName}.password" => $emailSettings['password'],
+                ]);
+                // Purge cached mailer instance so it picks up the fresh config
+                Mail::purge($mailerName);
+                self::$registeredWorkspaceMailers[$workspace->id] = true;
+            }
+
+            return $mailerName;
         }
 
         return config('mail.default');
@@ -169,6 +183,15 @@ class FormEmailNotification extends Notification
                     $totalBytes += $nextSize;
                 }
             } catch (\Throwable $e) {
+                // L4 FIX: Log PDF generation failure so it's visible in monitoring.
+                // Previously this was silently swallowed — email would send without
+                // the attachment and the user would never know.
+                logger()->error('PDF email attachment generation failed.', [
+                    'form_id' => $form->id,
+                    'submission_id' => $submissionId,
+                    'template_id' => $template->id,
+                    'error' => $e->getMessage(),
+                ]);
                 report($e);
             }
         }

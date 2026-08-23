@@ -8,7 +8,7 @@
     :switch-reasons="switchReasons"
     :feature-comparison="featureComparison"
     :get-competitor-price="getPrice"
-    :summary-line="'SharaForms is the Fillout alternative for teams that need to scale past response caps, with unlimited forms, unlimited submissions, built-in calculators, custom domains, and self-hosting from $0.'"
+    :summary-line="'SharaForms is the Fillout alternative for teams that need to scale past response caps, with unlimited forms, unlimited submissions, three presentation modes, built-in calculations, custom domains, and self-hosting from $0.'"
     :faqs="faqs"
   >
     <template #hero-subtitle>
@@ -170,7 +170,7 @@ const faqs = [
   {
     question: 'Is SharaForms a good Fillout alternative?',
     answer:
-      'Yes. Fillout is a polished builder, but its free plan caps responses and usage quickly. SharaForms is free with unlimited forms and unlimited submissions, adds built-in calculators, custom domains, and self-hosting, and keeps scaling predictable.',
+      'Yes. Fillout is a polished builder, but its free plan caps responses and usage quickly. SharaForms is free with unlimited forms and unlimited submissions, adds three presentation modes, built-in calculations, custom domains, and self-hosting, and keeps scaling predictable.',
   },
   {
     question: 'Is Fillout free?',
@@ -185,7 +185,7 @@ const faqs = [
   {
     question: 'How does SharaForms pricing compare to Fillout?',
     answer:
-      'SharaForms starts free with unlimited submissions; paid plans begin at $12 per month. Fillout paid plans start at a similar point but still enforce response caps, so SharaForms tends to cost less as your volume grows.',
+      'SharaForms starts free with unlimited submissions; paid plans begin at $15 per month. Fillout paid plans start at a similar point but still enforce response caps, so SharaForms tends to cost less as your volume grows.',
   },
 ]
 

@@ -163,7 +163,7 @@
 
   var type = nfData.type || 'popup'
   var position = nfData.position === 'left' ? 'nf-left' : ''
-  var color = nfData.color || '#3B82F6'
+  var color = nfData.color || '#EA6676'
   var width = parseInt(nfData.width, 10) || 500
   var height = parseInt(nfData.height, 10) || 600
   var icon = nfData.icon || '💬'

@@ -28,26 +28,26 @@ let widgetId = null
 const SCRIPT_ID = 'recaptcha-script'
 let scriptLoadPromise = null
 
-// Add cleanup function similar to hCaptcha
+// H12 FIX: Only clean up THIS widget's iframes, not all reCAPTCHA iframes on the page.
+// The old code destroyed all reCAPTCHA widgets when any single widget unmounted.
 const cleanupRecaptcha = () => {
-  // Remove all reCAPTCHA iframes
-  document.querySelectorAll('iframe[src*="google.com/recaptcha"]').forEach(iframe => {
-    iframe.remove()
-  })
+  // Only remove iframes that belong to THIS widget (match by container)
+  if (recaptchaContainer.value) {
+    recaptchaContainer.value.querySelectorAll('iframe[src*="google.com/recaptcha"]').forEach(iframe => {
+      iframe.remove()
+    })
+  }
 
-  // Remove all reCAPTCHA scripts
-  document.querySelectorAll('script[src*="google.com/recaptcha"]').forEach(script => {
-    script.remove()
-  })
-
-  // Remove specific script
+  // Only remove the script we loaded
   const script = document.getElementById(SCRIPT_ID)
   if (script) {
     script.remove()
   }
 
-  // Clean up global variables
-  if (window.grecaptcha) {
+  // Only clean up grecaptcha if THIS was the last widget using it
+  // Check if any other reCAPTCHA containers still exist
+  const otherWidgets = document.querySelectorAll('.recaptcha-container iframe[src*="google.com/recaptcha"]')
+  if (otherWidgets.length === 0 && window.grecaptcha) {
     delete window.grecaptcha
   }
 
@@ -76,11 +76,19 @@ const loadRecaptchaScript = () => {
     let timeoutId = null
 
     script.onload = () => {
+      // M15 FIX: Add max-attempts guard to prevent infinite polling.
+      let pollAttempts = 0
+      const MAX_POLL_ATTEMPTS = 100 // 100 * 100ms = 10s max
       const checkGrecaptcha = () => {
         if (window.grecaptcha?.enterprise?.render) {
           if (timeoutId) clearTimeout(timeoutId)
           resolve(window.grecaptcha)
+        } else if (pollAttempts >= MAX_POLL_ATTEMPTS) {
+          if (timeoutId) clearTimeout(timeoutId)
+          scriptLoadPromise = null
+          reject(new Error('reCAPTCHA enterprise.render not available after maximum wait'))
         } else {
+          pollAttempts++
           setTimeout(checkGrecaptcha, 100)
         }
       }

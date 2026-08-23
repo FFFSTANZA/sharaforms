@@ -111,13 +111,43 @@ export const useOpnSeoMeta = (meta, alwaysEnabled = false) => {
 
 function resolveRobots (robots, route) {
   const resolvedRobots = resolveMetaValue(robots)
-  if (resolvedRobots) {
-    return resolvedRobots
+  const normalizedRobots = normalizeRobots(resolvedRobots)
+  if (normalizedRobots) {
+    return normalizedRobots
   }
 
   return isNonIndexablePath(route.path)
     ? 'noindex, nofollow'
     : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+}
+
+function normalizeRobots (robots) {
+  if (typeof robots === 'string' && robots.trim()) {
+    return robots.trim()
+  }
+
+  if (Array.isArray(robots) && robots.length) {
+    return robots.join(', ')
+  }
+
+  if (robots && typeof robots === 'object') {
+    const parts = []
+    if (robots.index === false) parts.push('noindex')
+    else if (robots.index === true) parts.push('index')
+    if (robots.follow === false) parts.push('nofollow')
+    else if (robots.follow === true) parts.push('follow')
+    if (robots.noarchive === true) parts.push('noarchive')
+    if (robots.noimageindex === true) parts.push('noimageindex')
+    if (robots.nosnippet === true) parts.push('nosnippet')
+    if (robots.notranslate === true) parts.push('notranslate')
+    if (robots.maxSnippet !== undefined) parts.push(`max-snippet:${robots.maxSnippet}`)
+    if (robots.maxImagePreview !== undefined) parts.push(`max-image-preview:${robots.maxImagePreview}`)
+    if (robots.maxVideoPreview !== undefined) parts.push(`max-video-preview:${robots.maxVideoPreview}`)
+
+    return parts.length ? parts.join(', ') : null
+  }
+
+  return null
 }
 
 function resolveCanonicalUrl (canonical, route, canonicalBaseUrl) {
@@ -221,14 +251,14 @@ function getPageSchemaType (path) {
 
 function getPageKeywords (path) {
   if (path === '/pricing') {
-    return 'free form builder pricing, unlimited forms, unlimited submissions pricing, free online forms, pricing calculator forms, quote forms'
+    return 'free form builder pricing, unlimited forms, unlimited submissions pricing, free online forms'
   }
 
   if (path === '/ai-form-builder') {
-    return 'ai form builder, free ai form builder, unlimited forms, pricing calculator forms, quote forms, forms that close deals'
+    return 'ai form builder, free ai form builder, unlimited forms, conditional logic forms, online forms'
   }
 
-  return 'free form builder, unlimited forms, unlimited submissions, forms that close deals, pricing calculator forms, online forms'
+  return 'free form builder, spotlight forms, one question at a time forms, multi-page forms, form builder with calculations, conditional logic forms, unlimited forms, unlimited submissions'
 }
 
 function normalizeCanonicalUrl (url, canonicalBaseUrl) {

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="group relative flex items-center gap-3 sm:gap-4 px-4 sm:px-5 py-3.5 transition-colors hover:bg-neutral-50 cursor-pointer"
+    class="group relative flex items-center gap-3 sm:gap-4 px-4 sm:px-5 py-3.5 transition-colors hover:bg-[#F0F1F4] cursor-pointer"
   >
     <!-- Type icon tile -->
     <div
@@ -13,14 +13,14 @@
     <!-- Title + slug + tags -->
     <div class="min-w-0 flex-1">
       <span
-        class="block truncate text-sm font-semibold text-neutral-900 dark:text-white"
+        class="block truncate text-[13px] font-semibold text-[#1D1F24] dark:text-white"
       >
         {{ form.title }}
       </span>
-      <div class="mt-1 flex items-center gap-1.5 text-xs text-neutral-400">
+      <div class="mt-1 flex items-center gap-1.5 text-xs text-[#A7ABB2]">
         <span class="truncate">{{ form.slug }}</span>
         <template v-if="form.tags?.length">
-          <span class="text-neutral-300">·</span>
+          <span class="text-[#C7C9CE]">·</span>
           <span class="flex flex-wrap items-center gap-1">
             <UBadge
               v-for="tag in form.tags"
@@ -38,7 +38,7 @@
     </div>
 
     <!-- Stats and Menu -->
-    <div class="flex shrink-0 items-center gap-3 sm:gap-4 text-sm text-neutral-500">
+    <div class="flex shrink-0 items-center gap-3 sm:gap-4 text-[13px] text-[#8E9198]">
       <!-- Status Badges -->
       <FormStatusBadges
         :form="form"
@@ -49,7 +49,7 @@
 
       <!-- Last Updated -->
       <span
-        class="hidden lg:inline text-xs whitespace-nowrap text-neutral-400"
+        class="hidden lg:inline text-xs whitespace-nowrap text-[#A7ABB2]"
         title="Last updated"
       >
         Updated {{ form.last_edited_human }}
@@ -177,9 +177,9 @@ const iconName = computed(() => {
 })
 
 const iconTileClass = computed(() => {
-  if (props.form.visibility === "draft") return "bg-amber-50 text-amber-600"
-  if (isClosed.value) return "bg-neutral-100 text-neutral-500"
-  return "bg-blue-50 text-blue-600"
+  if (props.form.visibility === "draft") return "bg-[#FDF6EB] text-[#d97706]"
+  if (isClosed.value) return "bg-[#F0F1F4] text-[#8E9198]"
+  return "bg-[#E4F4F8] text-[#0891b2]"
 })
 
 const copyLink = () => {

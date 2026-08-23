@@ -62,7 +62,7 @@ function buildFormPayload(workspaceId: number, title: string, presentationStyle:
     layout_rtl: false,
     border_radius: "small",
     dark_mode: "light",
-    color: "#3B82F6",
+    color: "#EA6676",
     uppercase_labels: false,
     no_branding: false,
     transparent_background: false,

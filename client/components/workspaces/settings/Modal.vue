@@ -9,7 +9,7 @@
     <SettingsModalPage
       id="information"
       label="Information"
-      icon="i-lucide-info"
+      icon="fa-solid fa-circle-info"
     >
       <LazyWorkspacesSettingsInformation />
     </SettingsModalPage>
@@ -17,7 +17,7 @@
     <SettingsModalPage
       id="members"
       label="Members"
-      icon="i-lucide-users"
+      icon="fa-solid fa-user-group"
     >
       <LazyWorkspacesSettingsMembers />
     </SettingsModalPage>
@@ -26,7 +26,7 @@
       v-if="showDomainsSettings"
       id="domains"
       label="Domains"
-      icon="i-lucide-globe"
+      icon="fa-solid fa-globe"
     >
       <LazyWorkspacesSettingsDomains />
     </SettingsModalPage>
@@ -35,7 +35,7 @@
       v-if="workspace && workspace.is_admin"
       id="emails"
       label="Emails"
-      icon="i-lucide-mail"
+      icon="fa-solid fa-envelope"
     >
       <LazyWorkspacesSettingsEmails />
     </SettingsModalPage>
@@ -44,7 +44,7 @@
       v-if="workspace && workspace.is_admin"
       id="sso"
       label="SSO"
-      icon="i-lucide-shield-check"
+      icon="fa-solid fa-shield-halved"
     >
       <LazyWorkspacesSettingsSso />
     </SettingsModalPage>
@@ -53,7 +53,7 @@
       v-if="workspace && workspace.is_admin"
       id="custom-code"
       label="Custom Code"
-      icon="i-lucide-code"
+      icon="fa-solid fa-code"
     >
       <LazyWorkspacesSettingsCustomCode />
     </SettingsModalPage>

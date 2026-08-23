@@ -30,33 +30,33 @@
         <!-- Stats Overview -->
         <div v-if="summaryData" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <DashboardPanel padding="sm">
-            <div class="text-sm font-medium text-neutral-500 mb-1">
+            <div class="text-[12px] font-semibold uppercase tracking-[0.06em] text-[var(--sf-text-label)] mb-1.5">
               Total Submissions
             </div>
-            <div class="text-3xl font-bold text-neutral-900">
+            <div class="text-3xl font-bold text-[var(--sf-text-primary)]">
               {{ summaryData.total_submissions }}
             </div>
           </DashboardPanel>
           <DashboardPanel padding="sm" class="opacity-50">
-            <div class="text-sm font-medium text-neutral-500 mb-1">
+            <div class="text-[12px] font-semibold uppercase tracking-[0.06em] text-[var(--sf-text-label)] mb-1.5">
               Completion Rate
             </div>
-            <div class="text-3xl font-bold text-neutral-900">
+            <div class="text-3xl font-bold text-[var(--sf-text-primary)]">
               -
             </div>
           </DashboardPanel>
           <DashboardPanel padding="sm" class="opacity-50">
-            <div class="text-sm font-medium text-neutral-500 mb-1">
+            <div class="text-[12px] font-semibold uppercase tracking-[0.06em] text-[var(--sf-text-label)] mb-1.5">
               Avg. Completion Time
             </div>
-            <div class="text-3xl font-bold text-neutral-900">
+            <div class="text-3xl font-bold text-[var(--sf-text-primary)]">
               -
             </div>
           </DashboardPanel>
         </div>
 
     <!-- Filters Bar -->
-    <div class="flex items-center justify-between py-3 border-b border-neutral-200">
+    <div class="flex items-center justify-between py-3 border-b border-[var(--sf-border-divider)]">
       <div class="flex items-center gap-3">
          <SelectInput
           v-if="form.enable_partial_submissions"
@@ -66,12 +66,12 @@
           class="w-40 !mb-0"
         />
       </div>
-      <div class="text-sm text-neutral-500">
+      <div class="text-[13px] text-[var(--sf-text-description)]">
         <template v-if="summaryData?.is_limited">
-          Showing stats for <span class="font-medium text-neutral-900">{{ summaryData?.processed_submissions?.toLocaleString() }}</span> of {{ summaryData?.total_submissions?.toLocaleString() }} submissions
+          Showing stats for <span class="font-semibold text-[var(--sf-text-primary)]">{{ summaryData?.processed_submissions?.toLocaleString() }}</span> of {{ summaryData?.total_submissions?.toLocaleString() }} submissions
         </template>
         <template v-else>
-          Showing stats for <span class="font-medium text-neutral-900">{{ summaryData?.total_submissions?.toLocaleString() || 0 }}</span> submissions
+          Showing stats for <span class="font-semibold text-[var(--sf-text-primary)]">{{ summaryData?.total_submissions?.toLocaleString() || 0 }}</span> submissions
         </template>
       </div>
     </div>

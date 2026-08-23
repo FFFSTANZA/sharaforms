@@ -33,31 +33,27 @@ export const useSharedNavigation = () => {
       active: isActive,
     }
 
-    const customClasses = ['group']
+    const customClasses = ['group', 'rounded-xl']
 
     if (isActive) {
-      // Active item: clean soft primary pill rendered by Nuxt UI's native
-      // activeVariant (no overlapping data-active hacks).
       baseItem.color = 'primary'
       baseItem.activeVariant = 'soft'
-      customClasses.push('font-medium')
+      customClasses.push('font-semibold')
       baseItem.ui = {
         ...baseItem.ui,
-        leadingIcon: 'text-primary-600 h-4 w-4',
+        leadingIcon: 'text-[var(--sf-coral-500)] h-4 w-4',
       }
     } else if (baseItem.color === 'primary') {
-      // Highlighted CTA (Upgrade, What's new): subtle tint, not an active pill
-      customClasses.push('hover:bg-primary-50/70')
+      customClasses.push('hover:bg-[var(--sf-nav-hover-bg)]')
       baseItem.ui = {
         ...baseItem.ui,
-        leadingIcon: 'text-primary-500 group-hover:text-primary-600 h-4 w-4',
+        leadingIcon: 'text-[var(--sf-coral-400)] group-hover:text-[var(--sf-coral-500)] h-4 w-4',
       }
     } else {
-      // Default neutral item
-      customClasses.push('hover:bg-neutral-100')
+      customClasses.push('hover:bg-[var(--sf-nav-hover-bg)]')
       baseItem.ui = {
         ...baseItem.ui,
-        leadingIcon: 'text-neutral-400 group-hover:text-neutral-600 h-4 w-4',
+        leadingIcon: 'text-[var(--sf-text-caption)] group-hover:text-[var(--sf-text-body)] h-4 w-4',
       }
     }
 

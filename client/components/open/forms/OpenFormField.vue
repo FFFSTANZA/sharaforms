@@ -4,12 +4,12 @@
     :id="'block-' + field.id"
     :data-testid="`open-form-field-${field.id}`"
     ref="form-block"
-    class="px-2"
+    class="px-3"
     :class="[
       {
-        'group/nffield hover:bg-neutral-100/50 relative hover:z-10 transition-colors hover:border-neutral-200 border-dashed border border-transparent box-border dark:hover:border-blue-900 dark:hover:bg-blue-950 rounded-md': isAdminPreview,
-        'cursor-pointer':workingFormStore.showEditFieldSidebar && isAdminPreview,
-        'bg-blue-50 hover:!bg-blue-50 dark:bg-neutral-700! dark:hover:bg-neutral-700! rounded-md': beingEdited,
+        'group/nffield relative hover:z-10 transition-all duration-150 border border-transparent hover:border-[var(--sf-border-card)] hover:shadow-sm rounded-xl': isAdminPreview,
+        'cursor-pointer': workingFormStore.showEditFieldSidebar && isAdminPreview,
+        'bg-[var(--sf-nav-active-bg)]/80 hover:!bg-[var(--sf-nav-active-bg)]/80 rounded-xl ring-1 ring-inset ring-[var(--sf-coral-500)]/15': beingEdited,
       }]"
     @click="setFieldAsSelected"
     @dblclick="fieldDoubleClick"
@@ -19,34 +19,34 @@
     <div
       v-if="isAdminPreview"
       ref="controlsRef"
-      class="absolute right-full mr-2 top-0 flex-row-reverse gap-0.5 z-20"
+      class="absolute right-full mr-2 top-1 flex flex-row-reverse gap-1 z-20"
       :class="showControls ? 'flex' : 'hidden'"
       @mouseenter="onControlsEnter"
       @mouseleave="onControlsLeave"
     >
       <div
         aria-label="Add block"
-        class="flex items-center justify-center w-6 h-6 rounded-md hover:bg-neutral-200/70 dark:hover:bg-neutral-700 cursor-pointer text-neutral-300 hover:text-neutral-600 dark:text-neutral-600 dark:hover:text-neutral-300 transition-colors"
+        class="flex items-center justify-center w-6 h-6 rounded-lg bg-[var(--sf-bg-surface)] border border-[var(--sf-border-card)] shadow-sm cursor-pointer text-[var(--sf-text-muted)] hover:text-[var(--sf-coral-500)] hover:border-[var(--sf-coral-500)]/30 hover:bg-[var(--sf-nav-active-bg)] transition-all duration-150"
         role="button"
         @click.stop.prevent="openAddFieldSidebar"
       >
-        <Icon name="i-lucide-plus" class="w-4 h-4" />
+        <Icon name="i-lucide-plus" class="w-3.5 h-3.5" />
       </div>
       <div
         aria-label="Settings"
-        class="flex items-center justify-center w-6 h-6 rounded-md hover:bg-neutral-200/70 dark:hover:bg-neutral-700 cursor-pointer text-neutral-300 hover:text-neutral-600 dark:text-neutral-600 dark:hover:text-neutral-300 transition-colors"
+        class="flex items-center justify-center w-6 h-6 rounded-lg bg-[var(--sf-bg-surface)] border border-[var(--sf-border-card)] shadow-sm cursor-pointer text-[var(--sf-text-muted)] hover:text-[var(--sf-text-primary)] hover:border-[var(--sf-hover-border)] transition-all duration-150"
         role="button"
         @click.stop.prevent="editFieldOptions"
       >
-        <Icon name="i-lucide-settings" class="w-4 h-4" />
+        <Icon name="i-lucide-settings" class="w-3.5 h-3.5" />
       </div>
       <div
         aria-label="Delete"
-        class="flex items-center justify-center w-6 h-6 rounded-md hover:bg-red-100 dark:hover:bg-red-950 cursor-pointer text-neutral-300 hover:text-red-400 dark:text-neutral-600 dark:hover:text-red-400 transition-colors"
+        class="flex items-center justify-center w-6 h-6 rounded-lg bg-[var(--sf-bg-surface)] border border-[var(--sf-border-card)] shadow-sm cursor-pointer text-[var(--sf-text-muted)] hover:text-[var(--sf-status-closed-text)] hover:border-[var(--sf-status-closed-border)] hover:bg-[var(--sf-status-closed-bg)] transition-all duration-150"
         role="button"
         @click.stop.prevent="removeField"
       >
-        <Icon name="i-lucide-trash-2" class="w-4 h-4" />
+        <Icon name="i-lucide-trash-2" class="w-3.5 h-3.5" />
       </div>
     </div>
     <div
@@ -58,17 +58,17 @@
     </div>
     <div
       v-if="isAdminPreview"
-      class="absolute -right-5 top-0 h-full w-5 flex-col items-center justify-center"
+      class="absolute -right-6 top-1 h-full w-6 flex-col items-center justify-center"
       :class="showControls ? 'flex' : 'hidden'"
       @mouseenter="onControlsEnter"
       @mouseleave="onControlsLeave"
     >
       <div
-        class="flex items-center justify-center bg-neutral-100 dark:bg-neutral-800 border rounded-md w-5 text-neutral-400 dark:text-neutral-500 dark:border-neutral-700 cursor-grab handle transition-colors hover:bg-neutral-200 dark:hover:bg-neutral-700 h-10"
+        class="flex items-center justify-center bg-[var(--sf-bg-surface)] border border-[var(--sf-border-card)] rounded-lg w-5 h-8 text-[var(--sf-text-disabled)] cursor-grab handle transition-all duration-150 hover:bg-[var(--sf-bg-muted)] hover:text-[var(--sf-text-body)] hover:border-[var(--sf-hover-border)] shadow-sm"
       >
         <Icon
           name="lucide:grip-vertical"
-          class="h-4 w-4"
+          class="h-3.5 w-3.5"
         />
       </div>
     </div>

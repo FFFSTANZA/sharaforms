@@ -1,31 +1,39 @@
 <template>
-  <div class="space-y-4">
-    <div class="flex flex-col flex-wrap items-start justify-between gap-4 sm:flex-row sm:items-center">
-      <div>
-        <div class="flex items-center gap-2">
-          <h3 class="text-lg font-medium text-neutral-900">SAML Settings</h3>
-          <UBadge color="neutral" variant="subtle">
-            Not available yet
-          </UBadge>
+  <div class="space-y-6">
+    <section class="sf-card sf-card-pad">
+      <div class="flex items-center gap-3 mb-5">
+        <span class="sf-icon-chip-soft sf-icon-chip-soft--muted">
+          <i class="fa-solid fa-shield-halved" />
+        </span>
+        <div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <h3 class="text-[15px] font-semibold text-[var(--sf-text-primary)]">SAML Settings</h3>
+            <span class="pill-draft inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold">
+              <i class="fa-solid fa-hourglass-half text-[9px]"></i>
+              Not available yet
+            </span>
+          </div>
+          <p class="text-xs text-[#8E9198] font-medium mt-0.5">
+            SAML single sign-on is not available yet. Use OIDC for workspace SSO.
+          </p>
         </div>
-        <p class="mt-1 text-sm text-neutral-500">
-          SAML single sign-on is not available yet. Use OIDC for workspace SSO.
+      </div>
+
+      <!-- Empty State -->
+      <div class="text-center py-10 rounded-xl border border-dashed border-[var(--sf-border-button)] bg-[var(--sf-bg-page)]">
+        <div class="mx-auto mb-4 flex items-center justify-center w-14 h-14 rounded-2xl bg-[#F0F1F4]">
+          <UIcon
+            name="i-lucide-shield-check"
+            class="w-6 h-6 text-[#8E9198]"
+          />
+        </div>
+        <h4 class="text-[15px] font-semibold text-[var(--sf-text-primary)] mb-1">
+          No SAML connections yet
+        </h4>
+        <p class="text-[13px] text-[var(--sf-text-description)] max-w-md mx-auto">
+          SAML setup is not implemented in this version of SharaForms.
         </p>
       </div>
-    </div>
-
-    <!-- Empty State -->
-    <div class="text-center py-12">
-      <UIcon 
-        name="i-lucide-shield-check" 
-        class="w-12 h-12 text-neutral-400 mx-auto mb-4" 
-      />
-      <h4 class="text-lg font-medium text-neutral-900 mb-2">
-        No SAML connections yet
-      </h4>
-      <p class="text-neutral-500 mb-6 max-w-md mx-auto">
-        SAML setup is not implemented in this version of SharaForms.
-      </p>
-    </div>
+    </section>
   </div>
 </template>

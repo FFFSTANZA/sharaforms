@@ -8,8 +8,21 @@ const integrationRegistry = new Map([
   ['slack', () => import('~/components/open/integrations/SlackIntegration.vue')],
   ['discord', () => import('~/components/open/integrations/DiscordIntegration.vue')],
   ['google_sheets', () => import('~/components/open/integrations/GoogleSheetsIntegration.vue')],
+  ['notion', () => import('~/components/open/integrations/NotionIntegration.vue')],
   ['telegram', () => import('~/components/open/integrations/TelegramIntegration.vue')],
   ['zapier', () => import('~/components/open/integrations/ZapierIntegration.vue')],
+  ['microsoft_teams', () => import('~/components/open/integrations/MicrosoftTeamsIntegration.vue')],
+  ['google_chat', () => import('~/components/open/integrations/GoogleChatIntegration.vue')],
+  ['ntfy', () => import('~/components/open/integrations/NtfyIntegration.vue')],
+  ['airtable', () => import('~/components/open/integrations/AirtableIntegration.vue')],
+  ['trello', () => import('~/components/open/integrations/TrelloIntegration.vue')],
+  ['supabase', () => import('~/components/open/integrations/SupabaseIntegration.vue')],
+  ['n8n', () => import('~/components/open/integrations/N8nIntegration.vue')],
+  ['baserow', () => import('~/components/open/integrations/BaserowIntegration.vue')],
+  ['linear', () => import('~/components/open/integrations/LinearIntegration.vue')],
+  ['resend', () => import('~/components/open/integrations/ResendIntegration.vue')],
+  ['pipedrive', () => import('~/components/open/integrations/PipedriveIntegration.vue')],
+  ['plane', () => import('~/components/open/integrations/PlaneIntegration.vue')],
 ])
 
 const clientOnlyHeavyFormComponentsRegistry = new Map([
@@ -24,9 +37,20 @@ const actionRegistry = new Map([
   ['SlackIntegrationActions', () => import('~/components/open/integrations/components/SlackIntegrationActions.vue')],
   ['DiscordIntegrationActions', () => import('~/components/open/integrations/components/DiscordIntegrationActions.vue')],
   ['GoogleSheetsIntegrationActions', () => import('~/components/open/integrations/components/GoogleSheetsIntegrationActions.vue')],
+  ['NotionIntegrationActions', () => import('~/components/open/integrations/components/NotionIntegrationActions.vue')],
   ['EmailIntegrationActions', () => import('~/components/open/integrations/components/EmailIntegrationActions.vue')],
   ['N8nIntegrationActions', () => import('~/components/open/integrations/components/N8nIntegrationActions.vue')],
-  ['ActivepiecesIntegrationActions', () => import('~/components/open/integrations/components/ActivepiecesIntegrationActions.vue')],
+  ['MicrosoftTeamsIntegrationActions', () => import('~/components/open/integrations/components/MicrosoftTeamsIntegrationActions.vue')],
+  ['GoogleChatIntegrationActions', () => import('~/components/open/integrations/components/GoogleChatIntegrationActions.vue')],
+  ['NtfyIntegrationActions', () => import('~/components/open/integrations/components/NtfyIntegrationActions.vue')],
+  ['AirtableIntegrationActions', () => import('~/components/open/integrations/components/AirtableIntegrationActions.vue')],
+  ['TrelloIntegrationActions', () => import('~/components/open/integrations/components/TrelloIntegrationActions.vue')],
+  ['SupabaseIntegrationActions', () => import('~/components/open/integrations/components/SupabaseIntegrationActions.vue')],
+  ['BaserowIntegrationActions', () => import('~/components/open/integrations/components/BaserowIntegrationActions.vue')],
+  ['LinearIntegrationActions', () => import('~/components/open/integrations/components/LinearIntegrationActions.vue')],
+  ['ResendIntegrationActions', () => import('~/components/open/integrations/components/ResendIntegrationActions.vue')],
+  ['PipedriveIntegrationActions', () => import('~/components/open/integrations/components/PipedriveIntegrationActions.vue')],
+  ['PlaneIntegrationActions', () => import('~/components/open/integrations/components/PlaneIntegrationActions.vue')],
 ])
 
 const providerRegistry = new Map([

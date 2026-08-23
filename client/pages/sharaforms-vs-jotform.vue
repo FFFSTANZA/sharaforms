@@ -170,7 +170,7 @@ const faqs = [
   {
     question: 'How much does SharaForms cost compared to Jotform?',
     answer:
-      'SharaForms is free with unlimited forms and submissions, and paid plans start at $12 per month. Jotform paid plans start at a higher price and still enforce submission and storage caps, so SharaForms is typically cheaper at scale.',
+      'SharaForms is free with unlimited forms and submissions, and paid plans start at $15 per month. Jotform paid plans start at a higher price and still enforce submission and storage caps, so SharaForms is typically cheaper at scale.',
   },
 ]
 

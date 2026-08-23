@@ -46,8 +46,8 @@
 
     <!-- Conditions Card -->
     <div class="mt-4">
-      <p class="text-xs font-medium text-gray-600 mb-2">When following condition(s) are true</p>
-      <div class="p-3 border border-gray-200 rounded-lg bg-gray-50/50 hover:bg-gray-50 transition-colors">
+      <p class="text-xs font-medium text-[var(--sf-text-body)] mb-2">When following condition(s) are true</p>
+      <div class="p-3 border border-[var(--sf-border-card)] rounded-lg bg-[var(--sf-bg-muted)]/50 hover:bg-[var(--sf-bg-muted)] transition-colors">
       <UPopover
         :content="{ 
           align: 'start', 
@@ -64,7 +64,7 @@
           :variant="hasConditions ? 'subtle' : 'outline'"
           :icon="hasConditions ? 'i-lucide-settings' : 'i-lucide-plus'"
           size="sm"
-          class="w-full justify-start font-medium hover:bg-white transition-colors"
+          class="w-full justify-start font-medium hover:bg-[var(--sf-bg-surface)] transition-colors"
         >
           {{ hasConditions ? `${conditionsCount} rule${conditionsCount > 1 ? 's' : ''}` : 'Add rule' }}
         </UButton>
@@ -97,13 +97,13 @@
     <!-- Divider Line -->
     <div class="flex items-center my-5">
       <div class="flex-1 border-b"></div>
-      <span class="px-4 py-1 text-xs font-medium text-gray-600 bg-white border rounded-full">then</span>
+      <span class="px-4 py-1 text-xs font-medium text-[var(--sf-text-body)] bg-[var(--sf-bg-surface)] border border-[var(--sf-border-card)] rounded-full">then</span>
       <div class="flex-1 border-b"></div>
     </div>
 
     <div>
-      <p class="text-xs font-medium text-gray-600 mb-2">Apply the following action(s)</p>
-      <div class="p-3 border border-gray-200 rounded-lg bg-gray-50/50 hover:bg-gray-50 transition-colors">
+      <p class="text-xs font-medium text-[var(--sf-text-body)] mb-2">Apply the following action(s)</p>
+      <div class="p-3 border border-[var(--sf-border-card)] rounded-lg bg-[var(--sf-bg-muted)]/50 hover:bg-[var(--sf-bg-muted)] transition-colors">
         <flat-select-input
           :key="resetKey"
           v-model="logic.actions"
@@ -117,7 +117,7 @@
       </div>
     </div>
 
-    <p class="text-neutral-400 text-xs mt-2">
+    <p class="text-[var(--sf-text-disabled)] text-xs mt-2">
       Note that hidden fields can never be required.
     </p>
 

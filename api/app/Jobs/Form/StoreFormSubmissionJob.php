@@ -373,7 +373,26 @@ class StoreFormSubmissionJob implements ShouldQueue
         // Handle pre-existing full URLs (e.g., from prefill)
         if (filter_var($value, FILTER_VALIDATE_URL) !== false && str_contains($value, parse_url(config('app.url'))['host'])) {
             $fileName = explode('?', basename($value))[0];
-            $path = FormController::ASSETS_UPLOAD_PATH . '/' . $fileName; // Assuming assets are in a defined path
+            $path = FormController::ASSETS_UPLOAD_PATH . '/' . $fileName;
+
+            // M9 FIX: Validate the file size before moving. Assets should already be within limits
+            // from the original upload, but prefill URLs could reference files outside the expected path.
+            if (!Storage::exists($path)) {
+                return null;
+            }
+
+            $size = Storage::size($path);
+            $maxSize = $this->form->workspace->max_file_size;
+            if ($maxSize > 0 && $size > $maxSize) {
+                logger()->warning('Skipping URL-based file move: exceeds size limit.', [
+                    'form_id' => $this->form->id,
+                    'file' => $fileName,
+                    'size' => $size,
+                    'max_size' => $maxSize,
+                ]);
+                return null;
+            }
+
             $newPath = FileUploadPathService::getFileUploadPath($this->form->id, $fileName);
             Storage::move($path, $newPath);
             return $fileName;
@@ -417,9 +436,23 @@ class StoreFormSubmissionJob implements ShouldQueue
         if ($value == null || !isset(explode(',', $value)[1])) {
             return null;
         }
+
+        $decoded = base64_decode(explode(',', $value)[1], true);
+
+        // M7 FIX: Validate the decoded content is actual image data, not arbitrary code.
+        // Check for PNG header (magic bytes) to prevent saving HTML/SVG/JS as .png.
+        if ($decoded === false || strlen($decoded) < 8
+            || substr($decoded, 0, 8) !== "\x89PNG\r\n\x1a\n") {
+            logger()->warning('Rejected signature with invalid image data', [
+                'form_id' => $this->form->id,
+                'data_length' => strlen($decoded ?? ''),
+            ]);
+            return null;
+        }
+
         $fileName = 'sign_' . (string) Str::uuid() . '.png';
         $completeNewFilename = FileUploadPathService::getFileUploadPath($this->form->id, $fileName);
-        Storage::put($completeNewFilename, base64_decode(explode(',', $value)[1]));
+        Storage::put($completeNewFilename, $decoded);
         return $fileName;
     }
 

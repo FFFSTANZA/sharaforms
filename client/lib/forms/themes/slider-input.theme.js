@@ -1,24 +1,25 @@
 /**
  * SliderInput tailwind-variants configuration
+ * Typeform-inspired: refined track and thumb styling
  */
 export const sliderInputTheme = {
   slots: {
-    stepLabel: 'text-neutral-700 dark:text-neutral-300 text-center',
-    slider: 'w-full mt-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
+    stepLabel: 'text-neutral-500 dark:text-neutral-400 text-center',
+    slider: 'w-full mt-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 rounded-full'
   },
   variants: {
     theme: {
       default: {
-        slider: 'focus-visible:ring-form/100'
+        slider: 'focus-visible:ring-form/30'
       },
       simple: {
-        slider: 'focus-visible:ring-form/100'
+        slider: 'focus-visible:ring-form/30'
       },
       notion: {
-        slider: 'focus-visible:ring-form/40'
+        slider: 'focus-visible:ring-form/30'
       },
       minimal: {
-        slider: 'focus-visible:ring-2 focus-visible:ring-form/60'
+        slider: 'focus-visible:ring-2 focus-visible:ring-form/50'
       }
     },
     size: {
@@ -29,11 +30,10 @@ export const sliderInputTheme = {
     },
     disabled: {
       true: {
-        slider: '!cursor-not-allowed !opacity-50 !focus-visible:ring-0'
+        slider: '!cursor-not-allowed !opacity-40 !focus-visible:ring-0'
       }
     }
   },
-  // Legacy theme used text-xs; keep default aligned
   defaultVariants: {
     theme: 'default',
     size: 'xs',

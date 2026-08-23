@@ -171,6 +171,17 @@ class RouteServiceProvider extends ServiceProvider
                 Limit::perHour(200)->by('form-submissions:hour:' . sha1($formIdentifier . '|' . $identifier)),
             ];
         });
+
+        // H5 FIX: Rate limit public Stripe payment intent creation to prevent cost attacks.
+        // 5 per minute per IP, 20 per hour per IP.
+        RateLimiter::for('payment-intent', function (Request $request) {
+            $identifier = 'ip:' . $request->ip();
+
+            return [
+                Limit::perMinute(5)->by('payment-intent:minute:' . $identifier),
+                Limit::perHour(20)->by('payment-intent:hour:' . $identifier),
+            ];
+        });
     }
 
     protected function registerGlobalRouteParamConstraints()

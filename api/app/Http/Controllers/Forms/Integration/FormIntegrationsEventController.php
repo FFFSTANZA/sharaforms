@@ -18,8 +18,10 @@ class FormIntegrationsEventController extends Controller
         $this->authorize('manageIntegrations', $form);
         $formIntegration = $form->integrations()->findOrFail((int) $integrationid);
 
+        // Cap the response: busy forms can accumulate thousands of events
+        // inside the 14-day retention window.
         return FormIntegrationsEventResource::collection(
-            $formIntegration->events()->orderByDesc('created_at')->get()
+            $formIntegration->events()->orderByDesc('created_at')->limit(100)->get()
         );
     }
 }

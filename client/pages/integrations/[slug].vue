@@ -225,7 +225,7 @@ definePageMeta({
 
 useOpnSeoMeta({
   title: () => guide.value?.name ?? 'Integration',
-  description: () => guide.value?.seoDescription ?? 'SharaForms is a free form builder with unlimited forms and submissions, built-in calculators, instant quotes, and proposals for teams that need more than basic forms.',
+  description: () => guide.value?.seoDescription ?? 'SharaForms is a free form builder with unlimited forms and submissions, three presentation modes, built-in calculations, conditional logic, signatures, and payments.',
   speakable: ["h1", "p"],
 })
 

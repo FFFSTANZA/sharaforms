@@ -17,7 +17,7 @@
         <h3 class="font-semibold text-medium">
           Advanced Settings
         </h3>
-        <p class="text-sm text-neutral-600">Configure advanced sharing options for your form.</p>
+        <p class="text-sm text-[var(--sf-text-body)]">Configure advanced sharing options for your form.</p>
         
         <div class="space-y-4">
           <toggle-switch-input

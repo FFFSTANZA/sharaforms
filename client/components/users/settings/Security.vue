@@ -1,12 +1,23 @@
 <template>
-  <div class="space-y-8">
+  <div class="space-y-6">
+    <!-- Page Head -->
+    <div class="sf-page-head">
+      <h2>Security</h2>
+      <p>Keep your account safe with a strong password and two-factor authentication.</p>
+    </div>
+
     <!-- Password Section -->
-    <div class="space-y-4">
-      <div>
-        <h3 class="text-lg font-medium text-neutral-900">Change Password</h3>
-        <p class="text-sm text-neutral-500 mt-1">
-          Update your password to keep your account secure.
-        </p>
+    <section class="sf-card sf-card-pad">
+      <div class="flex items-start gap-3 mb-6">
+        <span class="sf-icon-chip-soft sf-icon-chip-soft--muted">
+          <i class="fa-solid fa-key" />
+        </span>
+        <div>
+          <h3 class="text-[15px] font-semibold text-[#1D1F24]">Change Password</h3>
+          <p class="text-[13px] text-[#6E7278] mt-0.5">
+            Update your password to keep your account secure.
+          </p>
+        </div>
       </div>
 
       <VForm size="sm">
@@ -33,11 +44,11 @@
               @focus="isPasswordFocused = true"
               @blur="isPasswordFocused = false"
             />
-            <PasswordStrengthIndicator 
-              v-show="isPasswordFocused" 
-              :password="passwordForm.password" 
+            <PasswordStrengthIndicator
+              v-show="isPasswordFocused"
+              :password="passwordForm.password"
             />
-            
+
             <TextInput
               :form="passwordForm"
               name="password_confirmation"
@@ -48,22 +59,24 @@
             />
           </div>
 
-          <div class="mt-4">
+          <div class="mt-6">
             <UButton
               type="submit"
               :loading="passwordForm.busy"
               color="primary"
+              class="btn-primary"
             >
               Update Password
             </UButton>
           </div>
         </form>
       </VForm>
-    </div>
+    </section>
 
-    <div class="pt-8 border-t border-neutral-200">
+    <!-- Two-Factor Authentication -->
+    <section class="sf-card sf-card-pad">
       <UsersSettingsTwoFactorAuth />
-    </div>
+    </section>
   </div>
 </template>
 
@@ -92,4 +105,4 @@ const updatePassword = () => {
       console.error(error)
     })
 }
-</script> 
+</script>

@@ -229,7 +229,7 @@ const options = computed({
 })
 
 // Computed properties
-const isFocused = computed(() => props.form?.presentation_style === 'focused')
+const isFocused = computed(() => props.form?.presentation_style === 'focused' || props.form?.presentation_style === 'spotlight')
 
 const isFocusedSelectorActive = computed(() => {
   return isFocused.value && props.field.use_focused_selector !== false

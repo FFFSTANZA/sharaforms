@@ -2,10 +2,10 @@
   <ErrorBoundary @on-error="onFormEditorError">
     <template #error="{ error, clearError }">
       <div class="flex-grow w-full flex items-center justify-center flex-col gap-4">
-        <h1 class="text-blue-800 text-2xl font-medium">
+        <h1 class="text-[var(--sf-text-primary)] text-2xl font-medium">
           Oops! Something went wrong.
         </h1>
-        <p class="text-neutral-500 max-w-lg text-center">
+        <p class="text-[var(--sf-text-caption)] max-w-lg text-center">
           It looks like your last action caused an issue on our side. We
           apologize for
           the

@@ -1,80 +1,82 @@
 <template>
-  <UModal
-    v-model:open="isOpen"
-    :ui="{ content: 'sm:max-w-5xl' }"
-  >
-    <template #content>
-      <div class="flex flex-col h-[80vh] bg-white">
-        <!-- Header -->
-        <div class="flex items-center justify-between p-4 border-b flex-shrink-0">
-          <h3 class="text-lg font-semibold">
-            {{ isEditing ? 'Edit Variable' : 'Create Variable' }}
-          </h3>
-          <UButton
-            icon="i-lucide-x"
-            color="neutral"
-            variant="ghost"
-            size="sm"
-            @click="close"
-          />
-        </div>
-        
-        <!-- Main Content - Two Columns -->
-        <div class="flex flex-1 min-h-0">
-          <!-- Left Column: Formula Editor -->
-          <div class="w-1/2 border-r">
-            <FormulaDefinitionPanel
-              :local-variable="localVariable"
-              :current-formula="currentFormula"
-                  :form="form"
-                  :other-variables="otherVariables"
-              :validation-result="validationResult"
-              :errors="errors"
-              @update:name="handleNameUpdate"
-              @update:formula="handleFormulaUpdate"
-                  @validation="handleValidation"
-              @show-reference="showReference = true"
+  <div>
+    <UModal
+      v-model:open="isOpen"
+      :ui="{ content: 'sm:max-w-5xl' }"
+    >
+      <template #content>
+        <div class="flex flex-col h-[80vh] bg-[var(--sf-bg-surface)]">
+          <!-- Header -->
+          <div class="flex items-center justify-between p-4 border-b flex-shrink-0">
+            <h3 class="text-lg font-semibold">
+              {{ isEditing ? 'Edit Variable' : 'Create Variable' }}
+            </h3>
+            <UButton
+              icon="i-lucide-x"
+              color="neutral"
+              variant="ghost"
+              size="sm"
+              @click="close"
             />
           </div>
           
-          <!-- Right Column: Test Form -->
-          <div class="w-1/2">
-            <FormulaTestPanel
-              :form="form"
-              :referenced-field-ids="referencedFieldIds"
-              :referenced-variables="referencedVariables"
-              :other-variables="otherVariables"
-              :computed-result="computedResult"
-              :validation-result="validationResult"
-              :local-variable="localVariable"
-              @update:test-values="handleTestValuesUpdate"
-            />
+          <!-- Main Content - Two Columns -->
+          <div class="flex flex-1 min-h-0">
+            <!-- Left Column: Formula Editor -->
+            <div class="w-1/2 border-r">
+              <FormulaDefinitionPanel
+                :local-variable="localVariable"
+                :current-formula="currentFormula"
+                :form="form"
+                :other-variables="otherVariables"
+                :validation-result="validationResult"
+                :errors="errors"
+                @update:name="handleNameUpdate"
+                @update:formula="handleFormulaUpdate"
+                @validation="handleValidation"
+                @show-reference="showReference = true"
+              />
+            </div>
+            
+            <!-- Right Column: Test Form -->
+            <div class="w-1/2">
+              <FormulaTestPanel
+                :form="form"
+                :referenced-field-ids="referencedFieldIds"
+                :referenced-variables="referencedVariables"
+                :other-variables="otherVariables"
+                :computed-result="computedResult"
+                :validation-result="validationResult"
+                :local-variable="localVariable"
+                @update:test-values="handleTestValuesUpdate"
+              />
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="flex justify-end gap-3 p-4 border-t flex-shrink-0">
+            <UButton
+              color="neutral"
+              variant="outline"
+              @click="close"
+            >
+              Cancel
+            </UButton>
+            <UButton
+              color="primary"
+              :disabled="!canSave"
+              @click="save"
+            >
+              {{ isEditing ? 'Save Changes' : 'Create Variable' }}
+            </UButton>
           </div>
         </div>
+      </template>
+    </UModal>
 
-        <!-- Footer -->
-        <div class="flex justify-end gap-3 p-4 border-t flex-shrink-0">
-          <UButton
-            color="neutral"
-            variant="outline"
-            @click="close"
-          >
-            Cancel
-          </UButton>
-          <UButton
-            color="primary"
-            :disabled="!canSave"
-            @click="save"
-          >
-            {{ isEditing ? 'Save Changes' : 'Create Variable' }}
-          </UButton>
-        </div>
-      </div>
-    </template>
-  </UModal>
-
-  <!-- Function Reference Modal -->
-  <FunctionReference v-model="showReference" />
+    <!-- Function Reference Modal -->
+    <FunctionReference v-model="showReference" />
+  </div>
 </template>
 
 <script setup>

@@ -1,6 +1,6 @@
 /**
  * InputLabel tailwind-variants configuration
- * Used for form input labels
+ * Typeform-inspired: clearer typography, better focused-mode sizing
  */
 export const inputLabelTheme = {
   slots: {
@@ -54,7 +54,7 @@ export const inputLabelTheme = {
     },
     uppercaseLabels: {
       true: {
-        label: 'uppercase'
+        label: 'uppercase tracking-wider'
       },
       false: {
         label: 'leading-none'
@@ -62,11 +62,10 @@ export const inputLabelTheme = {
     }
   },
   compoundVariants: [
-    // Label font size adjustments for focused presentation (increase by 1 step)
     { presentation: 'focused', size: 'xs', class: { label: 'text-sm leading-none' } },
     { presentation: 'focused', size: 'sm', class: { label: 'text-sm leading-none' } },
-    { presentation: 'focused', size: 'md', class: { label: 'text-base leading-none' } },
-    { presentation: 'focused', size: 'lg', class: { label: 'text-xl leading-none' } }
+    { presentation: 'focused', size: 'md', class: { label: 'text-lg leading-none font-semibold' } },
+    { presentation: 'focused', size: 'lg', class: { label: 'text-xl leading-none font-semibold' } }
   ],
   defaultVariants: {
     theme: 'default',

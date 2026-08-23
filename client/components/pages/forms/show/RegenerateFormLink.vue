@@ -41,15 +41,15 @@
           <span class="font-semibold">Be careful, changing your form URL is not a reversible
             operation</span>. Make sure to update your form URL everywhere where it's used.
         </p>
-        <div class="border-t py-4 mt-4">
-          <h3 class="text-xl text-neutral-700 font-semibold">
+        <div class="border-t border-[var(--sf-border-divider)] py-4 mt-4">
+          <h3 class="text-xl text-[var(--sf-text-secondary)] font-semibold">
             Human Readable URL
           </h3>
           <p>
             If your users are going to see this url, you might want to make nice
             and readable. Example:
           </p>
-          <p class="text-neutral-600 border p-4 bg-neutral-50 rounded-md mt-4">
+          <p class="text-[var(--sf-text-body)] border border-[var(--sf-border-card)] p-4 bg-[var(--sf-bg-muted)] rounded-md mt-4">
             https://sharaforms.com/forms/b4417f9c-34ae-4421-8006-832ee47786e7
           </p>
           <div class="text-center mt-4">
@@ -68,15 +68,15 @@
             </TrackClick>
           </div>
         </div>
-        <div class="border-t pt-4 mt-4">
-          <h3 class="text-xl text-neutral-700 font-semibold">
+        <div class="border-t border-[var(--sf-border-divider)] pt-4 mt-4">
+          <h3 class="text-xl text-[var(--sf-text-secondary)] font-semibold">
             Random ID URL
           </h3>
           <p>
             If your user are not going to see your form url (if it's embedded),
             and if you prefer to have a random non-guessable URL. Example:
           </p>
-          <p class="text-neutral-600 p-4 border bg-neutral-50 rounded-md mt-4">
+          <p class="text-[var(--sf-text-body)] p-4 border border-[var(--sf-border-card)] bg-[var(--sf-bg-muted)] rounded-md mt-4">
             https://sharaforms.com/forms/b4417f9c-34ae-4421-8006-832ee47786e7
           </p>
           <div class="text-center mt-4">

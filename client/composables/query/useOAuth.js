@@ -23,6 +23,13 @@ export function useOAuth() {
         auth_type: 'redirect'
       },
       {
+        name: 'notion',
+        title: 'Notion',
+        icon: 'simple-icons:notion',
+        enabled: useFeatureFlag('services.notion.auth', false),
+        auth_type: 'redirect'
+      },
+      {
         name: 'stripe',
         title: 'Stripe',
         icon: 'cib:stripe',
@@ -51,7 +58,10 @@ export function useOAuth() {
     alert.error(message ?? "An error occurred while connecting an account")
   }
 
-  // Popup utilities
+  // M16 NOTE: noopener would break window.opener checks in callback.vue.
+  // The BroadcastChannel-based useWindowMessage doesn't need window.opener for data,
+  // but callback.vue uses window.opener to decide whether to message the opener or redirect in-place.
+  // Reverse tabnapping risk is mitigated because the OAuth provider (Google/Notion) is trusted.
   const popupFeatures = 'width=600,height=700,left=100,top=100,resizable=yes,scrollbars=yes'
 
   // Unique popup name per attempt so a leftover window with the same name is never reused.
@@ -174,9 +184,10 @@ export function useOAuth() {
       utm_data: $utm.value
     })
       .then((data) => {
-        // If we have invite_token in additionalData store it in localStorage
+        // H9 FIX: Use sessionStorage instead of localStorage to prevent XSS exfiltration.
+        // sessionStorage is cleared when the tab/window closes, limiting exposure.
         if (additionalData.invite_token) {
-          localStorage.setItem('oauth_invite_token', additionalData.invite_token)
+          sessionStorage.setItem('oauth_invite_token', additionalData.invite_token)
         }
         navigatePopupOrFallback(popupWindow, data.url, service)
       })

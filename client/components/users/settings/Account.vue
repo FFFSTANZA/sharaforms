@@ -1,12 +1,23 @@
 <template>
-  <div class="space-y-8">
+  <div class="space-y-6">
+    <!-- Page Head -->
+    <div class="sf-page-head">
+      <h2>Account</h2>
+      <p>Update your profile information and manage your personal data.</p>
+    </div>
+
     <!-- Profile Information Section -->
-    <div class="space-y-4">
-      <div>
-        <h3 class="text-lg font-medium text-neutral-900">Profile Information</h3>
-        <p class="text-sm text-neutral-500 mt-1">
-          Update your account profile information and email address.
-        </p>
+    <section class="sf-card sf-card-pad">
+      <div class="flex items-start gap-3 mb-6">
+        <span class="sf-icon-chip-soft sf-icon-chip-soft--muted">
+          <i class="fa-solid fa-user" />
+        </span>
+        <div>
+          <h3 class="text-[15px] font-semibold text-[#1D1F24]">Profile Information</h3>
+          <p class="text-[13px] text-[#6E7278] mt-0.5">
+            Update your account profile information and email address.
+          </p>
+        </div>
       </div>
 
       <VForm size="sm">
@@ -31,58 +42,73 @@
             />
           </div>
 
-          <div class="mt-4">
+          <div class="mt-6 flex items-center gap-3">
             <UButton
               type="submit"
               :loading="profileForm.busy"
               color="primary"
+              class="btn-primary"
             >
               Save Changes
             </UButton>
+            <span v-if="profileForm.busy" class="text-xs text-[#8E9198]">Saving…</span>
           </div>
         </form>
       </VForm>
-    </div>
+    </section>
 
-    <div class="pt-8 border-t border-neutral-200">
-      <div class="flex flex-col gap-2 items-start">
-        <div>
-          <h4 class="font-medium text-neutral-900">Export Personal Data</h4>
-          <p class="mt-1 text-sm text-neutral-500">
-            Download a machine-readable export of your account profile, workspaces, forms, subscriptions, and licenses.
-          </p>
+    <!-- Export Personal Data -->
+    <section class="sf-card sf-card-pad">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex items-start gap-3">
+          <span class="sf-icon-chip-soft sf-icon-chip-soft--muted">
+            <i class="fa-solid fa-download" />
+          </span>
+          <div>
+            <h3 class="text-[14px] font-semibold text-[#1D1F24]">Export Personal Data</h3>
+            <p class="mt-1 text-[13px] text-[#6E7278] max-w-md">
+              Download a machine-readable export of your account profile, workspaces, forms, subscriptions, and licenses.
+            </p>
+          </div>
         </div>
 
         <UButton
           color="neutral"
           variant="outline"
+          class="btn-ghost !border-[#DEE1E7] shrink-0"
           :loading="exportMutation.isPending.value"
           @click="downloadPersonalData"
         >
           Download My Data
         </UButton>
       </div>
-    </div>
+    </section>
 
-    <div class="pt-8 border-t border-neutral-200">
-      <div class="flex flex-col gap-2 items-start">
-        <div>
-          <h4 class="font-medium text-red-800">Delete Account</h4>
-          <p class="mt-1 text-sm text-neutral-500">
-            This will permanently delete your entire account. This cannot be undone.
-          </p>
+    <!-- Danger Zone -->
+    <section class="sf-danger-zone sf-card-pad">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex items-start gap-3">
+          <span class="sf-icon-chip-soft sf-icon-chip-soft--coral">
+            <i class="fa-solid fa-triangle-exclamation" />
+          </span>
+          <div>
+            <h3 class="sf-danger-title text-[14px] font-semibold">Delete Account</h3>
+            <p class="mt-1 text-[13px] text-[#6E7278] max-w-md">
+              This will permanently delete your entire account. This cannot be undone.
+            </p>
+          </div>
         </div>
 
-          <UButton
-            color="error"
-            :loading="deleteMutation.isPending.value"
-            @click="confirmDeleteAccount"
-          >
-            Delete Account
-          </UButton>
-
+        <UButton
+          color="error"
+          :loading="deleteMutation.isPending.value"
+          @click="confirmDeleteAccount"
+          class="shrink-0"
+        >
+          Delete Account
+        </UButton>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 

@@ -111,9 +111,9 @@ definePageMeta({
 useOpnSeoMeta({
   title: "Free Form Builder Pricing and Plans",
   description:
-    "Explore SharaForms pricing: a free plan with unlimited forms and submissions, built-in calculators, instant quotes, and proposals. Paid tiers add branding.",
+    "Explore SharaForms pricing: a free plan with unlimited forms and submissions, three presentation modes, built-in calculations, conditional logic, signatures, and payments. Paid tiers add branding.",
   ogImage: "/share-preview.jpg",
-  keywords: "free form builder pricing, form builder pricing, unlimited forms, unlimited submissions pricing, free online forms, pricing calculator forms, quote forms",
+  keywords: "free form builder pricing, form builder pricing, unlimited forms, unlimited submissions pricing, free online forms, spotlight forms, multi-page forms",
   speakable: [".faq-answer p", "h1"],
   breadcrumbs: [
     { name: "Home", item: "/" },
@@ -175,7 +175,7 @@ const plans = [
       "Remove branding",
       "Custom domains",
       "Custom SMTP",
-      "Discord, Slack, Telegram",
+      "Discord, Slack, Telegram + Notion, Supabase & Resend",
       "Password-protected forms",
       "Form expiration",
       "Captcha",
@@ -439,7 +439,7 @@ const pricingProductSchema = {
   "@type": "Product",
   "@id": `${useRuntimeConfig().public.appUrl.replace(/\/+$/, '')}/pricing#product`,
   name: "SharaForms Form Builder",
-  description: "A powerful form builder with unlimited forms and submissions, built-in calculators, conditional logic, dynamic documents, and integrations.",
+  description: "A powerful form builder with unlimited forms and submissions, three presentation modes, built-in calculations, conditional logic, dynamic documents, and integrations.",
   brand: {
     "@type": "Brand",
     name: "SharaForms",

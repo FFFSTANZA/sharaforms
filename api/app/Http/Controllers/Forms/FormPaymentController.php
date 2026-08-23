@@ -113,7 +113,8 @@ class FormPaymentController extends Controller
         $amount = $request->resolveAmount($paymentBlock['amount']);
 
         // Validate amount
-        if (!is_numeric($amount) || $amount <= 0) {
+        // H6 FIX: Add upper bound to prevent overflow and abuse.
+        if (!is_numeric($amount) || $amount <= 0 || $amount > 999999.99) {
             Log::warning('Invalid payment amount', [
                 'form_id' => $form->id,
                 'amount' => $amount,
@@ -146,9 +147,12 @@ class FormPaymentController extends Controller
                 'stripe_account' => $provider->provider_user_id
             ]);
 
+            // H7 FIX: Never log the full PaymentIntent object — it contains client_secret.
             Log::info('Payment intent created', [
                 'form_id' => $form->id,
-                'intent' => $intent
+                'intent_id' => $intent->id,
+                'amount' => $amount,
+                'currency' => $paymentBlock['currency'],
             ]);
 
             if ($intent->id) {

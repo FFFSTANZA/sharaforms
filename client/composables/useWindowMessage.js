@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disable no-unused-vars */
 /**
  * Composable for handling window message communication
  * Provides a consistent interface for cross-window/iframe communication

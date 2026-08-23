@@ -25,13 +25,14 @@ const paddingMap = {
   lg: 'p-6',
 }
 
+/* Formly design tokens: cards use #E6E8EE borders, white bg, Clay shadow */
 const variantMap = {
-  default: 'border-neutral-200 bg-white shadow-sm',
-  subtle: 'border-neutral-200/70 bg-neutral-50/50',
+  default: 'border-[var(--sf-border-card)] bg-[var(--sf-bg-surface)]',
+  subtle: 'border-[var(--sf-border-divider)] bg-[var(--sf-bg-muted)]/50',
 }
 
 const panelClasses = computed(() => [
-  'rounded-xl border',
+  'rounded-2xl border shadow-[var(--sf-shadow-card)]',
   paddingMap[props.padding],
   variantMap[props.variant],
 ])

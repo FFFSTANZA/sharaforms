@@ -12,13 +12,13 @@ vi.mock('~/api', () => ({
 describe('storeFile', () => {
   beforeEach(() => {
     globalThis.useFeatureFlag = vi.fn(() => false)
-    globalThis.useFetch = vi.fn(() => Promise.resolve())
+    globalThis.$fetch = vi.fn(() => Promise.resolve())
   })
 
   afterEach(() => {
     vi.clearAllMocks()
     delete globalThis.useFeatureFlag
-    delete globalThis.useFetch
+    delete globalThis.$fetch
   })
 
   it('forwards signed storage headers to the S3 PUT request', async () => {
@@ -40,7 +40,7 @@ describe('storeFile', () => {
 
     await storeFile(file)
 
-    expect(globalThis.useFetch).toHaveBeenCalledWith(
+    expect(globalThis.$fetch).toHaveBeenCalledWith(
       'https://nbg1.your-objectstorage.com/mybucket/tmp/file?X-Amz-SignedHeaders=host%3Bx-amz-acl',
       expect.objectContaining({
         method: 'PUT',
@@ -52,7 +52,7 @@ describe('storeFile', () => {
       }),
     )
 
-    const uploadOptions = globalThis.useFetch.mock.calls[0][1]
+    const uploadOptions = globalThis.$fetch.mock.calls[0][1]
     expect(uploadOptions.headers).not.toHaveProperty('Host')
     expect(uploadOptions.headers).not.toHaveProperty('host')
   })

@@ -10,7 +10,7 @@
     :switch-reasons="switchReasons"
     :feature-comparison="featureComparison"
     :get-competitor-price="getPrice"
-    :summary-line="'SharaForms is the HeyForm alternative that is actually free to use hosted, with unlimited forms, unlimited submissions, built-in calculators, dynamic PDFs, and custom domains from $0.'"
+    :summary-line="'SharaForms is the HeyForm alternative that is actually free to use hosted, with unlimited forms, unlimited submissions, three presentation modes, built-in calculations, dynamic PDFs, and custom domains from $0.'"
     :faqs="faqs"
   >
     <template #hero-subtitle>
@@ -160,7 +160,7 @@ const faqs = [
   {
     question: 'Is SharaForms a good HeyForm alternative?',
     answer:
-      'Yes. HeyForm is a clean, open-source builder, but its hosted plan starts with a paid entry tier and caps features. SharaForms is free with unlimited forms and unlimited submissions, adds built-in calculators, dynamic PDFs, and custom domains, and scales more predictably.',
+      'Yes. HeyForm is a clean, open-source builder, but its hosted plan starts with a paid entry tier and caps features. SharaForms is free with unlimited forms and unlimited submissions, adds three presentation modes, built-in calculations, dynamic PDFs, and custom domains, and scales more predictably.',
   },
   {
     question: 'Is HeyForm free?',
@@ -175,7 +175,7 @@ const faqs = [
   {
     question: 'How does SharaForms pricing compare to HeyForm?',
     answer:
-      'SharaForms is free with unlimited submissions; paid plans start at $12 per month. HeyForm hosted plans start around $15 per month and enforce submission limits, so SharaForms offers better value at scale.',
+      'SharaForms is free with unlimited submissions; paid plans start at $15 per month. HeyForm hosted plans start around $15 per month and enforce submission limits, so SharaForms offers better value at scale.',
   },
 ]
 

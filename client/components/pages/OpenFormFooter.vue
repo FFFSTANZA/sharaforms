@@ -297,6 +297,20 @@ const linkGroups = computed(() => [
       { label: "Enterprise", to: { name: "enterprise" } },
       { label: "Industry", to: { name: "industry" } },
       { label: "Templates", to: { name: "templates" } },
+      { label: "Guides", to: "/guides" },
+    ],
+  },
+  {
+    title: "Popular templates",
+    links: [
+      { label: "Contact Form", to: { name: "templates-slug", params: { slug: "contact-form-template" } } },
+      { label: "Event Registration", to: { name: "templates-slug", params: { slug: "event-registration-template" } } },
+      { label: "Job Application", to: { name: "templates-slug", params: { slug: "job-application-form-template" } } },
+      { label: "Rental Application", to: { name: "templates-slug", params: { slug: "rental-application-form-template" } } },
+      { label: "Liability Waiver", to: { name: "templates-slug", params: { slug: "liability-waiver-form-template" } } },
+      { label: "Expense Report", to: { name: "templates-slug", params: { slug: "expense-report-form-template" } } },
+      { label: "Webinar Registration", to: { name: "templates-slug", params: { slug: "webinar-registration-form-template" } } },
+      { label: "NPS Survey", to: { name: "templates-slug", params: { slug: "nps-survey-template" } } },
     ],
   },
   {

@@ -1,0 +1,802 @@
+{
+  "contact-form-template": {
+    "questions": [
+      {
+        "question": "How do I add a contact form to my website?",
+        "answer": "<p>Copy this contact form template, customize the fields, then either embed it on your site with a code snippet or link directly to its hosted page. No plugins or developer time required.</p>"
+      },
+      {
+        "question": "How do I stop spam submissions on my contact form?",
+        "answer": "<p>Enable captcha protection in the form settings and review submission sources in your dashboard. SharaForms logs where entries come from, making it easy to spot and block abusive patterns.</p>"
+      },
+      {
+        "question": "Where do contact form submissions go?",
+        "answer": "<p>Every submission lands in your SharaForms dashboard with a timestamp, and you can receive instant email notifications per submission. Exports let you move inquiries into your CRM whenever needed.</p>"
+      }
+    ]
+  },
+  "event-registration-template": {
+    "questions": [
+      {
+        "question": "Can I limit how many people can register?",
+        "answer": "<p>Yes. Set a submission limit and the form closes automatically once reached, so attendance never exceeds venue capacity or seat availability.</p>"
+      },
+      {
+        "question": "Do registrants receive confirmation automatically?",
+        "answer": "<p>Yes. Confirmation emails go out instantly after sign-up, carrying event details such as dates, locations, or join links that you configure once in the form settings.</p>"
+      },
+      {
+        "question": "How do I track registrations across multiple sessions?",
+        "answer": "<p>Add a session selector to the form and responses arrive tagged with each attendee's choice. The dashboard tallies totals per session so capacity planning stays current.</p>"
+      }
+    ]
+  },
+  "customer-feedback-survey-template": {
+    "questions": [
+      {
+        "question": "How long should a customer feedback survey be?",
+        "answer": "<p>Five to eight questions is the sweet spot, keeping completion under three minutes. Every extra question measurably reduces response rates, so cut anything that does not inform a decision.</p>"
+      },
+      {
+        "question": "Can respondents remain anonymous?",
+        "answer": "<p>Yes. Simply omit identifying fields and feedback arrives without names attached, which typically produces more honest responses while still allowing optional contact for follow-ups.</p>"
+      },
+      {
+        "question": "How do I analyze survey results?",
+        "answer": "<p>View summary charts in your dashboard for quick sentiment reads, or export all submissions to CSV for deeper analysis in spreadsheets or BI tools.</p>"
+      }
+    ]
+  },
+  "job-application-form-template": {
+    "questions": [
+      {
+        "question": "What should a job application form include?",
+        "answer": "<p>Contact details, position applied for, work experience, relevant skills, and a resume upload field. Consistent structured questions make candidate comparison fair and dramatically faster than reading varied emails.</p>"
+      },
+      {
+        "question": "Can candidates attach resumes and cover letters?",
+        "answer": "<p>Yes. File upload fields accept PDFs and documents up to your configured size limits, keeping every application complete with attachments stored alongside it permanently.</p>"
+      },
+      {
+        "question": "How do I close applications after a deadline?",
+        "answer": "<p>Schedule form closure in the settings. Applications are accepted until your chosen date and time, then the form closes automatically without anyone needing to remember.</p>"
+      }
+    ]
+  },
+  "appointment-booking-form-template": {
+    "questions": [
+      {
+        "question": "Is a booking form the same as live scheduling software?",
+        "answer": "<p>No. This form collects appointment requests with preferred times that staff confirm against real calendars. It suits practices with variable appointment lengths better than rigid slot systems.</p>"
+      },
+      {
+        "question": "Can clients choose their preferred service provider?",
+        "answer": "<p>Yes. Add a stylist, consultant, or specialist selector so requests route to the right person, balancing client loyalty with fair distribution of bookings.</p>"
+      },
+      {
+        "question": "How does this reduce appointment no-shows?",
+        "answer": "<p>Instant confirmations set expectations immediately, cancellation policy acknowledgment creates commitment, and exported schedules feed reminder messages before each booked visit.</p>"
+      }
+    ]
+  },
+  "online-order-form-template": {
+    "questions": [
+      {
+        "question": "Can customers pay directly through the order form?",
+        "answer": "<p>Yes. Add a payment field connected to Stripe so buyers pay at submission. On free forms without payments, collect order details only and invoice separately.</p>"
+      },
+      {
+        "question": "How do I handle products with multiple options?",
+        "answer": "<p>Use select fields for variants like size or color and number fields for quantities. Calculations can compute running totals automatically as buyers make selections.</p>"
+      },
+      {
+        "question": "How do I get orders to my fulfillment team?",
+        "answer": "<p>Export submissions to CSV for your printer or supplier, or connect webhooks to push each completed order into your operations tools the moment it arrives.</p>"
+      }
+    ]
+  },
+  "donation-form-template": {
+    "questions": [
+      {
+        "question": "Can donors give recurring monthly amounts?",
+        "answer": "<p>Yes. Offer a frequency choice between one-time and monthly giving, with recurring donations processed automatically through Stripe until the donor cancels.</p>"
+      },
+      {
+        "question": "Do we get receipts and donor records for tax purposes?",
+        "answer": "<p>Every donation records amount, date, and donor contact in exportable form. Automated thank-you emails serve as immediate acknowledgments for your supporters' records.</p>"
+      },
+      {
+        "question": "How many donation amount presets should I offer?",
+        "answer": "<p>Three to five presets plus an open field performs best. Anchor each preset to tangible impact so donors understand exactly what their gift accomplishes.</p>"
+      }
+    ]
+  },
+  "lead-generation-form-template": {
+    "questions": [
+      {
+        "question": "How many fields should a lead capture form have?",
+        "answer": "<p>Start with three: name, email, and company or need. Add fields only when sales confirms they act on the data, since each extra field reduces conversion.</p>"
+      },
+      {
+        "question": "Can leads flow into my CRM automatically?",
+        "answer": "<p>Yes. Webhooks push full submission data into your CRM or middleware like Zapier within seconds, while email notifications alert owners in parallel.</p>"
+      },
+      {
+        "question": "How do I qualify leads through the form itself?",
+        "answer": "<p>Add one conditional qualifying question such as timeline or budget range. Responses tag each lead's urgency so sales prioritizes hot prospects first.</p>"
+      }
+    ]
+  },
+  "patient-intake-form-template": {
+    "questions": [
+      {
+        "question": "Should patients complete intake forms before their visit?",
+        "answer": "<p>Ideally yes. Sending the form after booking lets patients answer health history comfortably at home, saving appointment time and surfacing issues waiting-room clipboards miss.</p>"
+      },
+      {
+        "question": "How is sensitive health information handled?",
+        "answer": "<p>Submissions stay private inside your secured workspace with role-based access limited to authorized staff. Collect only what triage requires and retain per your practice policies.</p>"
+      },
+      {
+        "question": "Can guardians complete intake on behalf of minors?",
+        "answer": "<p>Yes. Include guardian identity and signature sections for patients under the age of majority, documenting consent properly for pediatric intakes.</p>"
+      }
+    ]
+  },
+  "real-estate-inquiry-form-template": {
+    "questions": [
+      {
+        "question": "What details should a property inquiry collect?",
+        "answer": "<p>Buyer or tenant contact information, property of interest, budget range, preferred viewing times, and any specific requirements. Complete inquiries enable same-day responses that win business.</p>"
+      },
+      {
+        "question": "Can I embed this form on listing pages?",
+        "answer": "<p>Yes. Embed the form on individual listing pages or share its direct link from portals. Inquiries arrive tagged to the property they came from.</p>"
+      },
+      {
+        "question": "How fast should agents respond to inquiries?",
+        "answer": "<p>Within hours if possible. Instant notifications mean inquiries reach your phone immediately, and fast responders convert a disproportionate share of property interest.</p>"
+      }
+    ]
+  },
+  "course-enrollment-form-template": {
+    "questions": [
+      {
+        "question": "How do I cap enrollment when a course fills?",
+        "answer": "<p>Set a submission limit matching your seats. The form closes automatically when reached, and a separate waitlist form captures overflow demand cleanly.</p>"
+      },
+      {
+        "question": "Can students enroll in multiple courses at once?",
+        "answer": "<p>Yes. Use multi-select fields for course choices or accept separate submissions per course. Exports show exactly who is enrolled in what.</p>"
+      },
+      {
+        "question": "Does the form support document collection like transcripts?",
+        "answer": "<p>Yes. Upload fields gather transcripts, identification, or prior certificates with configurable limits, attaching them permanently to each student record.</p>"
+      }
+    ]
+  },
+  "rsvp-form-template": {
+    "questions": [
+      {
+        "question": "When should guests be asked to RSVP by?",
+        "answer": "<p>Set deadlines two to three weeks before the event. That leaves time to finalize catering numbers and seating while accommodating reasonable late changes.</p>"
+      },
+      {
+        "question": "Can families respond for everyone in their household?",
+        "answer": "<p>Yes. Include party-size fields or per-guest meal selectors so one submission covers the whole group while keeping headcounts accurate.</p>"
+      },
+      {
+        "question": "How do I see who has not responded yet?",
+        "answer": "<p>Export submitted responses and compare against your invitation list. The gap shows exactly who needs a gentle reminder before your deadline.</p>"
+      }
+    ]
+  },
+  "file-upload-form-template": {
+    "questions": [
+      {
+        "question": "What file types and sizes can uploads accept?",
+        "answer": "<p>Fields can restrict formats such as PDF, JPG, PNG, MP4, and ZIP, with per-file size caps typically around 10 MB depending on workspace settings.</p>"
+      },
+      {
+        "question": "Where do uploaded files end up?",
+        "answer": "<p>Files attach directly to each submission inside your dashboard, previewable and downloadable together with the rest of the response data, forever.</p>"
+      },
+      {
+        "question": "Can I request multiple files in one submission?",
+        "answer": "<p>Yes. Configure maximum file counts per upload field, or add separate fields for different document categories so everything arrives organized.</p>"
+      }
+    ]
+  },
+  "consent-form-template": {
+    "questions": [
+      {
+        "question": "Are digital consent forms legally valid?",
+        "answer": "<p>In most jurisdictions yes. Electronic signature regulations such as ESIGN and eIDAS recognize digital signatures, and timestamped storage creates the evidence trail that paper often lacks. Have counsel review your specific wording.</p>"
+      },
+      {
+        "question": "What makes a consent form truly informed?",
+        "answer": "<p>The signer understands what they agree to before signing: the scope, any risks, the duration, and their right to withdraw. Plain language and explicit scope statements are what make consent informed rather than assumed.</p>"
+      },
+      {
+        "question": "How do I handle consent for minors?",
+        "answer": "<p>Include guardian identity and signature sections alongside the minor's details. Consent for anyone under the age of majority must come from a parent or guardian, stored together in one record.</p>"
+      }
+    ]
+  },
+  "questionnaire-template": {
+    "questions": [
+      {
+        "question": "What is the difference between a questionnaire and a survey?",
+        "answer": "<p>A questionnaire is the instrument itself: the ordered set of questions. A survey is the broader process of administering questionnaires to a sample and analyzing the responses collected.</p>"
+      },
+      {
+        "question": "Which question types produce analyzable data?",
+        "answer": "<p>Closed formats including single-choice, multiple-choice, rating scales, and matrices produce quantifiable results. Reserve open text for questions where unexpected answers genuinely inform outcomes.</p>"
+      },
+      {
+        "question": "How do I test a questionnaire before launching it?",
+        "answer": "<p>Pilot with five people matching your audience, watch where they hesitate or misread, then refine wording and length. Small pilots catch most comprehension problems cheaply.</p>"
+      }
+    ]
+  },
+  "abstract-submission-form-template": {
+    "questions": [
+      {
+        "question": "What word count should conference abstracts target?",
+        "answer": "<p>Conference abstracts commonly run 250 to 300 words; journal abstracts 150 to 250. State your limit clearly in the field description so authors self-edit before submitting.</p>"
+      },
+      {
+        "question": "How do review committees score abstracts fairly?",
+        "answer": "<p>Collect identical structured fields from every submitter, export all abstracts to CSV, and run blind scoring rounds against criteria published to authors in advance.</p>"
+      },
+      {
+        "question": "Can authors revise an abstract after submitting?",
+        "answer": "<p>Yes when editable submissions are enabled: presenters refine their existing entry until the deadline instead of creating duplicates, keeping your review set clean.</p>"
+      }
+    ]
+  },
+  "audit-form-template": {
+    "questions": [
+      {
+        "question": "What should an audit checklist include?",
+        "answer": "<p>Checkpoints grouped by area, each observable by any qualified auditor, with pass-fail-not-applicable responses, evidence uploads where findings occur, and an auditor signature with timestamp.</p>"
+      },
+      {
+        "question": "Can audit forms calculate scores automatically?",
+        "answer": "<p>Yes. Assign point values to responses and use built-in calculations to produce section and overall scores at submission, turning subjective walks into trackable metrics.</p>"
+      },
+      {
+        "question": "What is the difference between an audit and an inspection?",
+        "answer": "<p>Inspections examine specific conditions at one moment; audits systematically evaluate whether processes conform to standards over time, referencing procedures and records rather than only physical states.</p>"
+      }
+    ]
+  },
+  "award-nomination-form-template": {
+    "questions": [
+      {
+        "question": "What information should award nominations collect?",
+        "answer": "<p>Nominator and nominee identities, the category entered, and an achievement statement mapped explicitly to each published criterion, plus supporting documents where they genuinely help judges.</p>"
+      },
+      {
+        "question": "Can one person submit multiple nominations?",
+        "answer": "<p>Yes, and you can control it either way. Leave submissions open for distinct nominees, or use validation rules to prevent duplicate entries from the same nominator.</p>"
+      },
+      {
+        "question": "How do judges evaluate nominations consistently?",
+        "answer": "<p>Export all entries to CSV with identical fields, share scoring rubrics derived from your published criteria, and review blind wherever your process allows.</p>"
+      }
+    ]
+  },
+  "calculation-form-template": {
+    "questions": [
+      {
+        "question": "Do calculator forms require coding skills?",
+        "answer": "<p>No. You define input fields and write the formula in plain settings; SharaForms recomputes the result live as users answer. No JavaScript or developer involvement needed.</p>"
+      },
+      {
+        "question": "What can calculated fields compute?",
+        "answer": "<p>Anything expressible as math over inputs: service quotes, cost estimates, financing costs, scoring systems, ROI projections, and discount ladders all work well.</p>"
+      },
+      {
+        "question": "Should calculators show results without requiring email first?",
+        "answer": "<p>Showing results immediately builds trust and still converts well. Add optional contact capture beside the result; hard gating typically suppresses completion sharply.</p>"
+      }
+    ]
+  },
+  "checklist-form-template": {
+    "questions": [
+      {
+        "question": "How do teams use digital checklists day to day?",
+        "answer": "<p>Post a QR code linking to the form at the point of work, or pin the link in your team chat. One tap opens today's round on any phone.</p>"
+      },
+      {
+        "question": "Can managers verify checklists were actually done?",
+        "answer": "<p>Yes. Every submission carries a timestamp plus notes and photos where configured, giving supervisors verifiable proof instead of undated paper ticks.</p>"
+      },
+      {
+        "question": "What belongs on a daily operations checklist?",
+        "answer": "<p>Steps ordered exactly as they happen in real execution, required confirmations on safety-critical items, and a notes field for exceptions worth recording.</p>"
+      }
+    ]
+  },
+  "content-submission-form-template": {
+    "questions": [
+      {
+        "question": "How do I collect usage rights with content submissions?",
+        "answer": "<p>Add an explicit license checkbox capturing scope and duration beside the upload field. The acknowledgment stores permanently with each submission, protecting both parties.</p>"
+      },
+      {
+        "question": "What file types should content submissions accept?",
+        "answer": "<p>Restrict uploads to formats your production pipeline ingests, such as PDF, DOCX, JPG, PNG, and MP4. Use link fields for oversized media like full-length video.</p>"
+      },
+      {
+        "question": "Can I run multiple themed submission rounds?",
+        "answer": "<p>Duplicate the form per round with updated briefs and closing dates. Each campaign keeps its own archive while your review process stays identical.</p>"
+      }
+    ]
+  },
+  "employee-evaluation-form-template": {
+    "questions": [
+      {
+        "question": "How often should employee evaluations happen?",
+        "answer": "<p>Quarterly suits most teams, aligned to decision cadence rather than calendar habit. Consistent timing matters more than frequency for producing comparable trend data.</p>"
+      },
+      {
+        "question": "Should employee evaluations be confidential?",
+        "answer": "<p>They can be. Omit evaluator identity fields and control visibility through workspace permissions so responses reach only the people who need them.</p>"
+      },
+      {
+        "question": "What rating scale works best for performance reviews?",
+        "answer": "<p>A consistent five-point scale balances sensitivity with speed. Never mix scale directions between questions, and ask for evidence alongside ratings to reduce halo bias.</p>"
+      }
+    ]
+  },
+  "inspection-form-template": {
+    "questions": [
+      {
+        "question": "Can inspections be completed on mobile devices?",
+        "answer": "<p>Yes. The form works in any phone browser with photo capture built into file fields, letting inspectors document findings on site rather than reconstructing them later.</p>"
+      },
+      {
+        "question": "How should failed inspection items be handled?",
+        "answer": "<p>Use logic to require corrective notes and photos whenever an item fails, and trigger instant notifications to responsible managers so critical failures escalate immediately.</p>"
+      },
+      {
+        "question": "What evidence should every inspection capture?",
+        "answer": "<p>Timestamped photos per finding, inspector identity, and clear pass-fail status per checkpoint. Together these create the defensible record that disputes and audits demand.</p>"
+      }
+    ]
+  },
+  "interview-form-template": {
+    "questions": [
+      {
+        "question": "Why use structured interview scorecards?",
+        "answer": "<p>Scorecards anchor hiring decisions to observed evidence instead of gut feel, reduce individual interviewer bias, and create defensible records if hiring choices are ever questioned.</p>"
+      },
+      {
+        "question": "When should interviewers fill out their scorecards?",
+        "answer": "<p>Immediately after the interview, ideally within an hour. Memory decays quickly and ratings become contaminated by impressions from subsequent conversations.</p>"
+      },
+      {
+        "question": "Can different interview stages use different questions?",
+        "answer": "<p>Yes. Duplicate the template per stage and tailor competencies accordingly: screens verify basics, technical rounds probe depth, and final rounds assess team contribution.</p>"
+      }
+    ]
+  },
+  "legal-intake-form-template": {
+    "questions": [
+      {
+        "question": "Is online legal intake confidential?",
+        "answer": "<p>Submissions stay inside your secured workspace with access limited to invited members. For privileged matters, avoid third-party integrations and retain records under firm policies.</p>"
+      },
+      {
+        "question": "What should legal intake forms always ask first?",
+        "answer": "<p>Party identities come first because conflict checks depend on them, followed by matter type, jurisdiction, and urgency so triage decisions happen quickly.</p>"
+      },
+      {
+        "question": "Can clients sign engagement documents through the form?",
+        "answer": "<p>Signature fields capture acknowledgments with timestamps suitable for records. Comprehensive engagement letters should still attach as reviewed documents during the signing step.</p>"
+      }
+    ]
+  },
+  "membership-application-form-template": {
+    "questions": [
+      {
+        "question": "Can membership dues be paid through the form?",
+        "answer": "<p>Yes. Add a payment field connected to Stripe and present tiers as selectable options, so applications and payments complete together in one flow.</p>"
+      },
+      {
+        "question": "How do we handle membership renewals?",
+        "answer": "<p>Export member rosters before expiry, send renewal links pre-filled with known details, and let members pay in two clicks while history stays attached per member.</p>"
+      },
+      {
+        "question": "Should memberships require approval before joining?",
+        "answer": "<p>For vetted associations, split application and payment into two steps: review submissions first, then send approved applicants a payment link manually.</p>"
+      }
+    ]
+  },
+  "petition-form-template": {
+    "questions": [
+      {
+        "question": "How do I start an online petition for free?",
+        "answer": "<p>Copy this template, write your demand in one persuasive sentence, and publish the link anywhere. The free plan covers unlimited forms and unlimited signatures.</p>"
+      },
+      {
+        "question": "Can petition signers stay anonymous?",
+        "answer": "<p>Yes. Ask display consent separately from identity so you may require real names internally while showing only counts or first names publicly.</p>"
+      },
+      {
+        "question": "How do petitions gain momentum quickly?",
+        "answer": "<p>Seed initial signatures among core supporters before public launch, equip sharers with a short clean link, and publish milestone updates that give media reasons to cover progress.</p>"
+      }
+    ]
+  },
+  "poll-form-template": {
+    "questions": [
+      {
+        "question": "How do I prevent duplicate votes in my poll?",
+        "answer": "<p>Enable captcha and limit submissions per person where appropriate. For stronger guarantees, distribute the poll through controlled channels or accept light imperfection as normal polling reality.</p>"
+      },
+      {
+        "question": "Should poll results be visible before people vote?",
+        "answer": "<p>Hide results until after voting on sensitive topics to prevent bandwagon effects. Showing live tallies boosts participation for lighter community questions.</p>"
+      },
+      {
+        "question": "How many answer options should a poll have?",
+        "answer": "<p>Two to five works best. More options fragment your results and slow answering, which defeats the speed that makes polls engaging.</p>"
+      }
+    ]
+  },
+  "quiz-form-template": {
+    "questions": [
+      {
+        "question": "Can an online quiz grade itself automatically?",
+        "answer": "<p>Yes. Mark the correct option on each choice question and SharaForms computes scores at submission, showing every participant their result instantly without manual marking.</p>"
+      },
+      {
+        "question": "How many questions should an online quiz have?",
+        "answer": "<p>Five to ten questions keeps completion high for classrooms and marketing alike. Reserve longer formats for formal assessment where participants already expect effort.</p>"
+      },
+      {
+        "question": "Can quizzes show different results based on score?",
+        "answer": "<p>Yes. Conditional logic maps score ranges to distinct completion messages, whether that is mastery praise, targeted revision links, or playful personality outcomes.</p>"
+      }
+    ]
+  },
+  "quote-request-form-template": {
+    "questions": [
+      {
+        "question": "What details make a quote request useful?",
+        "answer": "<p>Project scope, measurements or site photos, preferred timeline, and a budget range. Complete requests let businesses reply with accurate numbers instead of clarification emails.</p>"
+      },
+      {
+        "question": "Why do quote forms ask for a budget range?",
+        "answer": "<p>Stated ranges filter impossible matches early and anchor negotiations realistically. Buyers who share budgets receive faster, more tailored responses instead of generic menus.</p>"
+      },
+      {
+        "question": "How quickly should businesses respond to quote requests?",
+        "answer": "<p>Within one business day, ideally within hours. Response speed consistently predicts which vendor wins the job, particularly in competitive home services.</p>"
+      }
+    ]
+  },
+  "recommendation-form-template": {
+    "questions": [
+      {
+        "question": "What should I ask when requesting a recommendation?",
+        "answer": "<p>Ask for relationship context, specific examples tied to your selection criteria, and how you compare against peers. Structured prompts produce far stronger letters than blank-page requests.</p>"
+      },
+      {
+        "question": "How much notice do recommenders need?",
+        "answer": "<p>Three to four weeks minimum, six weeks for academic cycles. Early requests paired with clear structure significantly raise both acceptance rates and letter quality.</p>"
+      },
+      {
+        "question": "Can recommendations stay confidential from candidates?",
+        "answer": "<p>Yes. Submissions route directly into reviewer workspaces without exposing content to candidates, preserving confidential reference norms while keeping records organized.</p>"
+      }
+    ]
+  },
+  "incident-report-form-template": {
+    "questions": [
+      {
+        "question": "What makes a good incident report?",
+        "answer": "<p>Facts before interpretation: who, what, when, where, observable conditions. Add severity classification and keep opinions in clearly separated analysis sections rather than woven into accounts.</p>"
+      },
+      {
+        "question": "Should incident reporting allow anonymous submissions?",
+        "answer": "<p>Yes, particularly for safety concerns and misconduct. Anonymous channels surface issues pressured employees otherwise swallow; leave contact fields optional for follow-up purposes.</p>"
+      },
+      {
+        "question": "How quickly must workplace incidents be reported?",
+        "answer": "<p>Same shift for injuries and near misses, twenty-four hours for property damage are common baselines. Regulatory timelines override these wherever your industry has stricter rules.</p>"
+      }
+    ]
+  },
+  "reservation-form-template": {
+    "questions": [
+      {
+        "question": "How far in advance can guests make reservations?",
+        "answer": "<p>Accept bookings as far out as operations honor reliably, commonly thirty to ninety days. Longer windows fill prime slots early but complicate staffing forecasts.</p>"
+      },
+      {
+        "question": "Do online reservations reduce no-shows?",
+        "answer": "<p>They help considerably: cancellation policy acknowledgment, reminder-ready exports, and optional deposit collection all discourage silent absences better than phone bookings alone.</p>"
+      },
+      {
+        "question": "Can guests change their reservation after booking?",
+        "answer": "<p>Enable editable submissions so guests adjust party size or timing themselves using their confirmation link, cutting amendment calls dramatically during peak service.</p>"
+      }
+    ]
+  },
+  "sponsorship-application-form-template": {
+    "questions": [
+      {
+        "question": "What do sponsors look for in applications?",
+        "answer": "<p>Audience fit over raw size, verified engagement metrics, and concrete deliverables they can verify later. Activation commitments signal professionalism more than follower counts ever will.</p>"
+      },
+      {
+        "question": "When should sponsorship application rounds close?",
+        "answer": "<p>Eight to twelve weeks before activation leaves contracting and fulfillment lead time. Late cycles force rushed activations nobody measures well.</p>"
+      },
+      {
+        "question": "Should we accept non-cash sponsorship offers?",
+        "answer": "<p>Yes. Include an in-kind option capturing what partners contribute in services or products, since creative non-cash partnerships often outperform modest cash deals.</p>"
+      }
+    ]
+  },
+  "subscription-form-template": {
+    "questions": [
+      {
+        "question": "How does recurring billing work through a form?",
+        "answer": "<p>A payment field connected to Stripe charges subscribers at signup and each cycle afterward until they cancel, with your exports tracking active plans and frequencies.</p>"
+      },
+      {
+        "question": "Should subscription signups offer free trials?",
+        "answer": "<p>Trials lift conversion when product value shows quickly. If you offer one, state conversion terms plainly at signup to avoid surprise-charge complaints later.</p>"
+      },
+      {
+        "question": "How do subscribers cancel their plan?",
+        "answer": "<p>Publish cancellation steps openly and honor requests promptly. Easy exits paradoxically increase signups because commitment feels reversible to cautious buyers.</p>"
+      }
+    ]
+  },
+  "summer-camp-registration-form-template": {
+    "questions": [
+      {
+        "question": "When should summer camp registration open?",
+        "answer": "<p>January through March captures early-bird demand for summer programs. Returning families register fastest when priority windows explicitly reward loyalty.</p>"
+      },
+      {
+        "question": "What health information should camps collect about campers?",
+        "answer": "<p>Allergies, medications with dosing instructions, chronic conditions, physician details, and emergency contacts. Restrict visibility to designated health leads rather than general staff.</p>"
+      },
+      {
+        "question": "Can parents register multiple children at once?",
+        "answer": "<p>Yes. Use household sections covering several campers, or accept one submission per child linked by shared guardian contact information for cleaner records.</p>"
+      }
+    ]
+  },
+  "telecommuting-agreement-form-template": {
+    "questions": [
+      {
+        "question": "What should a telecommuting agreement include?",
+        "answer": "<p>Approved remote days, equipment ownership responsibilities, workspace safety attestations, data security obligations, availability expectations, and signed acknowledgment from both employee and manager.</p>"
+      },
+      {
+        "question": "Are remote work agreements legally required?",
+        "answer": "<p>Rarely mandated outright, but strongly advisable. They clarify mutual obligations and satisfy insurance requirements that home offices meet basic safety standards.</p>"
+      },
+      {
+        "question": "Who pays for home office equipment under telecommuting?",
+        "answer": "<p>Whatever your agreement specifies: employer-provided gear, employee-owned devices, or stipends. Documenting the chosen approach explicitly prevents payroll disputes later.</p>"
+      }
+    ]
+  },
+  "asset-tracking-form-template": {
+    "questions": [
+      {
+        "question": "How do I track company equipment checkouts?",
+        "answer": "<p>Log serial numbers, borrower identity, checkout date, and expected return in one timestamped entry per transaction. QR codes at storage points make logging one tap.</p>"
+      },
+      {
+        "question": "What happens when borrowed equipment is not returned?",
+        "answer": "<p>Overdue exports highlight exactly which items and borrowers need reminders, and the complete custody history supports straightforward recovery conversations.</p>"
+      },
+      {
+        "question": "Can multiple teams share one equipment tracking form?",
+        "answer": "<p>Yes. Team or location selectors segment entries in your exports while everyone uses one canonical link, preventing divergent shadow trackers.</p>"
+      }
+    ]
+  },
+  "voting-form-template": {
+    "questions": [
+      {
+        "question": "Are online votes valid for official elections?",
+        "answer": "<p>Validity depends on your governing documents and jurisdiction rather than the software. Many organizations amend bylaws to permit electronic voting, then use exported, witness-verifiable tallies as their record.</p>"
+      },
+      {
+        "question": "How do I ensure one person, one vote?",
+        "answer": "<p>Combine controlled link distribution with captcha and duplicate detection, or issue personalized links. For high-stakes elections, pair the form with verification against your membership roll.</p>"
+      },
+      {
+        "question": "Should voters see results while voting is open?",
+        "answer": "<p>Never during official elections: live tallies suppress later voters and invite bandwagon effects. Reveal results only after close, from a certified export.</p>"
+      }
+    ]
+  },
+  "wedding-rsvp-form-template": {
+    "questions": [
+      {
+        "question": "When should wedding RSVPs be due?",
+        "answer": "<p>Set deadlines three to four weeks before the wedding, balancing caterer cutoffs against chronically late responders. Digital reminders nudge gently without awkward phone calls.</p>"
+      },
+      {
+        "question": "Can guests respond for themselves and a plus-one?",
+        "answer": "<p>Yes. Party-size fields or per-guest meal selectors let one response cover couples and families while keeping your headcount accurate for catering.</p>"
+      },
+      {
+        "question": "How do we handle guests who never respond?",
+        "answer": "<p>Export non-responders after your deadline and follow up once collectively. Plan final numbers assuming most stragglers attend; surprises favor full seats over empty ones.</p>"
+      }
+    ]
+  },
+  "volunteer-signup-form-template": {
+    "questions": [
+      {
+        "question": "What should a volunteer signup form include?",
+        "answer": "<p>Identity and emergency contacts, skills and interests, availability selections, and waiver acceptance. Role-specific screening questions belong wherever responsibility involves risk or vulnerable groups.</p>"
+      },
+      {
+        "question": "How can volunteers choose their own shifts?",
+        "answer": "<p>List shifts as selectable options and export assignments per slot. Gaps become obvious immediately, letting you recruit specifically for underserved times instead of blasting everyone.</p>"
+      },
+      {
+        "question": "Do volunteers need to sign waivers?",
+        "answer": "<p>Strongly recommended before first participation. Fold waiver acceptance into the form with a signature field so proof stores alongside each volunteer's record permanently.</p>"
+      }
+    ]
+  },
+  "alumni-registration-form-template": {
+    "questions": [
+      {
+        "question": "How do alumni associations keep contact data current?",
+        "answer": "<p>Annual update campaigns tied to value moments such as reunion announcements achieve strong response rates. Prefill known details so updates take under two minutes.</p>"
+      },
+      {
+        "question": "Can alumni update their own details later?",
+        "answer": "<p>Yes. Editable submissions let graduates revisit their entry whenever careers or addresses change, keeping your directory accurate without administrative chasing.</p>"
+      },
+      {
+        "question": "What drives alumni event attendance most?",
+        "answer": "<p>Milestone programming plus effortless registration. Digital RSVPs with calendar attachments measurably outperform email-only invitations for reunion turnout.</p>"
+      }
+    ]
+  },
+  "pet-adoption-application-form-template": {
+    "questions": [
+      {
+        "question": "What should a pet adoption application ask?",
+        "answer": "<p>Household composition, existing pets with vaccination status, hours the pet would be alone, landlord permission where relevant, and care philosophy alignment. These predict successful placements best.</p>"
+      },
+      {
+        "question": "How long should adoption screening take?",
+        "answer": "<p>Structured applications enable same-week decisions without cutting rigor. Consistent questions mean reviewers compare applicants on substance instead of decoding free-text emails.</p>"
+      },
+      {
+        "question": "Can someone apply to adopt multiple pets?",
+        "answer": "<p>Accept separate applications per animal so each placement gets its own clean record, while household details repeat across an applicant's submissions.</p>"
+      }
+    ]
+  },
+  "bank-account-opening-form-template": {
+    "questions": [
+      {
+        "question": "Can account opening happen entirely online?",
+        "answer": "<p>Inquiry and pre-screening stages digitize readily everywhere. Final identity verification depends on jurisdictional eKYC rules, so route regulated steps through compliant channels while forms organize the front end.</p>"
+      },
+      {
+        "question": "What information does opening an account require?",
+        "answer": "<p>Applicant identity, product selection, initial funding intent, and acknowledgment of disclosures. Structured collection feeds verification systems cleanly and shortens branch visits dramatically.</p>"
+      },
+      {
+        "question": "How is sensitive financial information protected?",
+        "answer": "<p>Submissions stay inside secured workspaces with role-based access. Collect only what triage requires, avoid moving regulated data through third-party tools, and retain per compliance schedules.</p>"
+      }
+    ]
+  },
+  "insurance-claim-form-template": {
+    "questions": [
+      {
+        "question": "What information does an insurance claim require?",
+        "answer": "<p>Policy reference, incident date, time and location, a factual chronology, damage description, and photo evidence. Complete first notices are what separate fast settlements from stalled ones.</p>"
+      },
+      {
+        "question": "Why do insurance claims get delayed?",
+        "answer": "<p>Mostly incomplete first notices: missing dates, unclear policy references, or absent evidence force adjusters into chase loops. Required structured fields eliminate most of that back-and-forth.</p>"
+      },
+      {
+        "question": "Can policyholders file claims online themselves?",
+        "answer": "<p>Yes. Public claim forms with verification fields let customers file immediately after incidents, accelerating file creation while improving experience scores.</p>"
+      }
+    ]
+  },
+  "photography-booking-form-template": {
+    "questions": [
+      {
+        "question": "When should clients sign photography releases?",
+        "answer": "<p>At booking confirmation, weeks before shooting. Day-of signing delays starts and occasionally gets forgotten entirely, creating legal gaps that surface later.</p>"
+      },
+      {
+        "question": "Do minors need separate photo releases?",
+        "answer": "<p>Yes. Guardian signatures are mandatory for photographing minors, so include dedicated guardian sections kept distinct from adult release records.</p>"
+      },
+      {
+        "question": "How do booking forms filter serious inquiries from browsers?",
+        "answer": "<p>Date flexibility questions, package selection, and optional budget ranges separate committed clients. Serious customers appreciate focused responses over generic price lists.</p>"
+      }
+    ]
+  },
+  "seo-audit-request-form-template": {
+    "questions": [
+      {
+        "question": "What should an SEO audit request include?",
+        "answer": "<p>Domain, CMS and analytics access status, primary conversion goals, target keywords if known, and any penalties or known issues. Complete requests cut audit turnaround by days.</p>"
+      },
+      {
+        "question": "Why do SEO audits stall at kickoff?",
+        "answer": "<p>Missing access credentials cause most delays. Gate audits behind a prerequisite checklist covering analytics, console, and CMS access so work starts immediately.</p>"
+      },
+      {
+        "question": "How are audit findings prioritized afterward?",
+        "answer": "<p>Document impact-versus-effort rankings in the report itself, then capture client sign-off on priorities so implementation order is agreed rather than argued.</p>"
+      }
+    ]
+  },
+  "sports-team-registration-form-template": {
+    "questions": [
+      {
+        "question": "What must youth sports registration include?",
+        "answer": "<p>Guardian identity and consent, emergency contacts, medical conditions affecting play, and code-of-conduct acceptance. These protect clubs, players, and volunteers together.</p>"
+      },
+      {
+        "question": "When should team registration open each season?",
+        "answer": "<p>Four to six weeks before the season balances planning certainty against family schedule changes. Early windows also smooth volunteer workload at kickoff.</p>"
+      },
+      {
+        "question": "How are age divisions handled in registration?",
+        "answer": "<p>A division selector validates placement at signup, and submission limits per division prevent overfilled rosters before they become problems.</p>"
+      }
+    ]
+  },
+  "gaming-tournament-registration-form-template": {
+    "questions": [
+      {
+        "question": "How do organizers verify player ranks in tournaments?",
+        "answer": "<p>Collect platform IDs and rank screenshots during registration, then cross-check entries against your published rules before brackets lock. Rule acceptance creates accountability for violations.</p>"
+      },
+      {
+        "question": "When should tournament registration close?",
+        "answer": "<p>Firmly, before bracket generation begins. Late manual additions break seeding integrity and frustrate players who registered on time.</p>"
+      },
+      {
+        "question": "Can teams register all their players together?",
+        "answer": "<p>Yes. Roster submissions with one accountable captain contact keep teams coherent, while solo events accept individual entries per player.</p>"
+      }
+    ]
+  },
+  "service-request-form-template": {
+    "questions": [
+      {
+        "question": "What categories should a service request form have?",
+        "answer": "<p>Mirror your owning teams: IT support, facilities maintenance, supplies, access requests, and other. Category selection routes each request automatically to whoever can actually fix it.</p>"
+      },
+      {
+        "question": "How is priority determined on incoming requests?",
+        "answer": "<p>Requesters suggest business impact, but owners calibrate final priority against published definitions. Manager approval of top urgencies keeps the system honest over time.</p>"
+      },
+      {
+        "question": "Will staff actually stop emailing requests directly?",
+        "answer": "<p>Adoption follows friction: make the form faster than describing things twice, pin the link everywhere, and redirect emails politely until the habit forms.</p>"
+      }
+    ]
+  }
+}

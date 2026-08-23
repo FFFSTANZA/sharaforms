@@ -54,6 +54,10 @@ services:
       # Google Drive Picker (browser API key; HTTP-referrer restricted)
       GOOGLE_PICKER_API_KEY: ${GOOGLE_PICKER_API_KEY:-change-me}
       GOOGLE_PICKER_APP_ID: ${GOOGLE_PICKER_APP_ID:-775268936981}
+      # Notion integration
+      NOTION_CLIENT_ID: ${NOTION_CLIENT_ID:-change-me}
+      NOTION_CLIENT_SECRET: ${NOTION_CLIENT_SECRET:-change-me}
+      NOTION_REDIRECT_URI: ${NOTION_REDIRECT_URI:-http://localhost:3000/oauth/notion/callback}
       # reCAPTCHA Enterprise
       RE_CAPTCHA_SITE_KEY: ${RE_CAPTCHA_SITE_KEY:-change-me}
       RE_CAPTCHA_SECRET_KEY: ${RE_CAPTCHA_SECRET_KEY:-change-me}
@@ -89,6 +93,8 @@ services:
       NUXT_PUBLIC_API_BASE: "http://localhost"
       NUXT_PRIVATE_API_BASE: "http://sharaforms-ingress"
       NUXT_PUBLIC_RE_CAPTCHA_SITE_KEY: ${NUXT_PUBLIC_RE_CAPTCHA_SITE_KEY:-change-me}
+      NUXT_PUBLIC_GTM_CODE: ${NUXT_PUBLIC_GTM_CODE:-GTM-5WKJ6MF4}
+      NUXT_PUBLIC_GOOGLE_ANALYTICS_CODE: ${NUXT_PUBLIC_GOOGLE_ANALYTICS_CODE:-G-RYMDPF5CTW}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     ports:

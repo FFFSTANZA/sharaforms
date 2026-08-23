@@ -36,15 +36,15 @@
           v-for="service in services"
           :key="service.name"
           role="button"
-          class="mr-2 bg-neutral-50 border border-neutral-200 rounded-md transition-colors p-4 pb-2 items-center justify-center w-[170px] h-[110px] flex flex-col relative"
+          class="mr-2 bg-[#F7F8FA] border border-[#E6E8EE] rounded-md transition-colors p-4 pb-2 items-center justify-center w-[170px] h-[110px] flex flex-col relative"
           :class="{
-            'hover:bg-blue-50 group cursor-pointer': service.enabled,
+            'hover:bg-[#F0F1F4] group cursor-pointer': service.enabled,
             'cursor-not-allowed': !service.enabled,
           }"
           @click="connect(service)"
         >
           <div class="flex justify-center">
-            <div class="h-10 w-10 text-neutral-500 group-hover:text-blue-500 transition-colors flex items-center">
+            <div class="h-10 w-10 text-[#8E9198] group-hover:text-[#1D1F24] transition-colors flex items-center">
               <Icon
                 :name="service.icon"
                 class=""
@@ -54,7 +54,7 @@
           </div>
 
           <div class="flex-grow flex items-center">
-            <div class="text-neutral-400 font-medium text-sm text-center">
+            <div class="text-[#A7ABB2] font-medium text-[13px] text-center">
               {{ service.title }}
             </div>
           </div>

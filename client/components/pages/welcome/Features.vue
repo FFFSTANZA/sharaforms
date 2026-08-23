@@ -105,11 +105,15 @@
               {{ panel.eyebrow }}
             </div>
 
-            <h2
+            <!-- Styled as a heading but not one semantically: this desktop-only
+                 branch duplicates the mobile branch's panels, and duplicate
+                 <h2> text in the DOM dilutes heading signals (mobile-first
+                 indexing parses the lg:hidden branch above). -->
+            <div
               class="brand-text-strong my-4 text-3xl xl:text-[44px] font-semibold leading-tight tracking-[-1%]"
             >
               {{ panel.title }}
-            </h2>
+            </div>
 
             <p
               class="brand-text-muted text-base xl:text-lg mt-4 leading-7 xl:leading-8 font-normal tracking-[-1.1%]"
@@ -354,7 +358,7 @@ const panels = [
         iconClass: "text-neutral-600",
       },
       {
-        title: "Typeform-style or classic layouts",
+        title: "Spotlight, focused, or classic presentation modes",
         icon: "i-heroicons:rectangle-group",
         iconWrapClass: "bg-neutral-100",
         iconClass: "text-neutral-600",
@@ -491,7 +495,7 @@ const tabContent = {
     badge: "Build smarter flows",
     title: "Logic & Calculations",
     description:
-      "Go beyond basic field logic with built-in calculators, conditional flows, hidden data, and post-submit routing.",
+      "Go beyond basic field logic with built-in calculations, conditional flows, hidden data, and post-submit routing.",
     points: [
       "Conditional logic",
       "Calculations & computed fields",

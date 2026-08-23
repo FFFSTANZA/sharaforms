@@ -22,7 +22,7 @@ class AiGenerateFormRequest extends FormRequest
         return [
             'form_prompt' => 'required|string|max:' . $maxLength,
             'generation_params' => 'nullable|array|max:10',
-            'generation_params.presentation_style' => 'nullable|in:classic,focused',
+            'generation_params.presentation_style' => 'nullable|in:classic,focused,spotlight',
         ];
     }
 }

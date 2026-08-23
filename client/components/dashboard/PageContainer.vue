@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4">
+  <div class="p-[var(--sf-space-base)]">
     <div :class="innerClasses">
       <slot />
     </div>

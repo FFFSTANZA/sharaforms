@@ -29,7 +29,7 @@ const props = defineProps({
   form: { type: Object, required: false }
 })
 
-const isFocusedMode = computed(() => (props.form?.presentation_style || 'classic') === 'focused')
+const isFocusedMode = computed(() => ['focused', 'spotlight'].includes(props.form?.presentation_style || 'classic'))
 
 const isEmpty = computed(() => !props.model?.image || !props.model.image?.url)
 const headerIconClass = computed(() => isEmpty.value ? 'text-blue-500! animate-pulse' : '')

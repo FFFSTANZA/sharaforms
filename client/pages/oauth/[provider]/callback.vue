@@ -97,11 +97,11 @@ const handleCallback = async () => {
       payloadData.state = route.query.state
     }
     
-    // Get invite token from localStorage if it was stored during OAuth initiation
-    const inviteToken = localStorage.getItem('oauth_invite_token')
+    // H9 FIX: Read invite token from sessionStorage (was localStorage — XSS-accessible)
+    const inviteToken = sessionStorage.getItem('oauth_invite_token')
     if (inviteToken) {
       payloadData.invite_token = inviteToken
-      localStorage.removeItem('oauth_invite_token')
+      sessionStorage.removeItem('oauth_invite_token')
     }
 
     // Call the OAuth callback endpoint directly to get the raw response

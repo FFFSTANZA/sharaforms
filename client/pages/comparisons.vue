@@ -15,7 +15,7 @@
               Compare SharaForms side by side with every major form builder.
                See free plans, pricing, and features at a glance, and find out
               which alternative gives you unlimited forms, unlimited
-              submissions, and built-in calculators.
+              submissions, and three presentation modes.
             </p>
             <div
               class="flex flex-col sm:flex-row items-center justify-center gap-4"
@@ -83,9 +83,9 @@
           </h2>
           <p class="brand-text-muted mt-3 text-base sm:text-lg leading-7 sm:leading-8 tracking-[-1.1%] font-normal">
             SharaForms is the form builder that stays free at scale: unlimited
-            forms, unlimited submissions, built-in calculators, dynamic PDFs,
-             and custom domains, without the caps or upgrade pressure that
-            other builders add as your forms grow.
+            forms, unlimited submissions, three presentation modes, built-in
+            calculations, dynamic PDFs, and custom domains, without the caps
+            or upgrade pressure that other builders add as your forms grow.
           </p>
         </div>
       </div>
@@ -121,9 +121,9 @@ useOpnSeoMeta({
     'free form builder',
     'unlimited forms',
     'unlimited submissions',
-    'forms that close deals',
-    'pricing calculator forms',
-    'quote forms',
+    'spotlight forms',
+    'one question at a time forms',
+    'multi-page forms',
   ].join(', '),
 })
 
@@ -146,7 +146,7 @@ const comparisons = [
   {
     slug: 'tally',
     label: 'Tally',
-    description: "The more powerful Tally alternative with deeper customization, built-in calculators, and better workflow control.",
+    description: "The more powerful Tally alternative with deeper customization, built-in calculations, and better workflow control.",
   },
   {
     slug: 'fillout',
@@ -213,7 +213,7 @@ const comparisonsSchema = computed(() => {
             name: 'Is SharaForms a good Typeform alternative?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'Yes. SharaForms offers the polished conversational form experience Typeform is known for, but with unlimited forms and submissions on the free plan, built-in calculators, custom branding, and no upgrade pressure as usage grows.',
+              text: 'Yes. SharaForms offers the polished conversational form experience Typeform is known for, but with unlimited forms and submissions on the free plan, three presentation modes, built-in calculations, custom branding, and no upgrade pressure as usage grows.',
             },
           },
           {
@@ -221,7 +221,7 @@ const comparisonsSchema = computed(() => {
             name: 'Which free form builder has unlimited submissions?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'SharaForms offers a free plan with unlimited forms and unlimited submissions, along with built-in calculators, conditional logic, and dynamic PDF generation.',
+              text: 'SharaForms offers a free plan with unlimited forms and unlimited submissions, along with three presentation modes, built-in calculations, conditional logic, and dynamic PDF generation.',
             },
           },
           {
@@ -229,7 +229,7 @@ const comparisonsSchema = computed(() => {
             name: 'How much does SharaForms cost?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'SharaForms is free for unlimited forms and submissions. Paid plans start at $12 per month (Pro), with Business at $48 and Enterprise at $125 per month, billed monthly.',
+              text: 'SharaForms is free for unlimited forms and submissions. Paid plans start at $15 per month (Pro), with Business at $48 and Enterprise at $125 per month, billed monthly.',
             },
           },
         ],

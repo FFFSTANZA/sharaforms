@@ -471,3 +471,195 @@ Favicon showed in the browser tab but not Google SERPs. Primary `<link rel="icon
 - **Google favicon caching is the real lag** — correct tags alone won't appear in SERPs for days-to-weeks. Speed-up: GSC URL Inspection → Request Indexing on `/` AND on `/favicon-192x192.png` directly (inspect the image URL to hit the favicon crawler), then never change the favicon URL (churn resets trust).
 - Agent can't view images — used the 1254px logo as source for consistency with apple-touch-icon.
 - Remaining user-side actions after this session: rotate the GitHub PAT (`ghp_dH6f...` was pasted in chat → treat as exposed) and run the GSC re-index steps.
+
+## Session: 2026-08-20 — Dev Mode Switch + sharaforms-ui Crash Fix (defu missing in node_modules volume)
+
+### What happened
+- Mode switched to dev via `./switch-mode.sh dev` (script commit c753226; dev keys: api `APP_ENV=local`, client `NUXT_PUBLIC_ENV=development`; backups `api/.env.bak.20260820-001915`, `client/.env.bak.20260820-001915`). Then `docker compose -f docker-compose.dev.yml restart api` + `up -d ui` for the full stack in dev mode.
+- **sharaforms-ui crash**: `ERROR Cannot find package '/app/node_modules/defu/index.js' imported from /app/node_modules/listhen/dist/index.mjs` — Nuxt dev (listhen) dies at startup.
+
+### Root cause
+- The persistent named volume `sharaforms_client_node_modules` (compose file names it `client_node_modules`, Docker prefixes with the compose project name `sharaforms` — `docker volume ls` shows `sharaforms_client_node_modules`, not `client_node_modules`) was **corrupt/partial**: the `defu` package directory was entirely missing, plus ~100s of other packages missing vs. the lockfile (npm ci rebuilt 1336 packages; host `client/node_modules` was incomplete too).
+- The ui entrypoint only runs `npm install` when `node_modules/.install-complete` is missing OR `package.json` is newer than it — the marker existed, so install was skipped and the broken tree persisted.
+- **Key environment fact: the dev containers have NO outbound network** (`docker run node:24-alpine npm ping` hangs; host `npm ping` PONGs). So `npm install` inside any container can never complete — a mid-flight install (triggered by a newer package.json) died leaving `defu` + others missing.
+
+### Fix
+1. `docker run --rm -v sharaforms_client_node_modules:/nm node:20-alpine rm -f /nm/.install-complete` (force install path).
+2. Kill the stalled in-container `npm install` (`kill 8`).
+3. **Repair from host via `--network host`**: `docker run --rm --network host -v ./client:/app -v sharaforms_client_node_modules:/app/node_modules node:24-alpine sh -c 'cd /app && npm ci --no-audit --no-fund && touch node_modules/.install-complete'` → "added 1336 packages in 3m". Same platform as the ui image (node:24-alpine) so native binaries (esbuild, etc.) match. Do NOT copy host `client/node_modules` — host is glibc/node 26, container is musl/node 24, ABI mismatch.
+4. `docker compose -f docker-compose.dev.yml up -d ui` → dev server boots, `http://localhost:3000` 200, title renders. Font-provider fetch warnings (`api.fontsource.org`, `fonts.bunny.net`, `api.fontshare.com`) are expected noise — no container network.
+
+### Verified dev stack
+- `sharaforms-api` Up, `sharaforms-db` healthy, `sharaforms-ingress` Up, `sharaforms-ui` Up (Nuxt dev on :3000, Vite HMR :24678).
+- API dev config after restart: `config('app.env')=local`, `debug=1`, `database.default=pgsql`. `/content/plans` via ingress → 200 JSON.
+- Ingress routes: `/content/plans` works (no `/api` prefix on the dev nginx), root `/` → 404 is normal (API host).
+
+### Gotchas for future
+- **Dev containers have no outbound network** — any `npm install`/composer fetch must run on the host, or in a throwaway container with `--network host`. If node_modules in `sharaforms_client_node_modules` is corrupt again: delete the `.install-complete` marker and re-run the step-3 `npm ci --network host` repair (3 min), NOT an in-container install.
+- Volume name is `sharaforms_client_node_modules` (project-prefixed), even though compose says `client_node_modules`.
+- Marker logic: entrypoint skips install if marker exists and is newer than package.json — after a package.json change, a dead-end in-container install can silently corrupt the tree (marker still present). If the ui shows `Cannot find package .../defu/index.js`, check the volume, don't just restart.
+- `docker-compose.dev.yml` prints "attribute version is obsolete" warning — harmless.
+
+## Session: 2026-08-20 — /dashboard 500 fix (object-form robots regression from fba5991)
+
+### Symptom
+`/dashboard` (unauthenticated or unknown path) returned **500** instead of 404; SSR threw `TypeError: robots.includes is not a function`.
+
+### Root cause
+Commit `fba5991` (favicon/SEO copy refresh) added `robots: { index: false, follow: false }` — an **object** — to `client/pages/[...all].vue` (404 catch-all) and `client/error.vue`. `useOpnSeoMeta.js` `resolveRobots()` returned objects as-is, then `shouldAddPageSchema()` called `robots.includes('noindex')` → crash. `/dashboard` has no page → catch-all → 500.
+
+### Fix (uncommitted, in working tree)
+- `client/composables/useOpnSeoMeta.js`: added `normalizeRobots()` — string → trim; array → `join(', ')`; object → builds from `index/follow/noarchive/noimageindex/nosnippet/notranslate/maxSnippet/maxImagePreview/maxVideoPreview` (`{index:false, follow:false}` → `'noindex, nofollow'`); returns null if empty. `resolveRobots()` returns the normalized string when truthy, else the path-based fallback.
+- Regression tests added to `client/test/nuxt/useOpnSeoMeta.spec.ts` (4 new): object robots → `'noindex, nofollow'`, explicit `follow:true` → `'noindex, follow'`, array → joined string, noindex robots suppress the page-schema JSON-LD script (the exact old crash line). NOTE: schema test must first remove leftover `script[type="application/ld+json"]` from earlier tests — nuxt test env does not clear head between tests.
+
+### Verification
+- `vitest run` full: **720/721** (4 new pass; the 1 failure is the pre-existing unrelated `test/unit/file-uploads.test.ts`). ESLint clean on the composable (`test/nuxt/*` is outside ESLint config scope — ignored by design).
+- Live dev (http://localhost:3000): `/dashboard` now **404 "Page not found"** with zero JS errors (only the expected 404 resource log). Real dashboard `/home?tab=dashboard` renders the Formly redesign (sidebar, KPI tiles, weekly-views chart, top forms); user dropdown + Settings modal (Account/Security/Connections/Access Tokens tabs) render correctly. No hydration-mismatch warning on the dashboard (earlier one was stale-bundle noise).
+
+### Gotchas
+- `/dashboard` is NOT a real route — sidebar links to `{ name: 'home', query: { tab: 'dashboard' } }` (`/home?tab=dashboard`); root redirects logged-in users there via `useSubdomainRedirect`. A 404 on `/dashboard` is correct behavior.
+- `useRoute` in nuxt test env is mocked WITHOUT `path` → `isNonIndexablePath(undefined)` is false, so tests exercise the indexable fallback path.
+- Do not commit the working-tree changes unless explicitly requested (uncommitted: useOpnSeoMeta fix + spec, settings/dropdown redesign pass, FA7 vendor files).
+
+## Session: 2026-08-22 — SEO Audit Fixes 1–4 (client/)
+
+### Changes (uncommitted)
+1. **Double-brand title fixed** — `app.vue` titleTemplate now returns the chunk unchanged when it already contains "SharaForms" (comparison titles keep their natural form; no more "SharaForms | … - SharaForms"). `pages/index.vue` home title switched to keyword-first "Free Form Builder with Calculations & Conditional Logic" (template appends brand).
+2. **`lang` attribute added** — app.vue htmlAttrs now emits `lang: locale.value || 'en'` (+ existing dir logic). Arabic browser sessions get `lang="ar" dir="rtl"`; header-less SSR gets `en`.
+3. **Duplicate home H2s deduped** — Features.vue desktop branch (`hidden lg:grid`) panel headings demoted to styled `<div>`; mobile branch (`lg:hidden`, what mobile-first Googlebot parses) keeps semantic `<h2>`. Verified: each panel title = 1 semantic h2 in DOM.
+4. **Template title pattern variation** — `pages/templates/[slug].vue` picks one of 5 keyword-first variants ("— Free & Customizable", "Free X, Ready to Use", etc.) via stable slug hash (deterministic across builds/hydration). Distribution over 75 hub slugs: 11–17 per variant. og/twitter:title follow automatically.
+
+### Gotchas
+- Several marketing pages use `defineRouteRules({ swr: 3600 })` — Nitro SWR cache serves STALE pre-edit HTML after deploys (query strings don't bust it reliably). After SEO head changes, expect up to 1h of mixed old/new output on enterprise/industry/integrations/privacy/templates pages.
+- i18n is `strategy: 'no_prefix'` + `detectBrowserLanguage`: same URL serves different locales per session. Curl without Accept-Language → defaultLocale en; owner's browser runs ar → cached pages can show rtl/ar artifacts.
+- Full vitest suite: 720/721 (only pre-existing file-uploads.test.ts `$fetch` failure). ESLint clean on all changed files.
+
+## Session: 2026-08-22 — Fix #5 FAQ Expansion (home + 75 templates)
+
+### Changes
+1. **Home FAQs rewritten** (`client/pages/index.vue` homepageFaqs): all answers now 42-57 words (was 10-29), direct-answer-first formula, zero em dashes. JSON-LD re-syncs automatically (single source array).
+2. **Template FAQs grown 3 to 6** via new `api/database/seeders/TemplateQuestionsSeeder.php` + bank `api/resources/data/forms/templates/expansion-questions.json`:
+   - Appends per template: "How do I create {article} {name}?" + "Is the {name} free to use?" + one category slot keyed on primary type (`types[0]`, 15 categories covering 48 templates) or slug-hash rotation of 3 generic entries for rare primaries.
+   - Idempotent: skips additions whose normalized question text already exists on the template; existing curated questions never touched.
+   - subjectName() strips "Form Template"/"Template", restores acronyms (\b nps|rsvp|rfp|pto|kyc \b), appends " form" when missing a form-ish noun suffix. articleFor(): acronym vowel-sound letters take "an".
+3. **DB state**: 74 templates at 6 questions; online-order-form-template stays 5 (its curated set already had the payment question, dedupe correctly skipped).
+
+### Gotchas
+- Seeder idempotency keys on question TEXT: editing an answer in the JSON after seeding does NOT update DB rows with the same question. To change copy, roll back affected rows first (`questions - N - ... - 3`) then re-seed.
+- wedding-rsvp-form-template got double-seeded once (old vs new suffix logic produced different texts that both passed dedupe); fixed by rolling back indexes 3-8 then re-running. Lesson: when changing composition logic, roll back affected slugs before re-running.
+- Verify FAQ changes live with curl + parse FAQPage JSON-LD vs visible <dt> set; they must match exactly (hard rule #4).
+
+## Session: 2026-08-22 — Fix #6 /guides Hub Launch (10 long-tail guides)
+
+### Architecture
+- `client/data/guides/guides-part-{1,2,3}.js`: 10 guides as structured blocks (h2/p/ul/ol/steps/table/callout + faqs), merged by `index.js` which also exports `getGuideBySlug`/`getRelatedGuides`.
+- `client/pages/guides/index.vue`: hub with CollectionPage+ItemList JSON-LD, all 10 links SSR'd, CTA block.
+- `client/pages/guides/[slug].vue`: Article+BreadcrumbList+FAQPage schema, TOC from h2 anchors, real-404 on unknown slugs (`createError` server-side), related-guides module.
+- Sitemap wired via `sitemap.js` imports `guides` from data registry (hub priority 0.85 weekly, details 0.75 monthly). Verified 11 guide URLs in output after ui restart.
+- llms.txt/ai.txt gained a Guides section; OpenFormFooter Product column gained a Guides link (sitewide crawl path).
+
+### Guide topics (long-tail, each mapped to a product strength; NO payment topics)
+single-page-vs-multi-page-forms, one-question-at-a-time-forms, add-calculations-to-a-form, self-grading-quiz, lead-qualification-scoring-form, conditional-logic-examples, hidden-form-fields-source-tracking, auto-generate-pdf-from-form-responses, survey-vs-questionnaire-vs-poll, self-hosted-form-builder-guide. Copy rules: no em dashes anywhere, no AI-slop phrasing, direct answer in first paragraph, FAQ answers self-contained 40-60w.
+
+### Gotchas
+- Editing sitemap.js (imported by nuxt.config.ts) requires a full dev-server reload; Nitro caches the old sitemap up to cacheMaxAgeSeconds (2h). `docker compose -f docker-compose.dev.yml restart ui` forces it; expect ~60-90s boot to first 200.
+- Pre-existing em dashes existed in app.vue global SoftwareApplication schema descriptions; replaced with colon phrasing this session (site-wide JSON-LD now em-dash free).
+- New guides are NOT auto-linked from marketing nav; only footer + hub cross-links + sitemap. If a guide earns traffic, consider adding contextual links from matching template pages.
+- Verification loop used: curl each slug → assert 200 + Article/FAQPage parse + visible dt count == mainEntity length + zero em dashes; all 10 pass. Vitest 720/721 (only pre-existing file-uploads failure).
+
+## Session: 2026-08-22 (later) — Guides catalog revision: dropped self-hosted, added 6 pull topics (14 total)
+
+### Changes
+- REMOVED `self-hosted-form-builder-guide` (Enterprise-only feature, low mainstream pull). Slug now real-404s.
+- ADDED 6 high-pull task-cluster guides in new `client/data/guides/guides-part-4.js`:
+  customer-satisfaction-survey-questions (question bank listicle), collect-rsvps-online-free,
+  online-event-registration-guide, sign-up-sheet-online (teachers/volunteers/potlucks),
+  form-submission-notifications (email/Slack/webhook routing), share-a-form-anywhere (links/QR/embeds).
+- index.js imports part4; llms.txt + ai.txt updated (self-hosted line swapped for six new entries); sitemap auto-derives.
+- New categories introduced: Question banks, Events & groups, Automations, Distribution.
+
+### Gotchas
+- Removing a guide object via scripted string surgery is fragile: part-3 got mangled once because array elements lack trailing commas on the last item (`},` rindex matched inside the previous guide). Fixed by truncating from the last FAQ marker. Lesson: edit these files by hand or rewrite whole objects.
+- Raw `node --input-type=module` cannot resolve extensionless imports in data/guides/index.js; verify through the dev server or vite instead (not an actual error).
+- After sitemap-affecting changes, restart ui container and expect ~60-90s boot; Nitro caches old sitemap otherwise.
+
+## Session: 2026-08-22 (night) — SEO audit follow-ups: 97-point fixes 1-3
+
+### Changes
+1. **Duplicate SoftwareApplication fixed** — removed `homepageSoftwareSchema` block + script entry from `pages/index.vue`; app.vue's sitewide `@graph` node (richer: keywords, featureList, alternateName) is now the only `#software` entity. Verified: exactly 1 SA node in home HTML.
+2. **Home H1 keyword equity** — H1 keeps the brand tagline and gains a visible subline span: "The free form builder with built-in calculations & conditional logic". First paragraph rewritten to add NEW keywords (signatures, file uploads, dynamic PDF documents) instead of repeating calculations/logic.
+3. **Guide-to-template contextual links** — new `GUIDE_TEMPLATE_LINKS` map + `getGuideTemplateLinks()` in `data/guides/index.js`; `[slug].vue` renders a "Templates to start from" pill strip before FAQs. All slugs verified against template-slugs.js registry (caught volunteer-form-template missing → volunteer-signup-form-template). 15 unique links across 15 guides, all return 200.
+
+### Gotchas
+- When picking template slugs for links, ALWAYS validate against data/forms/templates/template-slugs.js first; plausible-looking slugs like order-form-template / volunteer-form-template do not exist (real: online-order-form-template, volunteer-signup-form-template).
+- The "hasError accessed during render" Vue warn in sharaforms-ui logs is pre-existing dev noise across pages, unrelated to guide changes.
+
+## Session: 2026-08-22 (late night) — Guide pages UI redesign + wave overlap fix
+
+### Changes
+1. **Wave overlap fixed** — guide hero sections (hub + detail) had no bottom padding, so the 60-90px wave SVG overlapped the breadcrumb/H1/meta. Both heroes now carry `pt-[124px] sm:pt-[156px] pb-24 sm:pb-32`.
+2. **Editorial redesign** ([slug].vue): dropped the brand-surface glass boxes for a standard article layout — single max-w-[46rem] reading column, plain intro paragraphs, neutral TOC card, dot-marker lists, connected step timeline (border-l + numbered circles), standard bordered tables, editorial left-border callouts. Template strip restyled as a bordered link list; FAQ/CTA/related sections separated by hairline borders instead of colored panels.
+3. **Hub cards simplified** — plain white bordered cards with hover border-pink-300; CTA panel became a simple top-border split row.
+4. Wave fill on guides = `#fcfcfd` matching .marketing-page gradient (NOT #ffffff); article section does NOT set bg-white (gradient shows through).
+
+### Gotchas
+- `.marketing-page` background is a fixed gradient (#fcfcfd → #f5f6f8): never put bg-white sections under the hero wave without changing the fill color to match; home uses #fcfcfd too.
+- OpenFormFooter contains its own brand-surface-strong panel; that one is intentional and stays.
+
+## Session: 2026-08-23 — Form editor mobile support (Desktop-Only gate removed)
+
+### Architecture
+- `FormEditor.vue` now branches on `isMobile` (`breakpoints.smaller('md')`, initialized `false` and flipped in `onMounted` so SSR + hydration both render the desktop tree → no mismatch). Desktop three-pane branch is byte-identical to before.
+- Mobile (< md): single pane + new `FormEditorMobileNav.vue` bottom tab bar (Build/Preview/Design, safe-area padded). Panels key off local `mobileTab` directly (NOT store `activeTab` — staleness bug avoided); an `immediate:true` watch syncs `mobileTab → store.activeTab`.
+- Sidebars become full-screen sheets: `showAddFieldSidebar/showEditFieldSidebar` render `AddFormBlock`/`FormFieldEdit` in a fixed inset-0 z-40 overlay with slide-up transition. Store flags drive it unchanged.
+- `FormEditorPreview` gains `embedded` prop (always-visible instead of `hidden md:flex`); expanded mode now `inset-2 md:inset-8`. Editor root gets `supports-[height:100dvh]:max-h-[100dvh]`.
+- Touch: field rows' inline actions always visible below md (`opacity-100 md:opacity-0 md:group-hover:…`); both VueDraggable lists get `delay 150 / delayOnTouchOnly / touchStartThreshold 3`; palette search autofocus gated to `(hover:hover) and (pointer:fine)` (no keyboard pop-over-sheet on phones).
+- Removed: Desktop-Only gates (FormEditor + FormEditorSkeleton) and the `formsApi.mobileEditorEmail` watcher. `form_editor_viewed` posthog event now carries `platform`.
+
+### Stacking proof (why sheet z-40 works under modals)
+Portaled reka-ui/Nuxt UI overlays have NO z-index (theme + DialogPortal confirmed), yet the ⋯ dropdown inside the existing z-30 sidebar paints above everything daily → the editor subtree sits in an isolated stacking context. So sheet z-40 beats sibling panes but loses to body-portaled modals/dropdowns and to z-50 loading overlay / expanded preview. Don't "fix" by raising modal z-indexes.
+
+### Validation & env incidents
+- ESLint clean on all 7 touched files; vitest full suite **724/725** (+4 new: 3 nav-mount tests in `test/nuxt/form-editor-mobile-nav.spec.ts` + SFC compile smoke for Skeleton/FormFieldsEditor/AddFormBlock/FormFieldEdit). The 1 failure is the long-pre-existing `file-uploads.test.ts` ($fetch).
+- Compile-smoke CANNOT import FormEditor/Navbar/Preview in vitest: `[unimport] failed to find "useI18n"` — vitest nuxt env lacks i18n module; pre-existing env limitation, not code. Validated those via eslint template parse instead (no production build run, per user).
+- ⚠️ An aborted host `npm run build` deleted user-owned `.nuxt/tsconfig.json` (extends target of client/tsconfig.json → all vitest projects failed with TSConfckParseError) while crashing on root-owned `.nuxt/dev/*` (dev server owns them). Recovery: `docker run --rm -v ./client:/app -w /app node:20-alpine ./node_modules/.bin/nuxi prepare`, then chown `.nuxt` back to uid 1000 via busybox container. Dev server hot-reloaded through it; localhost:3000 + /content/plans back to 200. Lesson: never run nuxi build on the host while the root-owned dev stack owns .nuxt.
+
+## Session: 2026-08-23 (later) — Integration tier gating shipped + PlanAccessService dot-notation bug fix
+
+### Final tier matrix (user-approved)
+- **Free**: email, webhook, zapier, n8n, ntfy, google_sheets
+- **Pro**: slack, discord, telegram, notion, resend, supabase (+ email.advanced)
+- **Business**: airtable, baserow, linear, trello, plane, pipedrive, microsoft_teams, google_chat (+ hubspot/salesforce pre-configured, not built)
+- Enterprise inherits all.
+
+### Changes
+1. `api/config/plans.php`: added 10 `integrations.*` keys (notion/resend/supabase=pro; baserow/linear/trello/plane/pipedrive/microsoft_teams/google_chat=business).
+2. `client/data/forms/integrations.json`: synced 9 `required_tier` values (notion→pro; teams/gchat/trello/baserow/linear/plane/pipedrive/airtable→business). Client `useFormIntegrations` reads THIS json for lock badges + upgrade modal (`requires_upgrade`), backend config drives enforcement.
+3. Runtime enforcement: `shouldRun()` gains `$this->form->workspace?->hasFeature('integrations.X')` in all 10 newly-gated handlers (mirrors existing Slack/Discord/Telegram pattern).
+4. Save-time guard: `FormIntegrationsController::create()` calls `requireFeature` when `getRequiredTier('integrations.'.$id) !== null`; `update()` intentionally unguarded = grandfathering of legacy paid-tier configs.
+5. Pricing copy synced: FeatureComparison.vue rows + pricing.vue Pro card feature line.
+6. Tests: `api/tests/Feature/Forms/FormIntegrationTierGatingTest.php` (6 tests): free-can-webhook, free-blocked-supabase(402+no row), pro-ok-supabase+blocked-trello(402 business), business-ok-trello, update-after-downgrade allowed, handler shouldRun=false via anonymous-class + Http::assertNothingSent.
+
+### 🐛 Pre-existing bug fixed: PlanAccessService dotted-key lookups
+`getRequiredTier()`, `userHasFeature()`, `getFormFeatureRequiredTier()` used `config('plans.features.' . $feature)` — Laravel dot notation SPLITS the key, so every dotted feature ('integrations.slack', 'security.password_protection'…) resolved to NULL/false forever. Fixed to literal `config('plans.features')[$feature] ?? null`. Symptom that exposed it: my create-guard never fired (402 expected, got 200) while handler-level hasFeature worked (that path uses literal `$featureMap[$feature]`). Gotcha: `config('plans.features.integrations.trello')` ≠ plans.features['integrations.trello'] — NEVER use config() dot paths over keys that themselves contain dots.
+
+### Verification & gotchas
+- Container `php -l` clean ×13 files; pest: TierGating 6/6, Integrations+FormIntegrationTest+PlanOverrideResolver 135 passed, PlanServiceTest 41 passed (incl. pre-existing getRequiredTier test — PlanService::getRequiredTier was already literal-correct; only PlanAccessService was broken).
+- Client/backend drift check: python compare of integrations.json required_tier vs plans.php regex → ALL IN SYNC (20/20).
+- ⚠️ Legacy behavior note: integrations whose tier lapsed still show "Active" but silently skip at submission time (same as pre-existing slack/discord/telegram semantics). Follow-up idea: one-time command to pause out-of-tier form_integrations + notify owners.
+- Pest temp-file permission warning in container output is cosmetic (root vs www-data on vendor/.temp); results unaffected.
+
+## Session: 2026-08-23 (night) — Homepage hero copy rebalance (category-first)
+
+### Changes
+1. **Hero subline** (`pages/index.vue`): "The free form builder with built-in calculations & conditional logic" → "Three ways to present any form: classic pages, focused flows, or one-question spotlight mode. Calculations and conditional logic built in." Category now leads; calculations demoted to one trailing proof-point mention.
+2. **Hero paragraph**: "One form. Three presentation modes. …" → "Signatures, file uploads, and dynamic PDF documents come standard. Unlimited forms, unlimited responses, free forever." Fixes the factual bug ("One form." contradicted the unlimited-forms FAQ) and moves "free" to the close.
+3. **Features.vue panel card**: "Typeform-style or classic layouts" → "Spotlight, focused, or classic presentation modes" (removes competitor framing, adds the only body-section modes mention on the page).
+
+### Rationale & gotchas
+- Above-the-fold "free" went 2×→1×; title tag + meta description intentionally UNCHANGED ("Free Form Builder with Calculations & Conditional Logic") so SERP keyword equity stays while humans get category-first copy.
+- Audit found the homepage body had ZERO spotlight/modes mentions outside H1+FAQ while calculations had its own feature card AND default tab ("smart" = Logic & Calculations). Tabs left as-is (adding a modes tab needs an image asset); revisit if a feature-modes screenshot becomes available.
+- Full vitest suite now 725/725 (the long-pre-existing file-uploads.test.ts failure stopped reproducing after the .nuxt regeneration earlier this day).
+- Marketing pages use `defineRouteRules({ swr: 3600 })` in some cases; expect up to 1h of stale pre-edit HTML on prod after deploy (Nitro SWR cache).
+
+

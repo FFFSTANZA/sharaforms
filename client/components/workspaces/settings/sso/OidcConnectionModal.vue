@@ -7,8 +7,8 @@
     <template #body>
       <div class="flex justify-center">
         <VForm :form="form" size="sm" @submit.prevent="handleSave" class="w-full max-w-md space-y-6">
-          <div class="space-y-4 rounded-xl border border-neutral-200 bg-neutral-50 p-4 text-sm text-neutral-600">
-            <p class="text-xs uppercase tracking-wide text-neutral-500">General</p>
+          <div class="space-y-4 rounded-xl border border-[var(--sf-border-card)] bg-[var(--sf-bg-page)] p-4 text-sm text-[var(--sf-text-description)]">
+            <p class="text-[11px] font-medium uppercase tracking-[0.1em] text-[var(--sf-text-label)]">General</p>
             <TextInput
               name="name"
               :form="form"
@@ -35,17 +35,17 @@
             >
               <template #help>
                 <div class="space-y-1">
-                  <p v-if="userEmailDomain" class="text-xs text-neutral-500">
+                  <p v-if="userEmailDomain" class="text-xs text-[var(--sf-text-description)]">
                     Must match your email domain ('{{ userEmailDomain }}' or another subdomain of it).
                   </p>
-                  <p v-else class="text-xs text-neutral-500">
+                  <p v-else class="text-xs text-[var(--sf-text-description)]">
                     Must match your email domain (e.g., if your email is user@company.com, use 'company.com' or another subdomain of it).
                   </p>
-                  <p class="text-xs text-neutral-500">
+                  <p class="text-xs text-[var(--sf-text-description)]">
                     Common email providers are not allowed.
                     <button
                       type="button"
-                      class="text-blue-600 hover:text-blue-700 underline"
+                      class="text-[var(--sf-teal)] hover:underline"
                       @click="openSupportChat"
                     >
                       Contact support
@@ -57,13 +57,13 @@
             </TextInput>
           </div>
 
-          <div class="space-y-4 rounded-xl border border-neutral-200 bg-neutral-50 p-4 text-sm text-neutral-600">
-            <p class="text-xs uppercase tracking-wide text-neutral-500">Security</p>
+          <div class="space-y-4 rounded-xl border border-[var(--sf-border-card)] bg-[var(--sf-bg-page)] p-4 text-sm text-[var(--sf-text-description)]">
+            <p class="text-[11px] font-medium uppercase tracking-[0.1em] text-[var(--sf-text-label)]">Security</p>
             
             <!-- Redirect URI Display -->
-            <div v-if="redirectUri" class="rounded-lg border border-blue-200 bg-blue-50 p-3">
-              <p class="text-xs font-medium text-blue-900 mb-1">Redirect URI</p>
-              <p class="text-xs text-blue-700 mb-2">
+            <div v-if="redirectUri" class="rounded-lg border border-[var(--sf-teal-light)] bg-[var(--sf-teal-light)] p-3">
+              <p class="text-xs font-medium text-[var(--sf-text-primary)] mb-1">Redirect URI</p>
+              <p class="text-xs text-[var(--sf-text-description)] mb-2">
                 Copy this URL and add it to your OIDC provider's allowed redirect URIs:
               </p>
               <CopyContent
@@ -113,12 +113,12 @@
             />
           </div>
 
-          <Collapse v-model="showFieldMappings" class="rounded-xl border border-neutral-200 bg-neutral-50 p-4 text-sm text-neutral-600">
+          <Collapse v-model="showFieldMappings" class="rounded-xl border border-[var(--sf-border-card)] bg-[var(--sf-bg-page)] p-4 text-sm text-[var(--sf-text-description)]">
             <template #title>
-              <p class="text-xs uppercase tracking-wide text-neutral-500">Field Mappings</p>
+              <p class="text-[11px] font-medium uppercase tracking-[0.1em] text-[var(--sf-text-label)]">Field Mappings</p>
             </template>
             <div class="space-y-4 pt-2">
-              <p class="text-xs text-neutral-500">
+              <p class="text-xs text-[var(--sf-text-description)]">
                 Map IdP claim field names to SharaForms fields. Use this if your IdP uses different field names (e.g., "preferred_username" for email).
               </p>
               
@@ -143,16 +143,16 @@
             </div>
           </Collapse>
 
-          <Collapse v-model="showRoleMapping" class="rounded-xl border border-neutral-200 bg-neutral-50 p-4 text-sm text-neutral-600">
+          <Collapse v-model="showRoleMapping" class="rounded-xl border border-[var(--sf-border-card)] bg-[var(--sf-bg-page)] p-4 text-sm text-[var(--sf-text-description)]">
             <template #title>
-              <p class="text-xs uppercase tracking-wide text-neutral-500">Role Mapping</p>
+              <p class="text-[11px] font-medium uppercase tracking-[0.1em] text-[var(--sf-text-label)]">Role Mapping</p>
             </template>
             <div class="space-y-4 pt-2">
-              <p class="text-xs text-neutral-500">
+              <p class="text-xs text-[var(--sf-text-description)]">
                 Map IdP groups to workspace roles. Users will be assigned the highest privilege role from their groups.
               </p>
               
-              <div v-if="roleMappings.length === 0" class="text-center py-4 text-sm text-neutral-400">
+              <div v-if="roleMappings.length === 0" class="text-center py-4 text-[13px] text-[#A7ABB2]">
                 No role mappings configured. Users will be assigned the default "member" role.
               </div>
               
@@ -160,7 +160,7 @@
                 <div
                   v-for="(mapping, index) in roleMappings"
                   :key="index"
-                  class="flex items-start gap-2 p-2 rounded-md border border-neutral-200 bg-white"
+                  class="flex items-start gap-2 p-2 rounded-md border border-[var(--sf-border-card)] bg-white"
                 >
                   <div class="flex-1 grid grid-cols-2 gap-2">
                     <TextInput

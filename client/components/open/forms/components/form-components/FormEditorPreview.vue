@@ -2,30 +2,36 @@
   <!-- Backdrop -->
   <div
     v-if="isExpanded"
-    class="fixed inset-0 z-40 bg-white/30 dark:bg-neutral-900/30 backdrop-blur-xs"
+    class="fixed inset-0 z-40 bg-[var(--sf-bg-surface)]/30 backdrop-blur-xs"
     @click="toggleExpand"
   />
 
-  <!--   Form Preview (desktop only)   -->
+  <!--   Form Preview (desktop: center pane, mobile: embedded full pane)   -->
   <div
     class="form-editor-preview"
     ref="parent"
     :class="{
-      'fixed inset-8 z-50 !flex': isExpanded,
-      'bg-neutral-50 dark:bg-notion-dark-light hidden md:flex flex-grow min-h-0 p-4 flex-col items-center shadow-inner': !isExpanded
+      'fixed inset-2 md:inset-8 z-50 !flex': isExpanded,
+      'bg-[#EDF6F9] flex-grow min-h-0 p-4 flex-col items-center': !isExpanded,
+      'flex': !isExpanded && embedded,
+      'hidden md:flex': !isExpanded && !embedded
     }"
   >
     <div 
-      class="border rounded-lg bg-white dark:bg-notion-dark w-full grow shadow-xs transition-all overflow-hidden flex flex-col min-h-0"
-      :class="{ 'h-full': isExpanded }"
+      class="border border-[var(--sf-border-card)] rounded-2xl bg-[var(--sf-bg-surface)] w-full max-w-3xl grow shadow-[var(--sf-shadow-card)] transition-all overflow-hidden flex flex-col min-h-0"
+      :class="{ 'h-full max-w-none': isExpanded }"
     >
-      <div class="w-full bg-white dark:bg-neutral-950 border-b border-neutral-300 dark:border-blue-900 dark:border-neutral-700 rounded-t-lg p-1.5 pl-4 pr-1.5 flex items-center gap-x-1.5">
-        <div class="bg-red-500 rounded-full w-2.5 h-2.5" />
-        <div class="bg-yellow-500 rounded-full w-2.5 h-2.5" />
-        <div class="bg-green-500 rounded-full w-2.5 h-2.5" />
-        <p class="text-sm text-neutral-500/70 text-sm ml-4 select-none">
-          Form Preview
-        </p>
+      <div class="w-full bg-[var(--sf-bg-muted)]/50 border-b border-[var(--sf-border-divider)] rounded-t-2xl px-4 py-2 flex items-center gap-2">
+        <div class="flex items-center gap-1.5">
+          <div class="w-2.5 h-2.5 rounded-full bg-[#FF5F57]" />
+          <div class="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]" />
+          <div class="w-2.5 h-2.5 rounded-full bg-[#28C840]" />
+        </div>
+        <div class="flex-1 flex items-center justify-center">
+          <span class="text-[11px] font-medium text-[var(--sf-text-disabled)] select-none uppercase tracking-wider">
+            Form Preview
+          </span>
+        </div>
         <UTooltip :text="previewDarkMode ? 'Disable dark mode preview' : 'Preview in dark mode'" arrow>
           <UButton
             :icon="previewDarkMode ? 'i-lucide-sun' : 'i-lucide-moon'"
@@ -37,7 +43,7 @@
         </UTooltip>
         <div class="flex-grow" />
         <UButton
-          v-if="previewFormSubmitted || (form && form.presentation_style === 'focused' && focusedPreviewPage > 0)"
+          v-if="previewFormSubmitted || (form && (form.presentation_style === 'focused' || form.presentation_style === 'spotlight') && focusedPreviewPage > 0)"
           icon="i-lucide-refresh-cw"
           color="neutral"
           variant="outline"
@@ -74,7 +80,7 @@
             v-if="previewReady"
             ref="formPreview"
             class="w-full grow min-h-0"
-            :form="form"
+            :form="previewForm"
             :dark-mode="darkMode"
             :mode="formMode"
             @restarted="previewFormSubmitted=false"
@@ -91,62 +97,42 @@
             <USkeleton class="h-10 w-28 self-center" />
           </div>
         </OverlayScrollbarsComponent>
-        <!-- Quick actions for focused presentation (only when not expanded) -->
+        <!-- Quick actions for focused presentation (only when not expanded, spotlight uses classic in collapsed mode) -->
          
         <VTransition name="fade">
           <div
             v-if="!isExpanded && form && form.presentation_style === 'focused'"
-            class="absolute top-2 right-2 z-20 flex items-center gap-2"
+            class="absolute top-3 right-3 z-20 flex items-center gap-1 bg-[var(--sf-bg-surface)]/90 backdrop-blur-sm rounded-xl border border-[var(--sf-border-card)] shadow-sm p-1"
           >
-            <UTooltip
-              text="Add block"
-              :kbds="['meta', 'B']"
-              arrow
+            <button
+              class="flex items-center justify-center w-7 h-7 rounded-lg text-[var(--sf-text-caption)] hover:text-[var(--sf-coral-500)] hover:bg-[var(--sf-nav-active-bg)] transition-all duration-150"
+              title="Add block (⌘B)"
+              @click.stop="handleAddBlock"
             >
-              <UButton
-                icon="i-lucide-plus"
-                color="neutral"
-                variant="outline"
-                size="sm"
-                @click.stop="handleAddBlock"
-              />
-            </UTooltip>
-            <UTooltip
-              text="Settings"
-              arrow
+              <Icon name="i-lucide-plus" class="w-3.5 h-3.5" />
+            </button>
+            <button
+              class="flex items-center justify-center w-7 h-7 rounded-lg text-[var(--sf-text-caption)] hover:text-[var(--sf-text-primary)] hover:bg-[var(--sf-nav-hover-bg)] transition-all duration-150"
+              title="Settings"
+              @click.stop="handleSettingsCurrent"
             >
-              <UButton
-                icon="i-lucide-settings"
-                color="neutral"
-                variant="outline"
-                size="sm"
-                @click.stop="handleSettingsCurrent"
-              />
-            </UTooltip>
-            <UTooltip
-              text="Duplicate"
-              arrow
+              <Icon name="i-lucide-settings" class="w-3.5 h-3.5" />
+            </button>
+            <button
+              class="flex items-center justify-center w-7 h-7 rounded-lg text-[var(--sf-text-caption)] hover:text-[var(--sf-text-primary)] hover:bg-[var(--sf-nav-hover-bg)] transition-all duration-150"
+              title="Duplicate"
+              @click.stop="handleDuplicateCurrent"
             >
-              <UButton
-                icon="i-lucide-copy"
-                color="neutral"
-                variant="outline"
-                size="sm"
-                @click.stop="handleDuplicateCurrent"
-              />
-            </UTooltip>
-            <UTooltip
-              text="Delete"
-              arrow
+              <Icon name="i-lucide-copy" class="w-3.5 h-3.5" />
+            </button>
+            <div class="w-px h-4 bg-[var(--sf-border-divider)] mx-0.5" />
+            <button
+              class="flex items-center justify-center w-7 h-7 rounded-lg text-[var(--sf-text-caption)] hover:text-[var(--sf-status-closed-text)] hover:bg-[var(--sf-status-closed-bg)] transition-all duration-150"
+              title="Delete"
+              @click.stop="handleDeleteCurrent"
             >
-              <UButton
-                icon="i-lucide-trash-2"
-                color="neutral"
-                variant="outline"
-                size="sm"
-                @click.stop="handleDeleteCurrent"
-              />
-            </UTooltip>
+              <Icon name="i-lucide-trash-2" class="w-3.5 h-3.5" />
+            </button>
           </div>
         </VTransition>
       </div>
@@ -164,6 +150,15 @@ import { FormMode } from "~/lib/forms/FormModeStrategy.js"
 import { useCrisp } from '~/composables/useCrisp.js'
 import TrackClick from '~/components/global/TrackClick.vue'
 import { useFormEditorPreviewData } from '~/composables/useFormEditorPreviewData.js'
+
+// When embedded (mobile editor pane), the preview is always visible instead
+// of hidden below the md breakpoint (desktop center-pane behavior).
+defineProps({
+  embedded: {
+    type: Boolean,
+    default: false,
+  },
+})
 
 const { hideChat, showChat } = useCrisp()
 
@@ -192,6 +187,16 @@ const darkMode = useDarkMode(parent)
 
 // Use PREVIEW mode when not expanded, TEST mode when expanded
 const formMode = computed(() => isExpanded.value ? FormMode.TEST : FormMode.PREVIEW)
+
+// In the inline (collapsed) preview, force classic rendering for spotlight forms
+// so all fields are visible and easy to edit. Only show spotlight in expanded mode.
+const previewForm = computed(() => {
+  if (!form.value) return form.value
+  if (!isExpanded.value && form.value.presentation_style === 'spotlight') {
+    return { ...form.value, presentation_style: 'classic' }
+  }
+  return form.value
+})
 
 defineShortcuts({
   escape: {
@@ -259,12 +264,10 @@ function handleDarkModeChange() {
   if (!form.value) return
   if (!parent.value) return
 
-  // Prevent admin dark mode (html.dark) from overriding preview's independent dark mode.
-  // Tailwind v4's @custom-variant dark (&:where(.dark, .dark *)) activates dark: variants
-  // for ALL descendants of html.dark, making parent.dark irrelevant. Clear html.dark so
-  // the preview can control its own dark mode via the scoped parent element.
-  document.documentElement.classList.remove('dark')
-
+  // Apply dark mode to the preview container only — do NOT touch
+  // document.documentElement.classList. Removing 'dark' from <html> breaks
+  // all --sf-* design tokens used by the editor chrome (navbar, sidebars, etc.).
+  // The form-renderer already scopes its dark: variants to the parent element.
   if (previewDarkMode.value) {
     handleDarkMode('dark', parent.value)
   } else {
@@ -326,10 +329,11 @@ const currentSlideIndex = computed(() => {
 })
 
 // Shared guards/helpers
+// Spotlight only uses focused editing when expanded (collapsed renders classic)
 const isFocusedEditing = computed(() => {
   return !!(
     form.value &&
-    form.value.presentation_style === 'focused' &&
+    (form.value.presentation_style === 'focused' || (form.value.presentation_style === 'spotlight' && isExpanded.value)) &&
     workingFormStore.showEditFieldSidebar
   )
 })
@@ -433,5 +437,18 @@ function handleDeleteCurrent() {
 
 .form-editor-preview .powered-by-button {
   @apply bottom-10 right-10 z-50;
+}
+
+/* Suppress blue/indigo input focus rings in admin preview mode.
+   The coral selection state on OpenFormField is the only visual indicator needed. */
+.form-editor-preview .open-complete-form .form-group input:focus-visible,
+.form-editor-preview .open-complete-form .form-group textarea:focus-visible,
+.form-editor-preview .open-complete-form .form-group select:focus-visible,
+.form-editor-preview .open-complete-form .form-group [role='listbox']:focus-visible,
+.form-editor-preview .open-complete-form .form-group [role='radio']:focus-visible,
+.form-editor-preview .open-complete-form .form-group [role='checkbox']:focus-visible,
+.form-editor-preview .open-complete-form .form-group [contenteditable]:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
 }
 </style>

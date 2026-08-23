@@ -1,261 +1,585 @@
-/* ── Shell · cool neutral canvas + gray borders (Monday/Airtable) ──── */
-.sidebar
-{
-  background: linear-gradient(180deg, #FFFFFF 0%, #F4F5F7 100%);
-  border-right: 1px solid #E6E8EE;
+/* ══════════════════════════════════════════════════════════════════════
+   SharaForms Design System — Formly/Clay/Monday/Airtable Hybrid
+   ══════════════════════════════════════════════════════════════════════
+   
+   Design DNA:
+   - Clay: flat saturated fills, soft elevation, inset highlights
+   - Monday: cool neutral canvas, gray borders, clean spacing
+   - Airtable: monochrome nav icons, coral active states, status pills
+   - Formly: deep coral gradient CTAs, warm brand identity
+   
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── CSS Custom Properties (Design Tokens) ────────────────────────── */
+:root {
+  /* ── Color Palette ── */
+  --sf-bg-page: #F7F8FA;
+  --sf-bg-surface: #FFFFFF;
+  --sf-bg-muted: #F4F5F7;
+  --sf-bg-subtle: #F0F1F4;
+  --sf-bg-canvas: #E8EBF2;
+
+  /* ── Dark Mode Color Palette ── */
+  --sf-dark-bg-page: #111113;
+  --sf-dark-bg-surface: #1A1A1D;
+  --sf-dark-bg-muted: #232326;
+  --sf-dark-bg-subtle: #2A2A2E;
+
+  /* Brand / Sunkist Coral Identity */
+  --sf-coral-500: #EA6676;
+  --sf-coral-400: #f0818c;
+  --sf-coral-600: #d04a5e;
+  --sf-coral-700: #b83d52;
+  --sf-coral-800: #a3354a;
+  --sf-coral-900: #eb5e6c;
+
+  /* Text Hierarchy */
+  --sf-text-primary: #1D1F24;
+  --sf-text-secondary: #383B41;
+  --sf-text-body: #565A62;
+  --sf-text-description: #6E7278;
+  --sf-text-caption: #8E9198;
+  --sf-text-label: #A0A4AD;
+  --sf-text-disabled: #A7ABB2;
+  --sf-text-muted: #C7C9CE;
+
+  /* Border Hierarchy */
+  --sf-border-card: #E6E8EE;
+  --sf-border-button: #DEE1E7;
+  --sf-border-divider: #ECEEF2;
+
+  /* Semantic Colors — Metric Tiles */
+  --sf-teal: #0891b2;
+  --sf-teal-light: #E4F4F8;
+  --sf-amber: #d97706;
+  --sf-amber-light: #FDF6EB;
+  --sf-indigo: #6366f1;
+  --sf-indigo-light: #EEF0FD;
+  --sf-green: #16a34a;
+  --sf-green-light: #EFF8F1;
+
+  /* Status Pills */
+  --sf-status-live-bg: #e3f6e7;
+  --sf-status-live-text: #0e7a46;
+  --sf-status-live-border: #bfe8cd;
+  --sf-status-draft-bg: #fff3d6;
+  --sf-status-draft-text: #9a6a00;
+  --sf-status-draft-border: #f5dfa8;
+  --sf-status-closed-bg: #fce7e2;
+  --sf-status-closed-text: #c2351f;
+  --sf-status-closed-border: #f3c7c0;
+
+  /* Interactive States */
+  --sf-nav-active-bg: #FDE8EB;
+  --sf-nav-hover-bg: #F0F1F4;
+  --sf-focus-ring: #EA6676;
+  --sf-hover-border: #F4B5BD;
+
+  /* ── Shadows (Clay-inspired) ── */
+  --sf-shadow-card: inset 0 1px 0 0 #FFFFFF, 0 1px 2px rgba(23, 25, 35, 0.04), 0 16px 40px -20px rgba(23, 25, 35, 0.18);
+  --sf-shadow-card-hover: inset 0 1px 0 0 #ffffff, 0 24px 56px -24px rgba(23, 25, 35, 0.34);
+  --sf-shadow-button-primary: 0 2px 6px -2px rgba(214, 60, 38, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.14);
+  --sf-shadow-button-primary-hover: 0 6px 16px -6px rgba(214, 60, 38, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+  --sf-shadow-button-ghost-hover: 0 8px 18px -8px rgba(23, 25, 35, 0.18);
+  --sf-shadow-dropdown: 0 1px 2px rgba(23, 25, 35, 0.04), 0 8px 20px -12px rgba(23, 25, 35, 0.14);
+
+  /* ── Border Radius ── */
+  --sf-radius-sm: 0.5rem;    /* 8px - input, small elements */
+  --sf-radius-md: 0.75rem;   /* 12px - buttons, nav items */
+  --sf-radius-lg: 1rem;      /* 16px - cards, dropdowns */
+  --sf-radius-xl: 1.25rem;   /* 20px - form cards, KPI tiles */
+  --sf-radius-full: 9999px;  /* pills, badges */
+
+  /* ── Spacing Scale ── */
+  --sf-space-xs: 0.25rem;    /* 4px */
+  --sf-space-sm: 0.5rem;     /* 8px */
+  --sf-space-md: 0.75rem;    /* 12px */
+  --sf-space-base: 1rem;     /* 16px */
+  --sf-space-lg: 1.5rem;     /* 24px */
+  --sf-space-xl: 2rem;       /* 32px */
+  --sf-space-2xl: 2.5rem;    /* 40px */
+  --sf-space-3xl: 4rem;      /* 64px */
+
+  /* ── Typography Scale ── */
+  --sf-font-size-2xs: 0.6875rem;  /* 11px - section labels, captions */
+  --sf-font-size-xs: 0.75rem;     /* 12px - button text, small labels */
+  --sf-font-size-sm: 0.8125rem;   /* 13px - body text, descriptions */
+  --sf-font-size-base: 0.875rem;  /* 14px - sub-section titles */
+  --sf-font-size-md: 0.9375rem;   /* 15px - section titles */
+  --sf-font-size-lg: 1.125rem;    /* 18px - sidebar brand */
+  --sf-font-size-xl: 1.75rem;     /* 28px - page titles */
+
+  /* ── Transitions ── */
+  --sf-transition-fast: 0.15s ease;
+  --sf-transition-base: 0.18s ease;
+  --sf-transition-slow: 0.22s ease;
+}
+
+/* ── Dark Mode Token Overrides ────────────────────────────────────── */
+/* Tokens set on .dark cascade to all descendants via CSS inheritance.
+   When .dark is on <html>, the editor chrome gets dark tokens.
+   When .dark is on the preview parent, the form inside gets dark tokens.
+   The editor chrome falls back to :root light tokens in that case. */
+.dark {
+  --sf-bg-page: #111113;
+  --sf-bg-surface: #1A1A1D;
+  --sf-bg-muted: #232326;
+  --sf-bg-subtle: #2A2A2E;
+  --sf-bg-canvas: #161618;
+  --sf-text-primary: #F0F0F2;
+  --sf-text-secondary: #D1D1D6;
+  --sf-text-body: #A1A1AA;
+  --sf-text-description: #8A8A94;
+  --sf-text-caption: #6E6E78;
+  --sf-text-label: #585860;
+  --sf-text-disabled: #48484F;
+  --sf-text-muted: #3A3A40;
+  --sf-border-card: #2E2E33;
+  --sf-border-button: #3A3A40;
+  --sf-border-divider: #28282C;
+  --sf-status-live-bg: rgba(22, 163, 74, 0.15);
+  --sf-status-live-text: #4ade80;
+  --sf-status-live-border: rgba(22, 163, 74, 0.25);
+  --sf-status-draft-bg: rgba(217, 119, 6, 0.12);
+  --sf-status-draft-text: #fbbf24;
+  --sf-status-draft-border: rgba(217, 119, 6, 0.2);
+  --sf-status-closed-bg: rgba(239, 68, 68, 0.12);
+  --sf-status-closed-text: #f87171;
+  --sf-status-closed-border: rgba(239, 68, 68, 0.2);
+  --sf-nav-active-bg: rgba(234, 102, 118, 0.1);
+  --sf-nav-hover-bg: #252528;
+  --sf-focus-ring: #EA6676;
+  --sf-hover-border: rgba(244, 181, 189, 0.3);
+  --sf-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.2), 0 16px 40px -20px rgba(0, 0, 0, 0.4);
+  --sf-shadow-card-hover: 0 24px 56px -24px rgba(0, 0, 0, 0.6);
+  --sf-shadow-dropdown: 0 8px 20px -8px rgba(0, 0, 0, 0.5);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   Shell · Cool neutral canvas + gray borders (Monday/Airtable)
+   ══════════════════════════════════════════════════════════════════════ */
+
+.sidebar {
+  background: linear-gradient(180deg, var(--sf-bg-surface) 0%, var(--sf-bg-muted) 100%);
+  border-right: 1px solid var(--sf-border-card);
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
-.nav-active
-{
-  background: #FFE9E2;
+
+/* ══════════════════════════════════════════════════════════════════════
+   Navigation · Active / Hover States (Airtable/Clay/Monday)
+   ══════════════════════════════════════════════════════════════════════ */
+
+.nav-active {
+  background: var(--sf-nav-active-bg);
 }
 
-.nav-item:hover
-{
-  background: #F0F1F4;
+.nav-item:hover {
+  background: var(--sf-nav-hover-bg);
 }
 
-/* ── Brand · coral identity ──────────────────── */
-.grad-brand
-{
-  background: linear-gradient(135deg, #ff8a4d, #ff4f3d);
+/* Tab navigation · CSS-driven states */
+.tab-link {
+  color: var(--sf-text-secondary);
 }
 
-.grad-kicker
-{
-  background: linear-gradient(90deg, #ff8a4d, #d97706);
+.tab-link:hover {
+  background: var(--sf-nav-hover-bg);
 }
 
-/* ── Primary action · deep coral gradient, white text ─── */
-.btn-primary
-{
-  background: linear-gradient(180deg, #e14a30, #d63c26);
-  color: #ffffff;
-  box-shadow: 0 2px 6px -2px rgba(214, 60, 38, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.14);
-  transition: box-shadow 0.18s ease, transform 0.18s ease, background 0.18s ease;
+.tab-link.nav-active:hover {
+  background: var(--sf-nav-active-bg);
 }
 
-.btn-primary:hover
-{
-  background: linear-gradient(180deg, #f0642f, #e04026);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px -6px rgba(214, 60, 38, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
-}
-
-.btn-primary:active
-{
-  background: linear-gradient(180deg, #d63c26, #c43420);
-  box-shadow: 0 1px 3px -1px rgba(214, 60, 38, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
-}
-
-/* ── Ghost / secondary actions ───────────── */
-.btn-ghost
-{
-  background: #ffffff;
-  color: #565A62;
-  transition: all 0.18s ease;
-}
-
-.btn-ghost:hover
-{
-  background: #F0F1F4;
-  border-color: #DEE1E7;
-  transform: translateY(-1px);
-  box-shadow: 0 8px 18px -8px rgba(23, 25, 35, 0.18);
-}
-
-.btn-ghost:active
-{
-  transform: translateY(0);
-}
-
-/* ── Card lift · soft elevation on hover ──── */
-.hover-shadow
-{
-  transition: box-shadow 0.22s ease;
-}
-
-.hover-shadow:hover
-{
-  box-shadow: inset 0 1px 0 0 #ffffff, 0 24px 56px -24px rgba(23, 25, 35, 0.34) !important;
-}
-
-/* ── Interactive defaults ─────────────────── */
-button
-{
-  cursor: pointer;
-}
-
-:focus-visible
-{
-  outline: 2px solid #ff5c38;
-  outline-offset: 2px;
-}
-
-/* ── KPI tiles · flat saturated fills (Clay) ─── */
-.tile-view
-{
-  background: #0891b2;
-  box-shadow: 0 4px 10px -4px rgba(8, 145, 178, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
-}
-
-.tile-resp
-{
-  background: #d97706;
-  box-shadow: 0 4px 10px -4px rgba(217, 119, 6, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
-}
-
-.tile-conv
-{
-  background: #6366f1;
-  box-shadow: 0 4px 10px -4px rgba(99, 102, 241, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
-}
-
-.tile-live
-{
-  background: #16a34a;
-  box-shadow: 0 4px 10px -4px rgba(22, 163, 74, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
-}
-
-/* ── Status pills · semantic only ───────────── */
-.pill-live
-{
-  background: #e3f6e7;
-  color: #0e7a46;
-  border: 1px solid #bfe8cd;
-}
-
-.pill-draft
-{
-  background: #fff3d6;
-  color: #9a6a00;
-  border: 1px solid #f5dfa8;
-}
-
-.pill-closed
-{
-  background: #fce7e2;
-  color: #c2351f;
-  border: 1px solid #f3c7c0;
-}
-
-/* ── Tab navigation · CSS-driven states ──── */
-.tab-link
-{
-  color: #383B41;
-}
-
-.tab-link:hover
-{
-  background: #F0F1F4;
-}
-
-.tab-link.nav-active:hover
-{
-  background: #FFE9E2;
-}
-
-.tab-link .nav-label
-{
+.tab-link .nav-label {
   font-weight: 500;
-  color: #565A62;
+  color: var(--sf-text-body);
 }
 
-.tab-link.nav-active .nav-label
-{
+.tab-link.nav-active .nav-label {
   font-weight: 600;
-  color: #1D1F24;
+  color: var(--sf-text-primary);
 }
 
-.tab-link .nav-indicator
-{
+.tab-link .nav-indicator {
   opacity: 0;
 }
 
-.tab-link.nav-active .nav-indicator
-{
+.tab-link.nav-active .nav-indicator {
   opacity: 1;
 }
 
-/* ── Nav icons · monochrome chrome, color only on active (Airtable/Clay/Monday) ── */
+/* Nav icons · monochrome chrome, color only on active (Airtable/Clay/Monday) */
 .tab-link i,
-.nav-item i
-{
-  color: #383B41;
-  transition: color 0.15s ease;
+.nav-item i {
+  color: var(--sf-text-secondary);
+  transition: color var(--sf-transition-fast);
 }
 
 .tab-link:hover i,
-.nav-item:hover i
-{
-  color: #1D1F24;
+.nav-item:hover i {
+  color: var(--sf-text-primary);
 }
 
-.tab-link.nav-active i
-{
-  color: #ff5c38;
+.tab-link.nav-active i {
+  color: var(--sf-coral-500);
 }
 
-/* ── Sidebar nav items · softer weight ─────────── */
-.nav-item
-{
+/* Sidebar nav items · softer weight */
+.nav-item {
   font-weight: 500;
-  color: #565A62;
+  color: var(--sf-text-body);
 }
 
-.nav-item:hover
-{
+.nav-item:hover {
   font-weight: 600;
 }
 
-/* ── View toggle (grid / list) ───────────── */
-.view-toggle button
-{
-  color: #565A62;
+
+/* ══════════════════════════════════════════════════════════════════════
+   Brand · Coral Identity
+   ══════════════════════════════════════════════════════════════════════ */
+
+.grad-brand {
+  background: linear-gradient(135deg, var(--sf-coral-400), var(--sf-coral-900));
 }
 
-.view-toggle button:hover
-{
-  background: #F0F1F4;
+.grad-kicker {
+  background: linear-gradient(90deg, var(--sf-coral-400), var(--sf-amber));
 }
 
-.view-toggle button.view-active
-{
-  background: #FFE9E2;
-  color: #1D1F24;
+
+/* ══════════════════════════════════════════════════════════════════════
+   Buttons · Deep Coral Gradient (Formly) + Ghost/Secondary
+   ══════════════════════════════════════════════════════════════════════ */
+
+.btn-primary {
+  background: linear-gradient(180deg, var(--sf-coral-600), var(--sf-coral-700));
+  color: #ffffff;
+  box-shadow: var(--sf-shadow-button-primary);
+  transition: box-shadow var(--sf-transition-base), transform var(--sf-transition-base), background var(--sf-transition-base);
 }
 
-/* ── Chart bars · views metric teal ─────── */
-.chart-bar
-{
-  background: linear-gradient(180deg, #5ec5d4 0%, #0891b2 100%);
+.btn-primary:hover {
+  background: linear-gradient(180deg, #ec5566, #d9485c);
+  transform: translateY(-1px);
+  box-shadow: var(--sf-shadow-button-primary-hover);
+}
+
+.btn-primary:active {
+  background: linear-gradient(180deg, var(--sf-coral-700), var(--sf-coral-800));
+  box-shadow: 0 1px 3px -1px rgba(184, 61, 82, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Ghost / secondary actions */
+.btn-ghost {
+  background: var(--sf-bg-surface);
+  color: var(--sf-text-body);
+  transition: all var(--sf-transition-base);
+}
+
+.btn-ghost:hover {
+  background: var(--sf-nav-hover-bg);
+  border-color: var(--sf-border-button);
+  transform: translateY(-1px);
+  box-shadow: var(--sf-shadow-button-ghost-hover);
+}
+
+.btn-ghost:active {
+  transform: translateY(0);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   Cards · Clay-style Elevation + Hover Lift
+   ══════════════════════════════════════════════════════════════════════ */
+
+.hover-shadow {
+  transition: box-shadow var(--sf-transition-slow);
+}
+
+.hover-shadow:hover {
+  box-shadow: var(--sf-shadow-card-hover) !important;
+}
+
+/* Form card hover state (border color shift) */
+.form-card:hover {
+  border-color: var(--sf-hover-border);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   KPI Tiles · Flat Saturated Fills (Clay)
+   ══════════════════════════════════════════════════════════════════════ */
+
+.tile-view {
+  background: var(--sf-teal);
+  box-shadow: 0 4px 10px -4px rgba(8, 145, 178, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
+}
+
+.tile-resp {
+  background: var(--sf-amber);
+  box-shadow: 0 4px 10px -4px rgba(217, 119, 6, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
+}
+
+.tile-conv {
+  background: var(--sf-indigo);
+  box-shadow: 0 4px 10px -4px rgba(99, 102, 241, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
+}
+
+.tile-live {
+  background: var(--sf-green);
+  box-shadow: 0 4px 10px -4px rgba(22, 163, 74, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   Status Pills · Semantic Only (Airtable)
+   ══════════════════════════════════════════════════════════════════════ */
+
+.pill-live {
+  background: var(--sf-status-live-bg);
+  color: var(--sf-status-live-text);
+  border: 1px solid var(--sf-status-live-border);
+}
+
+.pill-draft {
+  background: var(--sf-status-draft-bg);
+  color: var(--sf-status-draft-text);
+  border: 1px solid var(--sf-status-draft-border);
+}
+
+.pill-closed {
+  background: var(--sf-status-closed-bg);
+  color: var(--sf-status-closed-text);
+  border: 1px solid var(--sf-status-closed-border);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   View Toggle · Grid / List (Clay)
+   ══════════════════════════════════════════════════════════════════════ */
+
+.view-toggle button {
+  color: var(--sf-text-body);
+}
+
+.view-toggle button:hover {
+  background: var(--sf-nav-hover-bg);
+}
+
+.view-toggle button.view-active {
+  background: var(--sf-nav-active-bg);
+  color: var(--sf-text-primary);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   Chart Bars · Teal Views Metric with Coral Peak
+   ══════════════════════════════════════════════════════════════════════ */
+
+.chart-bar {
+  background: linear-gradient(180deg, #5ec5d4 0%, var(--sf-teal) 100%);
   box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.28);
-  transition: background 0.15s ease, transform 0.18s ease, box-shadow 0.18s ease;
+  transition: background var(--sf-transition-fast), transform var(--sf-transition-base), box-shadow var(--sf-transition-base);
 }
 
-.chart-bar:hover
-{
+.chart-bar:hover {
   background: linear-gradient(180deg, #4db8c8 0%, #087a8a 100%);
   box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
   transform: scaleY(1.04);
   transform-origin: bottom;
 }
 
-.chart-bar.peak
-{
-  background: linear-gradient(180deg, #ff8a4d 0%, #ff5c38 100%);
+.chart-bar.peak {
+  background: linear-gradient(180deg, var(--sf-coral-400) 0%, var(--sf-coral-500) 100%);
   box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.28);
 }
 
-.chart-bar.peak:hover
-{
+.chart-bar.peak:hover {
   background: linear-gradient(180deg, #ff7a3d 0%, #e04e2c 100%);
   box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
 }
 
-::-webkit-scrollbar
-{
+
+/* ══════════════════════════════════════════════════════════════════════
+   Settings · Formly-grade Section Primitives
+   Shared by user settings, workspace settings, and settings dropdowns.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* Settings section card (Clay elevation, #E6E8EE border) */
+.sf-card {
+  background: var(--sf-bg-surface);
+  border: 1px solid var(--sf-border-card);
+  border-radius: var(--sf-radius-lg);
+  box-shadow: var(--sf-shadow-card);
+}
+
+.sf-card-pad {
+  padding: var(--sf-space-lg);
+}
+
+/* Gradient kicker bar for section headers */
+.sf-kicker {
+  display: block;
+  width: 2rem;
+  height: 4px;
+  border-radius: var(--sf-radius-full);
+  background: linear-gradient(90deg, var(--sf-coral-400), var(--sf-amber));
+  margin-bottom: var(--sf-space-md);
+}
+
+/* Icon chip — flat saturated fill (Clay) */
+.sf-icon-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--sf-radius-sm);
+  flex-shrink: 0;
+}
+
+.sf-icon-chip--teal {
+  background: var(--sf-teal);
+  color: #ffffff;
+  box-shadow: 0 4px 10px -4px rgba(8, 145, 178, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
+}
+
+.sf-icon-chip--amber {
+  background: var(--sf-amber);
+  color: #ffffff;
+  box-shadow: 0 4px 10px -4px rgba(217, 119, 6, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
+}
+
+.sf-icon-chip--indigo {
+  background: var(--sf-indigo);
+  color: #ffffff;
+  box-shadow: 0 4px 10px -4px rgba(99, 102, 241, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
+}
+
+.sf-icon-chip--green {
+  background: var(--sf-green);
+  color: #ffffff;
+  box-shadow: 0 4px 10px -4px rgba(22, 163, 74, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
+}
+
+.sf-icon-chip--coral {
+  background: var(--sf-coral-500);
+  color: #ffffff;
+  box-shadow: 0 4px 10px -4px rgba(234, 102, 118, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
+}
+
+/* Icon chip — soft tinted (settings lists) */
+.sf-icon-chip-soft {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--sf-radius-sm);
+  flex-shrink: 0;
+  font-size: 0.8125rem;
+}
+
+.sf-icon-chip-soft--teal {
+  background: var(--sf-teal-light);
+  color: var(--sf-teal);
+}
+
+.sf-icon-chip-soft--amber {
+  background: var(--sf-amber-light);
+  color: var(--sf-amber);
+}
+
+.sf-icon-chip-soft--indigo {
+  background: var(--sf-indigo-light);
+  color: var(--sf-indigo);
+}
+
+.sf-icon-chip-soft--green {
+  background: var(--sf-green-light);
+  color: var(--sf-green);
+}
+
+.sf-icon-chip-soft--coral {
+  background: var(--sf-nav-active-bg);
+  color: var(--sf-coral-500);
+}
+
+.sf-icon-chip-soft--muted {
+  background: var(--sf-bg-subtle);
+  color: var(--sf-text-body);
+}
+
+/* Danger zone card — soft coral-red surface (Airtable pill red) */
+.sf-danger-zone {
+  background: var(--sf-status-closed-bg);
+  border: 1px solid var(--sf-status-closed-border);
+  border-radius: var(--sf-radius-lg);
+}
+
+.sf-danger-zone .sf-danger-title {
+  color: var(--sf-status-closed-text);
+}
+
+/* Settings page header (title + description) */
+.sf-page-head {
+  margin-bottom: var(--sf-space-lg);
+}
+
+.sf-page-head h2 {
+  font-size: var(--sf-font-size-lg);
+  font-weight: 700;
+  color: var(--sf-text-primary);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.sf-page-head p {
+  margin-top: 0.25rem;
+  font-size: var(--sf-font-size-sm);
+  color: var(--sf-text-description);
+  font-weight: 500;
+}
+
+/* Plan badge — coral-tinted pill */
+.sf-plan-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: var(--sf-radius-full);
+  background: var(--sf-nav-active-bg);
+  color: var(--sf-coral-600);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   Interactive Defaults
+   ══════════════════════════════════════════════════════════════════════ */
+
+button {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--sf-focus-ring);
+  outline-offset: 2px;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   Scrollbar · Hidden (Dashboard)
+   ══════════════════════════════════════════════════════════════════════ */
+
+::-webkit-scrollbar {
   width: 0;
 }

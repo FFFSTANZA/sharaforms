@@ -7,7 +7,7 @@
     <!-- Classic cover/logo rendering -->
     <div v-if="showBrandingMedia" class="mb-2">
       <div v-if="form.cover_picture">
-        <div id="cover-picture" class="h-56 w-full overflow-hidden pointer-events-none">
+        <div id="cover-picture" class="h-40 sm:h-56 w-full overflow-hidden pointer-events-none">
           <BlockMediaLayout :image="coverMedia" img-class="w-full h-full object-cover" alt="Form cover image" />
         </div>
       </div>
@@ -15,7 +15,7 @@
         v-if="form.logo_picture"
         class="w-full p-5 relative mx-auto"
         :class="[
-          !form.cover_picture ? 'pt-20' : '',
+          !form.cover_picture ? 'pt-12 sm:pt-20' : '',
           form.width === 'centered' ? (isPreviewMode ? 'max-w-lg' : '@3xl:w-3/5 @5xl:w-1/2 @3xl:max-w-2xl') : '',
           (form.width === 'full' && !isIframe) ? 'max-w-7xl' : ''
         ]"
@@ -25,7 +25,7 @@
           :src="form.logo_picture"
           :alt="form.seo_meta?.site_name ? `${form.seo_meta.site_name} logo` : 'Form logo'"
           :class="{ 'top-5': !form.cover_picture, '-top-10': form.cover_picture }"
-          class="w-20 h-20 object-contain absolute transition-all"
+          class="w-14 h-14 sm:w-20 sm:h-20 object-contain absolute transition-all"
         >
       </div>
     </div>
@@ -60,9 +60,9 @@
             :model-value="currentFields"
             group="form-elements"
             item-key="id"
-            class="grid grid-cols-12 relative transition-all w-full"
+            class="grid grid-cols-12 gap-y-2 gap-x-0 relative transition-all w-full"
             :class="[
-              draggingNewBlock ? 'rounded-md bg-blue-50 dark:bg-neutral-800' : '',
+              draggingNewBlock ? 'rounded-md bg-[var(--sf-nav-active-bg)]' : '',
             ]"
             ghost-class="ghost-item"
             filter=".not-draggable"
@@ -93,14 +93,14 @@
       <CaptchaWrapper v-if="form.use_captcha && !isSubmitted" :form-manager="formManager" />
 
       <!--  Submit, Next and previous buttons  -->
-      <div v-if="shouldDisplayForm" class="flex flex-wrap justify-center w-full">
+      <div v-if="shouldDisplayForm" class="flex flex-wrap justify-center w-full mt-2">
         <!-- Previous -->
         <editable-form-button
           v-if="isAdminPreview && formPageIndex>0 && previousFieldsPageBreak"
           :form="form"
           editable
           native-type="button"
-          class="mt-2 px-8 mx-1"
+          class="mt-2 px-5 sm:px-8 mx-1.5"
           :model-value="previousFieldsPageBreak?.previous_btn_text"
           :placeholder="$t('forms.buttons.previous')"
           @update:model-value="previousFieldsPageBreak.previous_btn_text = $event"
@@ -109,7 +109,7 @@
           v-else-if="formPageIndex>0 && previousFieldsPageBreak"
           native-type="button"
           :form="form"
-          class="mt-2 px-8 mx-1"
+          class="mt-2 px-5 sm:px-8 mx-1.5"
           @click.stop="handlePreviousClick"
         >
           {{ previousFieldsPageBreak.previous_btn_text || $t('forms.buttons.previous') }}
@@ -129,7 +129,7 @@
             <open-form-button
             v-else
               :form="form"
-              class="mt-2 px-8 mx-1"
+              class="mt-2 px-5 sm:px-8 mx-1.5"
               :loading="isProcessing"
               @click.prevent="emit('submit')"
             >
@@ -143,7 +143,7 @@
           :form="form"
           editable
           native-type="button"
-          class="mt-2 px-8 mx-1"
+          class="mt-2 px-5 sm:px-8 mx-1.5"
           :model-value="currentFieldsPageBreak?.next_btn_text"
           :placeholder="$t('forms.buttons.next')"
           @update:model-value="currentFieldsPageBreak.next_btn_text = $event"
@@ -152,7 +152,7 @@
           v-else-if="!isLastPage && currentFieldsPageBreak"
           native-type="button"
           :form="form"
-          class="mt-2 px-8 mx-1"
+          class="mt-2 px-5 sm:px-8 mx-1.5"
           :loading="isProcessing"
           @click.stop="handleNextClick"
         >
@@ -162,7 +162,7 @@
           {{ $t('forms.wrong_form_structure') }}
         </div>
         <div v-if="hasPaymentBlock" class="mt-6 flex justify-center w-full">
-          <p class="text-xs text-neutral-400 dark:text-neutral-500 flex text-center max-w-md">
+          <p class="text-xs text-[var(--sf-text-muted)] flex text-center max-w-md">
             {{ $t('forms.payment.payment_disclaimer') }}
           </p>
         </div>
@@ -331,6 +331,7 @@ const showBranding = computed(() => props.formManager?.strategy?.value?.display?
 
 <style lang='scss' scoped>
 .ghost-item {
-  @apply bg-blue-100 dark:bg-blue-900 rounded-md;
+  @apply rounded-md;
+  background: var(--sf-nav-active-bg);
 }
 </style>

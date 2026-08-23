@@ -92,22 +92,8 @@ const scenario = computed(() =>
   }),
 )
 
-const mediaPreloads = computed(() => {
-  const urls = new Set()
-  for (const field of scenario.value.form.properties) {
-    if (field?.image?.url) {
-      urls.add(field.image.url)
-    }
-  }
-  return [...urls].map((href) => ({
-    rel: "preload",
-    href,
-    as: "image",
-    type: href.endsWith(".svg") ? "image/svg+xml" : "image/webp",
-  }))
-})
-
-useHead(() => ({ link: mediaPreloads.value }))
+// Image preloading is handled by useFormImagePreloader inside OpenFormFocused.
+// No duplicate preload links here — avoids "preloaded ... was not used" warnings.
 
 const primaryCtaTo = computed(() => ({
   name: authenticated.value ? "forms-create" : "forms-create-guest",

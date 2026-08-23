@@ -10,9 +10,9 @@
 
     <!-- QR Code Display -->
     <VTransition name="fadeHeight">
-      <div v-if="secret" class="space-y-4 p-4 border border-neutral-200 rounded-lg bg-neutral-50">
+      <div v-if="secret" class="space-y-4 p-4 border border-[#E6E8EE] rounded-lg bg-[#F7F8FA]">
         <div>
-          <p class="text-sm font-medium text-neutral-900 mb-2">
+          <p class="text-[13px] font-semibold text-[#1D1F24] mb-2">
             Scan this QR code with your authenticator app:
           </p>
           <div class="flex justify-center p-4 bg-white rounded-lg max-w-xs mx-auto">
@@ -21,7 +21,7 @@
         </div>
 
         <div>
-          <p class="text-sm font-medium text-neutral-900 mb-2">
+          <p class="text-[13px] font-semibold text-[#1D1F24] mb-2">
             Or enter this code manually:
           </p>
           <CopyContent
@@ -31,7 +31,7 @@
         </div>
 
         <div>
-          <p class="text-sm font-medium text-neutral-900 mb-2">
+          <p class="text-[13px] font-semibold text-[#1D1F24] mb-2">
             Enter the 6-digit code from your authenticator app to confirm:
           </p>
           <div class="flex justify-center mb-4">

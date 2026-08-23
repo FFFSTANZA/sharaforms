@@ -132,41 +132,29 @@ class TelegramIntegration extends AbstractIntegrationHandler
         }
         $url = $this->getWebhookUrl();
         if (!$url) {
-            logger()->error('TelegramIntegration failed: Missing bot token.', [
-                'form_id' => $this->form?->id,
-                'integration_id' => $this->formIntegration?->id,
-            ]);
-            return;
+            throw new \RuntimeException('Telegram integration is not configured: missing bot token.');
         }
 
         $data = $this->getWebhookData();
         if (empty($data['chat_id'])) {
-            logger()->error('TelegramIntegration failed: Missing chat_id.', [
-                'form_id' => $this->form?->id,
-                'integration_id' => $this->formIntegration?->id,
-                'provider_id' => $this->provider?->id
-            ]);
-            return;
+            throw new \RuntimeException('Telegram integration is not configured: no connected Telegram account chat.');
         }
 
-        try {
-            $response = Http::post($url, $data);
+        // Throw on transport or API failure so run() records an error event
+        // instead of silently marking the delivery as successful.
+        $response = Http::timeout(10)->post($url, $data);
 
-            if ($response->failed()) {
-                logger()->warning('TelegramIntegration request failed', [
-                    'form_id' => $this->form->id,
-                    'integration_id' => $this->formIntegration->id,
-                    'status' => $response->status(),
-                    'response' => $response->json() ?? $response->body()
-                ]);
-            }
-        } catch (\Exception $e) {
-            logger()->error('TelegramIntegration failed during API call', [
+        if ($response->failed()) {
+            logger()->warning('TelegramIntegration request failed', [
                 'form_id' => $this->form->id,
                 'integration_id' => $this->formIntegration->id,
-                'message' => $e->getMessage(),
-                'exception' => $e
+                'status' => $response->status(),
+                'response' => $response->json() ?? $response->body()
             ]);
+
+            throw new \RuntimeException(
+                'Telegram message delivery failed with status '.$response->status().'.'
+            );
         }
     }
 }

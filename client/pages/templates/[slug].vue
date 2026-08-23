@@ -108,7 +108,7 @@
               <div
                 :class="[
                   'flex flex-col',
-                  form?.presentation_style === 'focused'
+                  form?.presentation_style === 'focused' || form?.presentation_style === 'spotlight'
                     ? 'h-[650px] sm:h-[830px]'
                     : 'min-h-[520px]'
                 ]"
@@ -161,6 +161,48 @@
               v-html="template.description"
             />
 
+            <!-- START PRACTICES (category guidance from detail-content.json) -->
+            <div
+              v-if="detailTips"
+              class="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-x-12"
+            >
+              <div>
+                <h2 class="text-lg font-bold tracking-tight text-neutral-900 sm:text-xl">
+                  {{ detailTips.practices_title }}
+                </h2>
+                <ul class="mt-5 space-y-3">
+                  <li
+                    v-for="(item, tipKey) in detailTips.best_practices"
+                    :key="'bp-' + tipKey"
+                    class="flex items-start gap-3 text-sm leading-6 font-normal text-neutral-600"
+                  >
+                    <span class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full brand-gradient-warm">
+                      <UIcon name="i-lucide-check" class="h-3 w-3 text-white" />
+                    </span>
+                    {{ item }}
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h2 class="text-lg font-bold tracking-tight text-neutral-900 sm:text-xl">
+                  Common mistakes to avoid
+                </h2>
+                <ul class="mt-5 space-y-3">
+                  <li
+                    v-for="(item, missKey) in detailTips.common_mistakes"
+                    :key="'cm-' + missKey"
+                    class="flex items-start gap-3 text-sm leading-6 font-normal text-neutral-600"
+                  >
+                    <span class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-red-100">
+                      <UIcon name="i-lucide-x" class="h-3 w-3 text-red-600" />
+                    </span>
+                    {{ item }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- END PRACTICES -->
+
             <template v-if="template.questions?.length > 0">
               <hr class="mt-12 border-neutral-200">
               <div>
@@ -168,7 +210,7 @@
                   <h3
                     class="text-xl font-bold tracking-tight text-neutral-900 sm:text-2xl"
                   >
-                    Frequently asked questions
+                    {{ faqHeading }}
                   </h3>
                   <p class="mt-2 text-base font-normal text-neutral-600">
                     Everything you need to know about this template.
@@ -344,6 +386,7 @@ import TrackClick from "~/components/global/TrackClick.vue"
 import { handleDarkMode, useDarkMode } from "~/lib/forms/public-page.js"
 import { resolveSchemaUrl, stripHtml, useSchemaBaseUrl } from '~/composables/useSchemaSeo'
 import { useTemplateMeta } from '~/composables/data/useTemplateMeta'
+import detailContent from '~/data/forms/templates/detail-content.json'
 
 defineRouteRules({
   swr: 3600,
@@ -383,8 +426,20 @@ onMounted(() => {
   }
 })
 
-const relatedTemplates = computed(() => {
-  if (!template.value?.related_templates || !allTemplates.value) {
+// Category-level guidance for this template (derived from its primary type).
+const detailTips = computed(() => detailContent[route.params.slug] || null)
+
+// Personalized, question-shaped FAQ heading (AEO format).
+const faqHeading = computed(() => {
+  const short = (template.value?.name || '')
+    .replace(/\s*templates?$/i, '')
+    .trim()
+  return short
+    ? `Frequently asked questions about the ${short} template`
+    : 'Frequently asked questions'
+})
+
+const relatedTemplates = computed(() => {  if (!template.value?.related_templates || !allTemplates.value) {
     return []
   }
   const relatedSlugs = new Set(template.value.related_templates)
@@ -456,20 +511,48 @@ function buildTemplateKeywords () {
     "free form template",
     "free form builder",
     "unlimited submissions",
-    "built-in calculators",
-    "quote forms",
+    "built-in calculations",
+    "conditional logic",
     "no-code form",
   ]
   return parts.join(", ")
 }
 
+// Google de-dupes templated titles, so every template page must not share the
+// exact same "<Name> - SharaForms" pattern. Pick a keyword-first variant
+// deterministically from the slug so titles are stable across builds and
+// SSR/client hydration.
+const TEMPLATE_TITLE_VARIANTS = [
+  (name) => `${name} — Free & Customizable`,
+  (name) => `Free ${name}, Ready to Use`,
+  (name) => `${name} — Free, No Code Required`,
+  (name) => `${name} with Logic & Calculations`,
+  (name) => `${name} — Free to Build & Share`,
+]
+
+function buildTemplateSeoTitle(name) {
+  if (!name) {
+    return name
+  }
+
+  const slug = String(route.params.slug || '')
+  let hash = 0
+  for (let i = 0; i < slug.length; i += 1) {
+    hash = ((hash * 31 + slug.charCodeAt(i)) >>> 0)
+  }
+
+  return TEMPLATE_TITLE_VARIANTS[hash % TEMPLATE_TITLE_VARIANTS.length](name)
+}
+
 useOpnSeoMeta(
   computed(() => ({
-    title: template.value?.name,
+    title: () => buildTemplateSeoTitle(template.value?.name),
     description: template.value?.short_description,
-    ogImage: template.value?.image_url || "/share-preview.jpg",
     speakable: ["h1", "p"],
     keywords: () => buildTemplateKeywords(),
+    ogImage: template.value
+      ? `/og/template/${encodeURIComponent(route.params.slug)}?title=${encodeURIComponent(template.value.name)}&desc=${encodeURIComponent((template.value.short_description || '').slice(0, 120))}`
+      : '/share-preview.jpg',
   })),
 )
 

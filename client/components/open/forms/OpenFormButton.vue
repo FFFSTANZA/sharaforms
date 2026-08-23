@@ -4,7 +4,7 @@
     :type="nativeType"
     :disabled="loading ? true : null"
     :loading="loading"
-    :class="['btn', buttonClass]"
+    :class="['btn transition-all duration-200 ease-out', buttonClass]"
     :size="buttonSize"
     :icon="icon"
   >
@@ -55,9 +55,9 @@ const getTextClass = (bgColor, lightColor = "text-white", darkColor = "text-neut
 const buttonClass = computed(() => {
   const classes = [
     getTextClass(props.form.color),
+    'active:scale-[0.97]',
   ]
   
- 
   // Add border radius classes
   if (props.form.border_radius) {
     const radiusClasses = {

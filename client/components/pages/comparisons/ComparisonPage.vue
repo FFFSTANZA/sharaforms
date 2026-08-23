@@ -149,12 +149,12 @@
                     <UIcon
                       v-if="isYesCell(row.cells[0])"
                       name="i-lucide-check"
-                      class="h-5 w-5 text-green-500"
+                      class="h-5 w-5 text-[#16a34a]"
                     />
                     <UIcon
                       v-else-if="isNoCell(row.cells[0])"
                       name="i-lucide-x"
-                      class="h-5 w-5 text-red-500"
+                      class="h-5 w-5 text-[#C7C9CE]"
                     />
                     <span v-else>
                       {{ row.cells[0] }}
@@ -176,12 +176,12 @@
                     <UIcon
                       v-if="isYesCell(row.cells[1])"
                       name="i-lucide-check"
-                      class="h-5 w-5 text-green-500"
+                      class="h-5 w-5 text-[#16a34a]"
                     />
                     <UIcon
                       v-else-if="isNoCell(row.cells[1])"
                       name="i-lucide-x"
-                      class="h-5 w-5 text-red-500"
+                      class="h-5 w-5 text-[#C7C9CE]"
                     />
                     <span v-else>
                       {{ row.cells[1] }}
@@ -229,12 +229,12 @@
                     <UIcon
                       v-if="isYesCell(row.cells[0])"
                       name="i-lucide-check"
-                      class="h-6 w-6 text-green-500"
+                      class="h-6 w-6 text-[#16a34a]"
                     />
                     <UIcon
                       v-else-if="isNoCell(row.cells[0])"
                       name="i-lucide-x"
-                      class="h-6 w-6 text-red-500"
+                      class="h-6 w-6 text-[#C7C9CE]"
                     />
                     <span v-else>
                       {{ row.cells[0] }}
@@ -265,12 +265,12 @@
                   <UIcon
                     v-if="isYesCell(row.cells[1])"
                     name="i-lucide-check"
-                    class="h-6 w-6 text-green-500"
+                    class="h-6 w-6 text-[#16a34a]"
                   />
                   <UIcon
                     v-else-if="isNoCell(row.cells[1])"
                     name="i-lucide-x"
-                    class="h-6 w-6 text-red-500"
+                    class="h-6 w-6 text-[#C7C9CE]"
                   />
                   <span v-else>
                     {{ row.cells[1] }}
@@ -375,12 +375,12 @@
                     <UIcon
                       v-if="isYesCell(row.cells[0])"
                       name="i-lucide-check"
-                      class="h-5 w-5 text-green-500"
+                      class="h-5 w-5 text-[#16a34a]"
                     />
                     <UIcon
                       v-else-if="isNoCell(row.cells[0])"
                       name="i-lucide-x"
-                      class="h-5 w-5 text-red-500"
+                      class="h-5 w-5 text-[#C7C9CE]"
                     />
                     <span v-else>
                       {{ row.cells[0] }}
@@ -402,12 +402,12 @@
                     <UIcon
                       v-if="isYesCell(row.cells[1])"
                       name="i-lucide-check"
-                      class="h-5 w-5 text-green-500"
+                      class="h-5 w-5 text-[#16a34a]"
                     />
                     <UIcon
                       v-else-if="isNoCell(row.cells[1])"
                       name="i-lucide-x"
-                      class="h-5 w-5 text-red-500"
+                      class="h-5 w-5 text-[#C7C9CE]"
                     />
                     <span v-else>
                       {{ row.cells[1] }}
@@ -471,12 +471,12 @@
                       <UIcon
                         v-if="isYesCell(row.cells[0])"
                         name="i-lucide-check"
-                        class="h-6 w-6 text-green-500"
+                        class="h-6 w-6 text-[#16a34a]"
                       />
                       <UIcon
                         v-else-if="isNoCell(row.cells[0])"
                         name="i-lucide-x"
-                        class="h-6 w-6 text-red-500"
+                        class="h-6 w-6 text-[#C7C9CE]"
                       />
                       <span
                         v-else
@@ -492,12 +492,12 @@
                       <UIcon
                         v-if="isYesCell(row.cells[1])"
                         name="i-lucide-check"
-                        class="h-6 w-6 text-green-500"
+                        class="h-6 w-6 text-[#16a34a]"
                       />
                       <UIcon
                         v-else-if="isNoCell(row.cells[1])"
                         name="i-lucide-x"
-                        class="h-6 w-6 text-red-500"
+                        class="h-6 w-6 text-[#C7C9CE]"
                       />
                       <span
                         v-else
@@ -767,7 +767,7 @@
         <div class="mt-12 sm:mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
           <NuxtLink
             to="/comparisons"
-            class="group flex items-center justify-between rounded-2xl border border-gray-200 bg-gray-50 px-6 py-5 hover:border-blue-200 hover:bg-blue-50/40 transition"
+            class="group flex items-center justify-between rounded-2xl border border-[#E6E8EE] bg-[#F7F8FA] px-6 py-5 hover:border-[#FFB79A] hover:bg-[#F0F1F4] transition"
           >
             <div>
               <div class="text-base leading-6 font-semibold text-gray-950">
@@ -777,14 +777,14 @@
                 SharaForms vs every form builder
               </div>
             </div>
-            <UIcon name="i-lucide-arrow-right" class="h-5 w-5 text-gray-400 group-hover:text-blue-600" />
+            <UIcon name="i-lucide-arrow-right" class="h-5 w-5 text-[#A7ABB2] group-hover:text-[#ff5c38]" />
           </NuxtLink>
 
           <NuxtLink
             v-for="comparison in otherComparisons"
             :key="comparison.slug"
             :to="`/sharaforms-vs-${comparison.slug}`"
-            class="group flex items-center justify-between rounded-2xl border border-gray-200 bg-gray-50 px-6 py-5 hover:border-blue-200 hover:bg-blue-50/40 transition"
+            class="group flex items-center justify-between rounded-2xl border border-[#E6E8EE] bg-[#F7F8FA] px-6 py-5 hover:border-[#FFB79A] hover:bg-[#F0F1F4] transition"
           >
             <div>
               <div class="text-base leading-6 font-semibold text-gray-950">
@@ -794,7 +794,7 @@
                 Free SharaForms alternative
               </div>
             </div>
-            <UIcon name="i-lucide-arrow-right" class="h-5 w-5 text-gray-400 group-hover:text-blue-600" />
+            <UIcon name="i-lucide-arrow-right" class="h-5 w-5 text-[#A7ABB2] group-hover:text-[#ff5c38]" />
           </NuxtLink>
         </div>
       </div>
@@ -951,7 +951,7 @@ const otherComparisons = computed(() =>
 const bottomLine = computed(
   () =>
     props.summaryLine ??
-    `SharaForms is a free ${props.competitorName} alternative that gives you unlimited forms, unlimited submissions, and built-in calculators, without ${props.competitorName}'s free-tier limits, upgrade pressure, or cost as your usage grows.`,
+    `SharaForms is a free ${props.competitorName} alternative that gives you unlimited forms, unlimited submissions, three presentation modes, and built-in calculations, without ${props.competitorName}'s free-tier limits, upgrade pressure, or cost as your usage grows.`,
 )
 
 const defaultFaqs = computed(() => [
@@ -962,12 +962,12 @@ const defaultFaqs = computed(() => [
   },
   {
     question: `Is SharaForms a good ${props.competitorName} alternative?`,
-    answer: `For most teams, yes. SharaForms covers the polished form-building experience ${props.competitorName} is known for, plus built-in calculators, conditional logic, dynamic PDF documents, custom CSS, and a more generous free tier, without upgrade pressure as your usage grows.`,
+    answer: `For most teams, yes. SharaForms covers the polished form-building experience ${props.competitorName} is known for, plus three presentation modes (Classic, Focused, and Spotlight), built-in calculations, conditional logic, dynamic PDF documents, custom CSS, and a more generous free tier, without upgrade pressure as your usage grows.`,
   },
   {
     question: `How much does SharaForms cost compared to ${props.competitorName}?`,
     answer:
-      'SharaForms starts at $0 with unlimited forms and submissions. Paid plans start at $12 per month. The comparison table on this page shows how free-tier limits and pricing stack up.',
+      'SharaForms starts at $0 with unlimited forms and submissions. Paid plans start at $15 per month. The comparison table on this page shows how free-tier limits and pricing stack up.',
   },
   {
     question: `Can I import my forms from ${props.competitorName} to SharaForms?`,
@@ -976,7 +976,7 @@ const defaultFaqs = computed(() => [
   {
     question: 'Does SharaForms support calculations and formulas?',
     answer:
-      'Yes. Built-in calculators and formulas are a core SharaForms feature, so you can build order forms, quote calculators, and pricing estimators that compute totals in real time.',
+      'Yes. Built-in calculations with a native formula engine are a core SharaForms feature, so you can build order forms, quote calculators, and pricing estimators that compute totals in real time.',
   },
 ])
 
@@ -1068,7 +1068,7 @@ const comparisonSchema = computed(() => {
         '@type': 'Article',
         '@id': `${canonicalUrl}#article`,
         headline: `Why teams choose SharaForms over ${props.competitorName}`,
-        description: `Key reasons teams evaluating ${props.competitorName} choose SharaForms, including unlimited forms and submissions, built-in calculators, and workflow flexibility.`,
+        description: `Key reasons teams evaluating ${props.competitorName} choose SharaForms, including unlimited forms and submissions, three presentation modes, built-in calculations, and workflow flexibility.`,
         name: `SharaForms vs ${props.competitorName}`,
         author: {
           '@type': 'Organization',
@@ -1089,7 +1089,7 @@ const comparisonSchema = computed(() => {
       {
         '@type': 'ItemList',
         name: `Why teams choose SharaForms over ${props.competitorName}`,
-        description: `Key reasons teams evaluating ${props.competitorName} choose SharaForms, including unlimited forms and submissions, built-in calculators, and workflow flexibility.`,
+        description: `Key reasons teams evaluating ${props.competitorName} choose SharaForms, including unlimited forms and submissions, three presentation modes, built-in calculations, and workflow flexibility.`,
         numberOfItems: props.switchReasons.length,
         itemListElement: props.switchReasons.map((reason, index) => ({
           '@type': 'ListItem',

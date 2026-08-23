@@ -114,6 +114,33 @@ Route::group(['middleware' => 'auth.multi'], function () {
     Route::prefix('open')->name('open.')->group(function () {
         Route::get('/providers', [OAuthProviderController::class, 'index'])->name('providers');
 
+        // Notion databases list (used by frontend to populate database selector)
+        Route::get('/notion/databases', [\App\Http\Controllers\Integrations\NotionController::class, 'databases'])->name('notion.databases');
+        Route::get('/notion/databases/{databaseId}/properties', [\App\Http\Controllers\Integrations\NotionController::class, 'databaseProperties'])->name('notion.database-properties');
+
+        // Integration discovery endpoints (Trello, Supabase)
+        $disc = \App\Http\Controllers\Integrations\IntegrationDiscoveryController::class;
+        Route::get('/trello/boards', [$disc, 'trelloBoards'])->name('trello.boards');
+        Route::get('/trello/boards/{boardId}/lists', [$disc, 'trelloLists'])->name('trello.lists');
+        Route::get('/trello/boards/{boardId}/labels', [$disc, 'trelloLabels'])->name('trello.labels');
+        Route::get('/supabase/tables', [$disc, 'supabaseTables'])->name('supabase.tables');
+        Route::get('/supabase/tables/{tableName}/columns', [$disc, 'supabaseColumns'])->name('supabase.columns');
+
+        // Integration discovery endpoints (Baserow, Linear, Pipedrive, Plane)
+        Route::get('/baserow/workspaces', [$disc, 'baserowWorkspaces'])->name('baserow.workspaces');
+        Route::get('/baserow/workspaces/{workspaceId}/databases', [$disc, 'baserowDatabases'])->name('baserow.databases');
+        Route::get('/baserow/databases/{databaseId}/tables', [$disc, 'baserowTables'])->name('baserow.tables');
+        Route::get('/baserow/tables/{tableId}/fields', [$disc, 'baserowFields'])->name('baserow.fields');
+        Route::get('/linear/teams', [$disc, 'linearTeams'])->name('linear.teams');
+        Route::get('/linear/projects', [$disc, 'linearProjects'])->name('linear.projects');
+        Route::get('/linear/states', [$disc, 'linearStates'])->name('linear.states');
+        Route::get('/linear/labels', [$disc, 'linearLabels'])->name('linear.labels');
+        Route::get('/pipedrive/pipelines', [$disc, 'pipedrivePipelines'])->name('pipedrive.pipelines');
+        Route::get('/pipedrive/pipelines/{pipelineId}/stages', [$disc, 'pipedriveStages'])->name('pipedrive.stages');
+        Route::get('/plane/workspaces', [$disc, 'planeWorkspaces'])->name('plane.workspaces');
+        Route::get('/plane/workspaces/{workspaceSlug}/projects', [$disc, 'planeProjects'])->name('plane.projects');
+        Route::get('/plane/workspaces/{workspaceSlug}/projects/{projectId}/states', [$disc, 'planeStates'])->name('plane.states');
+
         Route::get('/forms', [FormController::class, 'indexAll'])->name('forms.index-all');
         Route::get('/forms/{form}', [FormController::class, 'show'])->name('forms.show');
 
@@ -184,6 +211,7 @@ Route::group(['middleware' => 'auth.multi'], function () {
                 Route::middleware('feature:form_analytics')->group(function () {
                     Route::get('form-stats/{form}', [FormStatsController::class, 'getFormStats'])->name('form.stats');
                 });
+                Route::get('dashboard', [\App\Http\Controllers\Forms\DashboardController::class, 'getWorkspaceDashboard'])->name('dashboard');
                 Route::get('form-stats-details/{form}', [FormStatsController::class, 'getFormStatsDetails'])->name('form.stats-details');
 
                 // Summary endpoints - Pro plan required, with rate limiting
@@ -417,7 +445,7 @@ Route::prefix('forms')->name('forms.')->group(function () {
         Route::get('{form}/view', [PublicFormController::class, 'view'])->name('view');
         Route::post('{form}/answer', [PublicFormController::class, 'answer'])->name('answer')->middleware([HandlePrecognitiveRequests::class, 'throttle:form-submissions']);
         Route::get('{form}/stripe-connect/get-account', [FormPaymentController::class, 'getAccount'])->name('stripe-connect.get-account')->middleware(HandlePrecognitiveRequests::class);
-        Route::post('{form}/stripe-connect/payment-intent', [FormPaymentController::class, 'createIntent'])->name('stripe-connect.create-intent')->middleware(HandlePrecognitiveRequests::class);
+        Route::post('{form}/stripe-connect/payment-intent', [FormPaymentController::class, 'createIntent'])->name('stripe-connect.create-intent')->middleware(HandlePrecognitiveRequests::class)->middleware('throttle:payment-intent');
 
         // Form content endpoints (user lists, relation lists etc.)
         Route::get(
@@ -484,6 +512,13 @@ Route::post(
 Route::get('local/temp/{path}', function (Request $request, string $path) {
     if (!$request->hasValidSignature()) {
         abort(401);
+    }
+
+    // C3 FIX: Restrict to tmp/ directory only — prevent reading arbitrary storage paths.
+    $realPath = storage_path('app/' . $path);
+    $tmpDir = realpath(storage_path('app/tmp'));
+    if ($tmpDir === false || !str_starts_with($realPath, $tmpDir . DIRECTORY_SEPARATOR)) {
+        abort(404);
     }
 
     return app(SafeFileResponseService::class)->serve($path, basename($path));

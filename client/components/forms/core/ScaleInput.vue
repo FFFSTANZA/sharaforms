@@ -5,7 +5,8 @@
     </template>
 
     <div 
-      class="rectangle-outer grid grid-cols-5 gap-2"
+      class="rectangle-outer grid gap-2.5"
+      :style="{ gridTemplateColumns: `repeat(${scaleList.length}, minmax(0, 1fr))` }"
       role="radiogroup"
       :aria-label="`Scale from ${minScale} to ${maxScale}`"
     >

@@ -1,40 +1,44 @@
 <template>
-  <div class="p-4">
-    <div class="flex justify-between items-start gap-4 mb-4">
-      <div class="min-w-0">
-        <h3 class="text-lg font-semibold text-gray-900">
-          Variables
-        </h3>
-        <p class="text-sm text-gray-500 mt-1">
-          Create calculated values from your form fields. Use them in emails, thank you messages, and integrations.
-        </p>
+  <div class="px-1 py-1">
+    <!-- Header Card -->
+    <div class="rounded-2xl border border-[var(--sf-border-card)] bg-[var(--sf-bg-surface)] p-5 shadow-[var(--sf-shadow-card)]">
+      <div class="flex items-center justify-between mb-5">
+        <div class="flex items-center gap-2.5">
+          <div class="w-7 h-7 rounded-lg bg-[var(--sf-teal-light)] flex items-center justify-center flex-shrink-0">
+            <i class="fa-solid fa-square-root-variable text-[12px] text-[var(--sf-teal)]"></i>
+          </div>
+          <h3 class="text-[13px] font-semibold text-[var(--sf-text-primary)]">Variables</h3>
+        </div>
+        <UButton
+          icon="i-lucide-plus"
+          class="btn-primary flex-shrink-0 whitespace-nowrap"
+          size="xs"
+          @click="openCreateModal"
+        >
+          Add Variable
+        </UButton>
       </div>
-      <UButton
-        icon="i-lucide-plus"
-        color="primary"
-        class="flex-shrink-0 whitespace-nowrap"
-        @click="openCreateModal"
-      >
-        Add Variable
-      </UButton>
+      <p class="text-sm text-[var(--sf-text-caption)]">
+        Create calculated values from your form fields. Use them in emails, thank you messages, and integrations.
+      </p>
     </div>
 
     <!-- Empty State -->
     <div
       v-if="!computedVariables || computedVariables.length === 0"
-      class="text-center py-12 border-2 border-dashed border-gray-200 rounded-lg"
+      class="text-center py-12 border-2 border-dashed border-[var(--sf-border-button)] rounded-lg"
     >
       <Icon
         name="i-lucide-variable"
-        class="h-12 w-12 mx-auto text-gray-400"
+        class="h-12 w-12 mx-auto text-[var(--sf-text-muted)]"
       />
-      <h3 class="mt-4 text-sm font-semibold text-gray-900">
+      <h3 class="mt-4 text-sm font-semibold text-[var(--sf-text-primary)]">
         No variables yet
       </h3>
-      <p class="mt-2 text-sm text-gray-500 max-w-sm mx-auto">
+      <p class="mt-2 text-sm text-[var(--sf-text-caption)] max-w-sm mx-auto">
         Variables let you calculate values from form responses. Use them in emails, thank you messages, and integrations.
       </p>
-      <div class="mt-4 text-sm text-gray-500">
+      <div class="mt-4 text-sm text-[var(--sf-text-caption)]">
         <p class="font-medium mb-2">Examples:</p>
         <ul class="space-y-1">
           <li>• Calculate order totals</li>
@@ -43,9 +47,8 @@
         </ul>
       </div>
       <UButton
-        class="mt-6"
+        class="mt-6 btn-primary"
         icon="i-lucide-plus"
-        color="primary"
         @click="openCreateModal"
       >
         Create Variable
@@ -70,14 +73,14 @@
     <!-- Info Footer -->
     <div
       v-if="computedVariables && computedVariables.length > 0"
-      class="mt-6 p-3 bg-blue-50 rounded-lg"
+      class="mt-6 p-3 bg-[var(--sf-teal-light)] rounded-lg"
     >
       <div class="flex items-start gap-2">
         <Icon
           name="i-lucide-info"
-          class="h-5 w-5 text-blue-500 shrink-0 mt-0.5"
+          class="h-5 w-5 text-[var(--sf-teal)] shrink-0 mt-0.5"
         />
-        <p class="text-sm text-blue-700">
+        <p class="text-sm text-[var(--sf-teal)]">
           Insert variables anywhere you can use @ mentions - in emails, thank you messages, redirect URLs, and integrations.
         </p>
       </div>

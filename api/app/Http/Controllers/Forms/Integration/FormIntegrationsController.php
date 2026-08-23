@@ -7,6 +7,7 @@ use App\Http\Requests\Integration\FormIntegrationsRequest;
 use App\Http\Resources\FormIntegrationResource;
 use App\Models\Forms\Form;
 use App\Models\Integration\FormIntegration;
+use App\Service\Billing\PlanAccessService;
 
 class FormIntegrationsController extends Controller
 {
@@ -30,6 +31,14 @@ class FormIntegrationsController extends Controller
     public function create(FormIntegrationsRequest $request, Form $form)
     {
         $this->authorize('manageIntegrations', $form);
+
+        // Enforce plan tier for gated integrations. Integrations without a
+        // required tier in config/plans.php are free; updates to existing
+        // integrations stay allowed so legacy configs keep working.
+        $planAccess = app(PlanAccessService::class);
+        if ($planAccess->getRequiredTier('integrations.' . $request->integration_id) !== null) {
+            $planAccess->requireFeature($form->workspace, 'integrations.' . $request->integration_id);
+        }
 
         /** @var FormIntegration $formIntegration */
         $formIntegration = FormIntegration::create(

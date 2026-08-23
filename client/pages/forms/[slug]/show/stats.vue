@@ -1,16 +1,17 @@
 <template>
-  <PageContainer spacing="lg">
-    <PageSection
-      title="Analytics"
-      description="View form performance and submission statistics."
-    >
+  <div class="px-6 py-5">
+    <div class="max-w-5xl mx-auto">
+      <PageSection
+        title="Analytics"
+        description="View form performance and submission statistics."
+      >
       <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
         <DashboardPanel
           v-for="(stat, index) in statItems"
           :key="index"
           padding="sm"
         >
-        <div class="mb-2 text-xs text-neutral-500">
+        <div class="mb-2 text-xs text-[var(--sf-text-caption)]">
           {{ stat.label }}
         </div>
         <VTransition name="fade">
@@ -35,12 +36,12 @@
         :meta-data="statsData?.meta_stats ?? {}"
         :is-loading="isLoading"
       />
-    </PageSection>
-  </PageContainer>
+      </PageSection>
+    </div>
+  </div>
 </template>
 
 <script setup>
-import PageContainer from "~/components/dashboard/PageContainer.vue"
 import PageSection from "~/components/dashboard/PageSection.vue"
 import DashboardPanel from "~/components/dashboard/DashboardPanel.vue"
 import FormStats from "~/components/open/forms/components/FormStats.vue"

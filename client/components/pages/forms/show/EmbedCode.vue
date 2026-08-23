@@ -27,7 +27,7 @@ export default {
   computed: {
     embedCode() {
       // eslint-disable no-useless-escape
-      const isFocused = this.form?.presentation_style === 'focused'
+      const isFocused = this.form?.presentation_style === 'focused' || this.form?.presentation_style === 'spotlight'
       const resizeComment = isFocused
         ? '  // Focused style: iframe has fixed height; no autoResize needed.\n  '
         : '  // SDK auto-resizes iframe by default.\n  '
@@ -47,7 +47,7 @@ ${resizeComment}
       const share_url = this.extraQueryParam
         ? this.form.share_url + "?" + this.extraQueryParam
         : this.form.share_url + this.extraQueryParam
-      const isFocused = this.form?.presentation_style === 'focused'
+      const isFocused = this.form?.presentation_style === 'focused' || this.form?.presentation_style === 'spotlight'
       const style = isFocused
         ? 'border:none;width:100%;height:700px;max-height:90vh;'
         : 'border:none;width:100%;'

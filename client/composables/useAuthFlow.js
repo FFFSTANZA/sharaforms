@@ -1,6 +1,3 @@
-import { WindowMessageTypes, useWindowMessage } from "~/composables/useWindowMessage"
-import { authApi } from "~/api"
-
 /**
  * Lightweight authentication check that doesn't require Vue Query context
  * Use this when you only need to check if user is authenticated
@@ -27,15 +24,17 @@ export const initServiceClients = (userData) => {
   useCrisp().setUser(userData)
 }
 
-// Shared state for 2FA modal - ensures all instances of useAuthFlow share the same state
-const showTwoFactorModal = ref(false)
-const pendingAuthToken = ref(null)
-const pendingAuthContext = ref(null)
-
+// H10 FIX: Move refs inside the composable to prevent concurrent flow clobber.
+// Previously these were module-level singletons shared across all component instances.
 export const useAuthFlow = () => {
   const authStore = useAuthStore()
   const { logEvent } = usePostHog()
   const router = useRouter()
+
+  // These are now per-instance, preventing concurrent OAuth + manual login from clobbering each other.
+  const showTwoFactorModal = ref(false)
+  const pendingAuthToken = ref(null)
+  const pendingAuthContext = ref(null)
 
   /**
    * Core authentication success handler  
@@ -145,36 +144,6 @@ export const useAuthFlow = () => {
   }
 
   /**
-   * Handle social login callback
-   */
-  const handleSocialCallback = async (provider, code, utmData) => {
-    const tokenData = await authApi.oauth.callback(provider, { code, utm_data: utmData })
-    
-    // Send messages to parent window if applicable
-    if (window.opener && !window.opener.closed) {
-      // Send login complete message (for auth flows)
-      useWindowMessage(WindowMessageTypes.LOGIN_COMPLETE).send(window.opener, {
-        eventType: WindowMessageTypes.LOGIN_COMPLETE,
-        useMessageChannel: false,
-        waitForAcknowledgment: false
-      })
-      
-      // Send OAuth provider connected message (for cache invalidation)
-      useWindowMessage(WindowMessageTypes.OAUTH_PROVIDER_CONNECTED).send(window.opener, {
-        eventType: `${WindowMessageTypes.OAUTH_PROVIDER_CONNECTED}:${provider}`,
-        useMessageChannel: false,
-        waitForAcknowledgment: false
-      })
-    } 
-
-    return handleAuthSuccess( 
-      tokenData, 
-      provider,
-      tokenData.new_user
-    )
-  }
-
-  /**
    * Handle manual logout (e.g., from UserDropdown)
    * Clears tokens, cache, and navigates to login page
    */
@@ -198,7 +167,7 @@ export const useAuthFlow = () => {
     
     // Handle admin token expiry by undoing impersonation
     if (authStore.isImpersonating) {
-      console.log("Admin token expired, undoing impersonation")
+      // M18 FIX: Don't log impersonation state to console in production.
       authStore.stopImpersonating()
       useAlert().error("User token expired. You have been logged out of the admin account.")
       await router.push({ name: 'home' })
@@ -216,7 +185,6 @@ export const useAuthFlow = () => {
   return {
     // Auth flow functions
     handleAuthSuccess,
-    handleSocialCallback,
     
     // Distinct logout methods
     handleManualLogout,

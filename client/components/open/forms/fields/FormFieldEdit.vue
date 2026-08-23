@@ -3,62 +3,56 @@
     :class="{ 'sidebar-bounce': sidebarBounce }"
     class="sidebar-container"
   >
-    <div class="p-2 border-b sticky top-0 z-20 bg-white">
-      <UButton
-        v-if="!field"
-        size="sm"
-        color="neutral"
-        icon="i-lucide-x"
-        variant="ghost"
-        @click="closeSidebar"
-      />
-      <template v-else>
-        <div class="flex">
-          <UButton
-            size="sm"
-            color="neutral"
-            icon="i-lucide-x"
-            variant="ghost"
-            @click="closeSidebar"
-          />
-          <div class="ml-2 flex flex-grow items-center space-between min-w-0 gap-x-3">
+    <div class="px-3 py-2.5 border-b border-[var(--sf-border-divider)] sticky top-0 z-20 bg-[var(--sf-bg-surface)]">
+      <div class="flex items-center">
+        <button
+          class="flex items-center justify-center w-7 h-7 rounded-lg text-[var(--sf-text-caption)] hover:text-[var(--sf-text-primary)] hover:bg-[var(--sf-nav-hover-bg)] transition-all duration-150"
+          @click="closeSidebar"
+        >
+          <Icon name="i-lucide-x" class="w-4 h-4" />
+        </button>
+        <template v-if="field">
+          <div class="ml-1.5 flex flex-grow items-center min-w-0 gap-x-2">
             <div class="flex-grow" />
             <BlockTypeIcon
               :type="field.type"
             />
-
-            <p
+            <span
               v-if="blocksTypes[field.type]"
-              class="text-sm text-neutral-500"
+              class="text-[13px] font-medium text-[var(--sf-text-body)]"
             >
               {{ blocksTypes[field.type].title }}
-            </p>
+            </span>
             
             <UDropdownMenu
               :items="dropdownItems"
               :content="{ side: 'bottom', align: 'start' }"
               arrow
             >
-              <UButton
-                color="neutral"
-                variant="outline"
-                icon="i-lucide-circle-ellipsis"
-              />
+              <button class="flex items-center justify-center w-7 h-7 rounded-lg text-[var(--sf-text-caption)] hover:text-[var(--sf-text-primary)] hover:bg-[var(--sf-nav-hover-bg)] transition-all duration-150">
+                <Icon name="i-lucide-circle-ellipsis" class="w-4 h-4" />
+              </button>
             </UDropdownMenu>
           </div>
-        </div>
-      </template>
+        </template>
+      </div>
     </div>
 
     <template v-if="field">
-      <div class="bg-neutral-100 border-b">
-        <UTabs
-          v-model="activeTab"
-          :items="tabItems"
-          color="primary"
-          :content="false"
-          class="w-full"
-        />
+      <div class="bg-[var(--sf-bg-muted)]/50 border-b border-[var(--sf-border-divider)]">
+        <div class="flex">
+          <button
+            v-for="tab in tabItems"
+            :key="tab.value"
+            class="flex-1 py-2.5 text-[12px] font-semibold text-center transition-all duration-150 border-b-2"
+            :class="activeTab === tab.value
+              ? 'text-[var(--sf-coral-500)] border-[var(--sf-coral-500)]'
+              : 'text-[var(--sf-text-caption)] border-transparent hover:text-[var(--sf-text-body)]'"
+            @click="activeTab = tab.value"
+          >
+            {{ tab.label }}
+          </button>
+        </div>
       </div>
       <div v-if="activeTab === 'options'">
         <FieldOptions
@@ -89,9 +83,9 @@
     </template>
     <div
       v-else
-      class="text-center p-10 text-sm text-neutral-500"
+      class="text-center p-10 text-[13px] text-[var(--sf-text-disabled)]"
     >
-      Click on field to edit it.
+      Click on a field to edit it.
     </div>
   </div>
 </template>

@@ -2,10 +2,10 @@
   <div class="flex gap-2">
     <div
       data-testid="copy-content-value"
-      class="flex-1 truncate sm:w-auto border border-neutral-300 rounded-md px-2 py-1 flex-grow select-all bg-neutral-100 relative"
+      class="flex-1 truncate sm:w-auto border border-[var(--sf-border-button)] rounded-xl px-3 py-2 flex-grow select-all bg-[var(--sf-bg-muted)]/30 relative"
     >
-      <div class="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-r from-transparent to-neutral-100"></div>
-      <p class="select-all text-neutral-900 text-sm">
+      <div class="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-r from-transparent to-[var(--sf-bg-muted)]/50 rounded-r-xl"></div>
+      <p class="select-all text-[var(--sf-text-primary)] text-[13px] font-medium truncate">
         {{ content }}
       </p>
     </div>
@@ -15,26 +15,32 @@
         :name="trackingEvent"
         :properties="trackingProperties"
       >
-        <UButton
-          :color="copySuccess ? 'success' : 'primary'"
-          :icon="copySuccess ? 'i-lucide-check' : 'i-lucide-clipboard-list'"
-          class="w-full"
+        <button
+          class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-[13px] font-semibold transition-all duration-150"
+          :class="copySuccess
+            ? 'bg-[var(--sf-green)] text-white'
+            : 'btn-primary'
+          "
           data-testid="copy-content-button"
           @click.prevent="copyToClipboard"
         >
+          <Icon :name="copySuccess ? 'i-lucide-check' : 'i-lucide-clipboard-list'" class="w-4 h-4" />
           <span class="hidden md:inline">{{ copySuccess ? 'Copied!' : label }}</span>
-        </UButton>
+        </button>
       </TrackClick>
-      <UButton
+      <button
         v-else
-        :color="copySuccess ? 'success' : 'primary'"
-        :icon="copySuccess ? 'i-lucide-check' : 'i-lucide-clipboard-list'"
-        class="w-full"
+        class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-[13px] font-semibold transition-all duration-150"
+        :class="copySuccess
+          ? 'bg-[var(--sf-green)] text-white'
+          : 'btn-primary'
+        "
         data-testid="copy-content-button"
         @click.prevent="copyToClipboard"
       >
+        <Icon :name="copySuccess ? 'i-lucide-check' : 'i-lucide-clipboard-list'" class="w-4 h-4" />
         <span class="hidden md:inline">{{ copySuccess ? 'Copied!' : label }}</span>
-      </UButton>
+      </button>
     </div>
   </div>
 </template>

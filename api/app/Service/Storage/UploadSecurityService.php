@@ -12,6 +12,43 @@ class UploadSecurityService
     private const BLOCKED_EXTENSIONS = ['html', 'htm', 'xhtml', 'xml'];
     private const BLOCKED_MIME_TYPES = ['text/html', 'application/xhtml+xml', 'application/xml', 'text/xml'];
 
+    /**
+     * C2 FIX: Allowlist of permitted MIME types. Only safe file types are accepted.
+     * Everything else is rejected, preventing upload of PHP, executables, etc.
+     */
+    private const ALLOWED_MIME_TYPES = [
+        'image/jpeg',
+        'image/png',
+        'image/gif',
+        'image/webp',
+        'image/avif',
+        'image/svg+xml',
+        'application/pdf',
+        'text/plain',
+        'text/csv',
+        'application/json',
+        'application/zip',
+        'application/x-zip-compressed',
+        'video/mp4',
+        'video/webm',
+        'audio/mpeg',
+        'audio/wav',
+        'audio/ogg',
+        'font/ttf',
+        'font/otf',
+        'font/woff',
+        'font/woff2',
+        'application/vnd.ms-fontobject',
+    ];
+
+    private const ALLOWED_EXTENSIONS = [
+        'jpg', 'jpeg', 'png', 'gif', 'webp', 'avif', 'svg',
+        'pdf', 'txt', 'csv', 'json',
+        'zip',
+        'mp4', 'webm', 'mp3', 'wav', 'ogg',
+        'ttf', 'otf', 'woff', 'woff2', 'eot',
+    ];
+
     public function inspectUploadedFile(UploadedFile $file): UploadSecurityInspection
     {
         $contents = $file->get();
@@ -70,8 +107,9 @@ class UploadSecurityService
 
     private function isBlockedActiveContent(string $extension, string $mimeType): bool
     {
-        return in_array($extension, self::BLOCKED_EXTENSIONS, true)
-            || in_array($mimeType, self::BLOCKED_MIME_TYPES, true);
+        // C2 FIX: Use allowlist instead of blocklist. Reject anything not explicitly permitted.
+        return !in_array($extension, self::ALLOWED_EXTENSIONS, true)
+            || !in_array($mimeType, self::ALLOWED_MIME_TYPES, true);
     }
 
     private function isSvg(string $extension, string $mimeType): bool

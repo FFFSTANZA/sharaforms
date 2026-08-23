@@ -30,3 +30,16 @@ keys.txt
 client/.nuxt-root-bak/
 # gcloud CLI tarball
 google-cloud-cli-linux-x86_64.tar.gz
+.code-graph/
+
+# Playwright MCP output
+.playwright-mcp/
+
+# Local artifacts
+Formly - Dashboard.html
+sitemap.xml
+
+# Root-level generated copies (real versions live in client/public/)
+llms.txt
+ai.txt
+package-lock.json

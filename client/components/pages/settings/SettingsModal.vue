@@ -14,69 +14,89 @@
     <template #content>
       <div class="flex h-full flex-col sm:flex-row">
         <!-- Left Sidebar -->
-        <aside class="flex flex-col border-b border-neutral-200 bg-neutral-50 sm:w-56 sm:shrink-0 sm:border-r sm:border-b-0">
-          <!-- Navigation Menu -->
-          <nav class="relative p-2 pt-2 sm:flex-1 sm:overflow-y-auto sm:pt-4">
+        <aside class="sidebar-settings flex flex-col border-b border-[var(--sf-border-card)] sm:w-64 sm:shrink-0 sm:border-r sm:border-b-0">
+          <!-- Sidebar Header -->
+          <div class="px-5 pt-6 pb-4">
+            <div class="flex items-center gap-2.5">
+              <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg grad-brand shadow-[0_4px_10px_-4px_rgba(255,92,56,0.45),inset_0_1px_0_0_rgba(255,255,255,0.25)]">
+                <i class="fa-solid fa-sliders text-[11px] text-white"></i>
+              </span>
+              <h2 class="text-[15px] font-bold text-[var(--sf-text-primary)] tracking-tight">Settings</h2>
+            </div>
+            <p class="mt-2 text-xs text-[var(--sf-text-caption)] font-medium leading-relaxed">
+              Manage your account and workspace
+            </p>
+          </div>
+
+          <!-- Divider -->
+          <div class="mx-5 border-t border-[var(--sf-border-divider)]"></div>
+
+          <!-- Navigation Menu (scrollable, vertical, like dashboard sidebar) -->
+          <nav class="relative flex-1 overflow-y-auto px-3 py-3">
             <slot name="nav-top" />
-            <div class="relative">
-              <!-- Left Arrow -->
-              <VTransition name="fade">
-                <UButton
-                  v-if="showLeftArrow"
-                  variant="ghost"
-                  color="neutral"
-                  icon="i-lucide-chevron-left"
-                  class="absolute -left-px top-0 z-10 h-full bg-gradient-to-r from-neutral-50 via-neutral-50 to-transparent"
-                  :ui="{ rounded: 'rounded-none', padding: { sm: 'px-4' } }"
-                  @click="scrollNav(-1)"
-                />
-              </VTransition>
-
-              <NavigationList
-                ref="navContainer"
-                :items="registeredPages.map(page => ({ ...createNavItem(page), id: page.id }))"
-                :tracking-enabled="false"
-                button-class="justify-start whitespace-nowrap !w-auto sm:!w-full"
-                list-class="flex flex-row space-x-1 overflow-x-auto sm:flex-col sm:space-y-1 sm:space-x-0"
-                @item-click="(item) => setActiveItem(item.id)"
-              />
-
-              <!-- Right Arrow -->
-              <VTransition name="fade">
-                <UButton
-                  v-if="showRightArrow"
-                  variant="ghost"
-                  color="neutral"
-                  icon="i-lucide-chevron-right"
-                  class="absolute -right-px top-0 z-10 h-full bg-gradient-to-l from-neutral-50 via-neutral-50 to-transparent"
-                  :ui="{ rounded: 'rounded-none', padding: { sm: 'px-4' } }"
-                  @click="scrollNav(1)"
-                />
-              </VTransition>
+            <div class="flex flex-col gap-0.5">
+              <button
+                v-for="page in registeredPages"
+                :key="page.id"
+                class="relative flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all text-left w-full"
+                :class="[
+                  activeTabRef === page.id
+                    ? 'nav-active font-semibold text-[var(--sf-text-primary)]'
+                    : 'text-[var(--sf-text-body)] hover:bg-[var(--sf-nav-hover-bg)]'
+                ]"
+                @click="setActiveItem(page.id)"
+              >
+                <!-- Active indicator dot -->
+                <span
+                  v-if="activeTabRef === page.id"
+                  class="nav-indicator absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-full bg-[var(--sf-coral-500)]"
+                ></span>
+                <i
+                  :class="page.icon"
+                  class="text-[14px] w-4 text-center transition-colors"
+                  :style="{ color: activeTabRef === page.id ? 'var(--sf-coral-500)' : 'var(--sf-text-secondary)' }"
+                ></i>
+                <span class="nav-label">{{ page.label }}</span>
+              </button>
             </div>
           </nav>
+
+          <!-- Sidebar Footer -->
+          <div class="hidden sm:block px-5 pb-5">
+            <div class="rounded-xl border border-[var(--sf-border-card)] bg-white/70 px-3 py-2.5 flex items-center gap-2.5">
+              <span class="inline-flex items-center justify-center w-6 h-6 rounded-md bg-[var(--sf-green-light)] text-[var(--sf-green)] shrink-0">
+                <i class="fa-solid fa-circle-question text-[10px]" />
+              </span>
+              <p class="text-[11px] text-[var(--sf-text-description)] font-medium leading-snug">
+                Need help?<br>
+                <a :href="`mailto:${links.contact_email}`" class="text-[var(--sf-coral-500)] hover:underline font-semibold">Contact support</a>
+              </p>
+            </div>
+          </div>
         </aside>
 
         <!-- Main Content -->
-        <main class="relative flex flex-1 flex-col overflow-hidden">
+        <main class="relative flex flex-1 flex-col overflow-hidden bg-[var(--sf-bg-page)]">
           <!-- Content Body -->
           <div class="flex-1 overflow-y-auto">
-            <div class="p-6">
-              <!-- Modal pages will register themselves and render here -->
-              <slot />
+            <div class="p-5 sm:p-8">
+              <div class="max-w-3xl mx-auto">
+                <!-- Modal pages will register themselves and render here -->
+                <slot />
 
-              <!-- Default content if no pages registered -->
-              <div v-if="registeredPages.length === 0" class="py-12 text-center">
-                <UIcon
-                  name="i-lucide-settings"
-                  class="mx-auto mb-4 h-12 w-12 text-neutral-400"
-                />
-                <h3 class="mb-2 text-lg font-medium text-neutral-900">
-                  Select a setting
-                </h3>
-                <p class="text-neutral-500">
-                  Choose an option from the sidebar to configure your settings.
-                </p>
+                <!-- Default content if no pages registered -->
+                <div v-if="registeredPages.length === 0" class="sf-card sf-card-pad py-12 text-center">
+                  <UIcon
+                    name="i-lucide-settings"
+                    class="mx-auto mb-4 h-12 w-12 text-[var(--sf-text-muted)]"
+                  />
+                  <h3 class="mb-2 text-[15px] font-semibold text-[var(--sf-text-primary)]">
+                    Select a setting
+                  </h3>
+                  <p class="text-[13px] text-[var(--sf-text-description)]">
+                    Choose an option from the sidebar to configure your settings.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -87,11 +107,10 @@
 </template>
 
 <script setup>
-import { useScroll, useResizeObserver } from '@vueuse/core'
 import { nextTick, ref, computed, watch, provide } from 'vue'
-import VTransition from '@/components/global/transitions/VTransition.vue'
-import NavigationList from '~/components/global/NavigationList.vue'
+import sharaformsConfig from "~/sharaforms.config.js"
 
+const links = sharaformsConfig.links
 const emit = defineEmits(['close', 'item-changed', 'update:activeTab'])
 
 // Registered pages for auto-registration
@@ -125,92 +144,10 @@ function getFirstItemId() {
 // Reactive reference for the currently active tab
 const activeTabRef = ref(props.activeTab)
 
-// --- Responsive Nav Scrolling ---
-const navContainer = ref(null)
-
-// Get the actual DOM element from the NavigationList component
-const navElement = computed(() => navContainer.value?.$el)
-
-const { x: scrollX } = useScroll(navElement)
-const contentWidth = ref(0)
-const containerWidth = ref(0)
-
-const showLeftArrow = computed(() => scrollX.value > 0)
-const showRightArrow = computed(() => {
-  if (containerWidth.value === 0 || contentWidth.value === 0) return false
-  return scrollX.value < contentWidth.value - containerWidth.value - 1 // -1 for subpixel precision
-})
-
-// Update dimensions from the element
-function updateNavDimensions() {
-  const el = navElement.value
-  if (el) {
-    containerWidth.value = el.clientWidth
-    contentWidth.value = el.scrollWidth
-  }
-}
-
-useResizeObserver(navElement, (entries) => {
-  const entry = entries[0]
-  containerWidth.value = entry.contentRect.width
-  const el = navElement.value
-  if (el) {
-    contentWidth.value = el.scrollWidth
-  }
-})
-
-function scrollNav(direction) {
-  const el = navElement.value
-  if (el) {
-    // Scroll by 80% of the container's width for a better user experience
-    const scrollAmount = containerWidth.value * 0.8 * direction
-    el.scrollBy({ left: scrollAmount, behavior: 'smooth' })
-  }
-}
-
 // Keep local ref in sync with incoming prop
 watch(() => props.activeTab, (newVal) => {
   activeTabRef.value = newVal
 })
-
-// Default button configuration
-const defaultButtonProps = {
-  variant: 'ghost',
-  activeVariant: 'soft', 
-  color: 'neutral',
-  block: true,
-}
-
-// Helper function to apply defaults to navigation items
-const createNavItem = (item) => {
-  const baseItem = {
-    ...defaultButtonProps,
-    label: item.label,
-    icon: item.icon,
-    active: activeTabRef.value === item.id
-  }
-  
-  // Add custom classes to darken ghost/soft variants for better visibility on neutral-50 background
-  const customClasses = ['group']
-  
-  // For ghost variant (default), darken hover state
-  if (baseItem.variant === 'ghost' && baseItem.color === 'neutral') {
-    customClasses.push('hover:bg-neutral-200/80')
-    baseItem.ui = {
-      leadingIcon: 'text-neutral-400 group-hover:text-neutral-500'
-    }
-  }
-  
-  // For soft variant (active state), darken background
-  if (baseItem.active && baseItem.activeVariant === 'soft' && baseItem.color === 'neutral') {
-    customClasses.push('bg-neutral-200/90 text-neutral-800')
-  }
-  
-  return {
-    ...baseItem,
-    class: customClasses.length > 0 ? customClasses.join(' ') : undefined
-  }
-}
 
 // Set active item
 const setActiveItem = (itemId) => {
@@ -236,10 +173,6 @@ watch(isOpen, (newValue) => {
           activeTabRef.value = getFirstItemId()
         }
       }
-      
-      // Initialize nav dimensions after modal content is rendered
-      // This ensures the right arrow is visible on mobile when there are more items
-      nextTick(() => updateNavDimensions())
     })
   }
 })
@@ -256,10 +189,6 @@ watch(registeredPages, () => {
   if (!registeredPages.value.some(p => p.id === activeTabRef.value)) {
     activeTabRef.value = getFirstItemId()
   }
-  
-  // Update nav dimensions when pages are registered/unregistered
-  // This ensures scroll indicators are accurate
-  nextTick(() => updateNavDimensions())
 }, { deep: true })
 
 // Registration functions for modal pages
@@ -297,8 +226,19 @@ provide('unregisterModalPage', unregisterModalPage)
 </script>
 
 <style scoped>
-/* Hide scrollbar for Chrome, Safari and Opera */
-ul::-webkit-scrollbar {
+/* Settings sidebar — matches dashboard sidebar gradient + hidden scrollbar */
+.sidebar-settings {
+  background: linear-gradient(180deg, #FFFFFF 0%, var(--sf-bg-muted) 100%);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.sidebar-settings::-webkit-scrollbar {
   display: none;
 }
-</style> 
+
+/* Nav indicator — same as dashboard sidebar */
+.nav-indicator {
+  opacity: 1;
+}
+</style>

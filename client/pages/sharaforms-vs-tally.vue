@@ -7,7 +7,7 @@
     :free-plan-comparison="freePlanComparison"
     :switch-reasons="switchReasons"
     :feature-comparison="featureComparison"
-    :summary-line="'SharaForms is the Tally alternative for teams that want Tally\'s simple, embeddable forms plus deeper workflow control, with unlimited forms, unlimited submissions, built-in calculators, dynamic PDFs, and self-hosting from $0.'"
+    :summary-line="'SharaForms is the Tally alternative for teams that want Tally\'s simple, embeddable forms plus deeper workflow control, with unlimited forms, unlimited submissions, three presentation modes, built-in calculations, dynamic PDFs, and self-hosting from $0.'"
     :faqs="faqs"
   >
     <template #hero-subtitle>
@@ -158,7 +158,7 @@ const faqs = [
   {
     question: 'Is SharaForms a good Tally alternative?',
     answer:
-      'Yes. Tally is great for simple, embeddable forms, but SharaForms adds deeper workflow control, richer customization, built-in calculators, dynamic PDFs, custom domains, and self-hosting, with the same free, no-limits starting point.',
+      'Yes. Tally is great for simple, embeddable forms, but SharaForms adds deeper workflow control, richer customization, three presentation modes, built-in calculations, dynamic PDFs, custom domains, and self-hosting, with the same free, no-limits starting point.',
   },
   {
     question: 'Is Tally free?',
@@ -173,7 +173,7 @@ const faqs = [
   {
     question: 'How does SharaForms pricing compare to Tally?',
     answer:
-      'Both start free. SharaForms paid plans begin at $12 per month and scale predictably, while Tally paid plans price by features and usage. SharaForms tends to cost less as your form stack grows.',
+      'Both start free. SharaForms paid plans begin at $15 per month and scale predictably, while Tally paid plans price by features and usage. SharaForms tends to cost less as your form stack grows.',
   },
 ]
 
