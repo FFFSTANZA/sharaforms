@@ -10,7 +10,6 @@
     
     <div 
       v-if="shouldShowOneTap"
-      id="g_id_onload"
       :data-client_id="googleClientId"
       :data-context="context"
       :data-cancel_on_tap_outside="false"

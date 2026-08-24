@@ -3,11 +3,12 @@ import { formsApi } from '~/api/forms'
 
 export function useDashboardStats(workspaceId, { days: daysRef, ...queryOptions } = {}) {
   const days = daysRef || ref(7)
+  const resolvedId = computed(() => unref(workspaceId))
 
   const { data: dashboard, isLoading, isFetching, isError, error } = useQuery({
-    queryKey: ['dashboard', workspaceId, days],
-    queryFn: () => formsApi.dashboard(workspaceId, { params: { days: days.value } }),
-    enabled: computed(() => import.meta.client && !!workspaceId?.value),
+    queryKey: ['dashboard', resolvedId, days],
+    queryFn: () => formsApi.dashboard(resolvedId.value, { params: { days: days.value } }),
+    enabled: computed(() => import.meta.client && !!resolvedId.value),
     refetchInterval: 5 * 60 * 1000, // Refetch every 5 minutes
     ...queryOptions,
   })
