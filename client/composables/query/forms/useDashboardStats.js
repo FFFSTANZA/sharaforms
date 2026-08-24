@@ -3,6 +3,7 @@ import { formsApi } from '~/api/forms'
 
 export function useDashboardStats(workspaceId, { days: daysRef, ...queryOptions } = {}) {
   const days = daysRef || ref(7)
+  // Unwrap the computed ref so the raw ID is used in the URL template literal
   const resolvedId = computed(() => unref(workspaceId))
 
   const { data: dashboard, isLoading, isFetching, isError, error } = useQuery({
