@@ -1,68 +1,85 @@
 <template>
-  <div class="flex flex-col h-full">
-    <div class="sticky top-0 z-40 bg-[var(--sf-bg-page)]/95 backdrop-blur-sm border-b border-[#E6E8EE]/80 px-4 sm:px-6 py-3">
-      <div class="max-w-6xl mx-auto flex items-center justify-between flex-wrap flex-shrink-0 gap-2">
-          <div class="py-1">
-            <span class="grad-kicker w-8 h-1 rounded-full block mb-2"></span>
-            <h1 class="text-lg font-bold text-[#1D1F24] tracking-tight">My Form Templates</h1>
-          </div>
-          <div class="flex items-center gap-2 w-full justify-end sm:w-auto">
-            <UButton
-              to="/templates"
-              variant="outline"
-              color="neutral"
-              class="btn-ghost !border-[#DEE1E7]"
-              icon="i-tabler:eye"
-              label="View All Templates"
-            />
-            <UButton
-              @click="openTemplateGuide"
-              variant="outline"
-              color="neutral"
-              class="btn-ghost !border-[#DEE1E7]"
-              icon="i-lucide-circle-question-mark"
-              label="How to Create"
-            />
-          </div>
+  <div class="flex flex-col min-h-screen px-4 sm:px-10 py-8">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10">
+      <div>
+        <span class="grad-kicker w-8 h-1 rounded-full block mb-3"></span>
+        <h1 class="text-[28px] font-bold text-[#1D1F24] tracking-tight">My Templates</h1>
+        <p class="text-[13px] text-[#6E7278] font-medium mt-1">
+          Forms you've saved as reusable templates
+        </p>
+      </div>
+      <div class="flex items-center gap-3">
+        <UButton
+          to="/templates"
+          variant="outline"
+          color="neutral"
+          class="btn-ghost !border-[#DEE1E7]"
+          icon="i-tabler:eye"
+          label="Browse Templates"
+        />
+        <UButton
+          @click="openTemplateGuide"
+          variant="outline"
+          color="neutral"
+          class="btn-ghost !border-[#DEE1E7]"
+          icon="i-lucide-circle-question-mark"
+          label="How to Create"
+        />
       </div>
     </div>
 
-    <div class="flex-1 overflow-y-auto p-4 sm:p-6">
-      <div class="max-w-6xl mx-auto">
-        <VTransition name="fade">
-          
-            <templates-list
-              v-if="loading || templates?.length > 0"
-              grid-classes="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-              section-class="bg-transparent pb-4"
-              :templates="templates"
-              :loading="loading"
-              :filter-types="false"
-              :filter-industries="false"
-              :show-types="false"
-              :show-industries="false"
-            />
-
-          <div v-else class="text-center py-20 px-4">
-            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#E6E8EE]/50 dark:bg-neutral-800 mb-4">
-              <UIcon name="i-lucide-copy" class="h-8 w-8 text-[#A7ABB2]" />
-            </div>
-            <h3 class="text-lg font-semibold text-[#1D1F24]">
-              No templates yet
-            </h3>
-            <p class="mt-1.5 text-sm text-[#6E7278] max-w-sm mx-auto">
-              You haven't created any templates yet. Create forms and share them as templates!
-            </p>
-            <UButton
-              class="mt-4"
-              @click="openTemplateGuide"
-              variant="outline"
-              color="neutral"
-              icon="i-lucide-circle-question-mark"
-              label="How to Create"
-            />
+    <!-- Loading State -->
+    <div v-if="loading" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div v-for="i in 6" :key="i" class="bg-white rounded-2xl border border-[#E6E8EE] overflow-hidden">
+        <USkeleton class="aspect-[4/3] rounded-none w-full" />
+        <div class="p-5">
+          <USkeleton class="h-5 mb-2 w-3/4" />
+          <USkeleton class="h-4 w-full" />
+          <USkeleton class="h-4 w-1/2 mt-1" />
+          <div class="flex gap-2 mt-4">
+            <USkeleton class="h-5 rounded-full w-14" />
+            <USkeleton class="h-5 rounded-full w-20" />
           </div>
-        </VTransition>
+        </div>
+      </div>
+    </div>
+
+    <!-- Templates Grid -->
+    <div v-else-if="templates && templates.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <single-template
+        v-for="template in templates"
+        :key="template.id"
+        :template="template"
+      />
+    </div>
+
+    <!-- Empty State -->
+    <div v-else class="text-center py-20 px-4">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#E6E8EE]/50 dark:bg-neutral-800 mb-4">
+        <UIcon name="i-lucide-copy" class="h-8 w-8 text-[#A7ABB2]" />
+      </div>
+      <h3 class="text-lg font-semibold text-[#1D1F24]">
+        No templates yet
+      </h3>
+      <p class="mt-1.5 text-sm text-[#6E7278] max-w-sm mx-auto">
+        You haven't created any templates yet. Save a form as a template to reuse it!
+      </p>
+      <div class="flex items-center justify-center gap-3 mt-5">
+        <NuxtLink
+          to="/forms/create"
+          class="btn-primary text-white px-5 py-2.5 rounded-xl flex items-center gap-2 text-sm font-semibold"
+        >
+          <i class="fa-solid fa-plus text-xs"></i>
+          Create Form
+        </NuxtLink>
+        <UButton
+          @click="openTemplateGuide"
+          variant="outline"
+          color="neutral"
+          icon="i-lucide-circle-question-mark"
+          label="How to Create"
+        />
       </div>
     </div>
   </div>
@@ -79,7 +96,7 @@ definePageMeta({
 useOpnSeoMeta({
   title: "My Templates",
   description:
-    "Our collection of beautiful templates to create your own forms!",
+    "Your saved form templates. Reuse and share your best forms.",
 })
 
 const { list } = useTemplates()
