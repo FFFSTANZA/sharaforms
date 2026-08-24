@@ -44,7 +44,13 @@ trait ManagesJWT
         if ($twoFactorService->requiresVerification($user)) {
             // Logout the user since 2FA verification is required
             // The TwoFactorVerificationController uses 'guest' middleware
-            auth('api')->logout();
+            // Wrap in try-catch because logout may fail if user isn't authenticated yet
+            // (e.g. fresh OAuth callback with no JWT token in the request)
+            try {
+                auth('api')->logout();
+            } catch (\Exception $e) {
+                // Ignore logout errors - user may not be authenticated yet
+            }
 
             $pendingToken = $twoFactorService->storePendingAuth($user, $context);
 
