@@ -149,7 +149,7 @@
               </div>
 
               <!-- Buttons below active question -->
-              <div v-if="!props.formManager?.state.isSubmitted" class="mt-5 flex gap-2.5" :class="getFieldAlignClasses(field)">
+              <div v-if="!props.formManager?.state.isSubmitted" class="mt-5 flex gap-2.5 shrink-0" :class="getFieldAlignClasses(field)">
                 <slot name="submit-btn" v-if="isLast" :loading="isProcessing">
                   <CaptchaWrapper v-if="form.use_captcha" :form-manager="formManager" />
                   <open-form-button

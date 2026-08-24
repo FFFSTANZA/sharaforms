@@ -73,7 +73,7 @@
             </div>
           </div>
         </div>
-        <div v-if="!props.formManager?.state.isSubmitted" class="mt-3 flex gap-2.5" :class="[getFieldAlignClasses(currentBlock), {'flex-col justify-normal! items-center': isLast &&form.use_captcha}]">
+        <div v-if="!props.formManager?.state.isSubmitted" class="mt-3 flex gap-2.5 shrink-0" :class="[getFieldAlignClasses(currentBlock), {'flex-col justify-normal! items-center': isLast &&form.use_captcha}]">
           <!-- Previous (visible from the 2nd page onward, inline-editable in admin preview) -->
           <editable-form-button
             v-if="isAdminPreview && canGoPrev && previousFocusedField"

@@ -49,7 +49,7 @@
           </div>
         </div>
 
-        <div class="relative h-[460px] bg-white sm:h-[620px]">
+        <div class="relative h-[520px] bg-white sm:h-[620px]">
           <LiveDemoForm
             :key="scenario.key"
             :scenario="scenario"
