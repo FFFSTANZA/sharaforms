@@ -663,3 +663,24 @@ Portaled reka-ui/Nuxt UI overlays have NO z-index (theme + DialogPortal confirme
 - Marketing pages use `defineRouteRules({ swr: 3600 })` in some cases; expect up to 1h of stale pre-edit HTML on prod after deploy (Nitro SWR cache).
 
 
+
+## Session: 2026-08-24 — Template logic + calculations rollout (27 templates)
+
+### Changes (uncommitted; only TemplateSeeder.php + new test are mine — other dirty files pre-date this session)
+- **27 templates** now demonstrate conditional logic and/or computed variables (all genuinely suitable, no forced additions):
+  - **Logic (19)**: liability-waiver + photo-release (is_minor → guardian name+signature, show-block+require-answer), poll (vote → why follow-up via is_not_empty+true), voting (3 positions w/ real slates + write-in checkbox → details), nps (score<7 → improvement, score>8 → highlight), customer-feedback (rating<3 → what-went-wrong), wedding-rsvp + rsvp (attending/guest-count conditionals), job-application (referral → referrer), rental-application (pets≠none → pet details), patient-intake (insurance yes → provider+policy, require-answer), leave-request (sick → doctor's note upload), insurance-claim (auto → vehicle details), maintenance-request (emergency → conditional nf-text warning block), sports-registration (team≠Adult → parent required), donation (Other Amount → custom amount required).
+  - **Calculations (12)**: calculation-form (package IF-chain × qty + CONTAINS addons → cv_total), quiz (self-grading cv_score /5), purchase-order ({quantity}*{unit_price} — FAQ already promised it), timesheet (SUM 5 days), tshirt (qty×$15 + XXL surcharge + ship fee + shipping-address conditional), catering (per-head by package × guests + onsite fee + venue-address conditional), event-registration (ticket price), gym (plan price/12 for annual + PT sessions×60), summer-camp (session fee), gaming-tournament (entry fee by team size), photography (starting price), reimbursement-claim (mileage_distance×0.67 — FAQ promised it).
+  - Rendering: `computed_variables` in structure + `totalBlock()` nf-text with `<span mention mention-field-id="cv_...">` — useParseMention substitutes live values during fill AND in the template detail preview.
+- **Thinnest fixed**: poll 2→5 fields, voting 5→9 fields.
+- New helpers in TemplateSeeder: `logicCondition()`, `revealLogic()`, `computedVariable()`, `totalBlock()`, `numberField()`, optional `$name` on `nfText()`. Select comparisons use option NAME text (post-normalization stored value). `select.is_not_empty` requires explicit `'value' => true`.
+- New test `api/tests/Feature/Templates/TemplateStructuresValidationTest.php` (4 tests): instantiates ALL 75 templates through the REAL form-create endpoint (StoreFormRequest→ComputedVariablesRule→LogicPropertyValidator), asserts logic presence on 19 slugs + formula validity/rendering block on 12 calc slugs.
+
+### Validation
+- Pest: new suite 4/4 (1517 asserts); FormLogic+ComputedVariables 34 pass; Feature/Forms 341 pass, 3 pre-existing failures (CustomSmtp notification, PublicAssetSecurity signed temp URL, SVG-sanitize expectation) — confirmed failing with seeder stashed.
+- Formula parity: PHP ComputedVariableEvaluator vs client JS evaluateFormula — identical results on all formulas (e.g. calc=2847, quiz=4/5, tshirt=73, gym=157.5).
+- Live dev: re-seeded DB (`db:seed --class=TemplateSeeder --force`), verified waiver/poll/calc pages render new fields + logic + mention blocks at localhost:3000.
+
+### Gotchas
+- Dev api container was created from an OLD compose config (only storage volume) — `docker compose up -d --force-recreate db api` to get the ./api bind mount back. Plain `docker start` reuses stale mounts.
+- Stale template data has TWO cache layers: Laravel `prod_templates` (3600s, clear as www-data) AND Nitro SWR disk cache at `/app/.nuxt/cache/nitro` which SURVIVES `docker restart ui` (writable layer) — `rm -rf` it or recreate the container.
+- sharaforms-ingress must be running for ui SSR fetches (`sharaforms-ingress` hostname); it was down ("Created") after the mode switch and silently broke SSR data.

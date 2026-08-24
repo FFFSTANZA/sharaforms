@@ -279,6 +279,17 @@ class TemplateSeeder extends Seeder
         ];
     }
 
+    private function numberField(string $id, string $title, bool $required = false, array $extra = []): array
+    {
+        return array_merge([
+            'id' => $id,
+            'type' => 'number',
+            'title' => $title,
+            'required' => $required,
+            'help' => '',
+        ], $extra);
+    }
+
     private function dateField(string $id, string $title, bool $required = false): array
     {
         return [
@@ -290,12 +301,83 @@ class TemplateSeeder extends Seeder
         ];
     }
 
-    private function nfText(string $id, string $content): array
+    private function nfText(string $id, string $content, ?string $name = null): array
+    {
+        $block = [
+            'id' => $id,
+            'type' => 'nf-text',
+            'content' => $content,
+        ];
+        if ($name !== null) {
+            $block['name'] = $name;
+        }
+
+        return $block;
+    }
+
+    /**
+     * A single condition node matching the client/server logic schema
+     * (see LogicPropertyValidator + resources/data/open_filters.json for the
+     * valid type/operator pairs). Select comparisons compare against the
+     * option NAME (the value stored on submit), not the legacy option value.
+     */
+    private function logicCondition(string $fieldId, string $fieldType, string $operator, mixed $value = null): array
+    {
+        $condition = [
+            'operator' => $operator,
+            'property_meta' => ['id' => $fieldId, 'type' => $fieldType],
+        ];
+        if ($value !== null) {
+            $condition['value'] = $value;
+        }
+
+        return ['identifier' => $fieldId, 'value' => $condition];
+    }
+
+    /**
+     * Logic for a hidden field that appears once `logicCondition` is met.
+     * With $requiredWhenShown the field also becomes mandatory while visible
+     * ('require-answer'), which keeps base validation valid per
+     * LogicPropertyValidator::checkActions (hidden fields may only carry
+     * show-block / require-answer actions).
+     */
+    private function revealLogic(array $conditions, string $operatorIdentifier = 'and', bool $requiredWhenShown = false): array
+    {
+        return [
+            'conditions' => [
+                'operatorIdentifier' => $operatorIdentifier,
+                'children' => $conditions,
+            ],
+            'actions' => $requiredWhenShown ? ['show-block', 'require-answer'] : ['show-block'],
+        ];
+    }
+
+    /**
+     * Hidden-by-default variant of a field: pass `'logic' => $this->revealLogic([...])`
+     * in the field's extra attributes together with 'hidden' => true.
+     */
+    private function computedVariable(string $id, string $name, string $formula): array
+    {
+        return [
+            'id' => $id,
+            'name' => $name,
+            'formula' => $formula,
+            'result_type' => 'number',
+        ];
+    }
+
+    /**
+     * Rich-text block that renders a computed variable live while the form is
+     * filled. The mention span is substituted by useParseMention with the
+     * variable's evaluated value (fallback shown until inputs are complete).
+     */
+    private function totalBlock(string $id, string $cvId, string $label, string $fallback): array
     {
         return [
             'id' => $id,
             'type' => 'nf-text',
-            'content' => $content,
+            'name' => $label,
+            'content' => '<p><strong>' . $label . ': <span mention="true" mention-field-id="' . $cvId . '" mention-field-name="' . $label . '" mention-fallback="' . $fallback . '">' . $fallback . '</span></strong></p>',
         ];
     }
 
@@ -434,7 +516,16 @@ class TemplateSeeder extends Seeder
                     ['value' => 'gluten_free', 'text' => 'Gluten-Free'],
                 ]),
                 $this->checkboxField('agree_terms', 'I agree to the event terms and conditions', true),
-            ], '#8b5cf6'),
+                $this->totalBlock('ticket_total_display', 'cv_ticket_total', 'Ticket Price', '$0'),
+            ], '#8b5cf6', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_ticket_total',
+                        'Ticket Price',
+                        'IF(ISBLANK({ticket_type}),0,IF({ticket_type}="VIP",150,IF({ticket_type}="Student",25,50)))'
+                    ),
+                ],
+            ]),
         ];
     }
 
@@ -452,6 +543,9 @@ class TemplateSeeder extends Seeder
                 $this->textField('full_name', 'Your Name'),
                 $this->emailField('email'),
                 ['id' => 'satisfaction', 'type' => 'rating', 'title' => 'How satisfied are you with our service?', 'required' => true, 'help' => '', 'steps' => 5],
+                ['id' => 'what_went_wrong', 'type' => 'text', 'title' => 'We fell short - what went wrong?', 'required' => false, 'help' => '',
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('satisfaction', 'rating', 'less_than', 3)])],
                 $this->selectField('recommend', 'How likely are you to recommend us?', [
                     ['value' => 'very_likely', 'text' => 'Very Likely'],
                     ['value' => 'likely', 'text' => 'Likely'],
@@ -488,6 +582,9 @@ class TemplateSeeder extends Seeder
                     ['value' => 'referral', 'text' => 'Employee Referral'],
                     ['value' => 'other', 'text' => 'Other'],
                 ]),
+                ['id' => 'referral_name', 'type' => 'text', 'title' => 'Who referred you?', 'required' => false, 'help' => 'Name of the employee who referred you',
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('how_did_you_hear', 'select', 'equals', 'Employee Referral')])],
                 $this->checkboxField('agree', 'I confirm that the information provided is accurate', true),
             ], '#6366f1'),
         ];
@@ -568,6 +665,10 @@ class TemplateSeeder extends Seeder
                     ['value' => '250', 'text' => '$250'],
                     ['value' => 'other', 'text' => 'Other Amount'],
                 ], true),
+                $this->numberField('custom_amount', 'Custom Amount ($)', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('donation_amount', 'select', 'equals', 'Other Amount')], 'and', true),
+                ]),
                 $this->selectField('frequency', 'Donation Frequency', [
                     ['value' => 'one_time', 'text' => 'One-Time'],
                     ['value' => 'monthly', 'text' => 'Monthly'],
@@ -627,6 +728,18 @@ class TemplateSeeder extends Seeder
                     ['value' => 'female', 'text' => 'Female'],
                     ['value' => 'other', 'text' => 'Other'],
                     ['value' => 'prefer_not', 'text' => 'Prefer Not to Say'],
+                ]),
+                $this->selectField('has_insurance', 'Do you have health insurance?', [
+                    ['value' => 'yes', 'text' => 'Yes'],
+                    ['value' => 'no', 'text' => 'No'],
+                ]),
+                $this->textField('insurance_provider', 'Insurance Provider', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('has_insurance', 'select', 'equals', 'Yes')], 'and', true),
+                ]),
+                $this->textField('policy_number', 'Member / Policy ID', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('has_insurance', 'select', 'equals', 'Yes')], 'and', true),
                 ]),
                 $this->textareaField('medical_history', 'Relevant Medical History'),
                 $this->textareaField('medications', 'Current Medications'),
@@ -721,8 +834,15 @@ class TemplateSeeder extends Seeder
                     ['value' => 'no', 'text' => 'Sorry, I can\'t make it'],
                 ], true),
                 ['id' => 'guests', 'type' => 'number', 'title' => 'Number of Guests (including you)', 'required' => false, 'help' => ''],
-                $this->textareaField('dietary', 'Dietary Restrictions / Allergies'),
-                $this->textareaField('message', 'Message for the Host'),
+                ['id' => 'guest_names', 'type' => 'text', 'title' => 'Names of Additional Guests', 'required' => false, 'help' => '',
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('guests', 'number', 'greater_than', 1)])],
+                ['id' => 'dietary', 'type' => 'text', 'title' => 'Dietary Restrictions / Allergies', 'required' => false, 'help' => '', 'multi_lines' => true,
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('attending', 'select', 'equals', "Yes, I'll be there!")])],
+                ['id' => 'message', 'type' => 'text', 'title' => 'Message for the Host', 'required' => false, 'help' => '', 'multi_lines' => true,
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('attending', 'select', 'equals', "Yes, I'll be there!")])],
                 $this->checkboxField('agree', 'I\'ve read and agree to the event guidelines'),
             ], '#e11d48'),
         ];
@@ -868,10 +988,22 @@ class TemplateSeeder extends Seeder
                 ['id' => 'full_name', 'type' => 'text', 'title' => 'Full Name', 'required' => true, 'help' => ''],
                 ['id' => 'email', 'type' => 'email', 'title' => 'Email', 'required' => true, 'help' => ''],
                 ['id' => 'project_type', 'type' => 'select', 'title' => 'Project Type', 'required' => true, 'help' => '', 'options' => [['value' => 'basic', 'text' => 'Basic Package - $499'], ['value' => 'standard', 'text' => 'Standard Package - $899'], ['value' => 'premium', 'text' => 'Premium Package - $1499']]],
-                ['id' => 'quantity', 'type' => 'number', 'title' => 'Quantity', 'required' => true, 'help' => ''],
+                ['id' => 'quantity', 'type' => 'number', 'title' => 'Quantity', 'required' => true, 'help' => 'How many units or licenses do you need?'],
                 ['id' => 'addons', 'type' => 'multi_select', 'title' => 'Add-ons', 'required' => false, 'help' => 'Select any additional services', 'options' => [['value' => 'design', 'text' => 'Extra Design - $150'], ['value' => 'support', 'text' => 'Priority Support - $99'], ['value' => 'training', 'text' => 'Training Session - $199']]],
-                ['id' => 'budget', 'type' => 'slider', 'title' => 'Your Budget', 'required' => false, 'help' => '', 'slider_min_value' => 0, 'slider_max_value' => 10000, 'slider_step_value' => 100]
-            ], '#14b8a6'),
+                ['id' => 'budget', 'type' => 'slider', 'title' => 'Your Budget', 'required' => false, 'help' => '', 'slider_min_value' => 0, 'slider_max_value' => 10000, 'slider_step_value' => 100],
+                $this->totalBlock('total_display', 'cv_total', 'Your Estimated Total', '$0'),
+            ], '#14b8a6', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_total',
+                        'Estimated Total',
+                        'IF({project_type}="Basic Package - $499",499,IF({project_type}="Standard Package - $899",899,1499))*{quantity}'
+                        . '+IF(CONTAINS({addons},"Extra Design - $150"),150,0)'
+                        . '+IF(CONTAINS({addons},"Priority Support - $99"),99,0)'
+                        . '+IF(CONTAINS({addons},"Training Session - $199"),199,0)'
+                    ),
+                ],
+            ]),
         ];
     }
 
@@ -1053,15 +1185,20 @@ class TemplateSeeder extends Seeder
     private function pollForm(): array
     {
         return [
-            'name' => 'Poll Form Template', 
-            'slug' => 'poll-form-template', 
-            'short_description' => 'A lightweight poll form template to gather quick opinions and votes from your audience.', 
-            'description' => '<p>Our Poll Form Template is perfect for gathering quick opinions from your audience. Ask one focused question and collect votes instantly.</p><h2>Why and when to use a poll</h2><p>Polls are great for social media, product decisions, community voting, and gathering fast feedback on a single question.</p><h2>Who is this template for</h2><p>Marketers, social media managers, product teams, and community managers running quick opinion polls.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms makes polls easy to share and embed, with instant submission summaries so you can read results as they come in.</p>', 
+            'name' => 'Poll Form Template',
+            'slug' => 'poll-form-template',
+            'short_description' => 'A lightweight poll form template to gather quick opinions and votes from your audience.',
+            'description' => '<p>Our Poll Form Template is perfect for gathering quick opinions from your audience. Ask one focused question, capture the reasoning behind votes with a conditional follow-up, and collect votes instantly.</p><h2>Why and when to use a poll</h2><p>Polls are great for social media, product decisions, community voting, and gathering fast feedback on a single question. The optional follow-up field only appears once someone has voted, so every response stays quick while still giving you the "why" behind the result.</p><h2>Who is this template for</h2><p>Marketers, social media managers, product teams, and community managers running quick opinion polls.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms makes polls easy to share and embed, uses conditional logic to keep the form short, and shows instant submission summaries so you can read results as they come in.</p>',
             'types' => ['polls', 'voting_forms'],
             'industries' => ['marketing_forms', 'entertainment_forms'],
             'structure' => $this->structure('Quick Poll', [
-                ['id' => 'question_1', 'type' => 'radio', 'title' => 'Which option do you prefer?', 'required' => true, 'help' => '', 'options' => [['value' => 'option_a', 'text' => 'Option A'], ['value' => 'option_b', 'text' => 'Option B'], ['value' => 'option_c', 'text' => 'Option C']]],
-                ['id' => 'feedback', 'type' => 'text', 'title' => 'Any comments?', 'required' => false, 'help' => '', 'multi_lines' => true]
+                $this->nfText('intro', '<h2>Quick Poll</h2><p>One question, ten seconds. Help us decide what to build next!</p>'),
+                ['id' => 'feature_choice', 'type' => 'radio', 'title' => 'Which feature should we build next?', 'required' => true, 'help' => '', 'options' => [['value' => 'dark_mode', 'text' => 'Dark Mode'], ['value' => 'mobile_app', 'text' => 'Mobile App'], ['value' => 'integrations', 'text' => 'More Integrations'], ['value' => 'custom_reports', 'text' => 'Custom Reports & Exports']]],
+                ['id' => 'vote_reason', 'type' => 'text', 'title' => 'Nice! Why does that matter to you?', 'required' => false, 'help' => 'Optional - one line helps us understand the vote', 'multi_lines' => false,
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('feature_choice', 'select', 'is_not_empty', true)])],
+                $this->emailField('email', 'Email (optional)', false),
+                ['id' => 'feedback', 'type' => 'text', 'title' => 'Any other comments?', 'required' => false, 'help' => '', 'multi_lines' => true]
             ], '#0ea5e9'),
         ];
     }
@@ -1081,8 +1218,17 @@ class TemplateSeeder extends Seeder
                 ['id' => 'q2', 'type' => 'radio', 'title' => 'Question 2: How many continents are there?', 'required' => true, 'help' => '', 'options' => [['value' => 'five', 'text' => '5'], ['value' => 'six', 'text' => '6'], ['value' => 'seven', 'text' => '7'], ['value' => 'eight', 'text' => '8']]],
                 ['id' => 'q3', 'type' => 'radio', 'title' => 'Question 3: Which planet is known as the Red Planet?', 'required' => true, 'help' => '', 'options' => [['value' => 'venus', 'text' => 'Venus'], ['value' => 'mars', 'text' => 'Mars'], ['value' => 'jupiter', 'text' => 'Jupiter'], ['value' => 'saturn', 'text' => 'Saturn']]],
                 ['id' => 'q4', 'type' => 'radio', 'title' => 'Question 4: What is 7 x 8?', 'required' => true, 'help' => '', 'options' => [['value' => '54', 'text' => '54'], ['value' => '56', 'text' => '56'], ['value' => '58', 'text' => '58'], ['value' => '64', 'text' => '64']]],
-                ['id' => 'q5', 'type' => 'radio', 'title' => 'Question 5: Which ocean is the largest?', 'required' => true, 'help' => '', 'options' => [['value' => 'atlantic', 'text' => 'Atlantic'], ['value' => 'indian', 'text' => 'Indian'], ['value' => 'pacific', 'text' => 'Pacific'], ['value' => 'arctic', 'text' => 'Arctic']]]
-            ], '#8b5cf6'),
+                ['id' => 'q5', 'type' => 'radio', 'title' => 'Question 5: Which ocean is the largest?', 'required' => true, 'help' => '', 'options' => [['value' => 'atlantic', 'text' => 'Atlantic'], ['value' => 'indian', 'text' => 'Indian'], ['value' => 'pacific', 'text' => 'Pacific'], ['value' => 'arctic', 'text' => 'Arctic']]],
+                $this->totalBlock('score_display', 'cv_score', 'Your Score', '0 / 5'),
+            ], '#8b5cf6', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_score',
+                        'Quiz Score',
+                        'IF({q1}="Paris",1,0)+IF({q2}="7",1,0)+IF({q3}="Mars",1,0)+IF({q4}="56",1,0)+IF({q5}="Pacific",1,0)'
+                    ),
+                ],
+            ]),
         ];
     }
 
@@ -1234,8 +1380,17 @@ class TemplateSeeder extends Seeder
                 ['id' => 'activities', 'type' => 'multi_select', 'title' => 'Preferred Activities', 'required' => false, 'help' => '', 'options' => [['value' => 'swimming', 'text' => 'Swimming'], ['value' => 'arts', 'text' => 'Arts & Crafts'], ['value' => 'sports', 'text' => 'Sports'], ['value' => 'nature', 'text' => 'Nature Hikes'], ['value' => 'music', 'text' => 'Music']]],
                 ['id' => 'medical_conditions', 'type' => 'text', 'title' => 'Medical Conditions / Allergies', 'required' => false, 'help' => '', 'multi_lines' => true],
                 ['id' => 'emergency_contact', 'type' => 'text', 'title' => 'Emergency Contact', 'required' => true, 'help' => ''],
-                ['id' => 'consent', 'type' => 'checkbox', 'title' => 'I consent to my child participating in camp activities', 'required' => true, 'help' => '']
-            ], '#f59e0b'),
+                ['id' => 'consent', 'type' => 'checkbox', 'title' => 'I consent to my child participating in camp activities', 'required' => true, 'help' => ''],
+                $this->totalBlock('camp_fee_display', 'cv_camp_fee', 'Camp Fee', '$0'),
+            ], '#f59e0b', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_camp_fee',
+                        'Camp Fee',
+                        'IF({session}="Full Summer",900,350)'
+                    ),
+                ],
+            ]),
         ];
     }
 
@@ -1286,17 +1441,23 @@ class TemplateSeeder extends Seeder
     private function votingForm(): array
     {
         return [
-            'name' => 'Voting Form Template', 
-            'slug' => 'voting-form-template', 
-            'short_description' => 'A voting form template for elections, award ballots, and community decision-making.', 
-            'description' => '<p>Our Voting Form Template helps you run elections, award ballots, and community decisions with a simple, structured voting flow.</p><h2>Why and when to use a voting form</h2><p>Use voting forms for board elections, staff decisions, community polls, and award ballots where you need a clear, auditable result.</p><h2>Who is this template for</h2><p>Organizations, associations, committees, and communities running structured votes.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms secures votes with authentication options and lets you limit submissions to one per person.</p>', 
+            'name' => 'Voting Form Template',
+            'slug' => 'voting-form-template',
+            'short_description' => 'A voting form template for elections, award ballots, and community decision-making.',
+            'description' => '<p>Our Voting Form Template helps you run elections, award ballots, and community decisions with a simple, structured voting flow: three positions, distinct candidate slates, and an optional write-in.</p><h2>Why and when to use a voting form</h2><p>Use voting forms for board elections, staff decisions, community polls, and award ballots where you need a clear, auditable result. Separate questions per position prevent confusion, and the write-in option keeps the ballot fair without extra forms.</p><h2>Who is this template for</h2><p>Organizations, associations, committees, and communities running structured votes.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms secures votes with authentication options, lets you limit submissions to one per person, and shows the write-in field only to voters who ask for it through conditional logic.</p>',
             'types' => ['voting_forms', 'polls'],
             'industries' => ['business_forms', 'church_forms'],
-            'structure' => $this->structure('Cast Your Vote', [
+            'structure' => $this->structure('Official Ballot', [
+                $this->nfText('intro', '<h2>Annual Board Election</h2><p>One vote per member. Choose a candidate or abstain for each position.</p>'),
                 ['id' => 'voter_name', 'type' => 'text', 'title' => 'Voter Name', 'required' => true, 'help' => ''],
-                ['id' => 'email', 'type' => 'email', 'title' => 'Email', 'required' => true, 'help' => ''],
-                ['id' => 'candidate_1', 'type' => 'radio', 'title' => 'Position 1: Choose a candidate', 'required' => true, 'help' => '', 'options' => [['value' => 'candidate_a', 'text' => 'Candidate A'], ['value' => 'candidate_b', 'text' => 'Candidate B'], ['value' => 'candidate_c', 'text' => 'Candidate C'], ['value' => 'abstain', 'text' => 'Abstain']]],
-                ['id' => 'candidate_2', 'type' => 'radio', 'title' => 'Position 2: Choose a candidate', 'required' => true, 'help' => '', 'options' => [['value' => 'candidate_a', 'text' => 'Candidate A'], ['value' => 'candidate_b', 'text' => 'Candidate B'], ['value' => 'candidate_c', 'text' => 'Candidate C'], ['value' => 'abstain', 'text' => 'Abstain']]],
+                ['id' => 'email', 'type' => 'email', 'title' => 'Email', 'required' => true, 'help' => 'Used to verify membership'],
+                ['id' => 'president_vote', 'type' => 'radio', 'title' => 'President: choose a candidate', 'required' => true, 'help' => '', 'options' => [['value' => 'pres_amara', 'text' => 'Amara Okafor'], ['value' => 'pres_luis', 'text' => 'Luis Fernandez'], ['value' => 'priya_pres', 'text' => 'Priya Sharma'], ['value' => 'abstain_1', 'text' => 'Abstain']]],
+                ['id' => 'secretary_vote', 'type' => 'radio', 'title' => 'Secretary: choose a candidate', 'required' => true, 'help' => '', 'options' => [['value' => 'sec_dana', 'text' => 'Dana Whitfield'], ['value' => 'sec_tom', 'text' => 'Tom Becker'], ['value' => 'sec_leila', 'text' => 'Leila Haddad'], ['value' => 'abstain_2', 'text' => 'Abstain']]],
+                ['id' => 'treasurer_vote', 'type' => 'radio', 'title' => 'Treasurer: choose a candidate', 'required' => true, 'help' => '', 'options' => [['value' => 'tres_marcus', 'text' => 'Marcus Lee'], ['value' => 'tres_ingrid', 'text' => 'Ingrid Svensson'], ['value' => 'tres_ravi', 'text' => 'Ravi Patel'], ['value' => 'abstain_3', 'text' => 'Abstain']]],
+                ['id' => 'write_in', 'type' => 'checkbox', 'title' => 'I would like to write in a candidate', 'required' => false, 'help' => ''],
+                ['id' => 'write_in_details', 'type' => 'text', 'title' => 'Write-in Candidate & Position', 'required' => false, 'help' => 'Candidate name and the position you are nominating them for',
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('write_in', 'checkbox', 'is_checked')])],
                 ['id' => 'comments', 'type' => 'text', 'title' => 'Comments (Optional)', 'required' => false, 'help' => '', 'multi_lines' => true]
             ], '#059669'),
         ];
@@ -1316,9 +1477,15 @@ class TemplateSeeder extends Seeder
                 ['id' => 'email', 'type' => 'email', 'title' => 'Email', 'required' => true, 'help' => ''],
                 ['id' => 'attending', 'type' => 'radio', 'title' => 'Will you attend?', 'required' => true, 'help' => '', 'options' => [['value' => 'yes', 'text' => 'Happily Accepts'], ['value' => 'no', 'text' => 'Regretfully Declines']]],
                 ['id' => 'plus_one', 'type' => 'number', 'title' => 'Number of Guests', 'required' => false, 'help' => 'Including yourself'],
-                ['id' => 'meal_choice', 'type' => 'select', 'title' => 'Meal Preference', 'required' => false, 'help' => '', 'options' => [['value' => 'chicken', 'text' => 'Chicken'], ['value' => 'fish', 'text' => 'Fish'], ['value' => 'vegetarian', 'text' => 'Vegetarian'], ['value' => 'vegan', 'text' => 'Vegan']]],
-                ['id' => 'dietary', 'type' => 'text', 'title' => 'Dietary Restrictions / Allergies', 'required' => false, 'help' => ''],
-                ['id' => 'song_request', 'type' => 'text', 'title' => 'Song Request', 'required' => false, 'help' => ''],
+                ['id' => 'meal_choice', 'type' => 'select', 'title' => 'Meal Preference', 'required' => false, 'help' => '', 'options' => [['value' => 'chicken', 'text' => 'Chicken'], ['value' => 'fish', 'text' => 'Fish'], ['value' => 'vegetarian', 'text' => 'Vegetarian'], ['value' => 'vegan', 'text' => 'Vegan']],
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('attending', 'select', 'equals', 'Happily Accepts')])],
+                ['id' => 'dietary', 'type' => 'text', 'title' => 'Dietary Restrictions / Allergies', 'required' => false, 'help' => '',
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('attending', 'select', 'equals', 'Happily Accepts')])],
+                ['id' => 'song_request', 'type' => 'text', 'title' => 'Song Request', 'required' => false, 'help' => '',
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('attending', 'select', 'equals', 'Happily Accepts')])],
                 ['id' => 'message', 'type' => 'text', 'title' => 'Message for the Couple', 'required' => false, 'help' => '', 'multi_lines' => true]
             ], '#e11d48'),
         ];
@@ -1431,6 +1598,9 @@ class TemplateSeeder extends Seeder
                 ['id' => 'claim_type', 'type' => 'select', 'title' => 'Claim Type', 'required' => true, 'help' => '', 'options' => [['value' => 'auto', 'text' => 'Auto'], ['value' => 'home', 'text' => 'Home'], ['value' => 'health', 'text' => 'Health'], ['value' => 'life', 'text' => 'Life'], ['value' => 'travel', 'text' => 'Travel']]],
                 ['id' => 'incident_date', 'type' => 'date', 'title' => 'Incident Date', 'required' => true, 'help' => ''],
                 ['id' => 'incident_description', 'type' => 'text', 'title' => 'Incident Description', 'required' => true, 'help' => '', 'multi_lines' => true],
+                ['id' => 'vehicle_details', 'type' => 'text', 'title' => 'Vehicle Details', 'required' => false, 'help' => 'Make, model, year, and plate of the insured vehicle',
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('claim_type', 'select', 'equals', 'Auto')])],
                 ['id' => 'claim_amount', 'type' => 'number', 'title' => 'Estimated Claim Amount', 'required' => true, 'help' => ''],
                 ['id' => 'supporting_documents', 'type' => 'files', 'title' => 'Supporting Documents', 'required' => false, 'help' => 'Photos, receipts, police report', 'max_number_of_files' => 6, 'max_file_size' => 25]
             ], '#f59e0b'),
@@ -1454,8 +1624,17 @@ class TemplateSeeder extends Seeder
                 ['id' => 'preferred_date', 'type' => 'date', 'title' => 'Preferred Date', 'required' => true, 'help' => ''],
                 ['id' => 'location', 'type' => 'text', 'title' => 'Location', 'required' => true, 'help' => ''],
                 ['id' => 'vision', 'type' => 'text', 'title' => 'Describe Your Vision', 'required' => false, 'help' => '', 'multi_lines' => true],
-                ['id' => 'inspiration', 'type' => 'files', 'title' => 'Inspiration Images (Optional)', 'required' => false, 'help' => 'Optional', 'max_number_of_files' => 5, 'max_file_size' => 25]
-            ], '#ec4899'),
+                ['id' => 'inspiration', 'type' => 'files', 'title' => 'Inspiration Images (Optional)', 'required' => false, 'help' => 'Optional', 'max_number_of_files' => 5, 'max_file_size' => 25],
+                $this->totalBlock('starting_price_display', 'cv_starting_price', 'Starting Price for Your Session', '$0'),
+            ], '#ec4899', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_starting_price',
+                        'Starting Price',
+                        'IF({session_type}="Wedding",1200,IF({session_type}="Portrait",250,IF({session_type}="Family",350,IF({session_type}="Event",800,1500))))'
+                    ),
+                ],
+            ]),
         ];
     }
 
@@ -1492,7 +1671,9 @@ class TemplateSeeder extends Seeder
             'structure' => $this->structure('Team Registration', [
                 ['id' => 'player_name', 'type' => 'text', 'title' => 'Player Name', 'required' => true, 'help' => ''],
                 ['id' => 'date_of_birth', 'type' => 'date', 'title' => 'Date of Birth', 'required' => true, 'help' => ''],
-                ['id' => 'parent_name', 'type' => 'text', 'title' => 'Parent / Guardian Name', 'required' => true, 'help' => ''],
+                ['id' => 'parent_name', 'type' => 'text', 'title' => 'Parent / Guardian Name', 'required' => false, 'help' => 'For players under 18',
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('team', 'select', 'does_not_equal', 'Adult')], 'and', true)],
                 ['id' => 'email', 'type' => 'email', 'title' => 'Email', 'required' => true, 'help' => ''],
                 ['id' => 'phone', 'type' => 'phone_number', 'title' => 'Phone Number', 'required' => true, 'help' => ''],
                 ['id' => 'team', 'type' => 'select', 'title' => 'Team / Division', 'required' => true, 'help' => '', 'options' => [['value' => 'u10', 'text' => 'Under 10'], ['value' => 'u12', 'text' => 'Under 12'], ['value' => 'u14', 'text' => 'Under 14'], ['value' => 'u16', 'text' => 'Under 16'], ['value' => 'adult', 'text' => 'Adult']]],
@@ -1520,8 +1701,17 @@ class TemplateSeeder extends Seeder
                 ['id' => 'game', 'type' => 'select', 'title' => 'Game', 'required' => true, 'help' => '', 'options' => [['value' => 'valorant', 'text' => 'Valorant'], ['value' => 'lol', 'text' => 'League of Legends'], ['value' => 'cs2', 'text' => 'Counter-Strike 2'], ['value' => 'rocket_league', 'text' => 'Rocket League']]],
                 ['id' => 'team_size', 'type' => 'select', 'title' => 'Entry Type', 'required' => true, 'help' => '', 'options' => [['value' => 'solo', 'text' => 'Solo'], ['value' => 'duo', 'text' => 'Duo'], ['value' => 'squad', 'text' => 'Squad (4 players)'], ['value' => 'clan', 'text' => 'Clan / Full Team']]],
                 ['id' => 'rank', 'type' => 'select', 'title' => 'Current Rank (Optional)', 'required' => false, 'help' => '', 'options' => [['value' => 'bronze', 'text' => 'Bronze'], ['value' => 'silver', 'text' => 'Silver'], ['value' => 'gold', 'text' => 'Gold'], ['value' => 'platinum', 'text' => 'Platinum'], ['value' => 'diamond_plus', 'text' => 'Diamond+']]],
-                ['id' => 'rules', 'type' => 'checkbox', 'title' => 'I agree to the tournament rules', 'required' => true, 'help' => '']
-            ], '#8b5cf6'),
+                ['id' => 'rules', 'type' => 'checkbox', 'title' => 'I agree to the tournament rules', 'required' => true, 'help' => ''],
+                $this->totalBlock('entry_fee_display', 'cv_entry_fee', 'Entry Fee', '$0'),
+            ], '#8b5cf6', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_entry_fee',
+                        'Entry Fee',
+                        'IF(ISBLANK({team_size}),0,IF({team_size}="Duo",18,IF({team_size}="Squad (4 players)",30,IF({team_size}="Clan / Full Team",50,10))))'
+                    ),
+                ],
+            ]),
         ];
     }
 
@@ -1578,6 +1768,9 @@ class TemplateSeeder extends Seeder
                 ['id' => 'move_in_date', 'type' => 'date', 'title' => 'Desired Move-in Date', 'required' => true, 'help' => ''],
                 ['id' => 'occupants', 'type' => 'number', 'title' => 'Number of Occupants', 'required' => true, 'help' => ''],
                 ['id' => 'pets', 'type' => 'select', 'title' => 'Pets', 'required' => true, 'help' => '', 'options' => [['value' => 'none', 'text' => 'No pets'], ['value' => 'dog', 'text' => 'Dog'], ['value' => 'cat', 'text' => 'Cat'], ['value' => 'other', 'text' => 'Other']]],
+                ['id' => 'pet_details', 'type' => 'text', 'title' => 'Pet Details', 'required' => false, 'help' => 'Breed, size, and weight for each pet',
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('pets', 'select', 'does_not_equal', 'No pets')])],
                 ['id' => 'employment_status', 'type' => 'select', 'title' => 'Employment Status', 'required' => true, 'help' => '', 'options' => [['value' => 'employed', 'text' => 'Employed'], ['value' => 'self_employed', 'text' => 'Self-employed'], ['value' => 'student', 'text' => 'Student'], ['value' => 'retired', 'text' => 'Retired'], ['value' => 'unemployed', 'text' => 'Other']]],
                 ['id' => 'monthly_income', 'type' => 'number', 'title' => 'Gross Monthly Income', 'required' => true, 'help' => ''],
                 ['id' => 'current_landlord', 'type' => 'text', 'title' => 'Current Landlord Contact', 'required' => false, 'help' => 'Name and phone or email'],
@@ -1654,6 +1847,9 @@ class TemplateSeeder extends Seeder
                 ['id' => 'end_date', 'type' => 'date', 'title' => 'Last Day of Leave', 'required' => true, 'help' => ''],
                 ['id' => 'days_requested', 'type' => 'number', 'title' => 'Working Days Requested', 'required' => true, 'help' => ''],
                 ['id' => 'coverage', 'type' => 'text', 'title' => 'Coverage / Handover Plan', 'required' => false, 'help' => '', 'multi_lines' => true],
+                ['id' => 'doctor_note', 'type' => 'files', 'title' => "Doctor's Note", 'required' => false, 'help' => 'Required by policy for absences of 3+ sick days', 'max_number_of_files' => 1, 'max_file_size' => 10,
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('leave_type', 'select', 'equals', 'Sick Leave')])],
                 ['id' => 'policy_ack', 'type' => 'checkbox', 'title' => 'I have read the time-off policy', 'required' => true, 'help' => '']
             ], '#059669'),
         ];
@@ -1728,9 +1924,14 @@ class TemplateSeeder extends Seeder
                 ['id' => 'hours_wed', 'type' => 'number', 'title' => 'Wednesday Hours', 'required' => true, 'help' => ''],
                 ['id' => 'hours_thu', 'type' => 'number', 'title' => 'Thursday Hours', 'required' => true, 'help' => ''],
                 ['id' => 'hours_fri', 'type' => 'number', 'title' => 'Friday Hours', 'required' => true, 'help' => ''],
+                $this->totalBlock('weekly_hours_display', 'cv_total_hours', 'Total Hours This Week', '0'),
                 ['id' => 'notes', 'type' => 'text', 'title' => 'Notes / Overtime Explanation', 'required' => false, 'help' => '', 'multi_lines' => true],
                 ['id' => 'accuracy_ack', 'type' => 'checkbox', 'title' => 'I confirm these hours are accurate', 'required' => true, 'help' => '']
-            ], '#0891b2'),
+            ], '#0891b2', [
+                'computed_variables' => [
+                    $this->computedVariable('cv_total_hours', 'Total Hours', 'SUM({hours_mon},{hours_tue},{hours_wed},{hours_thu},{hours_fri})'),
+                ],
+            ]),
         ];
     }
 
@@ -1767,8 +1968,13 @@ class TemplateSeeder extends Seeder
                 ['id' => 'unit_price', 'type' => 'number', 'title' => 'Unit Price', 'required' => true, 'help' => ''],
                 ['id' => 'needed_by', 'type' => 'date', 'title' => 'Required By', 'required' => true, 'help' => ''],
                 ['id' => 'budget_code', 'type' => 'text', 'title' => 'Budget Code (Optional)', 'required' => false, 'help' => ''],
+                $this->totalBlock('line_total_display', 'cv_line_total', 'Line Total', '$0'),
                 ['id' => 'manager_approval', 'type' => 'checkbox', 'title' => 'Manager approval obtained', 'required' => true, 'help' => '']
-            ], '#4f46e5'),
+            ], '#4f46e5', [
+                'computed_variables' => [
+                    $this->computedVariable('cv_line_total', 'Line Total', '{quantity}*{unit_price}'),
+                ],
+            ]),
         ];
     }
 
@@ -1799,12 +2005,20 @@ class TemplateSeeder extends Seeder
                 ['id' => 'claimant_name', 'type' => 'text', 'title' => 'Claimant Name', 'required' => true, 'help' => ''],
                 ['id' => 'email', 'type' => 'email', 'title' => 'Email for Payment Confirmation', 'required' => true, 'help' => ''],
                 ['id' => 'claim_type', 'type' => 'select', 'title' => 'Claim Type', 'required' => true, 'help' => '', 'options' => [['value' => 'mileage', 'text' => 'Mileage / Travel'], ['value' => 'medical', 'text' => 'Medical / Wellness'], ['value' => 'training', 'text' => 'Training / Course Fee'], ['value' => 'client_costs', 'text' => 'Client Entertainment'], ['value' => 'other', 'text' => 'Other Pre-approved Cost']]],
+                ['id' => 'mileage_distance', 'type' => 'number', 'title' => 'Trip Distance (miles)', 'required' => false, 'help' => 'Total miles for all trips claimed',
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('claim_type', 'select', 'equals', 'Mileage / Travel')])],
                 ['id' => 'amount_claimed', 'type' => 'number', 'title' => 'Amount Claimed', 'required' => true, 'help' => ''],
+                $this->totalBlock('mileage_estimate_display', 'cv_mileage_estimate', 'Mileage Estimate (at $0.67/mile)', '$0'),
                 ['id' => 'expense_date_range', 'type' => 'text', 'title' => 'Date(s) of Expense', 'required' => true, 'help' => 'e.g. 12-14 Aug 2026'],
                 ['id' => 'explanation', 'type' => 'text', 'title' => 'Explanation', 'required' => true, 'help' => '', 'multi_lines' => true],
                 ['id' => 'receipts', 'type' => 'files', 'title' => 'Receipts / Evidence', 'required' => true, 'help' => 'Photos or PDFs', 'max_number_of_files' => 6, 'max_file_size' => 10],
                 ['id' => 'policy_ack', 'type' => 'checkbox', 'title' => 'I confirm this claim follows the reimbursement policy', 'required' => true, 'help' => '']
-            ], '#0f766e'),
+            ], '#0f766e', [
+                'computed_variables' => [
+                    $this->computedVariable('cv_mileage_estimate', 'Mileage Estimate', '{mileage_distance}*0.67'),
+                ],
+            ]),
         ];
     }
 
@@ -1837,10 +2051,21 @@ class TemplateSeeder extends Seeder
                 ['id' => 'design', 'type' => 'select', 'title' => 'Design', 'required' => true, 'help' => '', 'options' => [['value' => 'classic_logo', 'text' => 'Classic Logo'], ['value' => 'anniversary', 'text' => 'Anniversary Edition'], ['value' => 'minimal', 'text' => 'Minimal Print']]],
                 ['id' => 'size', 'type' => 'select', 'title' => 'Size', 'required' => true, 'help' => '', 'options' => [['value' => 'xs', 'text' => 'XS'], ['value' => 's', 'text' => 'S'], ['value' => 'm', 'text' => 'M'], ['value' => 'l', 'text' => 'L'], ['value' => 'xl', 'text' => 'XL'], ['value' => 'xxl', 'text' => 'XXL']]],
                 ['id' => 'color', 'type' => 'select', 'title' => 'Color', 'required' => true, 'help' => '', 'options' => [['value' => 'black', 'text' => 'Black'], ['value' => 'white', 'text' => 'White'], ['value' => 'navy', 'text' => 'Navy'], ['value' => 'heather', 'text' => 'Heather Grey']]],
-                ['id' => 'quantity', 'type' => 'number', 'title' => 'Quantity', 'required' => true, 'help' => ''],
-                ['id' => 'delivery_method', 'type' => 'select', 'title' => 'Delivery Method', 'required' => true, 'help' => '', 'options' => [['value' => 'pickup', 'text' => 'Pickup at event'], ['value' => 'ship', 'text' => 'Ship to me']]],
-                ['id' => 'shipping_address', 'type' => 'text', 'title' => 'Shipping Address', 'required' => false, 'help' => 'Only if shipping', 'multi_lines' => true]
-            ], '#e11d48'),
+                ['id' => 'quantity', 'type' => 'number', 'title' => 'Quantity', 'required' => true, 'help' => '$15 per shirt, $2 extra for XXL'],
+                ['id' => 'delivery_method', 'type' => 'select', 'title' => 'Delivery Method', 'required' => true, 'help' => '', 'options' => [['value' => 'pickup', 'text' => 'Pickup at event'], ['value' => 'ship', 'text' => 'Ship to me (+$5)']]],
+                ['id' => 'shipping_address', 'type' => 'text', 'title' => 'Shipping Address', 'required' => false, 'help' => '',
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('delivery_method', 'select', 'equals', 'Ship to me (+$5)')], 'and', true)],
+                $this->totalBlock('order_total_display', 'cv_order_total', 'Order Total', '$0'),
+            ], '#e11d48', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_order_total',
+                        'Order Total',
+                        '{quantity}*15+IF({size}="XXL",2,0)*{quantity}+IF({delivery_method}="Ship to me (+$5)",5,0)'
+                    ),
+                ],
+            ]),
         ];
     }
 
@@ -1876,9 +2101,21 @@ class TemplateSeeder extends Seeder
                 ['id' => 'guest_count', 'type' => 'number', 'title' => 'Guest Count', 'required' => true, 'help' => ''],
                 ['id' => 'menu_package', 'type' => 'select', 'title' => 'Menu Package', 'required' => true, 'help' => '', 'options' => [['value' => 'breakfast', 'text' => 'Breakfast Spread'], ['value' => 'lunch_buffet', 'text' => 'Lunch Buffet'], ['value' => 'finger_food', 'text' => 'Finger Food & Canapés'], ['value' => 'formal_dinner', 'text' => 'Formal Dinner'], ['value' => 'custom', 'text' => 'Custom Menu']]],
                 ['id' => 'dietary_needs', 'type' => 'text', 'title' => 'Dietary Restrictions & Allergies', 'required' => false, 'help' => '', 'multi_lines' => true],
-                ['id' => 'service_type', 'type' => 'select', 'title' => 'Delivery or Pickup', 'required' => true, 'help' => '', 'options' => [['value' => 'delivery', 'text' => 'Delivery to venue'], ['value' => 'pickup', 'text' => 'Pickup'], ['value' => 'onsite_staff', 'text' => 'Delivery + On-site Staff']]],
-                ['id' => 'venue_address', 'type' => 'text', 'title' => 'Venue Address', 'required' => false, 'help' => 'Required for delivery', 'multi_lines' => true]
-            ], '#ca8a04'),
+                ['id' => 'service_type', 'type' => 'select', 'title' => 'Delivery or Pickup', 'required' => true, 'help' => '', 'options' => [['value' => 'delivery', 'text' => 'Delivery to venue'], ['value' => 'pickup', 'text' => 'Pickup'], ['value' => 'onsite_staff', 'text' => 'Delivery + On-site Staff (+$150)']]],
+                ['id' => 'venue_address', 'type' => 'text', 'title' => 'Venue Address', 'required' => false, 'help' => '',
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('service_type', 'select', 'does_not_equal', 'Pickup')], 'and', true)],
+                $this->totalBlock('estimate_display', 'cv_estimate', 'Estimated Quote', '$0'),
+            ], '#ca8a04', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_estimate',
+                        'Estimated Quote',
+                        'IF({menu_package}="Breakfast Spread",18,IF({menu_package}="Lunch Buffet",25,IF({menu_package}="Finger Food & Canapés",32,IF({menu_package}="Formal Dinner",55,0))))*{guest_count}'
+                        . '+IF({service_type}="Delivery + On-site Staff (+$150)",150,0)'
+                    ),
+                ],
+            ]),
         ];
     }
 
@@ -1909,8 +2146,13 @@ class TemplateSeeder extends Seeder
                 ['id' => 'participant_name', 'type' => 'text', 'title' => 'Participant Full Name', 'required' => true, 'help' => ''],
                 ['id' => 'email', 'type' => 'email', 'title' => 'Email', 'required' => true, 'help' => ''],
                 ['id' => 'activity_date', 'type' => 'date', 'title' => 'Activity Date', 'required' => true, 'help' => ''],
-                ['id' => 'is_minor', 'type' => 'checkbox', 'title' => 'Participant is under 18', 'required' => false, 'help' => ''],
-                ['id' => 'guardian_name', 'type' => 'text', 'title' => 'Parent / Guardian Name', 'required' => false, 'help' => 'Required for minors'],
+                ['id' => 'is_minor', 'type' => 'checkbox', 'title' => 'Participant is under 18', 'required' => false, 'help' => 'Checking this reveals the guardian section below'],
+                ['id' => 'guardian_name', 'type' => 'text', 'title' => 'Parent / Guardian Name', 'required' => false, 'help' => '',
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('is_minor', 'checkbox', 'is_checked')], 'and', true)],
+                ['id' => 'guardian_signature', 'type' => 'signature', 'title' => 'Parent / Guardian Signature', 'required' => false, 'help' => 'Guardian signs on behalf of the minor',
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('is_minor', 'checkbox', 'is_checked')], 'and', true)],
                 ['id' => 'emergency_contact', 'type' => 'phone_number', 'title' => 'Emergency Contact Number', 'required' => true, 'help' => ''],
                 ['id' => 'health_notes', 'type' => 'text', 'title' => 'Medical Conditions We Should Know About', 'required' => false, 'help' => '', 'multi_lines' => true],
                 ['id' => 'risk_acknowledgment', 'type' => 'checkbox', 'title' => 'I understand the activity involves inherent risks and voluntarily assume them', 'required' => true, 'help' => ''],
@@ -1950,8 +2192,13 @@ class TemplateSeeder extends Seeder
                 ['id' => 'usage_scope', 'type' => 'select', 'title' => 'Permitted Usage', 'required' => true, 'help' => '', 'options' => [['value' => 'website_social', 'text' => 'Website & Social Media'], ['value' => 'marketing_print', 'text' => 'Marketing & Print'], ['value' => 'all_media', 'text' => 'All Media Including Ads'], ['value' => 'internal', 'text' => 'Internal Use Only']]],
                 ['id' => 'usage_duration', 'type' => 'select', 'title' => 'Duration of Rights', 'required' => true, 'help' => '', 'options' => [['value' => 'one_year', 'text' => '1 Year'], ['value' => 'five_years', 'text' => '5 Years'], ['value' => 'indefinite', 'text' => 'Indefinite']]],
                 ['id' => 'compensation', 'type' => 'select', 'title' => 'Compensation', 'required' => true, 'help' => '', 'options' => [['value' => 'uncompensated', 'text' => 'Uncompensated'], ['value' => 'fee', 'text' => 'One-time Fee']]],
-                ['id' => 'is_minor', 'type' => 'checkbox', 'title' => 'Subject is under 18', 'required' => false, 'help' => ''],
-                ['id' => 'guardian_signature_note', 'type' => 'text', 'title' => 'Parent / Guardian Name (if minor)', 'required' => false, 'help' => ''],
+                ['id' => 'is_minor', 'type' => 'checkbox', 'title' => 'Subject is under 18', 'required' => false, 'help' => 'Checking this reveals the guardian section below'],
+                ['id' => 'guardian_name', 'type' => 'text', 'title' => 'Parent / Guardian Name', 'required' => false, 'help' => '',
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('is_minor', 'checkbox', 'is_checked')], 'and', true)],
+                ['id' => 'guardian_signature', 'type' => 'signature', 'title' => 'Parent / Guardian Signature', 'required' => false, 'help' => 'Guardian consents on behalf of the minor',
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('is_minor', 'checkbox', 'is_checked')], 'and', true)],
                 ['id' => 'consent_ack', 'type' => 'checkbox', 'title' => 'I grant the usage rights selected above and waive inspection approval', 'required' => true, 'help' => ''],
                 ['id' => 'signature', 'type' => 'signature', 'title' => 'Signature', 'required' => true, 'help' => 'Sign here']
             ], '#db2777'),
@@ -2284,6 +2531,9 @@ class TemplateSeeder extends Seeder
                 ['id' => 'category', 'type' => 'select', 'title' => 'Issue Category', 'required' => true, 'help' => '', 'options' => [['value' => 'plumbing', 'text' => 'Plumbing'], ['value' => 'electrical', 'text' => 'Electrical'], ['value' => 'hvac', 'text' => 'Heating / Cooling'], ['value' => 'appliance', 'text' => 'Appliance'], ['value' => 'lock_security', 'text' => 'Locks / Security'], ['value' => 'pest', 'text' => 'Pest Control'], ['value' => 'other', 'text' => 'Other']]],
                 ['id' => 'urgency', 'type' => 'select', 'title' => 'Urgency', 'required' => true, 'help' => '', 'options' => [['value' => 'emergency', 'text' => 'Emergency - safety risk, call us too'], ['value' => 'high', 'text' => 'High - needs fixing within 24-48h'], ['value' => 'medium', 'text' => 'Medium - within a week'], ['value' => 'low', 'text' => 'Low - whenever convenient']]],
                 ['id' => 'description', 'type' => 'text', 'title' => 'Describe the Issue', 'required' => true, 'help' => 'What happened, where exactly, since when', 'multi_lines' => true],
+                ['id' => 'emergency_notice', 'type' => 'nf-text', 'name' => 'Emergency Notice', 'content' => '<p><strong>Emergency?</strong> For gas smells, burst pipes, or total power loss, call our 24/7 line at (555) 010-0199 as well - do not rely on this form alone.</p>',
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('urgency', 'select', 'equals', 'Emergency - safety risk, call us too')])],
                 ['id' => 'photos', 'type' => 'files', 'title' => 'Photos', 'required' => false, 'help' => 'Up to 4 photos help contractors quote faster', 'max_number_of_files' => 4, 'max_file_size' => 10],
                 ['id' => 'access_time', 'type' => 'select', 'title' => 'Preferred Access Time', 'required' => true, 'help' => '', 'options' => [['value' => 'morning', 'text' => 'Mornings (8-12)'], ['value' => 'afternoon', 'text' => 'Afternoons (12-17)'], ['value' => 'evening', 'text' => 'Evenings (17-20)'], ['value' => 'anytime', 'text' => 'Anytime']]],
                 ['id' => 'entry_permission', 'type' => 'checkbox', 'title' => 'I authorize entry to carry out the repair (notice will be given)', 'required' => true, 'help' => '']
@@ -2395,7 +2645,12 @@ class TemplateSeeder extends Seeder
             'structure' => $this->structure('Net Promoter Score Survey', [
                 ['id' => 'nps_score', 'type' => 'scale', 'title' => 'How likely are you to recommend us to a friend or colleague?', 'required' => true, 'help' => '0 = not at all likely, 10 = extremely likely', 'scale_min_value' => 0, 'scale_max_value' => 10, 'scale_step_value' => 1],
                 ['id' => 'score_reason', 'type' => 'text', 'title' => "What is the main reason for your score?", 'required' => false, 'help' => '', 'multi_lines' => true],
-                ['id' => 'improvement', 'type' => 'text', 'title' => 'What could we do to earn a higher score?', 'required' => false, 'help' => '', 'multi_lines' => true],
+                ['id' => 'improvement', 'type' => 'text', 'title' => 'Sorry to hear it - what could we do to earn a higher score?', 'required' => false, 'help' => '',
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('nps_score', 'scale', 'less_than', 7)])],
+                ['id' => 'highlight', 'type' => 'text', 'title' => 'Wonderful! What did we do especially well?', 'required' => false, 'help' => 'We may feature your answer as a testimonial',
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('nps_score', 'scale', 'greater_than', 8)])],
                 ['id' => 'email', 'type' => 'email', 'title' => 'Your Email (optional)', 'required' => false, 'help' => 'Only if you would like a personal follow-up'],
                 ['id' => 'follow_up_ok', 'type' => 'checkbox', 'title' => 'You may contact me about my feedback', 'required' => false, 'help' => '']
             ], '#2563eb'),
@@ -2465,13 +2720,24 @@ class TemplateSeeder extends Seeder
                 ['id' => 'member_name', 'type' => 'text', 'title' => 'Member Full Name', 'required' => true, 'help' => ''],
                 ['id' => 'email', 'type' => 'email', 'title' => 'Email', 'required' => true, 'help' => ''],
                 ['id' => 'phone', 'type' => 'phone_number', 'title' => 'Phone Number', 'required' => true, 'help' => ''],
-                ['id' => 'plan', 'type' => 'select', 'title' => 'Membership Plan', 'required' => true, 'help' => '', 'options' => [['value' => 'monthly', 'text' => 'Monthly'], ['value' => 'annual', 'text' => 'Annual (save 20%)'], ['value' => 'student', 'text' => 'Student'], ['value' => 'family', 'text' => 'Family'], ['value' => 'trial', 'text' => '7-Day Trial']]],
+                ['id' => 'plan', 'type' => 'select', 'title' => 'Membership Plan', 'required' => true, 'help' => '', 'options' => [['value' => 'monthly', 'text' => 'Monthly - $45'], ['value' => 'annual', 'text' => 'Annual (save 20%) - $450'], ['value' => 'student', 'text' => 'Student - $30'], ['value' => 'family', 'text' => 'Family - $80'], ['value' => 'trial', 'text' => '7-Day Trial - Free']]],
                 ['id' => 'start_date', 'type' => 'date', 'title' => 'Preferred Start Date', 'required' => true, 'help' => ''],
+                ['id' => 'pt_sessions', 'type' => 'number', 'title' => 'Personal Training Sessions per Month (optional)', 'required' => false, 'help' => '$60 each, billed monthly'],
                 ['id' => 'fitness_goals', 'type' => 'multi_select', 'title' => 'Fitness Goals', 'required' => true, 'help' => '', 'options' => [['value' => 'strength', 'text' => 'Strength'], ['value' => 'cardio', 'text' => 'Cardio / Endurance'], ['value' => 'flexibility', 'text' => 'Flexibility / Mobility'], ['value' => 'weight_loss', 'text' => 'Weight Management'], ['value' => 'rehab', 'text' => 'Rehabilitation'], ['value' => 'general', 'text' => 'General Fitness']]],
                 ['id' => 'emergency_contact', 'type' => 'phone_number', 'title' => 'Emergency Contact Number', 'required' => true, 'help' => ''],
                 ['id' => 'health_conditions', 'type' => 'text', 'title' => 'Injuries or Health Conditions', 'required' => false, 'help' => 'Heart conditions, joint injuries, medication considerations', 'multi_lines' => true],
-                ['id' => 'waiver_acceptance', 'type' => 'checkbox', 'title' => 'I accept the membership terms and gym rules', 'required' => true, 'help' => '']
-            ], '#047857'),
+                ['id' => 'waiver_acceptance', 'type' => 'checkbox', 'title' => 'I accept the membership terms and gym rules', 'required' => true, 'help' => ''],
+                $this->totalBlock('monthly_cost_display', 'cv_monthly_cost', 'Your Monthly Cost', '$0'),
+            ], '#047857', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_monthly_cost',
+                        'Monthly Cost',
+                        'IF({plan}="Monthly - $45",45,IF({plan}="Annual (save 20%) - $450",37.5,IF({plan}="Student - $30",30,IF({plan}="Family - $80",80,0))))'
+                        . '+IFBLANK({pt_sessions},0)*60'
+                    ),
+                ],
+            ]),
         ];
     }
 }

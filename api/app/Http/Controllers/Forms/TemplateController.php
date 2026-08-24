@@ -20,18 +20,24 @@ class TemplateController extends Controller
         }
 
         $prodTemplates = Cache::remember('prod_templates', 3600, function () {
-            $response = Http::get('https://api.sharaforms.com/templates');
-            if ($response->successful()) {
-                return collect($response->json())->map(function ($item) {
-                    $item['from_prod'] = true;
-                    return $item;
-                })->toArray();
+            try {
+                $response = Http::timeout(5)->get('https://api.sharaforms.com/templates');
+                if ($response->successful()) {
+                    return collect($response->json())->map(function ($item) {
+                        $item['from_prod'] = true;
+                        return $item;
+                    })->toArray();
+                }
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning('Failed to fetch prod templates: ' . $e->getMessage());
             }
+
+            return [];
         });
         if ($slug) {
             return collect($prodTemplates)->filter(function ($item) use ($slug) {
                 return $item['slug'] === $slug;
-            })->toArray();
+            })->values()->toArray();
         }
         return $prodTemplates;
     }
@@ -116,9 +122,12 @@ class TemplateController extends Controller
             return new FormTemplateResource($template);
         }
 
-        // Get prod template by slug and return first match (or null if not found)
+        // Get prod template by slug and return first match (or 404 if not found)
         $prodTemplates = $this->getProdTemplates($slug);
-        // Use array_values to reindex since filter() preserves original keys
-        return !empty($prodTemplates) ? array_values($prodTemplates)[0] : null;
+        if (!empty($prodTemplates)) {
+            return array_values($prodTemplates)[0];
+        }
+
+        abort(404, 'Template not found');
     }
 }

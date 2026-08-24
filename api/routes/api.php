@@ -487,12 +487,15 @@ Route::get('/fonts', [\App\Http\Controllers\Content\FontsController::class, 'ind
 // Templates
 Route::prefix('templates')->group(function () {
     Route::get('/', [TemplateController::class, 'index'])->name('templates.index')
-        ->withoutMiddleware(['throttle:100,1']);
-    Route::post('/', [TemplateController::class, 'create'])->name('templates.create');
+        ->middleware('throttle:300,1');
     Route::get('/{slug}', [TemplateController::class, 'show'])->name('templates.show')
-        ->withoutMiddleware(['throttle:100,1']);
-    Route::put('/{id}', [TemplateController::class, 'update'])->name('templates.update');
-    Route::delete('/{id}', [TemplateController::class, 'destroy'])->name('templates.destroy');
+        ->middleware('throttle:300,1');
+    Route::post('/', [TemplateController::class, 'create'])->name('templates.create')
+        ->middleware('auth.multi');
+    Route::put('/{id}', [TemplateController::class, 'update'])->name('templates.update')
+        ->middleware('auth.multi');
+    Route::delete('/{id}', [TemplateController::class, 'destroy'])->name('templates.destroy')
+        ->middleware('auth.multi');
 });
 
 Route::post(

@@ -37,6 +37,12 @@ class FormTemplateRequest extends FormRequest
         'views_count',
         'visibility',
         'webhook_url',
+        'password',
+        'custom_code',
+        'custom_css',
+        'analytics',
+        'settings',
+        'seo_meta',
     ];
 
     /**
@@ -55,9 +61,9 @@ class FormTemplateRequest extends FormRequest
             'publicly_listed' => 'sometimes|boolean',
             'name' => 'required|string|max:60',
             'slug' => 'required|string|alpha_dash|unique:templates,slug' . $slugRule,
-            'short_description' => 'required|string|max:1000',
+            'short_description' => 'nullable|string|max:1000',
             'description' => 'required|string',
-            'image_url' => 'sometimes|nullable|string',
+            'image_url' => 'sometimes|nullable|url|max:2000',
             'types' => 'array',
             'industries' => 'array',
             'related_templates' => 'array',
