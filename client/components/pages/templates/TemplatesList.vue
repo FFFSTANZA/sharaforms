@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="bg-white pb-14">
+    <section :class="sectionClass">
         <div class="relative z-20 mb-10">
           <VForm
             size="sm"
@@ -324,6 +324,10 @@ const props = defineProps({
   gridClasses: {
     type: String,
     default: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4",
+  },
+  sectionClass: {
+    type: String,
+    default: "bg-white pb-14",
   },
 })
 
