@@ -245,7 +245,6 @@ useHead({
     : [],
   htmlAttrs: () => ({
     lang: locale.value || 'en',
-    dir: locale.value?.startsWith('ar') ? 'rtl' : 'ltr'
   })
 })
 
