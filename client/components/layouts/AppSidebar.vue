@@ -111,14 +111,14 @@
           <p class="px-4 text-[11px] font-medium uppercase tracking-[0.1em] text-[var(--sf-text-label)] mb-1.5">
             Product
           </p>
-          <button
-            v-if="featureBaseEnabled"
-            @click="openChangelog"
-            class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all text-left w-full hover:bg-[var(--sf-nav-hover-bg)]"
+          <a
+            :href="links.changelog_url"
+            target="_blank"
+            class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all"
           >
             <i class="fa-solid fa-bullhorn text-[14px] w-4 text-center"></i>
             What's new
-          </button>
+          </a>
           <a
             :href="links.roadmap"
             target="_blank"
@@ -219,13 +219,9 @@ import { useRoute } from "vue-router"
 import WorkspaceDropdown from "~/components/dashboard/WorkspaceDropdown.vue"
 import UserDropdown from "~/components/dashboard/UserDropdown.vue"
 import sharaformsConfig from "~/sharaforms.config.js"
-import { useAppStore } from "~/stores/app"
 
 const route = useRoute()
 const isMobileMenuOpen = ref(false)
-
-const appStore = useAppStore()
-const featureBaseEnabled = computed(() => appStore.featureBaseEnabled)
 
 const { current: workspace } = useCurrentWorkspace()
 const isSelfHosted = computed(() => useFeatureFlag('self_hosted'))
@@ -259,11 +255,6 @@ const triggerUpgrade = () => {
     plan,
     modal_title: `Upgrade to ${plan === 'business' ? 'Business' : 'Pro'} plan`,
   })
-}
-
-const openChangelog = () => {
-  if (import.meta.server || !window.Featurebase) return
-  window.Featurebase("manually_open_changelog_popup")
 }
 
 const contactSupport = () => {
