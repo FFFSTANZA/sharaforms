@@ -583,6 +583,12 @@ definePageMeta({
   layout: "default",
 })
 
+const { logEvent } = usePostHog()
+
+onMounted(() => {
+  logEvent('enterprise_page_viewed', {})
+})
+
 useOpnSeoMeta({
   title: "Secure Form Builder for Teams and Enterprises",
   description:

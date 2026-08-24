@@ -809,6 +809,8 @@ import LiveDemo from "~/components/pages/welcome/LiveDemo.vue"
 import Testimonials from "~/components/pages/welcome/Testimonials.vue"
 import { useIsAuthenticated } from "~/composables/useAuthFlow"
 
+const { logEvent } = usePostHog()
+
 const props = defineProps({
   competitorName: {
     type: String,
@@ -889,6 +891,12 @@ const props = defineProps({
 })
 
 const { isAuthenticated: authenticated } = useIsAuthenticated()
+
+onMounted(() => {
+  logEvent('comparison_page_viewed', {
+    competitor: props.competitorName,
+  })
+})
 
 const switchSectionTitle = computed(
   () => `Why Users Switch from ${props.competitorName} to SharaForms`,

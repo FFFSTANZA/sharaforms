@@ -164,18 +164,23 @@
           </h2>
           <ul class="mt-4 divide-y divide-neutral-100 border border-neutral-200 rounded-xl">
             <li v-for="tpl in templateLinks" :key="tpl.slug">
-              <NuxtLink
-                :to="`/templates/${tpl.slug}`"
-                class="group flex items-center justify-between gap-4 px-5 py-4 transition-colors hover:bg-neutral-50"
+              <TrackClick
+                name="guide_template_link_click"
+                :properties="{ slug: guide.slug, template_slug: tpl.slug, template_label: tpl.label }"
               >
-                <span class="text-[15px] font-medium text-neutral-900">
-                  {{ tpl.label }} template
-                </span>
-                <UIcon
-                  name="i-heroicons:arrow-up-right"
-                  class="h-4 w-4 shrink-0 text-neutral-400 transition-colors group-hover:text-pink-600"
-                />
-              </NuxtLink>
+                <NuxtLink
+                  :to="`/templates/${tpl.slug}`"
+                  class="group flex items-center justify-between gap-4 px-5 py-4 transition-colors hover:bg-neutral-50"
+                >
+                  <span class="text-[15px] font-medium text-neutral-900">
+                    {{ tpl.label }} template
+                  </span>
+                  <UIcon
+                    name="i-heroicons:arrow-up-right"
+                    class="h-4 w-4 shrink-0 text-neutral-400 transition-colors group-hover:text-pink-600"
+                  />
+                </NuxtLink>
+              </TrackClick>
             </li>
           </ul>
         </section>
@@ -207,36 +212,46 @@
                 presentation modes included.
               </p>
             </div>
-            <UButton
-              size="lg"
-              :to="{ name: authenticated ? 'forms-create' : 'forms-create-guest' }"
-              trailing-icon="i-heroicons:arrow-up-right"
-              label="Create a free form"
-              class="premium-primary-button shrink-0 px-5 py-3 rounded-xl text-[15px] font-semibold text-white"
-            />
+            <TrackClick
+              name="guide_detail_cta_create_form"
+              :properties="{ slug: guide.slug, authenticated }"
+            >
+              <UButton
+                size="lg"
+                :to="{ name: authenticated ? 'forms-create' : 'forms-create-guest' }"
+                trailing-icon="i-heroicons:arrow-up-right"
+                label="Create a free form"
+                class="premium-primary-button shrink-0 px-5 py-3 rounded-xl text-[15px] font-semibold text-white"
+              />
+            </TrackClick>
           </div>
         </section>
 
         <section v-if="relatedGuides.length" class="mt-16 border-t border-neutral-200 pt-10">
           <h2 class="text-xl font-semibold tracking-tight text-neutral-900">Keep reading</h2>
           <div class="mt-5 grid gap-4 sm:grid-cols-3">
-            <NuxtLink
-              v-for="related in relatedGuides"
+            <TrackClick
+              v-for="(related, idx) in relatedGuides"
               :key="related.slug"
-              :to="`/guides/${related.slug}`"
-              class="group rounded-xl border border-neutral-200 p-5 transition-colors hover:border-pink-300 hover:bg-neutral-50"
+              name="guide_related_click"
+              :properties="{ slug: guide.slug, related_slug: related.slug, related_category: related.category, position: idx }"
             >
-              <span class="text-[11px] font-semibold uppercase tracking-wider text-pink-600">
-                {{ related.category }}
-              </span>
-              <h3 class="mt-2 text-[15px] font-semibold leading-snug text-neutral-900 group-hover:text-pink-700 transition-colors">
-                {{ related.title }}
-              </h3>
-              <span class="mt-3 inline-flex items-center gap-1 text-sm font-medium text-neutral-500">
-                Read next
-                <UIcon name="i-heroicons:arrow-right" class="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-              </span>
-            </NuxtLink>
+              <NuxtLink
+                :to="`/guides/${related.slug}`"
+                class="group rounded-xl border border-neutral-200 p-5 transition-colors hover:border-pink-300 hover:bg-neutral-50"
+              >
+                <span class="text-[11px] font-semibold uppercase tracking-wider text-pink-600">
+                  {{ related.category }}
+                </span>
+                <h3 class="mt-2 text-[15px] font-semibold leading-snug text-neutral-900 group-hover:text-pink-700 transition-colors">
+                  {{ related.title }}
+                </h3>
+                <span class="mt-3 inline-flex items-center gap-1 text-sm font-medium text-neutral-500">
+                  Read next
+                  <UIcon name="i-heroicons:arrow-right" class="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                </span>
+              </NuxtLink>
+            </TrackClick>
           </div>
         </section>
       </div>
@@ -248,6 +263,7 @@
 
 <script setup>
 import OpenFormFooter from '~/components/pages/OpenFormFooter.vue'
+import TrackClick from '~/components/global/TrackClick.vue'
 import { getGuideBySlug, getRelatedGuides, getGuideTemplateLinks } from '~/data/guides/index.js'
 import { useIsAuthenticated } from '~/composables/useAuthFlow'
 
@@ -258,6 +274,7 @@ definePageMeta({
 const route = useRoute()
 const config = useRuntimeConfig()
 const { isAuthenticated: authenticated } = useIsAuthenticated()
+const { logEvent } = usePostHog()
 
 // Resolve once; unknown slugs must return a real 404 to crawlers.
 const guide = computed(() => getGuideBySlug(route.params.slug))
@@ -313,6 +330,19 @@ const tocItems = computed(() => {
 
 const relatedGuides = computed(() => getRelatedGuides(route.params.slug, 3))
 const templateLinks = computed(() => getGuideTemplateLinks(route.params.slug))
+
+onMounted(() => {
+  if (!guide.value) return
+  logEvent('guide_detail_viewed', {
+    slug: guide.value.slug,
+    category: guide.value.category,
+    reading_minutes: guide.value.readingMinutes,
+    section_count: guide.value.sections?.length || 0,
+    faq_count: guide.value.faqs?.length || 0,
+    template_link_count: templateLinks.value.length,
+    has_toc: tocItems.value.length > 0,
+  })
+})
 
 const articleSchema = computed(() => {
   if (!guide.value) {

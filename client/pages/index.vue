@@ -106,6 +106,13 @@ definePageMeta({
 })
 
 const { isAuthenticated: authenticated } = useIsAuthenticated()
+const { logEvent } = usePostHog()
+
+onMounted(() => {
+  logEvent('homepage_viewed', {
+    authenticated,
+  })
+})
 
 useOpnSeoMeta({
   // Keyword-first; the global titleTemplate appends the brand suffix.

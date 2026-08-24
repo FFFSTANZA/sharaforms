@@ -52,25 +52,30 @@
         </div>
 
         <div class="mt-12 sm:mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <NuxtLink
-            v-for="comparison in comparisons"
+          <TrackClick
+            v-for="(comparison, index) in comparisons"
             :key="comparison.slug"
-            :to="`/sharaforms-vs-${comparison.slug}`"
-            class="group rounded-3xl border border-gray-200 bg-white p-8 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-[0_18px_45px_-28px_rgba(37,99,235,0.45)]"
+            name="comparison_card_click"
+            :properties="{ slug: comparison.slug, competitor: comparison.label, position: index }"
           >
-            <div class="flex items-center justify-between">
-              <div class="text-xl leading-7 font-semibold text-gray-950">
-                vs {{ comparison.label }}
+            <NuxtLink
+              :to="`/sharaforms-vs-${comparison.slug}`"
+              class="group rounded-3xl border border-gray-200 bg-white p-8 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-[0_18px_45px_-28px_rgba(37,99,235,0.45)]"
+            >
+              <div class="flex items-center justify-between">
+                <div class="text-xl leading-7 font-semibold text-gray-950">
+                  vs {{ comparison.label }}
+                </div>
+                <UIcon
+                  name="i-lucide-arrow-up-right"
+                  class="h-5 w-5 text-gray-400 group-hover:text-blue-600"
+                />
               </div>
-              <UIcon
-                name="i-lucide-arrow-up-right"
-                class="h-5 w-5 text-gray-400 group-hover:text-blue-600"
-              />
-            </div>
-            <p class="mt-3 text-base leading-7 tracking-[-1.1%] font-medium text-gray-600">
-              {{ comparison.description }}
-            </p>
-          </NuxtLink>
+              <p class="mt-3 text-base leading-7 tracking-[-1.1%] font-medium text-gray-600">
+                {{ comparison.description }}
+              </p>
+            </NuxtLink>
+          </TrackClick>
         </div>
       </div>
     </section>
@@ -97,9 +102,18 @@
 
 <script setup>
 import OpenFormFooter from "~/components/pages/OpenFormFooter.vue"
+import TrackClick from "~/components/global/TrackClick.vue"
 
 definePageMeta({
   layout: "default",
+})
+
+const { logEvent } = usePostHog()
+
+onMounted(() => {
+  logEvent('comparison_hub_viewed', {
+    competitor_count: 10,
+  })
 })
 
 useOpnSeoMeta({

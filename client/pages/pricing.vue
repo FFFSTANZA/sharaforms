@@ -108,6 +108,14 @@ definePageMeta({
   middleware: [],
 })
 
+const { logEvent } = usePostHog()
+
+onMounted(() => {
+  logEvent('pricing_page_viewed', {
+    default_billing: 'yearly',
+  })
+})
+
 useOpnSeoMeta({
   title: "Free Form Builder Pricing and Plans",
   description:

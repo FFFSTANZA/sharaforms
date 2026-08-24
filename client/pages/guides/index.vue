@@ -41,12 +41,16 @@
     <section class="px-6 lg:px-12 py-16">
       <div class="mx-auto w-full max-w-266">
         <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          <NuxtLink
-            v-for="guide in guides"
+          <TrackClick
+            v-for="(guide, index) in guides"
             :key="guide.slug"
-            :to="`/guides/${guide.slug}`"
-            class="group flex flex-col rounded-xl border border-neutral-200 p-6 transition-colors hover:border-pink-300 hover:bg-neutral-50"
+            name="guide_hub_card_click"
+            :properties="{ slug: guide.slug, category: guide.category, title: guide.title, position: index }"
           >
+            <NuxtLink
+              :to="`/guides/${guide.slug}`"
+              class="group flex flex-col rounded-xl border border-neutral-200 p-6 transition-colors hover:border-pink-300 hover:bg-neutral-50"
+            >
             <div class="flex items-center justify-between gap-3">
               <span class="text-[11px] font-semibold uppercase tracking-wider text-pink-600">
                 {{ guide.category }}
@@ -69,6 +73,7 @@
               />
             </span>
           </NuxtLink>
+          </TrackClick>
         </div>
 
         <div class="mt-16 border-t border-neutral-200 pt-10 flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:justify-between">
@@ -82,21 +87,25 @@
             </p>
           </div>
           <div class="flex flex-wrap items-center gap-3">
-            <UButton
-              size="lg"
-              :to="{ name: authenticated ? 'forms-create' : 'forms-create-guest' }"
-              trailing-icon="i-heroicons:arrow-up-right"
-              label="Create a free form"
-              class="premium-primary-button px-5 py-3 rounded-xl text-[15px] font-semibold text-white"
-            />
-            <UButton
-              size="lg"
-              to="/templates"
-              label="Browse templates"
-              variant="outline"
-              color="neutral"
-              class="px-5 py-3 rounded-xl text-[15px] font-medium"
-            />
+            <TrackClick name="guide_hub_cta_create_form" :properties="{ authenticated }">
+              <UButton
+                size="lg"
+                :to="{ name: authenticated ? 'forms-create' : 'forms-create-guest' }"
+                trailing-icon="i-heroicons:arrow-up-right"
+                label="Create a free form"
+                class="premium-primary-button px-5 py-3 rounded-xl text-[15px] font-semibold text-white"
+              />
+            </TrackClick>
+            <TrackClick name="guide_hub_cta_browse_templates">
+              <UButton
+                size="lg"
+                to="/templates"
+                label="Browse templates"
+                variant="outline"
+                color="neutral"
+                class="px-5 py-3 rounded-xl text-[15px] font-medium"
+              />
+            </TrackClick>
           </div>
         </div>
       </div>
@@ -108,6 +117,7 @@
 
 <script setup>
 import OpenFormFooter from '~/components/pages/OpenFormFooter.vue'
+import TrackClick from '~/components/global/TrackClick.vue'
 import { guides } from '~/data/guides/index.js'
 import { useIsAuthenticated } from '~/composables/useAuthFlow'
 
@@ -116,6 +126,14 @@ definePageMeta({
 })
 
 const { isAuthenticated: authenticated } = useIsAuthenticated()
+const { logEvent } = usePostHog()
+
+onMounted(() => {
+  logEvent('guide_hub_viewed', {
+    guide_count: guides.length,
+    categories: [...new Set(guides.map(g => g.category))],
+  })
+})
 
 useOpnSeoMeta({
   title: 'Form Guides: Logic, Calculations & Design Decisions',

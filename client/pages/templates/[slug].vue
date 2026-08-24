@@ -394,6 +394,7 @@ defineRouteRules({
 
 const route = useRoute()
 const { detail, list } = useTemplates()
+const { logEvent } = usePostHog()
 
 const { data: template, suspense: templateSuspense } = detail(route.params.slug)
 const { data: allTemplates, suspense: templatesSuspense } = list()
@@ -423,6 +424,13 @@ const darkMode = useDarkMode(templatePreviewParent)
 onMounted(() => {
   if (template.value?.structure?.dark_mode) {
     handleDarkMode(template.value.structure.dark_mode, templatePreviewParent.value)
+  }
+  if (template.value) {
+    logEvent('template_page_viewed', {
+      slug: template.value.slug,
+      name: template.value.name,
+      category: template.value.category,
+    })
   }
 })
 
