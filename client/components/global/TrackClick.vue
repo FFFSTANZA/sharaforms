@@ -1,5 +1,5 @@
 <template>
-  <span @click="track">
+  <span @click="track" class="contents">
     <slot />
   </span>
 </template>

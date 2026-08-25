@@ -238,7 +238,7 @@
             >
               <NuxtLink
                 :to="`/guides/${related.slug}`"
-                class="group rounded-xl border border-neutral-200 p-5 transition-colors hover:border-pink-300 hover:bg-neutral-50"
+                class="group flex h-full flex-col rounded-xl border border-neutral-200 p-5 transition-colors hover:border-pink-300 hover:bg-neutral-50"
               >
                 <span class="text-[11px] font-semibold uppercase tracking-wider text-pink-600">
                   {{ related.category }}
@@ -246,7 +246,7 @@
                 <h3 class="mt-2 text-[15px] font-semibold leading-snug text-neutral-900 group-hover:text-pink-700 transition-colors">
                   {{ related.title }}
                 </h3>
-                <span class="mt-3 inline-flex items-center gap-1 text-sm font-medium text-neutral-500">
+                <span class="mt-auto pt-3 inline-flex items-center gap-1 text-sm font-medium text-neutral-500">
                   Read next
                   <UIcon name="i-heroicons:arrow-right" class="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
                 </span>
@@ -319,7 +319,9 @@ function anchorize (text) {
 // Content is authored locally in data/guides, so inline markup is trusted.
 // Only bold markers are expanded; everything else renders as plain text.
 function fmt (text) {
-  return String(text).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+  return String(text)
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\[([^\]]+)\]\((\/[^)\s]+)\)/g, '<a href="$2" class="font-medium text-pink-600 underline decoration-pink-300 underline-offset-2 hover:text-pink-700">$1</a>')
 }
 
 const tocItems = computed(() => {

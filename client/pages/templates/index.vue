@@ -48,6 +48,7 @@
 
 <script setup>
 import { resolveSchemaUrl, useSchemaBaseUrl } from '~/composables/useSchemaSeo'
+import { TEMPLATE_SLUGS } from '~/data/forms/templates/template-slugs.js'
 
 defineRouteRules({
   swr: 3600,
@@ -63,8 +64,8 @@ if (import.meta.server) {
 
 useOpnSeoMeta({
   title: "Free Form Templates with Built-In Calculations and Logic",
-  description:
-    "Browse 50+ free, no-code form templates for registrations, applications, surveys, orders, events, and feedback. Every template supports built-in calculations, conditional logic, signatures, and unlimited submissions.",
+  // Count comes from the static registry so the claim never goes stale.
+  description: `Browse ${TEMPLATE_SLUGS.length} free form templates for registrations, orders, events, and surveys. Built-in calculations, conditional logic, signatures, and unlimited submissions.`,
   keywords: "free form templates, free form builder, unlimited submissions, form templates with built-in calculations, no-code form templates, online form templates",
   speakable: ["h1", "p"],
   breadcrumbs: [

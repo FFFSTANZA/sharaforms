@@ -96,6 +96,11 @@ function getCoreMarketingUrls () {
       priority: 0.9,
     },
     {
+      url: '/spotlight-forms',
+      changefreq: 'weekly',
+      priority: 0.9,
+    },
+    {
       url: '/enterprise',
       changefreq: 'monthly',
       priority: 0.9,

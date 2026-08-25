@@ -293,6 +293,7 @@ const linkGroups = computed(() => [
     links: [
       { label: "Pricing", to: { name: "pricing" } },
       { label: "Features", to: { name: "index", hash: "#features" } },
+      { label: "Spotlight Forms", to: "/spotlight-forms" },
       { label: "Integrations", to: { name: "integrations" } },
       { label: "Enterprise", to: { name: "enterprise" } },
       { label: "Industry", to: { name: "industry" } },

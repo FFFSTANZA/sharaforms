@@ -23,7 +23,11 @@
             <span
               class="mt-4 block text-base sm:text-xl leading-7 font-normal tracking-normal text-white/80"
             >
-              Spotlight mode. Focused flows. Classic pages.
+              <NuxtLink
+                to="/spotlight-forms"
+                class="underline decoration-white/30 underline-offset-4 transition-colors hover:text-white hover:decoration-white/70"
+              >Spotlight mode.</NuxtLink>
+              Focused flows. Classic pages.
             </span>
           </h1>
 
@@ -118,7 +122,7 @@ useOpnSeoMeta({
   // Keyword-first; the global titleTemplate appends the brand suffix.
   title: "Free Form Builder with Calculations & Conditional Logic",
   description:
-    "Classic pages, focused flows, or spotlight mode. Built-in calculations, conditional logic, signatures, file uploads, and PDF generation. Unlimited forms, unlimited responses. Free.",
+    "Spotlight forms show every question while one stays in focus. Classic pages and focused flows too, plus calculations, conditional logic, signatures, PDFs.",
   ogImage: "/share-preview.jpg",
   keywords: "free form builder, spotlight forms, one question at a time form, multi-page forms, form builder with calculations, conditional logic forms, signature forms, payment forms, unlimited forms, unlimited submissions",
   speakable: ["h1", ".marketing-page > section:first-child p", ".faq-answer p"],

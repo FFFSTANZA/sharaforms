@@ -49,7 +49,7 @@
           >
             <NuxtLink
               :to="`/guides/${guide.slug}`"
-              class="group flex flex-col rounded-xl border border-neutral-200 p-6 transition-colors hover:border-pink-300 hover:bg-neutral-50"
+              class="group flex h-full flex-col rounded-xl border border-neutral-200 p-6 transition-colors hover:border-pink-300 hover:bg-neutral-50"
             >
             <div class="flex items-center justify-between gap-3">
               <span class="text-[11px] font-semibold uppercase tracking-wider text-pink-600">
@@ -138,7 +138,7 @@ onMounted(() => {
 useOpnSeoMeta({
   title: 'Form Guides: Logic, Calculations & Design Decisions',
   description:
-    'Practical form guides covering layout trade-offs, quiz scoring, conditional logic patterns, source tracking, PDF automation, and self hosting decisions.',
+    'Practical form guides covering layout trade-offs, quiz scoring, conditional logic patterns, source tracking, PDF automation, and survey question design.',
   ogImage: '/share-preview.jpg',
   speakable: ['h1', '.marketing-page > section:nth-of-type(2) p'],
   breadcrumbs: [

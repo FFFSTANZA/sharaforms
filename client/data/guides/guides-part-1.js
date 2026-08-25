@@ -56,7 +56,7 @@ export default [
       { type: 'h2', text: 'A middle path most builders never offer' },
       {
         type: 'p',
-        text: 'SharaForms treats layout as a presentation choice rather than a rebuild. The same form can run as Classic multi page steps, Focused single question screens, or Spotlight, which keeps every question visible on one page while highlighting the active one. Switch between them any time without touching your fields or logic, then judge results instead of guessing.',
+        text: 'SharaForms treats layout as a presentation choice rather than a rebuild. The same form can run as Classic multi page steps, Focused single question screens, or [Spotlight](/spotlight-forms), which keeps every question visible on one page while highlighting the active one. Switch between them any time without touching your fields or logic, then judge results instead of guessing.',
       },
       {
         type: 'callout',
@@ -112,7 +112,7 @@ export default [
       { type: 'h2', text: 'The middle ground: visible yet focused' },
       {
         type: 'p',
-        text: 'SharaForms offers a third layout called Spotlight that keeps all questions listed on one page while the active question takes visual focus. Respondents see total scope and their own progress, yet attention still lands on one thing at a time. It resolves the core tension between transparency and concentration without rebuilding your form.',
+        text: 'SharaForms offers a third layout called [Spotlight](/spotlight-forms) that keeps all questions listed on one page while the active question takes visual focus. Respondents see total scope and their own progress, yet attention still lands on one thing at a time. It resolves the core tension between transparency and concentration without rebuilding your form.',
       },
       {
         type: 'table',

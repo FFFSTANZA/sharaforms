@@ -1,9 +1,15 @@
 export function useComparisonSeo({ competitorName, summary }) {
   const normalizedSummary = summary.trim().replace(/\s+/g, ' ')
+  // Unique per-competitor summary keeps descriptions non-templated; the tail is
+  // appended only when the combined length stays inside SERP display bounds.
+  const comparisonTail = ' Compare pricing, limits, and features side by side.'
+  const description = normalizedSummary.length + comparisonTail.length <= 158
+    ? normalizedSummary + comparisonTail
+    : normalizedSummary
 
   return useOpnSeoMeta({
     title: `SharaForms vs ${competitorName}: Free Form Builder with Three Modes`,
-    description: `${normalizedSummary} Compare free plans, pricing, and features side by side. SharaForms gives teams unlimited forms and submissions, three presentation modes — Classic, Focused, and Spotlight — plus built-in calculations, workflow-ready logic, dynamic PDFs, and a generous free tier.`,
+    description,
     ogType: 'article',
     ogImage: '/share-preview.jpg',
     speakable: ['h1', '.comparison-bottom-line', 'p'],

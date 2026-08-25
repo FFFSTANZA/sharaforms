@@ -119,7 +119,7 @@ onMounted(() => {
 useOpnSeoMeta({
   title: "Free Form Builder Pricing and Plans",
   description:
-    "Explore SharaForms pricing: a free plan with unlimited forms and submissions, three presentation modes, built-in calculations, conditional logic, signatures, and payments. Paid tiers add branding.",
+    "Start free with unlimited forms and submissions on every plan. Paid tiers add branding removal, premium integrations, custom domains, and team controls.",
   ogImage: "/share-preview.jpg",
   keywords: "free form builder pricing, form builder pricing, unlimited forms, unlimited submissions pricing, free online forms, spotlight forms, multi-page forms",
   speakable: [".faq-answer p", "h1"],

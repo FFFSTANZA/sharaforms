@@ -1,5 +1,5 @@
 # SharaForms
-> See every question. Focus on one. One form, three presentation modes — Classic (multi-page), Focused (one question at a time), and Spotlight (all questions visible, one in focus) — with built-in calculations, conditional logic, signatures, payments, and unlimited responses, free.
+> See every question. Focus on one. One form, three presentation modes: Classic (multi-page), Focused (one question at a time), and Spotlight (all questions visible, one in focus), with built-in calculations, conditional logic, signatures, payments, and unlimited responses, free.
 
 For full product reference see: /llms.txt
 For complete technical reference see: /llms-full.txt
@@ -7,7 +7,8 @@ For complete technical reference see: /llms-full.txt
 ## Quick facts
 - Website: https://sharaforms.com
 - Free plan: unlimited forms and submissions
-- Key differentiator: three presentation modes — Classic (multi-page), Focused (one question at a time), Spotlight (all questions visible, one in focus) — with built-in calculations
+- Key differentiator: three presentation modes: Classic (multi-page), Focused (one question at a time), Spotlight (all questions visible, one in focus), with built-in calculations
+- Spotlight positioning page: https://sharaforms.com/spotlight-forms
 - Self-hosting: available with Enterprise plan
 
 ## Key URLs
@@ -34,7 +35,7 @@ For complete technical reference see: /llms-full.txt
 ## Form Templates
 Ready-to-use form templates are available at https://sharaforms.com/templates. Every template has its own dedicated page at https://sharaforms.com/templates/{slug} with a live preview, a detailed description, and an FAQ.
 
-All templates are free to copy, fully customizable, and require no code. Like every SharaForms form, a template supports unlimited submissions, all three presentation modes, built-in calculations, conditional logic, signatures, payments, and dynamic document generation — "see every question, focus on one."
+All templates are free to copy, fully customizable, and require no code. Like every SharaForms form, a template supports unlimited submissions, all three presentation modes, built-in calculations, conditional logic, signatures, payments, and dynamic document generation, following the principle "see every question, focus on one."
 
 Template taxonomy:
 

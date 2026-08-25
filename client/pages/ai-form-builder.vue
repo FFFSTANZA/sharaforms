@@ -523,7 +523,7 @@ const config = useRuntimeConfig()
 useOpnSeoMeta({
   title: "Free AI Form Builder with Calculations & Logic",
   description:
-    "Turn a prompt into a complete form. SharaForms AI Builder drafts your fields, formulas, and conditional logic — ready to share in any of the three presentation modes.",
+    "Turn a prompt into a complete form. SharaForms AI drafts your fields, formulas, and conditional logic, ready to share in any presentation mode.",
   ogImage: "/share-preview.jpg",
   keywords: "free ai form builder, ai form builder, unlimited forms, conditional logic forms, spotlight forms, multi-page forms, unlimited submissions",
   speakable: ["h1", ".marketing-page > section:first-child p"],

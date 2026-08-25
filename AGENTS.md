@@ -762,3 +762,20 @@ Portaled reka-ui/Nuxt UI overlays have NO z-index (theme + DialogPortal confirme
 ### Gotchas
 - Guide FAQ word-count regex on the JS source must account for escaped apostrophes (`\\'`) inside single-quoted strings or counts skew.
 - llms.txt closing line ("Every guide technique works...") is the insertion anchor for new guide links — insert BEFORE it, keep the closer last.
+
+## Session: 2026-08-25 (late night 2) — Launch SEO/AEO/GEO audit + /spotlight-forms money page
+
+### Audit verdict (live dev probes)
+- PASSING: schema graphs complete sitewide (Org/WebSite/SoftwareApplication/SiteNavigationElement + page CreativeWork/FAQPage/Breadcrumb/Article/CollectionPage); FAQ JSON-LD == visible DOM on home/templates/guides (home uses accordion buttons, NOT dt — probe by text presence); sitemap fully synced (was 304: 40 guides + 150 templates + 46 types + 26 industries + comparisons); robots.txt + llms.txt/ai.txt coherent; no phantom guide links (40 real guides across parts 1-6).
+- FIXED: comparison meta descriptions were 357 chars (useComparisonSeo) → now unique per-competitor summary + capped tail ≤158; home desc 180→154 with Spotlight first sentence; pricing 196→153; ai-form-builder 166+em-dash→142 clean; templates hub stale "50+" → dynamic `${TEMPLATE_SLUGS.length}` (=150) at 159 chars; guides hub desc dropped dead "self hosting" reference (guide was deleted earlier).
+- FIXED slop: types.json reservation H1 "Find Effortless"→"That Fill Tables Fast", sponsorship answer "unlock creative partnerships"→"lead to"; industries.json alumni "effortless registration"→"quick mobile-friendly registration"; llms.txt mirror synced; em dashes normalized to colon phrasing across llms*.txt/ai.txt taglines (title-separator dashes in templates/[slug].vue title variants are deliberate SERP separators — left as-is).
+
+### NEW: /spotlight-forms landing page (primary positioning)
+- client/pages/spotlight-forms.vue: hero w/ breadcrumb nav, "What is a spotlight form?" definitional AEO block, 3-step how-it-works timeline, Classic/Focused/Spotlight comparison table, use cases, 6 unique FAQs (40-60w answers), CTA bands. WebPage+breadcrumbs(nested)+FAQPage schema; canonical OK; FAQ parity verified live.
+- Wired: sitemap.js core URLs (priority 0.9 weekly), OpenFormFooter Product column, llms.txt Product Pages + Notes for AI Assistants, ai.txt Key URLs.
+- Internal link equity: homepage H1 subline "Spotlight mode." is now a NuxtLink to /spotlight-forms; guides/[slug].vue fmt() extended to render [text](/path) markdown links (pink underline style); both layout guides in guides-part-1 body text now link Spotlight → /spotlight-forms.
+
+### Validation
+- eslint clean ×11 changed files; vitest 725/725. Live: /spotlight-forms 200 (title/desc/canonical/schema all correct), sitemap 305 URLs incl /spotlight-forms, guide anchor links render, footer link SSR'd.
+- ⚠️ Flagged not fixed: /templates hub HTML = 1.9MB SSR (all 150 cards inline). Crawlable but heavy; consider pagination/lazy-load next perf pass. Marketing pages keep `swr: 3600` — expect ≤1h mixed old/new meta after deploy.
+- User said NO container restarts mid-task (I restarted ui once for sitemap busting before the instruction landed; it reboots in ~35s).
