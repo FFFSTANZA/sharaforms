@@ -25,6 +25,7 @@
             >
               <NuxtLink
                 to="/spotlight-forms"
+                class="text-white/80 hover:text-white"
               >Spotlight mode.</NuxtLink>
               Focused flows. Classic pages.
             </span>
