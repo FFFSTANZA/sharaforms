@@ -132,6 +132,7 @@ jobs:
             # Idempotent: keeps the template catalog in sync with the seeded
             # definitions (updateOrCreate on slug). New templates go live here.
             docker compose exec -T api php artisan db:seed --class=TemplateSeeder --force || echo "TEMPLATE SEED FAILED"
+            docker compose exec -T api php artisan db:seed --class=TemplateQuestionsSeeder --force || echo "TEMPLATE QUESTIONS SEED FAILED"
             docker compose ps --format "table {{.Name}}\t{{.Status}}"
             curl -sf -o /dev/null http://localhost/ && echo "INGRESS OK" || echo "INGRESS CHECK FAILED"
             curl -sf -o /dev/null http://localhost/api/content/plans && echo "API OK" || echo "API CHECK FAILED"
