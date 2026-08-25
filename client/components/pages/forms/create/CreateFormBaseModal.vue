@@ -217,12 +217,10 @@
                         data-testid="form-base-ai"
                         :loading="loading"
                         :disabled="!hasPrompt || loading"
-                        :color="hasPrompt || loading ? 'primary' : 'neutral'"
-                        :variant="hasPrompt || loading ? 'solid' : 'soft'"
+                        :class="['justify-center', hasPrompt || loading ? 'brand-button-primary' : 'bg-neutral-100 text-neutral-500 border border-neutral-200 hover:bg-neutral-200']"
                         icon="i-heroicons:rocket-launch"
                         trailing-icon="i-lucide-arrow-right"
                         label="Generate"
-                        class="justify-center"
                         @click="generateForm"
                       />
                     </div>

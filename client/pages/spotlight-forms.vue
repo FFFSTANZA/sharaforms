@@ -1,7 +1,7 @@
 <template>
   <div class="marketing-page">
     <section class="relative overflow-hidden bg-[#292438] -mt-[76px]">
-      <div class="relative pt-[124px] sm:pt-[156px] px-8 lg:px-12 max-w-7xl mx-auto">
+      <div class="relative pt-[124px] sm:pt-[156px] pb-24 sm:pb-32 px-8 lg:px-12 max-w-7xl mx-auto">
         <nav aria-label="Breadcrumb" class="flex justify-center mb-5">
           <ol class="flex items-center gap-2 text-sm text-white/50">
             <li>
@@ -141,13 +141,11 @@
             </p>
           </li>
         </ul>
-        <div class="mt-10 rounded-xl border-l-4 border-pink-500 bg-pink-50 p-5">
-          <p class="text-[15px] leading-7 text-neutral-700">
-            Switching is instant: open any form, change the presentation style, and publish.
-            Fields, logic, calculations, and integrations carry over unchanged, so you can compare
-            layouts against real completion data instead of guessing.
-          </p>
-        </div>
+        <p class="mt-8 text-[15px] leading-7 text-neutral-600">
+          Switching is instant: open any form, change the presentation style, and publish.
+          Fields, logic, calculations, and integrations carry over unchanged, so you can compare
+          layouts against real completion data instead of guessing.
+        </p>
       </div>
     </section>
 
@@ -182,7 +180,9 @@
       </div>
     </section>
 
-    <OpenFormFooter />
+    <div class="pt-16 sm:pt-20">
+      <OpenFormFooter />
+    </div>
   </div>
 </template>
 
