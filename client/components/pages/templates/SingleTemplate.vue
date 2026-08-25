@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="template"
-    class="relative group bg-white dark:bg-neutral-900 border border-[#E6E8EE] dark:border-neutral-800 rounded-2xl overflow-hidden shadow-[0_1px_3px_rgba(23,25,35,0.06)] transition-all duration-300 hover:border-[#FFB79A] dark:hover:border-neutral-700 hover:shadow-[0_8px_24px_-4px_rgba(23,25,35,0.12)]"
+    class="relative group bg-white dark:bg-neutral-900 border border-[#E6E8EE] dark:border-neutral-800 rounded-2xl overflow-hidden shadow-[0_1px_3px_rgba(23,25,35,0.06)] transition-all duration-300 hover:border-[#F4B5BD] dark:hover:border-neutral-700 hover:shadow-[0_8px_24px_-4px_rgba(23,25,35,0.12)]"
   >
     <div v-if="template.is_new" class="absolute top-0 right-0 p-3 z-10">
       <span

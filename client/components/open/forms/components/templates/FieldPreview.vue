@@ -55,7 +55,7 @@ const props = defineProps({
   palette: {
     type: Object,
     default: () => ({
-      color: '#4f46e5',
+      color: '#EA6676',
       inputBg: '#f5f5f5',
       border: '#e0e0e0',
       text: '#333333',

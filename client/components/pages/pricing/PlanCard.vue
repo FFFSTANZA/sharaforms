@@ -146,12 +146,12 @@ const accents = {
     check: "bg-[#EEF0FD] text-[#6366f1]",
   },
   pink: {
-    tile: "bg-gradient-to-br from-[#ff8a4d] to-[#ff5c38]",
-    banner: "bg-gradient-to-br from-[#ff8a4d] to-[#ff5c38]",
-    glow: "bg-[#ff5c38]/30",
+    tile: "bg-gradient-to-br from-[#f0818c] to-[#EA6676]",
+    banner: "bg-gradient-to-br from-[#f0818c] to-[#EA6676]",
+    glow: "bg-[#EA6676]/30",
     glowSoft: "bg-[#FDF6EB]",
-    price: "text-[#ff5c38]",
-    check: "bg-[#fce7e2] text-[#ff5c38]",
+    price: "text-[#EA6676]",
+    check: "bg-[#fce7e2] text-[#EA6676]",
   },
   blue: {
     tile: "bg-[#0891b2]",

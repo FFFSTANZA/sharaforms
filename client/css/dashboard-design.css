@@ -78,8 +78,8 @@
   /* ── Shadows (Clay-inspired) ── */
   --sf-shadow-card: inset 0 1px 0 0 #FFFFFF, 0 1px 2px rgba(23, 25, 35, 0.04), 0 16px 40px -20px rgba(23, 25, 35, 0.18);
   --sf-shadow-card-hover: inset 0 1px 0 0 #ffffff, 0 24px 56px -24px rgba(23, 25, 35, 0.34);
-  --sf-shadow-button-primary: 0 2px 6px -2px rgba(214, 60, 38, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.14);
-  --sf-shadow-button-primary-hover: 0 6px 16px -6px rgba(214, 60, 38, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+  --sf-shadow-button-primary: 0 2px 6px -2px rgba(234, 102, 118, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.14);
+  --sf-shadow-button-primary-hover: 0 6px 16px -6px rgba(234, 102, 118, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
   --sf-shadow-button-ghost-hover: 0 8px 18px -8px rgba(23, 25, 35, 0.18);
   --sf-shadow-dropdown: 0 1px 2px rgba(23, 25, 35, 0.04), 0 8px 20px -12px rgba(23, 25, 35, 0.14);
 
@@ -263,7 +263,7 @@
 }
 
 .btn-primary:hover {
-  background: linear-gradient(180deg, #ec5566, #d9485c);
+  background: linear-gradient(180deg, var(--sf-coral-500), var(--sf-coral-600));
   transform: translateY(-1px);
   box-shadow: var(--sf-shadow-button-primary-hover);
 }
@@ -573,6 +573,17 @@ button {
 :focus-visible {
   outline: 2px solid var(--sf-focus-ring);
   outline-offset: 2px;
+}
+
+/* Suppress the global focus-visible outline on form inputs that already
+   have their own ring-form focus styling (avoids two-color ring conflict). */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[role="listbox"]:focus-visible,
+[role="radio"]:focus-visible,
+[role="checkbox"]:focus-visible {
+  outline: none;
 }
 
 

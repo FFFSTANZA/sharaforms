@@ -110,7 +110,7 @@ formManager.initialize({
 const isFormReady = computed(() => !!formManager.structure.value)
 
 const formStyle = computed(() => {
-  const color = props.scenario.form.color || "#2563EB"
+  const color = props.scenario.form.color || "#EA6676"
   const colorPalette = tailwindcssPaletteGenerator(color).primary
   const style = {
     "--font-family": props.scenario.form.font_family,

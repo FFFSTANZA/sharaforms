@@ -47,7 +47,7 @@
                 />
                 <div
                   v-if="planOption.isRequired"
-                  class="absolute inset-x-6 top-0 h-1 rounded-b-full bg-gradient-to-r from-[#ff8a4d] via-[#ff5c38] to-[#d63c26]"
+                  class="absolute inset-x-6 top-0 h-1 rounded-b-full bg-gradient-to-r from-[#f0818c] via-[#EA6676] to-[#d04a5e]"
                 />
 
                 <div class="relative flex h-full flex-col">
@@ -133,9 +133,10 @@
                       <UButton
                         block
                         size="lg"
-                        :color="planOption.isRequired ? 'primary' : 'neutral'"
-                        :variant="planOption.isRequired ? 'solid' : 'outline'"
-                        class="h-12 rounded-2xl font-semibold"
+                        :class="[
+                          'h-12 rounded-2xl font-semibold',
+                          planOption.isRequired ? 'brand-button-primary' : 'brand-button-secondary',
+                        ]"
                         :loading="planOption.key === 'self_hosted' ? loading : isPlanLoading(planOption.key)"
                         :disabled="checkoutLoading || loading"
                         @click.prevent="startCheckout(planOption.key)"
@@ -150,7 +151,7 @@
                       size="lg"
                       :to="{ name: 'redirect-billing-portal' }"
                       target="_blank"
-                      class="h-12 rounded-2xl font-semibold"
+                      class="h-12 rounded-2xl font-semibold brand-button-primary"
                     >
                       Manage plan
                     </UButton>

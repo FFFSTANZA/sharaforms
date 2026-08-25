@@ -684,3 +684,81 @@ Portaled reka-ui/Nuxt UI overlays have NO z-index (theme + DialogPortal confirme
 - Dev api container was created from an OLD compose config (only storage volume) — `docker compose up -d --force-recreate db api` to get the ./api bind mount back. Plain `docker start` reuses stale mounts.
 - Stale template data has TWO cache layers: Laravel `prod_templates` (3600s, clear as www-data) AND Nitro SWR disk cache at `/app/.nuxt/cache/nitro` which SURVIVES `docker restart ui` (writable layer) — `rm -rf` it or recreate the container.
 - sharaforms-ingress must be running for ui SSR fetches (`sharaforms-ingress` hostname); it was down ("Created") after the mode switch and silently broke SSR data.
+
+## Session: 2026-08-24 (later) — Catalog expansion: +25 templates (75 → 100), SEO/AEO/GEO batch
+
+### What shipped (uncommitted)
+- **25 new templates** in `TemplateSeeder.php`, all mapped to EXISTING types/industries (no catalog changes → type/industry hubs gain members automatically):
+  - field-trip-permission-slip, therapy-intake, race-registration*, golf-tournament-registration*, vendor-application*, work-order*, warranty-claim, return-exchange, facility-rental-request*, parking-permit-application*, internship-application, student-registration, preschool-waitlist, parent-teacher-conference, tutoring-request*, newsletter-signup, demo-request, affiliate-program-application, podcast-guest-application, speaker-proposal, complaint-form, suggestion-box, equipment-checkout*, medication-refill-request, meal-train-signup (* = live-calculating total).
+  - 23/25 carry conditional logic; 8 carry computed totals (IF-chains, IFBLANK, per-unit × count patterns).
+- **AEO content**: 25 curated FAQ sets (6 Qs each, all answers 30–60 words, direct-answer-first, zero em dashes) appended to `api/resources/data/forms/templates/questions.json`; 25 unique best-practices/mistakes entries in `client/data/forms/templates/detail-content.json`. Uniqueness floor met per slug.
+- **Client registry**: `template-slugs.js` now 100 slugs — ALSO deduped 5 PRE-EXISTING duplicate entries (audit-form, calculation-form, bank-account-opening, insurance-claim, incident-report were listed twice).
+- **Test**: `TemplateStructuresValidationTest` logicSlugs += 23, calcSlugs += 8. Suite: 4/4 pass (2247 asserts). Feature/Forms: 341 pass / 3 skipped-ish pre-existing failures unchanged.
+- Live dev verified: re-seeded (100 rows), both caches cleared (Laravel cache:clear as www-data + Nitro `/app/.nuxt/cache/nitro/routes` rm), all 25 pages 200, FAQPage mainEntity == visible dt on every page, mention blocks present for all 8 calcs, sitemap carries all 100 template URLs, education/consent hubs list new members. Vitest 725/725; eslint clean. Formula parity: 6/6 PHP evaluator cases PASS.
+
+### 🐛 New gotcha: seeder helper signature drift silently drops logic
+- `phoneField/emailField/textareaField/checkboxField/dateField` did NOT accept an `$extra` param — passing `'hidden'+logic` as a 4th arg was **silently ignored** by PHP (no error). Five fields lost their conditional logic this way before the test caught one of them. All five helpers now take `$extra = []` with array_merge like textField/selectField. Lesson: when a helper doesn't support extra attrs, the call site compiles fine and the logic just vanishes — the endpoint-validation test is the only net.
+
+### Gotchas
+- The API rate-limiter (429) kicks in when crawling ~25 SSR pages rapidly from the host — space requests ~3s apart or the ui caches "Template page not found" responses during verification loops.
+- Em-dash hits inside new template pages' HTML can come from RELATED-template payloads (pre-existing contact/job descriptions) embedded in Nuxt data — check the slug's own description/questions in DB, not page HTML, before blaming new copy.
+- Nitro sitemap reflects registry changes only after clearing `/app/.nuxt/cache/nitro/routes` (2h cacheMaxAgeSeconds otherwise).
+
+## Session: 2026-08-25 — Catalog expansion batch 4: +25 templates (100 → 125)
+
+### What shipped (uncommitted, same 6 files as batch 3)
+- **25 new templates** in `TemplateSeeder.php`, existing types/industries only:
+  - conference-registration*, reunion-registration*, vacation-bible-school-registration, cake-order*, yearbook-order*, overtime-request*, travel-authorization*, art-commission-request*, training-evaluation* (SUM score), transcript-request, direct-deposit, purchase-requisition*, it-support-ticket, credit-application, wholesale-account-application, insurance-quote-request, tax-preparation-client-intake, tattoo-consent, prayer-request, open-house-sign-in (slug `open-house-sign-in-form-template` from name "Open House Sign-In Sheet"), hoa-architectural-request, guest-post-pitch, employee-of-the-month-nomination, potluck-signup-sheet, foster-animal-application (* = live total; 9 calcs, logic on all 25).
+  - New patterns: multi_select `contains` trigger (tax intake self-emp), rating `less_than` OR-chains (training eval), checkbox reveal chains (tattoo guardian), nested hidden reveals (direct-deposit split allocations).
+- questions.json + detail-content.json + template-slugs.js += 25 each (125/125/125). Test: logicSlugs += 25, calcSlugs += 9 → suite 4/4 (3017 asserts). Feature/Forms unchanged (341 pass, same 3 pre-existing failures).
+- Live verified: all 25 pages 200 with FAQPage == visible dt, calc mention blocks present, sitemap carries all 125 URLs after full nitro cache nuke, hubs list new members. Formula parity 9/9. Vitest 725/725, eslint clean.
+
+### Gotchas
+- 🐛 `urlField` was the last helper missing `$extra` → guest-post's `published_link` logic silently dropped until the test caught it. ALL helpers now accept `$extra`; audit any future helper the day it is born.
+- Sitemap cache survived `rm -rf /app/.nuxt/cache/nitro/routes` while ui was running (regenerated on demand) — must `rm -rf /app/.nuxt/cache/nitro` AND restart ui to bust it.
+- My own arithmetic produced two false formula-parity FAILs (travel 1020 not 1000; art-commission 265 not 300): recompute expected values before blaming the evaluator.
+- A stray CJK character (`补`) slipped into one FAQ tail during scripted expansion — always grep new JSON for non-ASCII beyond intended accents after bulk edits.
+
+## Session: 2026-08-25 (later) — Catalog expansion batch 5: +25 gap-filler templates (125 → 150)
+
+### What shipped (uncommitted, same 6 files as batches 3-4)
+- **25 "needed but missing" staples** in `TemplateSeeder.php`, existing types/industries only:
+  - move-in-move-out-inspection*, minor-travel-consent, vaccination-consent, resignation-notice, offer-acceptance, reference-check, shift-swap, job-requisition, address-change, callback-request, public-records-request, order-status-inquiry (WISMO), warranty-registration, supplier-registration, school-absence-report, dental-new-patient, charity-auction-donation, donation-pickup-request, event-feedback-survey*, employee-engagement-survey* (SUM index), course-evaluation, photo-contest-entry, customer-referral, birthday-party-booking*, storage-unit-reservation* (* = live total; 5 calcs, logic on all 25).
+  - Thin hubs reinforced: legal_forms (+1), tracking_forms (+1), file_upload_forms (+1), inspection_forms (+1).
+  - New logic patterns: rating `greater_than_or_equal_to` reveal (course-eval strengths), multi-condition OR across ratings + selects (engagement improvement prompt), insurance-policy details on selection (storage).
+- questions.json + detail-content.json + template-slugs.js += 25 each (150/150/150). Test: logicSlugs += 25, calcSlugs += 5 → suite 4/4 (3796 asserts). Feature/Forms unchanged (341 pass, same 3 pre-existing failures).
+- Live verified: all 25 pages 200, FAQPage == visible dt (normalize `&#39;` vs `&#039;` entities when comparing!), calc mention blocks present, sitemap carries all 150 URLs after nitro nuke + ui restart. Formula parity 5/5. Vitest 725/725, eslint clean.
+
+### Gotchas
+- 🐛 Slug drift: seeder declared `event-feedback-survey-template` while registry/test/FAQs used `event-feedback-survey-form-template` → firstOrFail crash in test. Keep a single canonical slug spelling; grep all four consumer files the day a slug is born.
+- 🐛 A generated helper script silently did nothing: `add_detail_content_b5.py` was missing its `main()` invocation (exit 0, no output) — detail-content stayed at 125 until the KeyError exposed it. Verify merge scripts by their printed totals, not exit codes.
+- FAQ `<dt>` rendering uses `&#39;`; JSON-LD uses raw apostrophes — normalize BOTH entity forms when asserting JSON-LD == visible DOM.
+- Third false formula-parity FAIL from my own arithmetic (party = 299+60+120+10 = 489): recompute expected values before blaming the evaluator.
+
+## Session: 2026-08-25 (night) — Full-catalog QA: 150 templates ship-ready (dashes, AI phrasing, uniqueness)
+
+### Audit + remediation (uncommitted, same 6 files)
+- Built a whole-catalog audit: em/en dashes, AI-slop phrase blocklist (elevate/unlock/seamless/effortless/harness/leverage/game-changer/robust/...), duplicate descriptions & FAQ sets, reused detail-content lines, FAQ answer word bands (28-65), meta-description lengths, four-way slug sync (seeder/questions/detail/registry).
+- **Fixed**: 3 em dashes in legacy seeder prose (contact/job-application/calculation); AI phrases rewritten (seamlessly, effortlessly x2, unlocks x3, highest-leverage x2, harness); 248 detail-content lines rewritten across 31 copier slugs (15 sharing groups — kept one canonical owner per category block); curated 6-Q FAQ sets added for the 25 legacy slugs that relied on inline+expansion questions; 138 original curated answers expanded past the 28-word floor.
+- **Final audit: all clean** — 0 dashes, 0 AI phrases, 0 reused lines, 0 dup FAQ sets, 0 dup answer texts, 4x150 coverage.
+- Pest Templates 4/4 (3796); Feature/Forms unchanged; vitest 725/725; eslint clean. Re-seeded 150 + TemplateQuestionsSeeder enrichment (+448 interpolated Q&As on top of curated 6). Sitemap carries all 150 URLs.
+
+### Gotchas
+- 🐛 The detail-content dedupe script mutated `data` while intersecting group members — first rewrite poisoned later intersections (intersection=0). Fix: deepcopy snapshot BEFORE mutating; read originals from snapshot.
+- 🐛 Tail-insertion patch used `src[:m.end()-1]+tail+src[m.end():]`, dropping the closing quote and producing unterminated strings. Correct pattern: keep the char at end (insert before it), i.e. slice at m.end() not m.end()-1.
+- 🐛 Regex "fix comma-to-colon" over-matched across entry boundaries gluing value+next-key pairs. Recovery: re-extract pairs via their `"....?":` signature (keys end with ?) and rebuild the script programmatically.
+- Legacy inline questions are REPLACED by questions.json entries when a slug exists in the catalog (run() prefers catalog) — adding curated sets silently supersedes inline ones; no dedupe needed against inline text.
+- Running TemplateQuestionsSeeder after catalog curation appends universal+category slots to ALL templates (curated sets lack those exact texts) → pages serve ~9 FAQs (6 curated + 3 interpolated). JSON-LD/DOM parity holds either way since both render from template->questions.
+
+## Session: 2026-08-25 (late night) — Guides batch 2: +10 AEO/GEO guides (15 → 25)
+
+### What shipped (uncommitted)
+- New `client/data/guides/guides-part-5.js` with 10 guides, wired into `index.js` (import + spread + 10 new GUIDE_TEMPLATE_LINKS entries):
+  - icebreaker-questions (60 Q bank), get-to-know-you-questions (45 Q bank), employee-engagement-survey-questions (5-driver table), workshop-feedback-questions (30 Q), how-to-write-survey-questions (6 rules w/ bad-good rewrites), how-long-should-a-survey-be (length-band table), order-form-vs-purchase-order-vs-invoice (3-doc comparison), hr-forms-for-small-business (10-form roundup), teacher-forms-toolkit (10-form roundup), collect-customer-testimonials (ask scripts).
+  - New categories: Comparisons, Toolkits, Growth. All template-link targets verified against template-slugs.js registry.
+- llms.txt Guides section += 10 lines; ai.txt Guides paragraph extended; llms-full.txt has no per-guide links (nothing to sync).
+- Validation: hub lists 25 guides; all 10 pages 200 with Article+FAQPage schema, mainEntity == visible dt (entity-normalized), template pills render; sitemap carries all 25 guide URLs after full nitro nuke + ui restart; source audit: 0 dashes, 0 slop phrases, 39/39 FAQs in band; vitest 725/725; eslint clean.
+
+### Gotchas
+- Guide FAQ word-count regex on the JS source must account for escaped apostrophes (`\\'`) inside single-quoted strings or counts skew.
+- llms.txt closing line ("Every guide technique works...") is the insertion anchor for new guide links — insert BEFORE it, keep the closer last.

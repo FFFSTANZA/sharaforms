@@ -767,7 +767,7 @@
         <div class="mt-12 sm:mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
           <NuxtLink
             to="/comparisons"
-            class="group flex items-center justify-between rounded-2xl border border-[#E6E8EE] bg-[#F7F8FA] px-6 py-5 hover:border-[#FFB79A] hover:bg-[#F0F1F4] transition"
+            class="group flex items-center justify-between rounded-2xl border border-[#E6E8EE] bg-[#F7F8FA] px-6 py-5 hover:border-[#F4B5BD] hover:bg-[#F0F1F4] transition"
           >
             <div>
               <div class="text-base leading-6 font-semibold text-gray-950">
@@ -777,14 +777,14 @@
                 SharaForms vs every form builder
               </div>
             </div>
-            <UIcon name="i-lucide-arrow-right" class="h-5 w-5 text-[#A7ABB2] group-hover:text-[#ff5c38]" />
+            <UIcon name="i-lucide-arrow-right" class="h-5 w-5 text-[#A7ABB2] group-hover:text-[#EA6676]" />
           </NuxtLink>
 
           <NuxtLink
             v-for="comparison in otherComparisons"
             :key="comparison.slug"
             :to="`/sharaforms-vs-${comparison.slug}`"
-            class="group flex items-center justify-between rounded-2xl border border-[#E6E8EE] bg-[#F7F8FA] px-6 py-5 hover:border-[#FFB79A] hover:bg-[#F0F1F4] transition"
+            class="group flex items-center justify-between rounded-2xl border border-[#E6E8EE] bg-[#F7F8FA] px-6 py-5 hover:border-[#F4B5BD] hover:bg-[#F0F1F4] transition"
           >
             <div>
               <div class="text-base leading-6 font-semibold text-gray-950">
@@ -794,7 +794,7 @@
                 Free SharaForms alternative
               </div>
             </div>
-            <UIcon name="i-lucide-arrow-right" class="h-5 w-5 text-[#A7ABB2] group-hover:text-[#ff5c38]" />
+            <UIcon name="i-lucide-arrow-right" class="h-5 w-5 text-[#A7ABB2] group-hover:text-[#EA6676]" />
           </NuxtLink>
         </div>
       </div>

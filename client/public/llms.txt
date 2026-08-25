@@ -334,4 +334,31 @@ Step-by-step guides answering specific form questions, written by the SharaForms
 - Form submission notifications: https://sharaforms.com/guides/form-submission-notifications
 - Sharing forms via links, QR codes, and embeds: https://sharaforms.com/guides/share-a-form-anywhere
 
+- 60 icebreaker questions for meetings, teams, and events: https://sharaforms.com/guides/icebreaker-questions
+- 45 get to know you questions for any group: https://sharaforms.com/guides/get-to-know-you-questions
+- Employee engagement survey questions: https://sharaforms.com/guides/employee-engagement-survey-questions
+- Workshop and training feedback questions: https://sharaforms.com/guides/workshop-feedback-questions
+- How to write survey questions people answer: https://sharaforms.com/guides/how-to-write-survey-questions
+- How long a survey should be by type: https://sharaforms.com/guides/how-long-should-a-survey-be
+- Order form vs purchase order vs invoice: https://sharaforms.com/guides/order-form-vs-purchase-order-vs-invoice
+- Ten HR forms small businesses need: https://sharaforms.com/guides/hr-forms-for-small-business
+- Teacher toolkit of ten school forms: https://sharaforms.com/guides/teacher-forms-toolkit
+- How to collect customer testimonials with ask scripts: https://sharaforms.com/guides/collect-customer-testimonials
+
+- How to create a survey in seven steps: https://sharaforms.com/guides/how-to-create-a-survey
+- Making a registration form people finish: https://sharaforms.com/guides/how-to-make-a-registration-form
+- Creating order forms with calculated totals: https://sharaforms.com/guides/how-to-create-an-order-form
+- Migrating from Google Forms without losing data: https://sharaforms.com/guides/migrate-from-google-forms
+- Net Promoter Score questions, follow-ups, and scoring: https://sharaforms.com/guides/net-promoter-score-questions
+- Exit interview questions that surface real reasons: https://sharaforms.com/guides/exit-interview-questions
+- Demographic survey questions to ask and to skip: https://sharaforms.com/guides/demographics-survey-questions
+- Job application screening questions worth asking: https://sharaforms.com/guides/job-application-questions
+- Patient intake form question essentials: https://sharaforms.com/guides/patient-intake-questions
+- Anonymous surveys people actually trust: https://sharaforms.com/guides/anonymous-surveys
+- Increasing form completion rates with twelve fixes: https://sharaforms.com/guides/how-to-increase-form-completion-rates
+- New hire paperwork checklist before day one: https://sharaforms.com/guides/new-hire-paperwork-checklist
+- Church forms toolkit for every ministry: https://sharaforms.com/guides/church-forms-toolkit
+- Nonprofit forms that replace paperwork chaos: https://sharaforms.com/guides/nonprofit-forms-toolkit
+- Liability waivers explained: what makes them hold up: https://sharaforms.com/guides/liability-waivers-explained
+
 Every guide technique works on the free plan with unlimited forms and submissions.

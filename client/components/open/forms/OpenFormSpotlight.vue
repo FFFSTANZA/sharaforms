@@ -248,7 +248,7 @@ const isSubmitted = computed(() => props.formManager?.state?.isSubmitted ?? fals
 const canGoPrev = computed(() => currentIndex.value > 0)
 
 // ── Active accent color ──
-const formColor = computed(() => form.value?.color || '#2563eb')
+const formColor = computed(() => form.value?.color || '#EA6676')
 
 // ── Progress bar ──
 const showProgressBar = computed(() => form.value?.show_progress_bar)

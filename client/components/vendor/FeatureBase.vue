@@ -3,7 +3,7 @@
     v-if="user && featureBaseOrganization"
     v-show="scriptLoaded && appStore.featureBaseButtonVisible"
     data-featurebase-feedback
-    class="fixed -right-9 top-1/2 -translate-y-1/2 z-20 bg-[#d63c26] hover:bg-[#e14a30] text-white font-medium py-2 px-3 rounded-t-lg shadow-lg transition-all duration-200 hover:shadow-xl transform hover:scale-105 flex items-center space-x-1 -rotate-90 origin-center"
+    class="fixed -right-9 top-1/2 -translate-y-1/2 z-20 bg-[#EA6676] hover:bg-[#d04a5e] text-white font-medium py-2 px-3 rounded-t-lg shadow-lg transition-all duration-200 hover:shadow-xl transform hover:scale-105 flex items-center space-x-1 -rotate-90 origin-center"
   >
     <Icon name="i-lucide-message-square" class="w-4 h-4" />
     <span class="text-xs">Feedback</span>

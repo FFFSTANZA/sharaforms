@@ -41,12 +41,12 @@ const colorClasses = computed(() => {
         { bg: 'bg-[#FDF6EB]', text: 'text-[#d97706]' },
         { bg: 'bg-[#EEF0FD]', text: 'text-[#6366f1]' },
         { bg: 'bg-[#EFF8F1]', text: 'text-[#16a34a]' },
-        { bg: 'bg-[#fce7e2]', text: 'text-[#ff5c38]' },
+        { bg: 'bg-[#fce7e2]', text: 'text-[#EA6676]' },
         { bg: 'bg-[#E4F4F8]', text: 'text-[#0891b2]' },
         { bg: 'bg-[#FDF6EB]', text: 'text-[#d97706]' },
         { bg: 'bg-[#EEF0FD]', text: 'text-[#6366f1]' },
         { bg: 'bg-[#EFF8F1]', text: 'text-[#16a34a]' },
-        { bg: 'bg-[#fce7e2]', text: 'text-[#ff5c38]' },
+        { bg: 'bg-[#fce7e2]', text: 'text-[#EA6676]' },
     ]
 
     const colorPair = colors[props.workspace.id % colors.length]

@@ -15,7 +15,7 @@
               class="btn-ghost flex items-center gap-2 border border-[#DEE1E7] rounded-xl px-4 py-3.5 text-xs font-semibold text-[#565A62] shadow-[0_1px_2px_rgba(23,25,35,0.04)]"
               @click.stop="showDateDropdown = !showDateDropdown"
             >
-              <i class="fa-solid fa-calendar-day text-[10px] text-[#ff5c38]"></i>
+              <i class="fa-solid fa-calendar-day text-[10px] text-[#EA6676]"></i>
               {{ selectedDateLabel }} <i class="fa-solid fa-chevron-down text-[9px] text-[#A7ABB2]"></i>
             </button>
             <div
@@ -26,7 +26,7 @@
                 v-for="option in dateOptions"
                 :key="option.value"
                 class="w-full text-left px-4 py-2.5 text-xs font-medium transition-colors"
-                :class="selectedDays === option.value ? 'text-[#ff5c38] bg-[#FFE9E2]' : 'text-[#565A62] hover:bg-[#F7F8FA]'"
+                :class="selectedDays === option.value ? 'text-[#EA6676] bg-[#FDE8EB]' : 'text-[#565A62] hover:bg-[#F7F8FA]'"
                 @click="selectDateRange(option.value)"
               >
                 {{ option.label }}
@@ -201,7 +201,7 @@
         >
           <div class="flex items-center justify-between mb-8">
             <div>
-              <h2 class="text-[15px] font-semibold text-[#1D1F24]">{{ selectedDays <= 7 ? 'Weekly' : 'Period' }} views</h2>
+              <h2 class="text-[15px] font-semibold text-[#1D1F24]">Weekly views</h2>
               <p class="text-xs text-[#8E9198] font-medium mt-0.5">Last {{ selectedDays }} days</p>
             </div>
             <div class="flex items-center gap-4">
@@ -243,7 +243,7 @@
                 >
                   <span
                     class="absolute left-1/2 -translate-x-1/2 -top-2 -translate-y-full text-[11px] font-semibold tabular-nums border rounded-lg px-2 py-1 shadow-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-30"
-                    :class="day.peak ? 'text-white bg-[#ff5c38] border-[#ff5c38]' : 'text-[#1D1F24] bg-white border-[#E6E8EE]'"
+                    :class="day.peak ? 'text-white bg-[#EA6676] border-[#EA6676]' : 'text-[#1D1F24] bg-white border-[#E6E8EE]'"
                   >
                     {{ day.count }}
                   </span>
@@ -277,7 +277,7 @@
             </div>
             <NuxtLink
               :to="{ name: 'home', query: { tab: 'forms' } }"
-              class="cursor-pointer shrink-0 mt-0.5 inline-flex items-center gap-1.5 text-xs font-semibold text-[#565A62] hover:text-[#ff5c38] transition-colors"
+              class="cursor-pointer shrink-0 mt-0.5 inline-flex items-center gap-1.5 text-xs font-semibold text-[#565A62] hover:text-[#EA6676] transition-colors"
             >
               View all <i class="fa-solid fa-arrow-right text-[9px]"></i>
             </NuxtLink>
@@ -297,7 +297,7 @@
                 <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" :class="getFormIconBg(form)">
                   <i :class="getFormIcon(form)" class="text-sm"></i>
                 </div>
-                <p class="flex-1 min-w-0 text-[13px] font-semibold text-[#1D1F24] truncate group-hover:text-[#ff5c38] transition-colors">
+                <p class="flex-1 min-w-0 text-[13px] font-semibold text-[#1D1F24] truncate group-hover:text-[#EA6676] transition-colors">
                   {{ form.title }}
                 </p>
                 <span class="text-sm font-bold text-[#1D1F24] tabular-nums shrink-0">
@@ -339,7 +339,7 @@
               type="search"
               v-model="search"
               placeholder="Search forms..."
-              class="bg-white border border-[#DEE1E7] rounded-xl py-3.5 pl-11 pr-5 w-72 text-sm text-[#1D1F24] placeholder:text-[#8E9198] focus:outline-none focus:ring-2 focus:ring-[#ff5c38]/15 focus:border-[#ff5c38]/35 transition-all shadow-[0_1px_2px_rgba(23,25,35,0.04),0_8px_20px_-12px_rgba(23,25,35,0.14)]"
+              class="bg-white border border-[#DEE1E7] rounded-xl py-3.5 pl-11 pr-5 w-72 text-sm text-[#1D1F24] placeholder:text-[#8E9198] focus:outline-none focus:ring-2 focus:ring-[#EA6676]/15 focus:border-[#EA6676]/35 transition-all shadow-[0_1px_2px_rgba(23,25,35,0.04),0_8px_20px_-12px_rgba(23,25,35,0.14)]"
             />
           </div>
 
@@ -401,12 +401,59 @@
           <span class="text-xs font-medium text-[#8E9198] tabular-nums">{{ enrichedForms.length }} forms</span>
         </div>
         <div class="flex items-center gap-2.5">
-          <button class="btn-ghost flex items-center gap-2 border border-[#DEE1E7] rounded-xl px-4 py-3.5 text-xs font-semibold text-[#565A62] shadow-[0_1px_2px_rgba(23,25,35,0.04)]">
-            <i class="fa-solid fa-sliders text-[10px] text-[#ff5c38]"></i> Filter
-          </button>
-          <button class="btn-ghost flex items-center gap-2 border border-[#DEE1E7] rounded-xl px-4 py-3.5 text-xs font-semibold text-[#565A62] shadow-[0_1px_2px_rgba(23,25,35,0.04)]">
-            <i class="fa-solid fa-arrow-up-wide-short text-[10px] text-[#ff5c38]"></i> Sort
-          </button>
+          <!-- Filter Dropdown -->
+          <div ref="filterDropdownRef" class="relative">
+            <button
+              class="btn-ghost flex items-center gap-2 border border-[#DEE1E7] rounded-xl px-4 py-3.5 text-xs font-semibold text-[#565A62] shadow-[0_1px_2px_rgba(23,25,35,0.04)]"
+              @click.stop="showFilterDropdown = !showFilterDropdown"
+            >
+              <i class="fa-solid fa-sliders text-[10px] text-[#EA6676]"></i> Filter
+              <span v-if="statusFilter !== 'all'" class="ml-1 w-1.5 h-1.5 rounded-full bg-[#EA6676]"></span>
+            </button>
+            <div
+              v-if="showFilterDropdown"
+              class="absolute right-0 top-full mt-2 bg-white border border-[#E6E8EE] rounded-xl shadow-[0_12px_40px_-12px_rgba(23,25,35,0.2)] z-50 py-1.5 min-w-[160px]"
+            >
+              <button
+                v-for="option in statusFilterOptions"
+                :key="option.value"
+                class="w-full text-left px-4 py-2.5 text-xs font-medium transition-colors"
+                :class="statusFilter === option.value ? 'text-[#EA6676] bg-[#FDE8EB]' : 'text-[#565A62] hover:bg-[#F7F8FA]'"
+                @click="selectStatusFilter(option.value)"
+              >
+                {{ option.label }}
+              </button>
+            </div>
+          </div>
+
+          <!-- Sort Dropdown -->
+          <div ref="sortDropdownRef" class="relative">
+            <button
+              class="btn-ghost flex items-center gap-2 border border-[#DEE1E7] rounded-xl px-4 py-3.5 text-xs font-semibold text-[#565A62] shadow-[0_1px_2px_rgba(23,25,35,0.04)]"
+              @click.stop="showSortDropdown = !showSortDropdown"
+            >
+              <i class="fa-solid fa-arrow-up-wide-short text-[10px] text-[#EA6676]"></i> Sort
+            </button>
+            <div
+              v-if="showSortDropdown"
+              class="absolute right-0 top-full mt-2 bg-white border border-[#E6E8EE] rounded-xl shadow-[0_12px_40px_-12px_rgba(23,25,35,0.2)] z-50 py-1.5 min-w-[180px]"
+            >
+              <button
+                v-for="option in sortOptions"
+                :key="option.value"
+                class="w-full text-left px-4 py-2.5 text-xs font-medium transition-colors flex items-center gap-2"
+                :class="sortBy === option.value ? 'text-[#EA6676] bg-[#FDE8EB]' : 'text-[#565A62] hover:bg-[#F7F8FA]'"
+                @click="selectSort(option.value)"
+              >
+                <span class="flex-1">{{ option.label }}</span>
+                <i
+                  v-if="sortBy === option.value"
+                  class="fa-solid text-[8px]"
+                  :class="sortDirection === 'asc' ? 'fa-arrow-up' : 'fa-arrow-down'"
+                ></i>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -419,7 +466,7 @@
         </div>
 
         <div v-else-if="forms?.length === 0" class="text-center py-16 px-4 bg-white rounded-2xl border border-[#E6E8EE]">
-          <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#FFE9E2] text-[#ff5c38] mb-5">
+          <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#FDE8EB] text-[#EA6676] mb-5">
             <i class="fa-solid fa-file-lines text-2xl"></i>
           </div>
           <h3 class="text-lg font-bold text-neutral-900">Create your first form</h3>
@@ -453,7 +500,7 @@
           <div
             v-for="form in paginatedForms"
             :key="form.id"
-            class="group bg-white rounded-2xl border border-[#E6E8EE] p-5 hover:border-[#FFB79A] hover:-translate-y-0.5 transition-all shadow-[inset_0_1px_0_0_#FFFFFF,0_1px_2px_rgba(23,25,35,0.04),0_12px_32px_-16px_rgba(23,25,35,0.14)] relative cursor-pointer"
+            class="group bg-white rounded-2xl border border-[#E6E8EE] p-5 hover:border-[#F4B5BD] hover:-translate-y-0.5 transition-all shadow-[inset_0_1px_0_0_#FFFFFF,0_1px_2px_rgba(23,25,35,0.04),0_12px_32px_-16px_rgba(23,25,35,0.14)] relative cursor-pointer"
             @click="navigateToSubmissions(form)"
           >
             <div class="flex items-start justify-between mb-4">
@@ -465,7 +512,7 @@
                 {{ getStatusLabel(form) }}
               </span>
             </div>
-            <p class="text-[14px] font-semibold text-[#1D1F24] truncate group-hover:text-[#ff5c38] transition-colors">{{ form.title }}</p>
+            <p class="text-[14px] font-semibold text-[#1D1F24] truncate group-hover:text-[#EA6676] transition-colors">{{ form.title }}</p>
             <div class="flex items-center gap-1.5 mt-1">
               <p class="text-xs text-[#8E9198] font-medium truncate">{{ form.slug }}</p>
               <template v-if="form.tags?.length">
@@ -528,9 +575,9 @@
           <NuxtLink
             v-if="!workspace?.is_readonly"
             :to="{ name: 'forms-create' }"
-            class="rounded-2xl border-2 border-dashed border-[#DEE1E7] flex flex-col items-center justify-center gap-3 hover:border-[#ff5c38]/40 hover:bg-[#FFE9E2]/40 transition-all min-h-[212px] group"
+            class="rounded-2xl border-2 border-dashed border-[#DEE1E7] flex flex-col items-center justify-center gap-3 hover:border-[#EA6676]/40 hover:bg-[#FDE8EB]/40 transition-all min-h-[212px] group"
           >
-            <span class="w-12 h-12 rounded-2xl bg-white border border-[#DEE1E7] flex items-center justify-center text-[#6E7278] group-hover:text-[#ff5c38] group-hover:border-[#FFB79A] transition-all shadow-[0_8px_20px_-12px_rgba(23,25,35,0.14)]">
+            <span class="w-12 h-12 rounded-2xl bg-white border border-[#DEE1E7] flex items-center justify-center text-[#6E7278] group-hover:text-[#EA6676] group-hover:border-[#F4B5BD] transition-all shadow-[0_8px_20px_-12px_rgba(23,25,35,0.14)]">
               <i class="fa-solid fa-plus text-lg"></i>
             </span>
             <span class="text-sm font-semibold text-[#565A62] group-hover:text-[#1D1F24]">New form</span>
@@ -565,7 +612,7 @@
                         <i :class="getFormIcon(form)" class="text-lg"></i>
                       </div>
                       <div>
-                        <p class="text-[14px] font-semibold text-[#1D1F24] group-hover:text-[#ff5c38] transition-colors">{{ form.title }}</p>
+                        <p class="text-[14px] font-semibold text-[#1D1F24] group-hover:text-[#EA6676] transition-colors">{{ form.title }}</p>
                         <p class="text-xs text-[#8E9198] font-medium mt-0.5">{{ form.slug }}</p>
                       </div>
                     </div>
@@ -700,6 +747,13 @@ const viewMode = useLocalStorage('sharaforms-viewmode', 'grid')
 const currentPage = ref(1)
 const itemsPerPage = 8
 const showDateDropdown = ref(false)
+const showFilterDropdown = ref(false)
+const showSortDropdown = ref(false)
+const statusFilter = ref('all')
+const sortBy = ref('last_updated')
+const sortDirection = ref('desc')
+const filterDropdownRef = ref(null)
+const sortDropdownRef = ref(null)
 
 const dateOptions = [
   { label: 'Last 7 days', value: 7 },
@@ -723,22 +777,60 @@ if (import.meta.client) {
     if (showDateDropdown.value && dateDropdownRef.value && !dateDropdownRef.value.contains(e.target)) {
       showDateDropdown.value = false
     }
+    if (showFilterDropdown.value && filterDropdownRef.value && !filterDropdownRef.value.contains(e.target)) {
+      showFilterDropdown.value = false
+    }
+    if (showSortDropdown.value && sortDropdownRef.value && !sortDropdownRef.value.contains(e.target)) {
+      showSortDropdown.value = false
+    }
   }
   onMounted(() => document.addEventListener('click', closeDropdown))
   onUnmounted(() => document.removeEventListener('click', closeDropdown))
+}
+
+// Filter & Sort options
+const statusFilterOptions = [
+  { label: 'All', value: 'all' },
+  { label: 'Live', value: 'live' },
+  { label: 'Draft', value: 'draft' },
+  { label: 'Closed', value: 'closed' },
+]
+
+const sortOptions = [
+  { label: 'Last Updated', value: 'last_updated' },
+  { label: 'Name', value: 'name' },
+  { label: 'Views', value: 'views' },
+  { label: 'Responses', value: 'responses' },
+]
+
+const selectStatusFilter = (value) => {
+  statusFilter.value = value
+  showFilterDropdown.value = false
+}
+
+const selectSort = (value) => {
+  if (sortBy.value === value) {
+    sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc'
+  } else {
+    sortBy.value = value
+    sortDirection.value = value === 'name' ? 'asc' : 'desc'
+  }
+  showSortDropdown.value = false
 }
 
 // Methods
 const clearFilters = () => {
   search.value = ""
   selectedTags.value = []
+  statusFilter.value = 'all'
 }
 
 // Computed
 const isFilteringForms = computed(() => {
   return (
     (search.value !== "" && search.value !== null) ||
-    selectedTags.value.length > 0
+    selectedTags.value.length > 0 ||
+    statusFilter.value !== 'all'
   )
 })
 
@@ -774,6 +866,12 @@ const tagOptions = computed(() =>
 const baseForms = computed(() => {
   if (!forms.value) return []
   return forms.value.filter((form) => {
+    // Status filter
+    if (statusFilter.value !== 'all') {
+      const formStatus = getStatusLabel(form).toLowerCase()
+      if (statusFilter.value !== formStatus) return false
+    }
+    // Tag filter
     if (selectedTags.value.length === 0) return true
     const selectedTagStrings = selectedTags.value
       .map((t) => (typeof t === "string" ? t : t?.value))
@@ -798,7 +896,30 @@ const enrichedForms = computed(() => {
   const base = baseForms.value
   if (!base || base.length === 0) return []
   const results = fuseResults.value
-  return results && results.length > 0 ? results.map((r) => r.item) : base
+  let items = results && results.length > 0 ? results.map((r) => r.item) : [...base]
+
+  // Apply sorting
+  items.sort((a, b) => {
+    let cmp = 0
+    switch (sortBy.value) {
+      case 'name':
+        cmp = (a.title || '').localeCompare(b.title || '')
+        break
+      case 'views':
+        cmp = (a.views_count || 0) - (b.views_count || 0)
+        break
+      case 'responses':
+        cmp = (a.submissions_count || 0) - (b.submissions_count || 0)
+        break
+      case 'last_updated':
+      default:
+        cmp = new Date(a.updated_at || 0) - new Date(b.updated_at || 0)
+        break
+    }
+    return sortDirection.value === 'asc' ? cmp : -cmp
+  })
+
+  return items
 })
 
 // Pagination

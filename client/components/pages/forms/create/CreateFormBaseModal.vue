@@ -174,7 +174,7 @@
                     :has-validation="false"
                     :ui="{
                       slots: {
-                        input: 'min-h-[150px] resize-none border-0 bg-white px-4 py-4 text-base leading-7 text-neutral-900 shadow-none placeholder:text-neutral-400 focus:border-transparent focus:ring-0 disabled:!bg-white'
+                        input: 'min-h-[150px] max-h-[200px] overflow-y-auto resize-none border-0 bg-white px-4 py-4 text-base leading-7 text-neutral-900 shadow-none placeholder:text-neutral-400 focus:border-transparent focus:ring-0 disabled:!bg-white'
                       }
                     }"
                     @input-filled="generateForm"

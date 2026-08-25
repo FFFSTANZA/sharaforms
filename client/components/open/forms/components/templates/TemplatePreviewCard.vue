@@ -57,7 +57,7 @@ const fieldCount = computed(() => {
 const hasMore = computed(() => fieldCount.value > MAX_PREVIEW_FIELDS)
 const remaining = computed(() => fieldCount.value - MAX_PREVIEW_FIELDS)
 
-const color = computed(() => props.form.color || '#4f46e5')
+const color = computed(() => props.form.color || '#EA6676')
 
 const palette = computed(() => ({
   color: color.value,

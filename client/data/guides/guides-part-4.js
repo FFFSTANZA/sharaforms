@@ -170,7 +170,7 @@ export default [
     slug: 'online-event-registration-guide',
     title: 'Online Event Registration: Set Up Yours in Minutes',
     description:
-      'Launch online event registration fast: attendee fields that matter, confirmation emails, capacity signals, and clean check-in exports, all without fees per signup.',
+      'Launch online event registration fast: attendee fields that matter, confirmation emails, capacity signals, and clean check-in exports without fees.',
     category: 'Events & groups',
     readingMinutes: 6,
     intro: [

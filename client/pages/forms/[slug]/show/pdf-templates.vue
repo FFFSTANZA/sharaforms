@@ -13,6 +13,7 @@
         >
           <UButton
             color="primary"
+            variant="solid"
             icon="i-lucide-plus"
             trailing-icon="i-lucide-chevron-down"
             :loading="uploading || creatingFromScratch"
@@ -112,6 +113,7 @@
             >
               <UButton
                 color="primary"
+                variant="solid"
                 icon="i-lucide-plus"
                 trailing-icon="i-lucide-chevron-down"
                 :loading="uploading || creatingFromScratch"
