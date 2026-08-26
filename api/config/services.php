@@ -123,6 +123,9 @@ return [
         'client_secret' => env('STRIPE_CLIENT_SECRET', env('STRIPE_SECRET')),
         'redirect' => env('STRIPE_REDIRECT_URL', front_url('/oauth/stripe/callback')),
         'export_lookback_days' => env('STRIPE_EXPORT_LOOKBACK_DAYS', 45),
+        // Allow creators to connect Stripe with their own API keys (no platform
+        // Stripe account / OAuth Connect required). Kill switch for compliance.
+        'own_keys_enabled' => env('STRIPE_OWN_KEYS_ENABLED', true),
     ],
 
     'ipinfo' => [

@@ -31,14 +31,14 @@
       </div>
       <template v-else>
         <div
-          v-if="shouldShowPreviewMessage || (props.isAdminPreview && (!stripeState.stripeAccountId || !publishableKey || !isStripeJsLoaded))"
+          v-if="shouldShowPreviewMessage || (props.isAdminPreview && (!paymentResolved || !effectivePublishableKey || !isStripeJsLoaded))"
           :class="ui.section({ class: props.ui?.slots?.section }) + ' p-4 text-center text-sm text-blue-700 bg-blue-100 dark:bg-blue-900/50 dark:text-blue-300 rounded-md'"
         >
           <p v-if="shouldShowPreviewMessage">Please save the form to activate the payment preview.</p>
           <p v-else>
-            Payment component configuration incomplete. 
-            {{ !stripeState?.stripeAccountId ? 'Stripe account not connected': 'Stripe account connected' }}.
-            {{ !publishableKey ? 'Missing Stripe publishable key.' : '' }}
+            Payment component configuration incomplete.
+            {{ !paymentResolved ? 'Stripe account not connected': 'Stripe account connected' }}.
+            {{ !effectivePublishableKey ? 'Missing Stripe publishable key.' : '' }}
             {{ !isStripeJsLoaded ? 'Stripe.js not loaded.' : '' }}
           </p>
           <p class="mt-2">The complete payment form will be visible to users when viewing the published form.</p>
@@ -56,7 +56,7 @@
           <p>{{ stripeState.errorMessage || 'Failed to load payment configuration' }}</p>
         </div>
         <div
-          v-else-if="stripeState && stripeState.stripeAccountId && isStripeJsLoaded && publishableKey"
+          v-else-if="stripeState && canRenderPayment && isStripeJsLoaded"
           :class="ui.section({ class: props.ui?.slots?.section })"
         >
           <div :class="ui.amountBar({ class: props.ui?.slots?.amountBar })">
@@ -65,9 +65,9 @@
           </div>
           <StripeElements
             ref="stripeElementsRef"
-            :stripe-key="publishableKey"
-            :stripe-account="String(stripeState.stripeAccountId)"
-            :instance-options="{ stripeAccount: String(stripeState.stripeAccountId) }"
+            :stripe-key="effectivePublishableKey"
+            :stripe-account="connectAccountId"
+            :instance-options="stripeInstanceOptions"
             :elements-options="{ locale: props.locale }"
             @ready="onStripeReady"
             @error="onStripeError"
@@ -110,10 +110,10 @@
         </div>
         <div v-else>
           <div v-if="props.isAdminPreview" class="my-4 p-4 text-center text-sm text-blue-700 bg-blue-100 dark:bg-blue-900/50 dark:text-blue-300 rounded-md">
-            <p>Payment component initializing. {{ !!stripeState?.stripeAccountId ? 'Stripe account connected': 'No Stripe account connected' }}.</p>
+            <p>Payment component initializing. {{ paymentResolved ? 'Stripe account connected': 'No Stripe account connected' }}.</p>
             <p class="mt-2">The payment form will be visible to users when viewing the published form.</p>
-            <p v-if="!publishableKey" class="mt-2 text-red-500">Missing Stripe publishable key in configuration.</p>
-            <p v-if="!stripeState?.stripeAccountId" class="mt-2 text-red-500">Missing Stripe account connection. ID: {{ props.oauthProviderId }}</p>
+            <p v-if="!effectivePublishableKey" class="mt-2 text-red-500">Missing Stripe publishable key in configuration.</p>
+            <p v-if="!paymentResolved" class="mt-2 text-red-500">Missing Stripe account connection. ID: {{ props.oauthProviderId }}</p>
           </div>
           <div v-else class="flex flex-col items-center justify-center py-4">
             <Loader class="mx-auto h-6 w-6" />
@@ -173,6 +173,53 @@ const publishableKey = computed(() => {
   return useFeatureFlag('billing.stripe_publishable_key', '')
 })
 
+// Own-keys mode: the payment block references a connection created from the
+// creator's own Stripe API keys (no platform Stripe account involved).
+const ownKeysMode = computed(() => stripeState.value?.connectionMode === 'own_keys')
+
+// Connected account id for Stripe Connect mode; undefined in own-keys mode
+// (Elements must NOT be scoped to a connected account there).
+const connectAccountId = computed(() => {
+  if (ownKeysMode.value) return undefined
+  const id = stripeState.value?.stripeAccountId
+  return id ? String(id) : undefined
+})
+
+// Publishable key used to initialize Elements: the creator's own key in
+// own-keys mode, the platform's key in connect mode.
+const effectivePublishableKey = computed(() => {
+  if (ownKeysMode.value) return stripeState.value?.accountPublishableKey || ''
+  return publishableKey.value || ''
+})
+
+const stripeInstanceOptions = computed(() => (
+  connectAccountId.value ? { stripeAccount: connectAccountId.value } : {}
+))
+
+// Whether the connection details have been resolved for either mode
+const paymentResolved = computed(() => (
+  ownKeysMode.value ? !!stripeState.value?.accountPublishableKey : !!stripeState.value?.stripeAccountId
+))
+
+const canRenderPayment = computed(() => !!effectivePublishableKey.value && paymentResolved.value)
+
+/**
+ * Makes sure window.Stripe exists. vue-stripe-js does not load Stripe.js on
+ * its own, so we load it with the best available key: the platform's key
+ * (connect mode) or the creator's account key once resolved (own_keys mode).
+ */
+const ensureStripeJsLoaded = async () => {
+  if (typeof window === 'undefined') return false
+  if (!window.Stripe) {
+    const key = effectivePublishableKey.value
+    if (!key) return false
+    console.debug('[PaymentInput] Loading Stripe.js with resolved key')
+    await loadStripe(key)
+  }
+  isStripeJsLoaded.value = true
+  return true
+}
+
 const card = ref(null)
 const stripeElementsRef = ref(null)
 const cardHolderName = ref(props.prefillName || '')
@@ -230,28 +277,15 @@ onMounted(async () => {
       stripeElementsInstance: !!stripeElements.value
     })
 
-    // Initialize Stripe.js globally first if needed
-    if (typeof window !== 'undefined' && !window.Stripe && publishableKey.value) {
-      console.debug('[PaymentInput] Loading Stripe.js with key:', publishableKey.value)
-      await loadStripe(publishableKey.value)
-      isStripeJsLoaded.value = true
-    } else if (typeof window !== 'undefined' && window.Stripe) {
-      isStripeJsLoaded.value = true
-    }
-    console.debug('[PaymentInput] Stripe.js loaded status:', isStripeJsLoaded.value)
+    // Load Stripe.js with whatever key is available up-front (platform key).
+    await ensureStripeJsLoaded()
 
     // Skip initialization if missing essential data
-    if (!props.oauthProviderId || !props.paymentData || !publishableKey.value) {
-      console.debug('[PaymentInput] Skipping initialization - missing requirements:', { 
+    if (!props.oauthProviderId || !props.paymentData) {
+      console.debug('[PaymentInput] Skipping initialization - missing requirements:', {
         oauthProviderId: props.oauthProviderId,
-        paymentData: !!props.paymentData,
-        publishableKey: !!publishableKey.value
+        paymentData: !!props.paymentData
       })
-      
-      // Set error state if publishable key is missing
-      if (!publishableKey.value && setAccountLoadingError.value) {
-        setAccountLoadingError.value('Missing Stripe configuration. Please check your settings.')
-      }
       return
     }
 
@@ -271,10 +305,18 @@ onMounted(async () => {
       })
       const result = await prepareStripeState.value(slug, props.oauthProviderId, props.isAdminPreview)
       console.debug('[PaymentInput] Stripe state preparation result:', result)
-      
+
+      // Own-keys mode resolves the account publishable key just now - make
+      // sure Stripe.js is loaded before StripeElements mounts.
+      await ensureStripeJsLoaded()
+
       if (!result.success && result.message && !result.requiresSave) {
         // Show error only if it's not the "Save the form" message
         alert.error(result.message)
+      } else if (result.success && !canRenderPayment.value && setAccountLoadingError.value) {
+        // Connection resolved but no usable publishable key (e.g. connect mode
+        // without a platform key configured).
+        setAccountLoadingError.value('Missing Stripe configuration. Please check your settings.')
       }
     }
   } catch (error) {
@@ -292,6 +334,8 @@ watch(() => props.oauthProviderId, async (newVal, oldVal) => {
     const slug = formSlug.value
     if (slug) {
       await prepareStripeState.value(slug, newVal, props.isAdminPreview)
+      // The newly selected connection may use a different publishable key.
+      await ensureStripeJsLoaded()
     }
   }
 })

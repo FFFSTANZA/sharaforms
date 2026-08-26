@@ -53,11 +53,15 @@
         :form="field"
         :required="true"
       />
-      <p class="mt-4 text-sm text-center text-bold">
+      <p
+        v-if="oauthConnectEnabled"
+        class="mt-4 text-sm text-center text-bold"
+      >
         OR
       </p>
     </div>
     <UButton
+      v-if="oauthConnectEnabled"
       class="mt-4"
       icon="i-lucide-arrow-right"
       block
@@ -67,6 +71,59 @@
     >
       Connect Stripe Account
     </UButton>
+
+    <div
+      v-if="ownKeysEnabled"
+      class="mt-3 border-t border-neutral-200 pt-3"
+    >
+      <button
+        type="button"
+        class="text-sm text-neutral-500 hover:text-neutral-700 cursor-pointer flex items-center gap-1 mx-auto"
+        @click.prevent="showKeysForm = !showKeysForm"
+      >
+        <Icon
+          :name="showKeysForm ? 'lucide:chevron-up' : 'lucide:key-round'"
+          class="h-3.5 w-3.5"
+        />
+        {{ showKeysForm ? 'Hide API key form' : 'Use your own Stripe API keys instead' }}
+      </button>
+
+      <div
+        v-if="showKeysForm"
+        class="mt-3 space-y-3"
+      >
+        <p class="text-xs text-neutral-500 leading-relaxed">
+          Payments go directly to your Stripe account using your own API keys.
+          Create a <b>restricted key</b> (Developers &gt; API keys) with the
+          <b>Charges: Write</b> permission, plus its publishable key.
+        </p>
+        <TextInput
+          v-model="ownKeys.publishable_key"
+          name="publishable_key"
+          label="Publishable key"
+          placeholder="pk_live_..."
+          :required="true"
+        />
+        <TextInput
+          v-model="ownKeys.secret_key"
+          name="secret_key"
+          label="Restricted / secret key"
+          placeholder="rk_live_..."
+          type="password"
+          :required="true"
+          autocomplete="off"
+        />
+        <UButton
+          block
+          icon="i-lucide-check"
+          :loading="savingKeys"
+          @click.prevent="saveOwnKeys"
+        >
+          Save API keys
+        </UButton>
+      </div>
+    </div>
+
     <p class="text-sm text-neutral-500 mt-3">
       <a
         target="#"
@@ -87,6 +144,7 @@
 import EditorSectionHeader from '~/components/open/forms/components/form-components/EditorSectionHeader.vue'
 import stripeCurrencies from "~/data/stripe_currencies.json"
 import { useWindowMessage, WindowMessageTypes } from '~/composables/useWindowMessage'
+import { oauthApi } from '~/api'
 
 const props = defineProps({
   field: {
@@ -103,6 +161,41 @@ const crisp = useCrisp()
 const oAuth = useOAuth()
 const { data: providersData, refetch} = oAuth.providers()
 const stripeLoading = ref(false)
+
+// Own Stripe API keys form ("bring your own keys")
+const ownKeysEnabled = computed(() => useFeatureFlag('billing.stripe_own_keys_enabled', false))
+// The OAuth Connect button needs a platform Stripe account; hide it when the
+// platform has none so creators are not offered a dead-end flow.
+const oauthConnectEnabled = computed(() => !!useFeatureFlag('billing.stripe_publishable_key', ''))
+const showKeysForm = ref(false)
+const savingKeys = ref(false)
+const ownKeys = reactive({ publishable_key: '', secret_key: '' })
+
+const saveOwnKeys = async () => {
+  if (!ownKeys.publishable_key || !ownKeys.secret_key) {
+    useAlert().error('Please fill in both the publishable key and the secret key.')
+    return
+  }
+  savingKeys.value = true
+  try {
+    await oauthApi.saveStripeKeys({ ...ownKeys })
+    await refetch()
+    // Auto-select the newly created API-key connection
+    const saved = (providersData.value || []).find((item) => item.provider === 'stripe_own_keys')
+    if (saved) {
+      props.field.stripe_account_id = saved.id
+    }
+    useAlert().success('Stripe API keys connected. Payments will go to your Stripe account.')
+    ownKeys.publishable_key = ''
+    ownKeys.secret_key = ''
+    showKeysForm.value = false
+  } catch (error) {
+    const message = error?.data?.message || error?.response?._data?.message || 'Could not verify your Stripe keys. Please check them and try again.'
+    useAlert().error(message)
+  } finally {
+    savingKeys.value = false
+  }
+}
 
 // Setup window message listener for Stripe connection
 const { listen, cleanup } = useWindowMessage()
@@ -141,10 +234,12 @@ onUnmounted(() => {
   cleanup()
 })
 
-const stripeAccounts = computed(() => (providersData.value || []).filter((item) => item.provider === 'stripe').map((item) => ({
-  name: item.name + (item.email ? ' (' + item.email + ')' : ''),
-  value: item.id
-})))
+const stripeAccounts = computed(() => (providersData.value || [])
+  .filter((item) => item.provider === 'stripe' || item.provider === 'stripe_own_keys')
+  .map((item) => ({
+    name: item.name + (item.email ? ' (' + item.email + ')' : '') + (item.provider === 'stripe_own_keys' ? ' - API keys' : ''),
+    value: item.id
+  })))
 
 const currencyList = computed(() => {
   return stripeCurrencies.map((item) => ({

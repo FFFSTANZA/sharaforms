@@ -20,6 +20,7 @@ class FeatureFlagsController extends Controller
             'billing' => [
                 'enabled' => pricing_enabled(),
                 'stripe_publishable_key' => config('cashier.key'),
+                'stripe_own_keys_enabled' => (bool) config('services.stripe.own_keys_enabled', false),
             ],
             'storage' => [
                 'local' => config('filesystems.default') === 'local',

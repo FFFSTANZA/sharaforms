@@ -87,6 +87,9 @@ Route::group(['middleware' => 'auth.multi'], function () {
 
         Route::prefix('/providers')->name('providers.')->group(function () {
             Route::get('/{provider}/token', [OAuthProviderController::class, 'token'])->name('token');
+            Route::post('/stripe-keys', [\App\Http\Controllers\Settings\StripeKeysController::class, 'store'])
+                ->name('stripe-keys.store')
+                ->middleware('throttle:10,1');
             Route::delete('/{provider}', [OAuthProviderController::class, 'destroy'])->name('destroy');
         });
 

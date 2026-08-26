@@ -64,7 +64,7 @@ class OAuthProviderPolicy
             return $this->denyWithStatus(400, 'This connection cannot be removed because there is already an integration using it.');
         }
 
-        if ($provider->provider->value === OAuthProviderService::Stripe->value) {
+        if (in_array($provider->provider->value, [OAuthProviderService::Stripe->value, OAuthProviderService::StripeOwnKeys->value], true)) {
             $formsUsingStripe = $user->forms()
                 ->get()
                 ->filter(function ($form) use ($provider) {

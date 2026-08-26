@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Forms;
 
 use App\Http\Controllers\Controller;
+use App\Integrations\OAuth\OAuthProviderService;
 use App\Models\Forms\Form;
 use App\Models\OAuthProvider;
 use App\Http\Requests\Forms\CreatePaymentIntentRequest;
 use App\Http\Requests\Forms\GetStripeAccountRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
@@ -72,6 +75,11 @@ class FormPaymentController extends Controller
             }
         }
 
+        // Own API keys connection: hand back the account's publishable key.
+        if ($provider->provider === OAuthProviderService::StripeOwnKeys) {
+            return $this->ownKeysAccountResponse($provider);
+        }
+
         // Return the Stripe Connect Account ID
         return $this->success(['stripeAccount' => $provider->provider_user_id]);
     }
@@ -124,6 +132,11 @@ class FormPaymentController extends Controller
         }
 
         try {
+            // Own API keys connection: charge the creator's account with their key.
+            if ($provider->provider === OAuthProviderService::StripeOwnKeys) {
+                return $this->createOwnKeysIntent($provider, $amount, $paymentBlock, $form);
+            }
+
             Log::info('Creating payment intent', [
                 'form_id' => $form->id,
                 'amount' => $amount,
@@ -135,7 +148,7 @@ class FormPaymentController extends Controller
             $intent = PaymentIntent::create([
                 // Use description from payment block if available, fallback to form title
                 'description' => $paymentBlock['description'] ?? ('Form - ' . $form->title),
-                'amount' => (int) ($amount * 100),  // Stripe requires amount in cents
+                'amount' => $this->toStripeAmount($amount, $paymentBlock['currency']),
                 'currency' => strtolower($paymentBlock['currency']),
                 'payment_method_types' => ['card'],
                 'metadata' => [
@@ -175,5 +188,104 @@ class FormPaymentController extends Controller
             ]);
             return $this->error(['message' => 'Failed to initialize payment.']);
         }
+    }
+
+    /**
+     * Convert a human-readable amount into Stripe's smallest-unit integer.
+     *
+     * Zero-decimal currencies (JPY, KRW, ...) are charged in whole units;
+     * multiplying them by 100 would overcharge 100x. List per Stripe docs.
+     */
+    private function toStripeAmount(float $amount, string $currency): int
+    {
+        $zeroDecimal = ['bif', 'clp', 'djf', 'gnf', 'jpy', 'kmf', 'krw', 'mga', 'pyg', 'rwf', 'ugx', 'vnd', 'vuv', 'xaf', 'xof', 'xpf'];
+
+        if (in_array(strtolower($currency), $zeroDecimal, true)) {
+            return (int) round($amount);
+        }
+
+        return (int) round($amount * 100);
+    }
+
+    /**
+     * Response for own-keys connections: the account's publishable key
+     * replaces the Connect account id on the client.
+     */
+    private function ownKeysAccountResponse(OAuthProvider $provider)
+    {
+        if (!config('services.stripe.own_keys_enabled')) {
+            return $this->error(['message' => 'Connecting Stripe via your own API keys is currently disabled.'], 403);
+        }
+
+        if (empty($provider->publishable_key)) {
+            return $this->error(['message' => 'Payment configuration not found.'], 404);
+        }
+
+        return $this->success([
+            'mode' => 'own_keys',
+            'publishableKey' => $provider->publishable_key,
+        ]);
+    }
+
+    /**
+     * Create the PaymentIntent directly on the creator's account using their
+     * stored secret key. Card data never touches our server (Stripe.js
+     * tokenizes client-side); this call only carries amount/currency/metadata.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    private function createOwnKeysIntent(OAuthProvider $provider, float $amount, array $paymentBlock, Form $form)
+    {
+        if (!config('services.stripe.own_keys_enabled')) {
+            return $this->error(['message' => 'Connecting Stripe via your own API keys is currently disabled.'], 403);
+        }
+
+        try {
+            $response = Http::asForm()
+                ->withToken(Crypt::decryptString($provider->access_token))
+                ->timeout(15)
+                ->post('https://api.stripe.com/v1/payment_intents', [
+                    'description' => $paymentBlock['description'] ?? ('Form - '.$form->title),
+                    'amount' => $this->toStripeAmount($amount, $paymentBlock['currency']),
+                    'currency' => strtolower($paymentBlock['currency']),
+                    'payment_method_types[]' => 'card',
+                    'metadata[form_id]' => $form->id,
+                    'metadata[workspace_id]' => $form->workspace_id,
+                    'metadata[form_name]' => $form->title,
+                ]);
+        } catch (\Throwable $e) {
+            // Crypt failure or transport error — never leak internals to the client.
+            Log::error('Own-keys payment intent creation failed', [
+                'form_id' => $form->id,
+                'provider_id' => $provider->id,
+                'error' => $e->getMessage(),
+            ]);
+
+            return $this->error(['message' => 'Failed to initialize payment.']);
+        }
+
+        if ($response->successful() && $response->json('id')) {
+            $intent = $response->json();
+
+            Log::info('Own-keys payment intent created', [
+                'form_id' => $form->id,
+                'intent_id' => $intent['id'],
+                'amount' => $amount,
+                'currency' => $paymentBlock['currency'],
+            ]);
+
+            return $this->success([
+                'intent' => ['id' => $intent['id'], 'secret' => $intent['client_secret']],
+            ]);
+        }
+
+        $stripeMessage = $response->json('error.message');
+        Log::warning('Own-keys payment intent rejected by Stripe', [
+            'form_id' => $form->id,
+            'status' => $response->status(),
+            'error_code' => $response->json('error.code'),
+        ]);
+
+        return $this->error(['message' => $stripeMessage ?? 'Failed to initialize payment.']);
     }
 }

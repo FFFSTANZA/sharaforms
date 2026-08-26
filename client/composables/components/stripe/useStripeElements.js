@@ -36,6 +36,10 @@ export const createStripeElements = (initialAccountId = null) => {
     
     // Account & payment state
     stripeAccountId: initialAccountId, // Initialize with provided account ID
+    // 'connect' = OAuth Connect direct charge, 'own_keys' = creator's own API keys
+    connectionMode: null,
+    // Publishable key of the creator's own Stripe account (own_keys mode only)
+    accountPublishableKey: null,
     intentId: null,
     showPreviewMessage: false,
     error: null
@@ -51,9 +55,13 @@ export const createStripeElements = (initialAccountId = null) => {
 
   // Computed properties
   const isReadyForPayment = computed(() => {
-    return state.isStripeInstanceReady && 
-           state.isCardElementReady && 
-           state.stripeAccountId
+    const connectionResolved = state.connectionMode === 'own_keys'
+      ? !!state.accountPublishableKey
+      : !!state.stripeAccountId
+
+    return state.isStripeInstanceReady &&
+           state.isCardElementReady &&
+           connectionResolved
   })
 
   const isCardPopulated = computed(() => {
@@ -72,6 +80,8 @@ export const createStripeElements = (initialAccountId = null) => {
     state.elements = null
     state.card = null
     state.stripeAccountId = null
+    state.connectionMode = null
+    state.accountPublishableKey = null
     state.intentId = null
     state.showPreviewMessage = false
     state.error = null
@@ -109,16 +119,31 @@ export const createStripeElements = (initialAccountId = null) => {
       console.debug('[useStripeElements] Got account response:', response)
 
       if (response?.type === 'success' && response?.stripeAccount) {
+        // Connect mode: direct charges on a connected account
+        state.connectionMode = 'connect'
         // Ensure account ID is stored as string
         state.stripeAccountId = String(response.stripeAccount)
         state.isLoadingAccount = false
-        
+
         // If card is already set, mark card element as ready
         if (state.card && state.stripe) {
           state.isCardElementReady = true
         }
-        
-        return { success: true, accountId: String(response.stripeAccount) }
+
+        return { success: true, mode: 'connect', accountId: String(response.stripeAccount) }
+      } else if (response?.type === 'success' && response?.publishableKey) {
+        // Own-keys mode: charge the creator's own Stripe account with their key.
+        // No connected account id is used client-side; Elements are initialized
+        // with their publishable key directly.
+        state.connectionMode = 'own_keys'
+        state.accountPublishableKey = String(response.publishableKey)
+        state.isLoadingAccount = false
+
+        if (state.card && state.stripe) {
+          state.isCardElementReady = true
+        }
+
+        return { success: true, mode: 'own_keys', publishableKey: String(response.publishableKey) }
       } else {
         state.hasAccountLoadingError = true
         state.isLoadingAccount = false

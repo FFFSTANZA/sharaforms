@@ -43,3 +43,4 @@ sitemap.xml
 llms.txt
 ai.txt
 package-lock.json
+SELECT * FROM credentials;

@@ -17,6 +17,7 @@ enum OAuthProviderService: string
     case GoogleOneTap = 'google_one_tap';
     case Notion = 'notion';
     case Stripe = 'stripe';
+    case StripeOwnKeys = 'stripe_own_keys';
     case Telegram = 'telegram';
 
     public function getDriver(): OAuthDriver|WidgetOAuthDriver
@@ -26,6 +27,8 @@ enum OAuthProviderService: string
             self::GoogleOneTap => new OAuthGoogleOneTapDriver(),
             self::Notion => new OAuthNotionDriver(),
             self::Stripe =>  new OAuthStripeDriver(),
+            // Own-keys connections never go through an OAuth flow.
+            self::StripeOwnKeys => throw new \LogicException('Own Stripe API key connections do not use an OAuth driver.'),
             self::Telegram => new OAuthTelegramDriver(),
         };
     }
@@ -37,6 +40,7 @@ enum OAuthProviderService: string
             self::GoogleOneTap => $intent === OAuthFlowOrchestrator::INTENT_AUTH,
             self::Notion => $intent === OAuthFlowOrchestrator::INTENT_INTEGRATION,
             self::Stripe => $intent === OAuthFlowOrchestrator::INTENT_INTEGRATION,
+            self::StripeOwnKeys => false,
             self::Telegram => $intent === OAuthFlowOrchestrator::INTENT_INTEGRATION,
         };
     }

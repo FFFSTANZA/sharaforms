@@ -75,11 +75,11 @@
             <div class="flex items-center gap-3">
               <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-[var(--sf-bg-subtle)] text-[var(--sf-text-body)] shrink-0">
                 <Icon
-                  :name="getService(item.provider)?.icon"
+                  :name="serviceMeta(item.provider)?.icon"
                   size="16px"
                 />
               </span>
-              <span class="font-semibold text-[#1D1F24]">{{ getService(item.provider)?.name || item.provider }}</span>
+              <span class="font-semibold text-[#1D1F24]">{{ serviceMeta(item.provider)?.name || item.provider }}</span>
             </div>
           </template>
 
@@ -156,6 +156,14 @@ const tableColumns = [
 // Get service information
 const getService = (providerName) => {
   return oAuth.getService(providerName)
+}
+
+// Fallback metadata for connections that are not OAuth services
+// (e.g. Stripe connections created from the creator's own API keys).
+const serviceMeta = (providerName) => {
+  return getService(providerName) || (providerName === 'stripe_own_keys'
+    ? { name: 'Stripe (own API keys)', icon: 'cib:stripe' }
+    : null)
 }
 
 // Disconnect provider mutation

@@ -7,27 +7,25 @@ use Illuminate\Support\Facades\Schema;
 return new class () extends Migration {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
         Schema::table('oauth_providers', function (Blueprint $table) {
-            $table->text('access_token')->change();
-            $table->text('refresh_token')->change();
+            // Explicit nullability: plain ->change() drops the nullable flag
+            // when the table is rebuilt (observed on sqlite).
+            $table->text('access_token')->nullable()->change();
+            $table->text('refresh_token')->nullable()->change();
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {
         Schema::table('oauth_providers', function (Blueprint $table) {
-            $table->string('access_token')->change();
-            $table->string('refresh_token')->change();
+            $table->string('access_token')->nullable()->change();
+            $table->string('refresh_token')->nullable()->change();
         });
     }
 };
