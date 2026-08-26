@@ -29,7 +29,7 @@
       class="grow min-h-0 flex"
       :speed="500"
     >
-      <div :key="focusedViewKey" class="w-full h-full">
+      <div :key="focusedViewKey" class="w-full grow min-h-0 flex flex-col">
         <!-- Password view (exclusive) -->
         <div v-if="$slots.password && form?.is_password_protected" key="password" class="w-full flex items-center px-6 grow min-h-0 z-10">
           <div class="w-full max-w-xl mx-auto p-4">
