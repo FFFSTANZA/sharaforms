@@ -43,43 +43,7 @@
             >
               Trusted by teams that care about control, clarity, and security.
             </div>
-            <div class="mt-6 flex items-center justify-center gap-12 flex-wrap">
-              <div class="w-fit">
-                <img
-                  src="/img/pages/welcome/vanguard-1.png"
-                  alt="Vanguard logo"
-                  class="w-full"
-                />
-              </div>
-              <div class="w-fit">
-                <img
-                  src="/img/pages/welcome/logo-berkeley-2.png"
-                  alt="UC Berkeley logo"
-                  class="w-full"
-                />
-              </div>
-              <div class="w-fit">
-                <img
-                  src="/img/pages/welcome/UN_emblem_blue-2.png"
-                  alt="United Nations logo"
-                  class="w-full"
-                />
-              </div>
-              <div class="w-fit">
-                <img
-                  src="/img/pages/welcome/Frame-47.png"
-                  alt="American Red Cross logo"
-                  class="w-full"
-                />
-              </div>
-              <div class="w-fit">
-                <img
-                  src="/img/pages/welcome/Zomato_Logo-2.png"
-                  alt="Zomato logo"
-                  class="w-full"
-                />
-              </div>
-            </div>
+
           </div>
         </div>
 

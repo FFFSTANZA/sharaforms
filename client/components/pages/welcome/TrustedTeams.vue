@@ -13,45 +13,6 @@
         </p>
       </div>
 
-      <div
-        class="mt-12 sm:mt-16 flex items-center justify-center gap-12 flex-wrap"
-      >
-        <div class="w-fit">
-          <img
-            src="/img/pages/welcome/vanguard-1.png"
-            alt="Trusted Teams"
-            class="w-full"
-          />
-        </div>
-        <div class="w-fit">
-          <img
-            src="/img/pages/welcome/logo-berkeley-2.png"
-            alt="Trusted Teams"
-            class="w-full"
-          />
-        </div>
-        <div class="w-fit">
-          <img
-            src="/img/pages/welcome/UN_emblem_blue-2.png"
-            alt="Trusted Teams"
-            class="w-full"
-          />
-        </div>
-        <div class="w-fit">
-          <img
-            src="/img/pages/welcome/Frame-47.png"
-            alt="Trusted Teams"
-            class="w-full"
-          />
-        </div>
-        <div class="w-fit">
-          <img
-            src="/img/pages/welcome/Zomato_Logo-2.png"
-            alt="Trusted Teams"
-            class="w-full"
-          />
-        </div>
-      </div>
     </div>
   </section>
 </template>

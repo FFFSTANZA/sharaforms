@@ -65,50 +65,7 @@
                 <span>Fair pricing for growing teams</span>
               </div>
             </div>
-            <div
-              class="text-sm leading-5 tracking-[-0.6%] font-medium text-white/90"
-            >
-              Secure, reliable, and trusted by teams worldwide.
-            </div>
-            <div
-              class="w-full xl:min-w-155 mt-6 md:mt-4 flex items-center justify-center sm:justify-start lg:justify-center gap-x-12 gap-y-5 sm:gap-12 flex-wrap"
-            >
-              <div class="w-fit filter-[sepia(1)_brightness(2)_saturate(0)]">
-                <img
-                  src="/img/pages/welcome/vanguard-1.png"
-                  alt="Trusted Teams"
-                  class="w-full"
-                />
-              </div>
-              <div class="w-fit filter-[sepia(1)_brightness(2)_saturate(0)]">
-                <img
-                  src="/img/pages/welcome/logo-berkeley-2.png"
-                  alt="Trusted Teams"
-                  class="w-full"
-                />
-              </div>
-              <div class="w-fit filter-[sepia(1)_brightness(2)_saturate(0)]">
-                <img
-                  src="/img/pages/welcome/Frame-47.png"
-                  alt="Trusted Teams"
-                  class="w-full"
-                />
-              </div>
-              <div class="w-fit filter-[sepia(1)_brightness(2)_saturate(0)]">
-                <img
-                  src="/img/pages/welcome/Zomato_Logo-2.png"
-                  alt="Trusted Teams"
-                  class="w-full"
-                />
-              </div>
-              <div class="w-fit filter-[sepia(1)_brightness(2)_saturate(0)]">
-                <img
-                  src="/img/pages/welcome/UN_emblem_blue-2.png"
-                  alt="Trusted Teams"
-                  class="w-full"
-                />
-              </div>
-            </div>
+
           </div>
 
           <div class="flex items-end justify-end pl-8 sm:pl-10">
