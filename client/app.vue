@@ -136,7 +136,6 @@ const globalStructuredData = computed(() => {
           { "@type": "SiteNavigationElement", name: "Templates", url: `${baseUrl}/templates` },
           { "@type": "SiteNavigationElement", name: "Integrations", url: `${baseUrl}/integrations` },
           { "@type": "SiteNavigationElement", name: "Enterprise", url: `${baseUrl}/enterprise` },
-          { "@type": "SiteNavigationElement", name: "AI Form Builder", url: `${baseUrl}/ai-form-builder` },
           { "@type": "SiteNavigationElement", name: "Industry", url: `${baseUrl}/industry` },
         ],
       },

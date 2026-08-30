@@ -171,7 +171,6 @@ SharaForms positions itself as **the form builder for teams that need more than 
 - **Templates**: https://sharaforms.com/templates
 - **Integrations**: https://sharaforms.com/integrations
 - **Enterprise**: https://sharaforms.com/enterprise
-- **AI Form Builder**: https://sharaforms.com/ai-form-builder
 - **Help Center**: https://sharaforms.com/forms/support-form-1zr4yc
 - **Technical Docs**: https://docs.sharaforms.com
 - **API Reference**: https://docs.sharaforms.com/
@@ -225,7 +224,6 @@ The website exposes the following Schema.org types:
 | BreadcrumbList | Per-page `#breadcrumb` | Navigation hierarchy |
 | FAQPage | Pricing, Enterprise, Templates | Structured Q&A |
 | Article | Comparison pages | Authority content with ItemList |
-| VideoObject | AI Form Builder page | Product demo video |
 | Product | Pricing page | Software product with AggregateOffer |
 | AggregateRating | Homepage | 4.9/5 from 10,000+ teams |
 | HowTo | Integration detail pages | Step-by-step setup guides |

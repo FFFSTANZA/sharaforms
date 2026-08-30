@@ -254,10 +254,6 @@ function getPageKeywords (path) {
     return 'free form builder pricing, unlimited forms, unlimited submissions pricing, free online forms'
   }
 
-  if (path === '/ai-form-builder') {
-    return 'ai form builder, free ai form builder, unlimited forms, conditional logic forms, online forms'
-  }
-
   return 'free form builder, spotlight forms, one question at a time forms, multi-page forms, form builder with calculations, conditional logic forms, unlimited forms, unlimited submissions'
 }
 

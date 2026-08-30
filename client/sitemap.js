@@ -91,11 +91,6 @@ function getCoreMarketingUrls () {
       priority: 0.95,
     },
     {
-      url: '/ai-form-builder',
-      changefreq: 'weekly',
-      priority: 0.9,
-    },
-    {
       url: '/spotlight-forms',
       changefreq: 'weekly',
       priority: 0.9,

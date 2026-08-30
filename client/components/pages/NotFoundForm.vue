@@ -45,10 +45,10 @@
           </p>
           <ul class="mt-4 space-y-2 text-sm">
             <li>
-              Do you want to know why users choose SharaForms? 
+              Do you want to know why users choose SharaForms?
               <NuxtLink
                 class="text-[#0891b2] hover:text-[#087a8a]"
-                :to="{ name: 'ai-form-builder' }"
+                to="/spotlight-forms"
               >
                 Learn more here!
               </NuxtLink>
