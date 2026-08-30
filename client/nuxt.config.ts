@@ -81,6 +81,10 @@ export default defineNuxtConfig({
       }
   },
 
+  features: {
+      inlineStyles: false,
+  },
+
   experimental: {
       inlineRouteRules: true
   },
@@ -173,6 +177,27 @@ export default defineNuxtConfig({
   devServer: {
     host: process.env.NUXT_HOST || 'localhost',
     port: Number(process.env.NUXT_PORT) || 3000,
+  },
+
+  // Cache marketing pages at the edge (Cloudflare) for 1h to improve TTFB and crawlability.
+  // SWR: serve stale content while revalidating in the background.
+  routeRules: {
+    '/':                       { swr: 3600 },
+    '/pricing':                { swr: 3600 },
+    '/enterprise':             { swr: 3600 },
+    '/templates':              { swr: 3600 },
+    '/templates/**':           { swr: 3600 },
+    '/integrations':           { swr: 3600 },
+    '/integrations/**':        { swr: 3600 },
+    '/guides':                 { swr: 3600 },
+    '/guides/**':              { swr: 3600 },
+    '/comparisons':            { swr: 3600 },
+    '/industry':               { swr: 3600 },
+    '/ai-form-builder':        { swr: 3600 },
+    '/spotlight-forms':        { swr: 3600 },
+    '/privacy-policy':         { swr: 86400 },
+    '/terms-conditions':       { swr: 86400 },
+    '/sharaforms-vs-*':        { swr: 3600 },
   },
 
   sitemap,
