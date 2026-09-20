@@ -87,8 +87,8 @@ return [
                 'api_key' => env('GROQ_API_KEY'),
                 'base_uri' => env('GROQ_BASE_URI', 'https://api.groq.com/openai/v1'),
                 'models' => [
-                    'mini' => env('GROQ_MODEL_MINI', 'llama-3.3-70b-versatile'),
-                    'nano' => env('GROQ_MODEL_NANO', 'llama-3.1-8b-instant'),
+                    'mini' => env('GROQ_MODEL_MINI', 'openai/gpt-oss-120b'),
+                    'nano' => env('GROQ_MODEL_NANO', 'openai/gpt-oss-20b'),
                 ],
             ],
         ],

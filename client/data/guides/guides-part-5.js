@@ -265,7 +265,7 @@ export default [
       { type: 'h2', text: 'Five drivers worth measuring' },
       {
         type: 'table',
-        headers: ['Driver', 'Survey question', 'What low scores usually mean'],
+        head: ['Driver', 'Survey question', 'What low scores usually mean'],
         rows: [
           ['Purpose', 'My daily work connects to goals I care about.', 'Strategy lives in slide decks, not in team rituals'],
           ['Growth', 'I am learning skills that advance my career here.', 'No visible development paths or stretch work'],
@@ -460,7 +460,7 @@ export default [
       { type: 'h2', text: 'Rule 4: Match the question type to the decision' },
       {
         type: 'table',
-        headers: ['Your decision', 'Question type', 'Example'],
+        head: ['Your decision', 'Question type', 'Example'],
         rows: [
           ['Prioritize fixes', 'Rating scale', 'Rate ease of checkout from 1 to 5'],
           ['Choose between options', 'Single choice', 'Which plan feature matters most?'],
@@ -528,7 +528,7 @@ export default [
       { type: 'h2', text: 'Length bands by survey type' },
       {
         type: 'table',
-        headers: ['Survey type', 'Questions', 'Target time', 'Why this band'],
+        head: ['Survey type', 'Questions', 'Target time', 'Why this band'],
         rows: [
           ['NPS pulse', '2 to 3', 'under 1 minute', 'Score plus reason; speed is the entire point'],
           ['CSAT after transaction', '3 to 5', '1 to 2 minutes', 'Capture the experience while it stays vivid'],
@@ -595,7 +595,7 @@ export default [
       { type: 'h2', text: 'The three documents at a glance' },
       {
         type: 'table',
-        headers: ['Document', 'Issued by', 'When it appears', 'What it represents'],
+        head: ['Document', 'Issued by', 'When it appears', 'What it represents'],
         rows: [
           ['Order form', 'Seller', 'Published upfront for buyers to complete', 'A structured way to capture what the buyer wants'],
           ['Purchase order', 'Buyer', 'After internal approval, before goods ship', 'A binding commitment to buy specified items at agreed prices'],

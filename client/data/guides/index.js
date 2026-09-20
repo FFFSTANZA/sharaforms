@@ -6,8 +6,9 @@ import guidesPart3 from './guides-part-3'
 import guidesPart4 from './guides-part-4'
 import guidesPart5 from './guides-part-5'
 import guidesPart6 from './guides-part-6'
+import guidesPart7 from './guides-part-7'
 
-export const guides = [...guidesPart1, ...guidesPart2, ...guidesPart3, ...guidesPart4, ...guidesPart5, ...guidesPart6]
+export const guides = [...guidesPart1, ...guidesPart2, ...guidesPart3, ...guidesPart4, ...guidesPart5, ...guidesPart6, ...guidesPart7]
 
 export const guideSlugs = guides.map((guide) => guide.slug)
 
@@ -209,6 +210,33 @@ const GUIDE_TEMPLATE_LINKS = {
   'liability-waivers-explained': [
     { slug: 'liability-waiver-form-template', label: 'Liability waiver' },
     { slug: 'photo-release-form-template', label: 'Photo release' },
+  ],
+  'zoho-spotlight-forms-vs-sharaforms': [
+    { slug: 'nps-survey-template', label: 'NPS survey' },
+    { slug: 'event-registration-template', label: 'Event registration' },
+  ],
+  'how-to-embed-a-form-on-your-website': [
+    { slug: 'newsletter-signup-form-template', label: 'Newsletter signup' },
+    { slug: 'customer-feedback-survey-template', label: 'Customer feedback survey' },
+  ],
+  'how-to-collect-signatures-online': [
+    { slug: 'liability-waiver-form-template', label: 'Liability waiver' },
+    { slug: 'photo-release-form-template', label: 'Photo release' },
+    { slug: 'consent-form-template', label: 'Consent form' },
+  ],
+  'why-people-abandon-forms': [
+    { slug: 'job-application-form-template', label: 'Job application' },
+    { slug: 'event-registration-template', label: 'Event registration' },
+    { slug: 'donation-form-template', label: 'Donation form' },
+  ],
+  'best-free-google-forms-alternatives': [
+    { slug: 'contact-form-template', label: 'Contact form' },
+    { slug: 'quiz-form-template', label: 'Quiz' },
+    { slug: 'event-registration-template', label: 'Event registration' },
+  ],
+  'prevent-form-spam': [
+    { slug: 'contact-form-template', label: 'Contact form' },
+    { slug: 'suggestion-box-form-template', label: 'Suggestion box' },
   ],
 }
 

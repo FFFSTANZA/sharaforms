@@ -31,7 +31,7 @@ export default [
       { type: 'h2', text: 'Match question types to what you need to learn' },
       {
         type: 'table',
-        headers: ['What you need', 'Question type', 'Example'],
+        head: ['What you need', 'Question type', 'Example'],
         rows: [
           ['Prioritize improvements', 'Rating scale', 'Rate checkout ease from 1 to 5'],
           ['Choose between options', 'Single choice', 'Which channel do you use most?'],
@@ -189,7 +189,7 @@ export default [
       { type: 'h2', text: 'Pricing patterns you can copy' },
       {
         type: 'table',
-        headers: ['Pattern', 'Formula shape', 'Example'],
+        head: ['Pattern', 'Formula shape', 'Example'],
         rows: [
           ['Flat unit price', '{price} * {quantity}', 'Mugs at $12 times quantity ordered'],
           ['Size surcharge', 'IF({size} = "XXL", base + fee, base) * qty', '$15 shirts, $17 for XXL'],
@@ -259,7 +259,7 @@ export default [
       { type: 'h2', text: 'What imports and what needs a rebuild' },
       {
         type: 'table',
-        headers: ['Element', 'Transfers on import?', 'Notes'],
+        head: ['Element', 'Transfers on import?', 'Notes'],
         rows: [
           ['Questions and titles', 'Yes', 'Text carries over cleanly'],
           ['Multiple choice and checkboxes', 'Yes', 'Options map to native choice fields'],
@@ -370,7 +370,7 @@ export default [
       { type: 'h2', text: 'Relationship versus transactional NPS' },
       {
         type: 'table',
-        headers: ['Flavor', 'Asks about', 'Cadence', 'Best for'],
+        head: ['Flavor', 'Asks about', 'Cadence', 'Best for'],
         rows: [
           ['Relationship NPS', 'The brand overall', 'Twice a year', 'Board metrics and long-run trends'],
           ['Transactional NPS', 'One interaction or purchase', 'Days after each touchpoint', 'Fixing specific journeys fast'],
@@ -509,7 +509,7 @@ export default [
       { type: 'h2', text: 'Standard fields with suggested options' },
       {
         type: 'table',
-        headers: ['Field', 'Suggested options', 'Ask when'],
+        head: ['Field', 'Suggested options', 'Ask when'],
         rows: [
           ['Age', 'Under 18 / 18-24 / 25-34 / 35-44 / 45-54 / 55-64 / 65+ / Prefer not to say', 'Generational differences matter'],
           ['Gender', 'Woman / Man / Non-binary / Prefer to self-describe / Prefer not to say', 'Representation or segmentation is in scope'],

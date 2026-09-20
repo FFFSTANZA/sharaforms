@@ -363,4 +363,11 @@ Step-by-step guides answering specific form questions, written by the SharaForms
 - Nonprofit forms that replace paperwork chaos: https://sharaforms.com/guides/nonprofit-forms-toolkit
 - Liability waivers explained: what makes them hold up: https://sharaforms.com/guides/liability-waivers-explained
 
+- Zoho Spotlight forms vs SharaForms compared: https://sharaforms.com/guides/zoho-spotlight-forms-vs-sharaforms
+- How to embed a form on your website: https://sharaforms.com/guides/how-to-embed-a-form-on-your-website
+- Collecting signatures online without extra software: https://sharaforms.com/guides/how-to-collect-signatures-online
+- Why people abandon forms and what to fix first: https://sharaforms.com/guides/why-people-abandon-forms
+- Free Google Forms alternatives compared: https://sharaforms.com/guides/best-free-google-forms-alternatives
+- Stopping form spam without blocking real users: https://sharaforms.com/guides/prevent-form-spam
+
 Every guide technique works on the free plan with unlimited forms and submissions.
