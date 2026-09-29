@@ -128,6 +128,12 @@
               or use our
               <a :href="sharaformsConfig.links.help_url" target="_blank" rel="noopener noreferrer" class="font-medium text-neutral-950 underline">Help Center</a>.
             </p>
+
+            <p class="mt-3 text-sm leading-6 text-neutral-700">
+              Also read our
+              <NuxtLink :to="{ name: 'terms-conditions' }" class="font-medium text-neutral-950 underline">Terms of Use</NuxtLink>,
+              which cover account rules, acceptable use, and payment terms.
+            </p>
           </div>
         </div>
       </div>

@@ -188,6 +188,41 @@
         :show-industries="false"
       />
 
+      <!-- START RELATED INDUSTRIES -->
+      <section
+        v-if="relatedIndustries.length > 0"
+        class="bg-neutral-50 border-t border-neutral-200 py-14 sm:py-20 dark:bg-neutral-950 dark:border-neutral-800"
+      >
+        <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+          <div class="mx-auto max-w-5xl">
+            <h2 class="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50 sm:text-2xl">
+              Explore related industries
+            </h2>
+            <div class="mt-6 flex flex-wrap gap-3">
+              <NuxtLink
+                v-for="related in relatedIndustries"
+                :key="related.slug"
+                :to="{ name: 'templates-industries-slug', params: { slug: related.slug } }"
+                class="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-medium text-neutral-700 ring-1 ring-inset ring-neutral-200 transition-all hover:ring-pink-300 hover:text-pink-700 dark:bg-neutral-900 dark:text-neutral-300 dark:ring-neutral-700"
+              >
+                {{ related.name }}
+                <span class="text-xs font-normal text-neutral-400 dark:text-neutral-500">
+                  {{ related.count }} shared
+                </span>
+              </NuxtLink>
+            </div>
+            <NuxtLink
+              :to="{ name: 'templates' }"
+              class="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-pink-700 hover:text-pink-800"
+            >
+              Browse all template categories
+              <UIcon name="i-lucide-arrow-right" class="h-4 w-4" />
+            </NuxtLink>
+          </div>
+        </div>
+      </section>
+      <!-- END RELATED INDUSTRIES -->
+
       <!-- START PRACTICES -->
       <section
         v-if="(industry.best_practices && industry.best_practices.length) || (industry.common_mistakes && industry.common_mistakes.length)"
@@ -319,6 +354,28 @@ const featuredTemplate = computed(() => {
     (t) => t.slug === industry.value.featured_template,
   ) || null
 })
+
+// Sibling industries that share templates with this one (co-occurrence),
+// rendered as a link strip so every industry hub passes equity to its closest hubs.
+const relatedIndustries = computed(() => {
+  if (!industry.value || !templates.value.length) return []
+  const scores = new Map()
+  for (const template of templates.value) {
+    for (const industrySlug of template.industries || []) {
+      if (industrySlug === route.params.slug || !industriesMap.has(industrySlug)) continue
+      scores.set(industrySlug, (scores.get(industrySlug) || 0) + 1)
+    }
+  }
+  return [...scores.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, 8)
+    .map(([industrySlug, count]) => ({
+      slug: industrySlug,
+      name: industriesMap.get(industrySlug)?.name || industrySlug,
+      count,
+    }))
+})
+
 const breadcrumbs = computed(() => {
   if (!industry.value) {
     return [{ route: { name: "templates" }, label: "Templates" }]

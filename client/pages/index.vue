@@ -80,6 +80,76 @@
 
     <!-- <AiFeature class="pb-8" /> -->
 
+    <!-- START TEMPLATES -->
+    <section class="bg-white py-14 sm:py-20 border-t border-neutral-200">
+      <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div class="max-w-2xl">
+            <h2 class="text-xl font-bold tracking-tight text-neutral-900 sm:text-2xl">
+              Start from a free template
+            </h2>
+            <p class="mt-3 text-sm leading-6 text-neutral-600 sm:text-base sm:leading-7">
+              Every template ships with unlimited submissions, built-in
+              calculations, and conditional logic ready to switch on.
+            </p>
+          </div>
+          <NuxtLink
+            :to="{ name: 'templates' }"
+            class="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-pink-700 hover:text-pink-800"
+          >
+            Browse all {{ templateCount }} templates
+            <UIcon name="i-lucide-arrow-right" class="h-4 w-4" />
+          </NuxtLink>
+        </div>
+
+        <div class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <NuxtLink
+            v-for="item in featuredTemplates"
+            :key="item.slug"
+            :to="{ name: 'templates-slug', params: { slug: item.slug } }"
+            class="group flex h-full flex-col rounded-xl border border-neutral-200 p-5 transition-colors hover:border-pink-300"
+          >
+            <h3 class="text-base font-semibold leading-snug text-neutral-900 group-hover:text-pink-700 transition-colors">
+              {{ item.name }}
+            </h3>
+            <p class="mt-1.5 text-sm leading-6 text-neutral-600">
+              {{ item.blurb }}
+            </p>
+            <span class="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-pink-700">
+              Use this template
+              <UIcon name="i-lucide-arrow-right" class="h-3.5 w-3.5" />
+            </span>
+          </NuxtLink>
+        </div>
+
+        <div class="mt-10">
+          <h3 class="text-xs font-semibold uppercase tracking-widest text-neutral-400">
+            Browse by category
+          </h3>
+          <div class="mt-4 flex flex-wrap gap-3">
+            <NuxtLink
+              v-for="hub in categoryHubs"
+              :key="hub.slug"
+              :to="hub.to"
+              class="inline-flex items-center rounded-full bg-neutral-50 px-4 py-2 text-sm font-medium text-neutral-700 ring-1 ring-inset ring-neutral-200 transition-all hover:ring-pink-300 hover:text-pink-700"
+            >
+              {{ hub.name }}
+            </NuxtLink>
+          </div>
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm font-medium text-neutral-600">
+          <NuxtLink to="/guides" class="hover:text-pink-700">
+            Step-by-step form guides
+          </NuxtLink>
+          <NuxtLink to="/integrations" class="hover:text-pink-700">
+            Connect your tools
+          </NuxtLink>
+        </div>
+      </div>
+    </section>
+    <!-- END TEMPLATES -->
+
     <ScrollReveal>
       <FaqSection
         class="sf-faq"
@@ -103,6 +173,8 @@ import MoreFeatures from "../components/pages/welcome/MoreFeatures.vue"
 import FaqSection from "~/components/pages/FaqSection.vue"
 import sharaformsConfig from "~/sharaforms.config.js"
 import { useIsAuthenticated } from "~/composables/useAuthFlow"
+import { useTemplateMeta } from "~/composables/data/useTemplateMeta"
+import { TEMPLATE_SLUGS } from "~/data/forms/templates/template-slugs"
 
 definePageMeta({
   layout: "default",
@@ -111,6 +183,76 @@ definePageMeta({
 
 const { isAuthenticated: authenticated } = useIsAuthenticated()
 const { logEvent } = usePostHog()
+const { types: typesMap, industries: industriesMap } = useTemplateMeta()
+const templateCount = TEMPLATE_SLUGS.length
+
+// Curated template cards (slugs validated against TEMPLATE_SLUGS) so the
+// homepage passes internal link equity to the template detail pages.
+const featuredTemplates = [
+  {
+    slug: "online-order-form-template",
+    name: "Online order form",
+    blurb: "Take orders with line items and totals calculated live.",
+  },
+  {
+    slug: "employee-onboarding-form-template",
+    name: "Employee onboarding form",
+    blurb: "Collect new-hire details, documents, and policies in one flow.",
+  },
+  {
+    slug: "student-registration-form-template",
+    name: "Student registration form",
+    blurb: "Enroll students with guardian contacts and course choices.",
+  },
+  {
+    slug: "catering-order-form-template",
+    name: "Catering order form",
+    blurb: "Quote events with per-head pricing and headcount totals.",
+  },
+  {
+    slug: "inspection-form-template",
+    name: "Inspection form",
+    blurb: "Log pass or fail results with conditional follow-up checks.",
+  },
+  {
+    slug: "address-change-form-template",
+    name: "Address change form",
+    blurb: "Update customer or employee records with a verified address.",
+  },
+  {
+    slug: "newsletter-signup-form-template",
+    name: "Newsletter signup form",
+    blurb: "Grow your list with a short, conversion-ready signup form.",
+  },
+  {
+    slug: "real-estate-inquiry-form-template",
+    name: "Real estate inquiry form",
+    blurb: "Qualify buyers and sellers before you schedule a callback.",
+  },
+]
+
+// Category hub links (slugs validated against types.json / industries.json).
+const categoryHubs = [
+  "abstract_forms",
+  "appointment_forms",
+  "contact_forms",
+  "content_forms",
+  "recommendation_forms",
+  "voting_forms",
+  "wedding_forms",
+]
+  .map((slug) => ({
+    slug,
+    name: typesMap.get(slug).name,
+    to: { name: "templates-types-slug", params: { slug } },
+  }))
+  .concat(
+    ["entertainment_forms", "marketing_forms"].map((slug) => ({
+      slug,
+      name: industriesMap.get(slug).name,
+      to: { name: "templates-industries-slug", params: { slug } },
+    })),
+  )
 
 onMounted(() => {
   logEvent('homepage_viewed', {

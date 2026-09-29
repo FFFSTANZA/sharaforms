@@ -2398,5 +2398,805 @@
       "Discovering vehicle-access needs when moving trucks arrive",
       "Losing reserved-unit holds inside manual paper ledgers"
     ]
+  },
+  "babysitting-agreement-form-template": {
+    "source_type": "consent_forms",
+    "practices_title": "Best practices for babysitting agreements",
+    "best_practices": [
+      "Agree the hourly rate in writing before the first sitting",
+      "Write medication instructions as numbered steps, not paragraphs",
+      "List allergies with the exact food names, not general categories",
+      "Refresh the agreement every school year and after any change"
+    ],
+    "common_mistakes": [
+      "Leaving the rate to be negotiated at the door",
+      "Describing medications as the bottle on the counter explains",
+      "Omitting a backup emergency contact entirely",
+      "Updating rules verbally without updating the signed record"
+    ]
+  },
+  "funeral-service-notification-form-template": {
+    "source_type": "rsvp_forms",
+    "practices_title": "Best practices for service notifications",
+    "best_practices": [
+      "Share the form link once beside the obituary notice",
+      "Let attendees report their own seat counts",
+      "Offer a call-back path for undecided relatives",
+      "Record donation preferences so guests stop guessing"
+    ],
+    "common_mistakes": [
+      "Collecting attendance with no plan for seating totals",
+      "Publishing responses where the wider circle can read them",
+      "Leaving the donation question open to interpretation",
+      "Forgetting a message field for those who cannot attend"
+    ]
+  },
+  "youth-league-registration-form-template": {
+    "source_type": "registration_forms",
+    "practices_title": "Best practices for league registrations",
+    "best_practices": [
+      "Put the price inside every division option label",
+      "Let the total compute discounts before parents commit",
+      "Collect photo permission once at registration, not per event",
+      "Require the waiver acknowledgment as its own checkbox"
+    ],
+    "common_mistakes": [
+      "Hand-calculating sibling discounts at the registration table",
+      "Collecting jersey names after the printing order went in",
+      "Burying the volunteer discount where nobody finds it",
+      "Leaving medical notes in an optional comment box nobody reads"
+    ]
+  },
+  "lactation-room-request-form-template": {
+    "source_type": "request_forms",
+    "practices_title": "Best practices for lactation room requests",
+    "best_practices": [
+      "Route requests to HR and facilities at the same time",
+      "Treat the equipment checklist as the procurement list",
+      "Document shared-room agreements with named partners",
+      "State the setup deadline in the form intro"
+    ],
+    "common_mistakes": [
+      "Assigning a storage closet and calling it compliant",
+      "Forgetting badge access until the first day back",
+      "Leaving shared-room scheduling to undocumented goodwill",
+      "Losing the request in a general HR inbox"
+    ]
+  },
+  "court-reporter-booking-form-template": {
+    "source_type": "booking_forms",
+    "practices_title": "Best practices for reporter bookings",
+    "best_practices": [
+      "Book 48 hours out minimum, two weeks for realtime work",
+      "Fix the transcript format before the reporter accepts",
+      "Attach pre-marked exhibits with the booking itself",
+      "Require the video link at submission for remote proceedings"
+    ],
+    "common_mistakes": [
+      "Confirming appearances before transcript specs are known",
+      "Discovering the video platform on the morning of the deposition",
+      "Booking full days when an afternoon block would do",
+      "Sending exhibit sets by a channel the reporter never checks"
+    ]
+  },
+  "waitlist-join-form-template": {
+    "source_type": "signup_forms",
+    "practices_title": "Best practices for waitlist forms",
+    "best_practices": [
+      "Capture interest level, not just contact details",
+      "Offer text notifications for time-sensitive openings",
+      "Invite in timestamp order within each interest segment",
+      "Review referral answers monthly to find what fills the list"
+    ],
+    "common_mistakes": [
+      "Treating every signup as equally ready to buy",
+      "Emailing openings that fill within the hour",
+      "Asking for phone numbers with no text opt-in",
+      "Letting the list grow without segmenting by plan"
+    ]
+  },
+  "intern-housing-request-form-template": {
+    "source_type": "request_forms",
+    "practices_title": "Best practices for intern housing requests",
+    "best_practices": [
+      "Set the request deadline four to six weeks before arrivals",
+      "Collect exact start and end dates, not months",
+      "Ask meal expectations when homestays are an option",
+      "Record roommate lifestyle notes before matching"
+    ],
+    "common_mistakes": [
+      "Matching roommates from application essays alone",
+      "Ignoring commute constraints until move-in week",
+      "Leaving pet allergies to surface on the first night",
+      "Placing budgets last when they decide everything"
+    ]
+  },
+  "language-exchange-signup-form-template": {
+    "source_type": "signup_forms",
+    "practices_title": "Best practices for exchange signups",
+    "best_practices": [
+      "Match on availability windows before personality notes",
+      "Require timezone answers from online-only members",
+      "Keep levels to three tiers that people answer honestly",
+      "Use goal tags as your matching filter"
+    ],
+    "common_mistakes": [
+      "Pairing partners twelve timezones apart by accident",
+      "Collecting city but never using it for in-person matches",
+      "Accepting signups with no stated availability at all",
+      "Skipping the native language question in one direction"
+    ]
+  },
+  "key-custody-agreement-form-template": {
+    "source_type": "legal_forms",
+    "practices_title": "Best practices for key custody records",
+    "best_practices": [
+      "Fill the form together with the recipient present",
+      "Match the return date to the actual need window",
+      "Record who holds copies before rekeying anything",
+      "Export signed records as your issuance log"
+    ],
+    "common_mistakes": [
+      "Issuing master sets with no individual record",
+      "Letting contractors keep keys past project end",
+      "Rekeying before documenting which copies exist",
+      "Storing agreements where audits cannot find them"
+    ]
+  },
+  "lost-and-found-claim-form-template": {
+    "source_type": "request_forms",
+    "practices_title": "Best practices for lost and found claims",
+    "best_practices": [
+      "Separate item description from identifying marks",
+      "Review photo claims before text-only claims",
+      "Verify pickup claims against ID digits on file",
+      "State the holding window in the form intro"
+    ],
+    "common_mistakes": [
+      "Handing items to whoever describes them best",
+      "Collecting shipping addresses for pickups too",
+      "Matching on brand names alone",
+      "Leaving claims in an inbox with no timestamps"
+    ]
+  },
+  "wedding-gift-registry-form-template": {
+    "source_type": "wedding_forms",
+    "practices_title": "Best practices for gift registries",
+    "best_practices": [
+      "Give guest list makers one authoritative answer set",
+      "Set a hold-until date if gifts should wait",
+      "Decide the group gifting rule once, in writing",
+      "Keep registry links optional so late additions fit"
+    ],
+    "common_mistakes": [
+      "Letting five relatives answer shipping questions differently",
+      "Announcing hold preferences after gifts have shipped",
+      "Omitting cash fund details from guest communications",
+      "Changing registry links without telling the website manager"
+    ]
+  },
+  "youth-group-registration-form-template": {
+    "source_type": "registration_forms",
+    "practices_title": "Best practices for youth group registration",
+    "best_practices": [
+      "Collect registration at home, before the first night",
+      "Require an emergency contact beyond the guardians",
+      "Reveal pickup authorizations only when families need them",
+      "Keep allergy notes visible to the snack coordinator"
+    ],
+    "common_mistakes": [
+      "Running registrations on clipboards at the door",
+      "Assuming guardians are the only pickup option",
+      "Collecting photo consent verbally per event",
+      "Ordering shirts before sizes arrive"
+    ]
+  },
+  "board-member-nomination-form-template": {
+    "source_type": "award_forms",
+    "practices_title": "Best practices for board nominations",
+    "best_practices": [
+      "Ask every nominee the same structured questions",
+      "Disclose current board roles with the nomination",
+      "Build the skills matrix from nomination data",
+      "Confirm willingness before publishing the slate"
+    ],
+    "common_mistakes": [
+      "Nominating through hallway conversations only",
+      "Discovering term-limit conflicts after the vote",
+      "Leaving resumes as links that expire",
+      "Closing nominations without a stated deadline"
+    ]
+  },
+  "pilot-logbook-verification-form-template": {
+    "source_type": "audit_forms",
+    "practices_title": "Best practices for logbook verifications",
+    "best_practices": [
+      "Verify by category, not just the total hours",
+      "Document discrepancies with their resolution",
+      "Re-verify before every insurance renewal",
+      "Keep the signed record with the training file"
+    ],
+    "common_mistakes": [
+      "Verifying totals while night hours drift unchecked",
+      "Explaining variances verbally instead of in writing",
+      "Dating the review after the fact with no timestamp",
+      "Leaving simulator time out of the breakdown"
+    ]
+  },
+  "wine-club-signup-form-template": {
+    "source_type": "membership_forms",
+    "practices_title": "Best practices for wine club signups",
+    "best_practices": [
+      "Show bottle counts and prices in each tier option",
+      "Capture the birth year before the first release",
+      "Use taste profiles for substitutions, not just marketing",
+      "Document authorized pickup persons for in-person claims"
+    ],
+    "common_mistakes": [
+      "Shipping to addresses nobody confirmed",
+      "Asking for age verification after checkout",
+      "Substituting outside stated taste preferences",
+      "Leaving pickup authorization to front-desk memory"
+    ]
+  },
+  "garden-plot-application-form-template": {
+    "source_type": "application_forms",
+    "practices_title": "Best practices for garden plot applications",
+    "best_practices": [
+      "Assign plots in timestamped application order",
+      "Price plots visibly inside each size option",
+      "Capture accessibility needs with the bed request",
+      "Require the organic pledge before keys change hands"
+    ],
+    "common_mistakes": [
+      "Double-assigning plots from a paper waitlist",
+      "Building accessible beds without asking what fits",
+      "Buying tools nobody requested",
+      "Explaining organic rules after planting started"
+    ]
+  },
+  "service-recovery-follow-up-form-template": {
+    "source_type": "feedback_forms",
+    "practices_title": "Best practices for service recovery",
+    "best_practices": [
+      "Price severity tiers openly on the form",
+      "Compute credits automatically, not by manager mood",
+      "Require notes on the resolution actually offered",
+      "Review category trends monthly for root causes"
+    ],
+    "common_mistakes": [
+      "Making make-good amounts up case by case",
+      "Calling customers who asked for email only",
+      "Recording the credit but not the failure category",
+      "Treating recovery as an apology, not a process"
+    ]
+  },
+  "snow-removal-service-agreement-form-template": {
+    "source_type": "consent_forms",
+    "practices_title": "Best practices for snow removal agreements",
+    "best_practices": [
+      "Sign before November 1 for full-season rates",
+      "State the plow trigger depth in the contract",
+      "Collect gate codes before the first storm",
+      "Price salting separately and explicitly"
+    ],
+    "common_mistakes": [
+      "Negotiating terms during the first snowfall",
+      "Assuming walkways are included in driveway pricing",
+      "Learning about gates when the truck is already there",
+      "Leaving overnight vehicle rules unstated"
+    ]
+  },
+  "talent-show-entry-form-template": {
+    "source_type": "registration_forms",
+    "practices_title": "Best practices for talent show entries",
+    "best_practices": [
+      "Print the program from submitted performer lists",
+      "Collect backing tracks attached to each act",
+      "Turn the tech-needs export into the stage plot",
+      "Set an entry deadline one week before the show"
+    ],
+    "common_mistakes": [
+      "Running entries on handwritten slips",
+      "Missing group members the program never named",
+      "Improvising microphones between acts",
+      "Recording every act when only some families paid"
+    ]
+  },
+  "furniture-assembly-service-form-template": {
+    "source_type": "booking_forms",
+    "practices_title": "Best practices for assembly bookings",
+    "best_practices": [
+      "Quote in hours, the honest unit of assembly work",
+      "Show stair and rush fees before booking, not on the invoice",
+      "Collect access notes like parking and elevators",
+      "Treat preferred dates as requests, then confirm"
+    ],
+    "common_mistakes": [
+      "Guessing quotes over the phone",
+      "Discovering third-floor walk-ups on arrival",
+      "Leaving rush pricing to the invoice",
+      "Skipping packaging-removal expectations"
+    ]
+  },
+  "recycling-pickup-request-form-template": {
+    "source_type": "request_forms",
+    "practices_title": "Best practices for pickup requests",
+    "best_practices": [
+      "Route electronics to crews with proper handling",
+      "Estimate volume in car, van, or truck loads",
+      "Capture receipt names at request time for taxes",
+      "Require a preferred date so routing is real"
+    ],
+    "common_mistakes": [
+      "Surprising drivers with a tube television",
+      "Issuing tax receipts with blank recipient names",
+      "Scheduling pickups without volume estimates",
+      "Mixing e-waste into the curbside stream"
+    ]
+  },
+  "campus-tour-booking-form-template": {
+    "source_type": "booking_forms",
+    "practices_title": "Best practices for campus tour bookings",
+    "best_practices": [
+      "Require two-week notice for groups over ten",
+      "Read submissions before matching student ambassadors",
+      "Arrange accessibility accommodations before setting routes",
+      "Let interests decide which buildings you tour"
+    ],
+    "common_mistakes": [
+      "Meeting a school bus with a two-guide route",
+      "Improvising interpreters on the front steps",
+      "Touring the same buildings for every visitor",
+      "Leaving group logistics to tour day"
+    ]
+  },
+  "utility-assistance-application-form-template": {
+    "source_type": "application_forms",
+    "practices_title": "Best practices for assistance applications",
+    "best_practices": [
+      "Screen with income bands, verify later",
+      "Request hardship documents only when claimed",
+      "Record program consent for funder audits",
+      "Scale eligibility checks by household size"
+    ],
+    "common_mistakes": [
+      "Demanding full documentation before first screening",
+      "Applying one income threshold to every household",
+      "Forcing a hardship category when none applies",
+      "Losing consents between caseworkers"
+    ]
+  },
+  "flu-shot-consent-form-template": {
+    "source_type": "consent_forms",
+    "practices_title": "Best practices for flu shot consent",
+    "best_practices": [
+      "Complete screening before the appointment slot",
+      "Flag egg allergies for the egg-free alternative",
+      "Reveal guardian fields only for minors",
+      "Reference the vaccine information statement at consent"
+    ],
+    "common_mistakes": [
+      "Filling screens at the check-in table",
+      "Collecting insurance IDs from self-pay patients",
+      "Missing high-risk conditions behind a free-text box",
+      "Filing consents without signatures or timestamps"
+    ]
+  },
+  "translation-request-form-template": {
+    "source_type": "request_forms",
+    "practices_title": "Best practices for translation requests",
+    "best_practices": [
+      "Quote from word counts, confirm after review",
+      "Ask the certification purpose when certified is chosen",
+      "State standard and rush turnarounds on the form",
+      "Keep document uploads optional at the estimate stage"
+    ],
+    "common_mistakes": [
+      "Quoting from attachments before knowing the deadline",
+      "Issuing certificates without a stated purpose",
+      "Treating rough word counts as exact commitments",
+      "Leaving notarization needs to surface mid-project"
+    ]
+  },
+  "garage-sale-permit-application-form-template": {
+    "source_type": "request_forms",
+    "practices_title": "Best practices for garage sale permit applications",
+    "best_practices": [
+      "Apply three to five business days before the first sale day",
+      "Price every sign permit in the same application",
+      "Designate the rain date up front instead of reapplying",
+      "State sale hours and cleanup plans in the notes"
+    ],
+    "common_mistakes": [
+      "Applying the day before the sale and expecting approval",
+      "Posting signs on public poles without sign permits",
+      "Ignoring the yearly sales cap in your city code",
+      "Leaving the rain date off and losing the weekend"
+    ]
+  },
+  "pool-party-rsvp-form-template": {
+    "source_type": "rsvp_forms",
+    "practices_title": "Best practices for pool party RSVPs",
+    "best_practices": [
+      "Set an RSVP deadline one week before the party",
+      "Price guests per person when costs scale with headcount",
+      "Ask which kids need the swim test before the party",
+      "Collect allergy notes where the snack table can see them"
+    ],
+    "common_mistakes": [
+      "Ordering food and towels from group-chat guesses",
+      "Skipping swim supervision plans for young guests",
+      "Treating non-responders as attending in the headcount",
+      "Letting the guest list outrun your lifeguard coverage"
+    ]
+  },
+  "sunday-school-registration-form-template": {
+    "source_type": "registration_forms",
+    "practices_title": "Best practices for Sunday school registrations",
+    "best_practices": [
+      "Open registration four to six weeks before the program year",
+      "Record pickup authorization before the first class",
+      "Route allergy details to the snack coordinator weekly",
+      "Place students by grade captured at registration"
+    ],
+    "common_mistakes": [
+      "Running first-morning clipboards that stall check-in",
+      "Assuming pickup permission instead of recording it",
+      "Burying allergy notes where volunteers never see them",
+      "Dividing classes without age or grade data"
+    ]
+  },
+  "apartment-walkthrough-schedule-form-template": {
+    "source_type": "booking_forms",
+    "practices_title": "Best practices for apartment walkthrough scheduling",
+    "best_practices": [
+      "Offer video tours for out-of-town renters",
+      "Ask move-in timeline to separate movers from browsers",
+      "Collect pet details before the tour, not at signing",
+      "Confirm every booking within one business day"
+    ],
+    "common_mistakes": [
+      "Booking tours by scattered voicemail and DMs",
+      "Double-booking units with no scheduling system",
+      "Hiding pet policies until lease signing",
+      "Touring renters with no move-in date attached"
+    ]
+  },
+  "video-testimonial-release-form-template": {
+    "source_type": "consent_forms",
+    "practices_title": "Best practices for video testimonial releases",
+    "best_practices": [
+      "Define usage scope in platform-specific choices",
+      "Record compensation explicitly, even gift cards",
+      "Offer an approval step to hesitant participants",
+      "Capture signatures with timestamps on the spot"
+    ],
+    "common_mistakes": [
+      "Filming on goodwill and writing scope later",
+      "Assuming paid-ads rights from a website release",
+      "Tagging social handles without recorded consent",
+      "Losing releases in email threads instead of exports"
+    ]
+  },
+  "equipment-donation-form-template": {
+    "source_type": "donation_forms",
+    "practices_title": "Best practices for equipment donation forms",
+    "best_practices": [
+      "Ask condition to route items to the right program",
+      "Collect pickup access notes like gates and floors",
+      "Track tax receipt requests for the finance team",
+      "Confirm acceptance within a stated number of days"
+    ],
+    "common_mistakes": [
+      "Accepting drop-offs the workshop cannot absorb",
+      "Sending drivers to addresses with no access notes",
+      "Issuing receipts only to donors who chased them",
+      "Leaving condition unverified until unload"
+    ]
+  },
+  "first-time-homebuyer-workshop-registration-form-template": {
+    "source_type": "event_registration_forms",
+    "practices_title": "Best practices for homebuyer workshop registrations",
+    "best_practices": [
+      "Price individuals and couples as clear options",
+      "Count printed kits before the print order goes in",
+      "Ask pre-approval status so teaching depth lands right",
+      "Issue certificates on completion day without chasing"
+    ],
+    "common_mistakes": [
+      "Undercounting kits and shorting attendees",
+      "Teaching financing to a room of unknown depth",
+      "Issuing certificates days after attendees request them",
+      "Listing sessions without a capped capacity"
+    ]
+  },
+  "neighborhood-watch-signup-form-template": {
+    "source_type": "signup_forms",
+    "practices_title": "Best practices for neighborhood watch signups",
+    "best_practices": [
+      "Offer low-commitment roles like alerts-only",
+      "Record patrol windows that fit real schedules",
+      "Document camera coverage volunteers are willing to share",
+      "Export phones ready for the phone tree"
+    ],
+    "common_mistakes": [
+      "Building the roster inside an unsorted group chat",
+      "Recruiting only after a scary incident",
+      "Treating the watch as a substitute for 911",
+      "Letting captain interest vanish without follow-up"
+    ]
+  },
+  "parking-space-rental-agreement-form-template": {
+    "source_type": "legal_forms",
+    "practices_title": "Best practices for parking rental agreements",
+    "best_practices": [
+      "Record vehicle make, model, and plate in the agreement",
+      "Price stall types and EV charging as explicit options",
+      "State access details like gates, fobs, and hours",
+      "Acknowledge storage and subletting rules in writing"
+    ],
+    "common_mistakes": [
+      "Running handshake deals with no rate or term",
+      "Leaving the assigned vehicle undocumented",
+      "Charging EV access informally with no record",
+      "Skipping signatures on month-to-month arrangements"
+    ]
+  },
+  "bake-sale-order-form-template": {
+    "source_type": "order_forms",
+    "practices_title": "Best practices for bake sale pre-orders",
+    "best_practices": [
+      "Close pre-orders one to three days before the sale",
+      "Price per dozen with a live customer total",
+      "Route nut-free requests straight to the bakers",
+      "Price delivery only when volunteers can cover it"
+    ],
+    "common_mistakes": [
+      "Baking to comment-thread guesses",
+      "Collecting allergy notes nobody reads",
+      "Promising delivery with no driver roster",
+      "Underpricing below twice ingredient cost"
+    ]
+  },
+  "car-show-registration-form-template": {
+    "source_type": "registration_forms",
+    "practices_title": "Best practices for car show registrations",
+    "best_practices": [
+      "Close pre-registration before gate day pricing kicks in",
+      "Define vehicle classes by era with exact years",
+      "Pre-order dash plaques from real registration counts",
+      "Assign arrival windows so the field stages in order"
+    ],
+    "common_mistakes": [
+      "Running gate-only registration that stalls the line",
+      "Leaving class boundaries vague for judges",
+      "Printing plaques without a count",
+      "Letting swap spaces overlap show parking"
+    ]
+  },
+  "cornhole-tournament-registration-form-template": {
+    "source_type": "registration_forms",
+    "practices_title": "Best practices for cornhole tournament registrations",
+    "best_practices": [
+      "Collect both player names on one team registration",
+      "Split competitive and social divisions honestly",
+      "Size shirts from real orders, not guesses",
+      "Close registration early enough to balance brackets"
+    ],
+    "common_mistakes": [
+      "Accepting day-of signups that wreck bracket math",
+      "Ordering shirts from the week-before headcount",
+      "Skipping waivers until players reach the boards",
+      "Mixing skill levels inside one division"
+    ]
+  },
+  "election-day-volunteer-signup-form-template": {
+    "source_type": "volunteer_forms",
+    "practices_title": "Best practices for election day volunteer signups",
+    "best_practices": [
+      "Assign roles and shifts before poll opening",
+      "Collect seat counts from ride drivers up front",
+      "Size lunch orders from full-day volunteers",
+      "Record language skills per precinct"
+    ],
+    "common_mistakes": [
+      "Building the roster from scattered texts",
+      "Dispatching rides without knowing seat counts",
+      "Feeding half-day volunteers a full-day lunch order",
+      "Leaving language coverage to chance"
+    ]
+  },
+  "kayak-tour-booking-form-template": {
+    "source_type": "booking_forms",
+    "practices_title": "Best practices for kayak tour bookings",
+    "best_practices": [
+      "Price tours per paddler with live group totals",
+      "Collect swim attestations before the briefing",
+      "Flag minors for guardian signatures before launch",
+      "State arrival windows and weight limits plainly"
+    ],
+    "common_mistakes": [
+      "Stranding tandem bookings without partner details",
+      "Putting first-timers in water above their skill",
+      "Discovering health notes at the dock",
+      "Leaving boat counts to walk-up traffic"
+    ]
+  },
+  "kickball-league-registration-form-template": {
+    "source_type": "registration_forms",
+    "practices_title": "Best practices for kickball league registrations",
+    "best_practices": [
+      "Separate team entries from free-agent placements",
+      "Size shirts from real per-player orders",
+      "Collect game-night preferences before scheduling",
+      "File waivers with registration, not at week one"
+    ],
+    "common_mistakes": [
+      "Placing free agents through week-one chaos",
+      "Ordering shirts from a headcount nobody confirmed",
+      "Publishing a schedule that ignores game-night data",
+      "Collecting waivers on clipboards at the field"
+    ]
+  },
+  "kiteboarding-lesson-waiver-form-template": {
+    "source_type": "consent_forms",
+    "practices_title": "Best practices for kiteboarding lesson waivers",
+    "best_practices": [
+      "Require swim attestations before any water time",
+      "Disclose medical conditions confidentially up front",
+      "Collect weight for proper vest and gear fit",
+      "Require guardian signatures for every minor"
+    ],
+    "common_mistakes": [
+      "Relying on verbal briefings for real risk",
+      "Discovering medical limits mid-lesson",
+      "Fitting gear without weight data",
+      "Teaching minors without guardian signatures"
+    ]
+  },
+  "knitting-class-registration-form-template": {
+    "source_type": "registration_forms",
+    "practices_title": "Best practices for knitting class registrations",
+    "best_practices": [
+      "Price series and single workshops as separate tracks",
+      "Collect kit color choices before the yarn order",
+      "Sort experience so the instructor paces the room",
+      "Offer a bring-your-own supplies discount explicitly"
+    ],
+    "common_mistakes": [
+      "Ordering kit yarn from DM registrations",
+      "Letting beginners fill advanced workshops",
+      "Ignoring left-handed knitters until class",
+      "Pricing kits without a bring-your-own option"
+    ]
+  },
+  "halloween-costume-contest-entry-form-template": {
+    "source_type": "registration_forms",
+    "practices_title": "Best practices for costume contest entries",
+    "best_practices": [
+      "Fix age divisions before entries open",
+      "Collect written descriptions judges can score",
+      "Price entry by division with wristbands as add-ons",
+      "Close entries an hour before judging"
+    ],
+    "common_mistakes": [
+      "Judging from a shouted stage lineup",
+      "Leaving group entries unpriced until the door",
+      "Letting contestants pick categories twice",
+      "Announcing winners with no written scores"
+    ]
+  },
+  "canned-food-drive-pledge-form-template": {
+    "source_type": "donation_forms",
+    "practices_title": "Best practices for food drive pledges",
+    "best_practices": [
+      "Pledge against the pantry's high-need list",
+      "Record pledged counts into a running goal tracker",
+      "Book drop-off shifts from the same form",
+      "Set one firm drop-by date for everyone"
+    ],
+    "common_mistakes": [
+      "Collecting hallway pledges that never reach the bin",
+      "Asking for items the pantry cannot store",
+      "Stacking all volunteer help on one day",
+      "Announcing totals without an actual tally"
+    ]
+  },
+  "church-picnic-registration-form-template": {
+    "source_type": "rsvp_forms",
+    "practices_title": "Best practices for church picnic registrations",
+    "best_practices": [
+      "Count headcount per person, not per family guess",
+      "Balance potluck categories as responses arrive",
+      "Let families pick games so stations get staffed",
+      "Collect shade and seating needs privately"
+    ],
+    "common_mistakes": [
+      "Ordering food from pew-style estimates",
+      "Ending up with forty desserts and two mains",
+      "Running games with no volunteer roster",
+      "Ignoring accessibility until the picnic starts"
+    ]
+  },
+  "zoo-family-membership-form-template": {
+    "source_type": "membership_forms",
+    "practices_title": "Best practices for zoo membership forms",
+    "best_practices": [
+      "Price household tiers by family size plainly",
+      "Sell parking and guest passes as clear add-ons",
+      "Record care-program donations for tax receipts",
+      "Collect child birth dates where cards require them"
+    ],
+    "common_mistakes": [
+      "Hiding parking costs until the front gate",
+      "Pricing guest passes with no pack options",
+      "Losing donation receipts in the membership total",
+      "Forcing membership desk line math on every family"
+    ]
+  },
+  "racetrack-track-day-registration-form-template": {
+    "source_type": "registration_forms",
+    "practices_title": "Best practices for track day registrations",
+    "best_practices": [
+      "Sort run groups by declared experience honestly",
+      "Size helmet rentals before the trailer opens",
+      "Require the tech inspection attestation at signup",
+      "Price instruction as a visible novice add-on"
+    ],
+    "common_mistakes": [
+      "Mixing novices into advanced run groups",
+      "Running out of rental helmets on arrival",
+      "Discovering waiver and license issues at the gate",
+      "Leaving instructor counts to day-of luck"
+    ]
+  },
+  "rv-park-reservation-form-template": {
+    "source_type": "reservation_forms",
+    "practices_title": "Best practices for RV park reservations",
+    "best_practices": [
+      "Collect rig length and slide-outs before assigning sites",
+      "Price site types and hookups transparently",
+      "Declare pets so desk fees are known in advance",
+      "Record arrival windows for smooth evening hosting"
+    ],
+    "common_mistakes": [
+      "Booking 40-foot rigs onto 30-foot sites",
+      "Surprising guests with undisclosed pet fees",
+      "Ignoring tow vehicles in length math",
+      "Leaving late arrivals with no after-hours plan"
+    ]
+  },
+  "egg-donor-screening-application-form-template": {
+    "source_type": "application_forms",
+    "practices_title": "Best practices for egg donor screening applications",
+    "best_practices": [
+      "State age and health eligibility up front",
+      "Route confidential answers to clinical staff only",
+      "Record consent for each screening stage explicitly",
+      "Confirm prior-cycle counts against program limits"
+    ],
+    "common_mistakes": [
+      "Booking clinical time before eligibility checks",
+      "Letting health answers circulate beyond clinical staff",
+      "Assuming consent instead of recording it",
+      "Burying compensation details until late stages"
+    ]
+  },
+  "family-reunion-tshirt-order-form-template": {
+    "source_type": "order_forms",
+    "practices_title": "Best practices for reunion t-shirt orders",
+    "best_practices": [
+      "Tally sizes per household with youth cuts separate",
+      "Close orders three to four weeks before printing",
+      "Offer pay-at-pickup to keep the treasurer out of the chain",
+      "Price shipping as an add-on for absent relatives"
+    ],
+    "common_mistakes": [
+      "Collecting sizes through message threads",
+      "Ordering adult smalls for every kid",
+      "Chasing payments one household at a time",
+      "Printing before the order deadline closes"
+    ]
   }
 }

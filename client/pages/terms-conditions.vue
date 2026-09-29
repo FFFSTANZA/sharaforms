@@ -128,6 +128,12 @@
               or through the
               <a :href="sharaformsConfig.links.help_url" target="_blank" rel="noopener noreferrer" class="font-medium text-neutral-950 underline">Help Center</a>.
             </p>
+
+            <p class="mt-3 text-sm leading-6 text-neutral-700">
+              See also our
+              <NuxtLink :to="{ name: 'privacy-policy' }" class="font-medium text-neutral-950 underline">Privacy Policy</NuxtLink>
+              for how data is collected, stored, and deleted.
+            </p>
           </div>
         </div>
       </div>

@@ -183,6 +183,41 @@
           </ul>
         </div>
 
+        <div class="mt-8 rounded-2xl border border-neutral-200 p-6">
+          <h2 class="text-lg font-semibold text-neutral-900">
+            Related integrations
+          </h2>
+          <div class="mt-4 flex flex-wrap gap-3">
+            <NuxtLink
+              v-for="item in relatedIntegrations"
+              :key="item.slug"
+              :to="{ name: 'integrations-slug', params: { slug: item.slug } }"
+              class="inline-flex items-center rounded-full bg-neutral-50 px-4 py-2 text-sm font-medium text-neutral-700 ring-1 ring-inset ring-neutral-200 transition-all hover:ring-pink-300 hover:text-pink-700"
+            >
+              {{ item.name }}
+            </NuxtLink>
+          </div>
+        </div>
+
+        <div
+          v-if="relatedGuides.length > 0"
+          class="mt-6 rounded-2xl border border-neutral-200 p-6"
+        >
+          <h2 class="text-lg font-semibold text-neutral-900">
+            Related guides
+          </h2>
+          <ul class="mt-4 space-y-3 text-sm leading-6 text-neutral-600 md:text-base">
+            <li v-for="item in relatedGuides" :key="item.slug">
+              <NuxtLink
+                :to="`/guides/${item.slug}`"
+                class="font-medium text-pink-700 hover:text-pink-800"
+              >
+                {{ item.title }}
+              </NuxtLink>
+            </li>
+          </ul>
+        </div>
+
         <div class="mt-8 rounded-2xl border border-dashed border-neutral-300 bg-neutral-50 p-6 text-sm leading-6 text-neutral-600 md:text-base">
           <span class="font-semibold text-neutral-900">Need another route?</span>
           Visit the full integrations index to compare native integrations, connected-account flows, and external automation platforms before you commit to a setup.
@@ -204,12 +239,32 @@
 
 <script setup>
 import { getIntegrationGuide } from '~/data/integration-guides'
+import { guides } from '~/data/guides/index'
+import integrationsCatalog from '~/data/forms/integrations.json'
 import { resolveSchemaUrl, useSchemaBaseUrl } from '~/composables/useSchemaSeo'
 
 const crisp = useCrisp()
 const { isAuthenticated: authenticated } = useIsAuthenticated()
 const slug = computed(() => useRoute().params.slug)
 const guide = computed(() => getIntegrationGuide(slug.value))
+
+// Cross-links so every integration page passes equity to its closest
+// integration siblings and to the standing setup guides.
+const relatedIntegrations = ['google_sheets', 'n8n', 'notion', 'pipedrive', 'zapier', 'slack', 'webhook', 'email']
+  .filter((item) => item !== slug.value)
+  .slice(0, 6)
+  .map((item) => ({
+    slug: item,
+    name: integrationsCatalog[item] ? integrationsCatalog[item].name : item,
+  }))
+
+const relatedGuides = [
+  'form-submission-notifications',
+  'hidden-form-fields-source-tracking',
+  'share-a-form-anywhere',
+]
+  .map((guideSlug) => guides.find((item) => item.slug === guideSlug))
+  .filter(Boolean)
 
 if (!guide.value) {
   throw createError({ statusCode: 404, statusMessage: 'Integration page not found' })

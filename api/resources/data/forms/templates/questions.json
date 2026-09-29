@@ -2419,7 +2419,7 @@
       },
       {
         "question": "Who approves requisitions and how quickly?",
-        "answer": "<p>Typically department head then finance within three business days, though your policy governs. Instant notifications keep requests moving, and exports show approvers pending decisions sorted by age. Aging-report exports embarrass stalled approvals better than any reminder email campaign.</p>"
+        "answer": "<p>Department head then finance within three business days, though your policy governs. Instant notifications keep requests moving, and exports audit the chain.</p>"
       }
     ]
   },
@@ -3083,7 +3083,7 @@
       },
       {
         "question": "What approval workflow do expense reports follow?",
-        "answer": "<p>Typically manager first, then finance for policy compliance, with higher amounts escalating further. Automated routing by amount thresholds keeps small claims fast while large ones earn appropriate scrutiny.</p>"
+        "answer": "<p>Manager first, then finance for policy compliance, with higher amounts escalating further. Automated routing by amount thresholds keeps small claims moving without manual handoffs.</p>"
       },
       {
         "question": "When must expense reports be submitted after trips?",
@@ -3596,6 +3596,1406 @@
       {
         "question": "How should webinar success be measured?",
         "answer": "<p>Attendance rate, engagement duration, question volume, and post-webinar conversion together tell fuller stories than registration counts, which flatter promotion while saying nothing about content resonance. Engagement metrics reveal content resonance registration counts flatteringly conceal.</p>"
+      }
+    ]
+  },
+  "babysitting-agreement-form-template": {
+    "questions": [
+      {
+        "question": "What should a babysitting agreement include?",
+        "answer": "<p>Agreed hourly rate, emergency contacts, allergy notes, house rules, and medication instructions with exact doses. A signature line turns the notes into a mutual commitment both sides can reference later.</p>"
+      },
+      {
+        "question": "How detailed should medication instructions be?",
+        "answer": "<p>Specific enough for a stranger to follow: medication name, dose, timing relative to meals, and where it is stored. Write instructions as steps rather than sentences so nothing depends on memory during a busy evening.</p>"
+      },
+      {
+        "question": "Should house rules be listed in the agreement?",
+        "answer": "<p>Yes. Screen time limits, bedtime routines, and outdoor play boundaries prevent the awkward moment when a sitter permits something you forbid. Rules written once are enforced consistently by every sitter who follows.</p>"
+      },
+      {
+        "question": "Can one agreement cover multiple children?",
+        "answer": "<p>Yes. List each child with their age and any individual needs in the children field, then note allergies or medications per child. Sitters see the whole household picture instead of separate notes per kid.</p>"
+      },
+      {
+        "question": "How often should we update the agreement?",
+        "answer": "<p>Whenever the rate, medications, or routines change, plus a light refresh at the start of each school year. Because the form lives online, updates take a minute and every caregiver holds the current version.</p>"
+      },
+      {
+        "question": "Do both the parents and the sitter sign this?",
+        "answer": "<p>At least one parent signs, and many families have the sitter counter-sign on the first sitting. The signature timestamp shows exactly when the terms were agreed, which settles rate disputes before they start.</p>"
+      }
+    ]
+  },
+  "funeral-service-notification-form-template": {
+    "questions": [
+      {
+        "question": "How do we share funeral service details with a large circle?",
+        "answer": "<p>Publish this form alongside the obituary and share its link once. Attendees confirm their own plans, which spares the family dozens of reply-all threads during the hardest week of the year.</p>"
+      },
+      {
+        "question": "Why collect seat counts for a funeral service?",
+        "answer": "<p>Venues and ushers plan seating from confirmed counts instead of guessing from community size. Knowing how many seats extended family needs also prevents the full-pew awkwardness at larger services.</p>"
+      },
+      {
+        "question": "What happens when someone is unsure about attending?",
+        "answer": "<p>The form reveals a call-request option for undecided respondents, so a family member can phone them personally and talk through dates. Nobody who needs a real conversation falls through a form-only crack, and the family sees every request in one list.</p>"
+      },
+      {
+        "question": "Can the form collect charity donation preferences?",
+        "answer": "<p>Yes. The flowers or donations question records what the family prefers, and respondents see it before sending arrangements. It replaces the footnote in obituaries that people routinely miss.</p>"
+      },
+      {
+        "question": "Who can see the responses?",
+        "answer": "<p>Only the family and whoever they share dashboard access with, such as the funeral home coordinator. Responses are never published, and each one is timestamped so seating plans stay current.</p>"
+      },
+      {
+        "question": "Does this work for memorials after the service date?",
+        "answer": "<p>Yes. Many families use it for scattering ceremonies, anniversary memorials, or virtual services. Simply edit the dates in the intro block and resend the same link to the circle.</p>"
+      }
+    ]
+  },
+  "youth-league-registration-form-template": {
+    "questions": [
+      {
+        "question": "How does the sibling discount work?",
+        "answer": "<p>Families enter how many siblings are already registered this season and the total subtracts $10 per sibling automatically. The league treasurer no longer audits handwritten discounts at the registration table.</p>"
+      },
+      {
+        "question": "How is the volunteer discount applied?",
+        "answer": "<p>Parents who commit to refereeing or scorekeeping select the volunteer option and $10 comes off the season total immediately. The league builds its volunteer roster and rewards helpers in the same step.</p>"
+      },
+      {
+        "question": "Can families register extra jerseys?",
+        "answer": "<p>Yes. Extra jerseys add $18 each to the live total, and a name field appears only when extra jerseys are ordered so the printing list stays accurate without follow-up emails.</p>"
+      },
+      {
+        "question": "What does the total estimate include?",
+        "answer": "<p>Division fee, sibling and volunteer discounts, and jersey add-ons. Field fees or fundraising obligations vary by league, so list anything extra in the intro text where parents see it before they submit.</p>"
+      },
+      {
+        "question": "Is the liability waiver part of the registration?",
+        "answer": "<p>Yes. The waiver acknowledgment is a required checkbox, and the completed registration with its timestamp becomes the league's record that the guardian accepted the terms for that player.</p>"
+      },
+      {
+        "question": "How should divisions be priced in the form?",
+        "answer": "<p>Put the price directly in each division option, like U8 Juniors (Saturdays, 10am) - $105. Parents compare divisions with full information, and the computed total reads the price from the same option text.</p>"
+      }
+    ]
+  },
+  "lactation-room-request-form-template": {
+    "questions": [
+      {
+        "question": "What equipment should a lactation room include?",
+        "answer": "<p>At minimum a comfortable chair, an outlet within reach, a small refrigerator, and a lockable door. The equipment checklist in this form covers those basics plus privacy screens and storage so procurement sees one complete list.</p>"
+      },
+      {
+        "question": "Is a shared lactation room acceptable?",
+        "answer": "<p>It can be, when scheduling is agreed in advance. The form asks directly, and employees who accept a shared room can name their scheduling partner so facilities documents the arrangement instead of guessing.</p>"
+      },
+      {
+        "question": "Who receives the request?",
+        "answer": "<p>Route submissions to HR and facilities simultaneously with notification rules. Both teams see the same equipment list and deadline, which is exactly the coordination that email chains drop.</p>"
+      },
+      {
+        "question": "How far in advance should the room be ready?",
+        "answer": "<p>Most organizations complete setup within five business days of a complete request. The form captures the need-from date so facilities can prioritize properly, and every submission timestamps the request, which keeps the deadline accountable on both sides.</p>"
+      },
+      {
+        "question": "Do badge-access requests belong in this form?",
+        "answer": "<p>Yes, because locked rooms without access defeat the purpose. The badge question surfaces access needs to security in the same submission instead of a second ticket weeks later.</p>"
+      },
+      {
+        "question": "Is the request confidential?",
+        "answer": "<p>Keep it that way by routing responses to a small HR group rather than a shared inbox. SharaForms responses are private to dashboard users with access, and nothing is published anywhere.</p>"
+      }
+    ]
+  },
+  "court-reporter-booking-form-template": {
+    "questions": [
+      {
+        "question": "What details does a reporter need to confirm a booking?",
+        "answer": "<p>Case caption, proceeding type, date and time block, location, expected attendees, and transcript format. This form captures all of them, so confirmations go out in one pass instead of three emails.</p>"
+      },
+      {
+        "question": "How does the form handle remote proceedings?",
+        "answer": "<p>When the remote option is selected, a video conference link field appears and becomes required. The reporter receives the platform details with the booking instead of on the morning of the deposition.</p>"
+      },
+      {
+        "question": "What transcript formats are typically offered?",
+        "answer": "<p>Standard delivery included in the appearance fee, certified copies for an added charge, and expedited next-day service when deadlines demand it. The priced options make the attorney's choice explicit.</p>"
+      },
+      {
+        "question": "Can exhibits be attached to the booking?",
+        "answer": "<p>Yes. The exhibit upload accepts up to five files, which covers most pre-marked exhibit sets. Larger sets can follow by secure transfer, but the booking itself never waits on them.</p>"
+      },
+      {
+        "question": "How far ahead should depositions be booked?",
+        "answer": "<p>48 hours is the practical minimum for reporter availability, and two weeks for multi-day or realtime work. The intro text on this form states your firm's exact cutoff.</p>"
+      },
+      {
+        "question": "Does the form work for recorded statements too?",
+        "answer": "<p>Yes. Recorded statements are one of the proceeding type options, so insurance adjusters book through the same flow as depositions, adding turnaround expectations in the special requests field. The confirmation email carries the full spec either way.</p>"
+      }
+    ]
+  },
+  "waitlist-join-form-template": {
+    "questions": [
+      {
+        "question": "How do waitlists convert into paying customers?",
+        "answer": "<p>By segmenting interest before the opening arrives. This form records which plan each person wants and how ready they are to join, so your first invitation goes to people who will actually say yes.</p>"
+      },
+      {
+        "question": "Why offer a text notification option?",
+        "answer": "<p>Openings fill within hours, and text messages are read in minutes while emails sit unread. When someone chooses text, a phone field appears so the number is captured with consent.</p>"
+      },
+      {
+        "question": "What should the join timing options capture?",
+        "answer": "<p>Realistic commitment levels: ready at the next opening, within a month or two, or flexible. Knowing urgency lets you fill a spot instantly with a ready buyer instead of burning the opening on a maybe.</p>"
+      },
+      {
+        "question": "Does the referral field matter?",
+        "answer": "<p>It becomes your acquisition report over time. Referral answers show which channels actually fill your waitlist, so you invest more in what works, cut what does not, and can quantify the value of each partnership you run.</p>"
+      },
+      {
+        "question": "How do I prioritize waitlist order fairly?",
+        "answer": "<p>Every response timestamps automatically, so join order is a fact rather than an argument. Filter by interest and urgency first, then invite in timestamp order within the segment that matches the opening, and note the decision in your dashboard.</p>"
+      },
+      {
+        "question": "Can I use this for a restaurant or clinic?",
+        "answer": "<p>Yes. Swap the plan options for seatings, appointment slots, or panel openings and edit the intro text to match. The structure of interest level, timing, and notification preference works for any scarcity-based signup you run.</p>"
+      }
+    ]
+  },
+  "intern-housing-request-form-template": {
+    "questions": [
+      {
+        "question": "What housing details prevent placement delays?",
+        "answer": "<p>Exact start and end dates, a monthly budget, housing type preference, and commute constraints. Coordinators match placements from one sortable list instead of chasing each intern for missing numbers.</p>"
+      },
+      {
+        "question": "How does the form handle homestay preferences?",
+        "answer": "<p>When someone selects a homestay, a meal preference question appears and becomes required, so hosts know the expectation before accepting the placement. That single answer prevents the mid-summer misunderstanding that sours both the family and the intern.</p>"
+      },
+      {
+        "question": "Should interns request roommates directly?",
+        "answer": "<p>The form captures willingness and preferences separately. Program coordinators make the final match, but they see lifestyle notes before pairing anyone, which is where most roommate conflicts start.</p>"
+      },
+      {
+        "question": "Why ask about pets for intern housing?",
+        "answer": "<p>Homestays and shared apartments often include animals, and allergies cut both ways. The pet question prevents the placement that unravels on day one because of a cat nobody mentioned.</p>"
+      },
+      {
+        "question": "Can budget fields be trusted?",
+        "answer": "<p>Treat the budget as a screening range rather than a binding promise. Coordinators filter placements by the number, then confirm details during the offer conversation, where flexibility usually appears once the location and roommates are right.</p>"
+      },
+      {
+        "question": "How early should housing requests be submitted?",
+        "answer": "<p>Set a deadline four to six weeks before start dates. The intro block on this form states your program's deadline, and submissions timestamp so you know who missed it.</p>"
+      }
+    ]
+  },
+  "language-exchange-signup-form-template": {
+    "questions": [
+      {
+        "question": "What makes language exchange pairings stick?",
+        "answer": "<p>Matching on availability and timezone, not just language. This form captures meeting preferences and weekly windows, so coordinators pair people who can actually meet at the same hour.</p>"
+      },
+      {
+        "question": "Why collect both native and target languages?",
+        "answer": "<p>Exchanges are reciprocal: each partner teaches one language and learns the other. Collecting both sides lets you match mutual pairs automatically instead of reading every profile by hand.</p>"
+      },
+      {
+        "question": "How granular should level options be?",
+        "answer": "<p>Three tiers work best: beginner, intermediate, and advanced. Finer scales create false precision that scares people away from signing up at all, and partners care far more about patience and shared goals than about a CEFR letter.</p>"
+      },
+      {
+        "question": "What goals should the checklist include?",
+        "answer": "<p>Conversation practice, grammar help, business vocabulary, and exam preparation cover most members. Goal tags turn matching into a filter instead of guesswork, and pairs who share a goal keep meeting long past the third session.</p>"
+      },
+      {
+        "question": "How does the form handle online-only members?",
+        "answer": "<p>When online-only is selected, a timezone field appears and becomes required before submission. That single field prevents the classic pairing of two motivated people twelve hours apart whose waking hours never actually overlap.</p>"
+      },
+      {
+        "question": "Should the city field be required?",
+        "answer": "<p>No. Members who only want online partners leave it blank, and in-person matching filters on the responses where it exists. Asking without requiring keeps the form short for everyone.</p>"
+      }
+    ]
+  },
+  "key-custody-agreement-form-template": {
+    "questions": [
+      {
+        "question": "What makes a key custody record enforceable?",
+        "answer": "<p>A named recipient, the property covered, the agreed return date, and a signature with a timestamp. This form captures all four, and the signed record lives in your dashboard instead of a drawer.</p>"
+      },
+      {
+        "question": "Why document copies in the agreement?",
+        "answer": "<p>Copy details surface only when copies were made, recording who holds them and how many. When a lock change happens, you know exactly how many keys to collect before rekeying.</p>"
+      },
+      {
+        "question": "Should contractors sign key agreements?",
+        "answer": "<p>Yes, especially for multi-week jobs with after-hours access. The purpose field records the scope, and the return date matches the project end, so access ends when the work does.</p>"
+      },
+      {
+        "question": "What does the rekeying acknowledgment cover?",
+        "answer": "<p>It states that locks may be rekeyed if keys are not returned by the agreed date. The acknowledgment is optional but recommended, since it makes rekeying costs a documented consequence rather than a surprise.</p>"
+      },
+      {
+        "question": "Can this replace a property management key log?",
+        "answer": "<p>Yes. Export the signed records and you have a complete issuance log with dates, purposes, and signatures, which is more than most paper logs capture before they get lost.</p>"
+      },
+      {
+        "question": "Who should complete the form?",
+        "answer": "<p>The issuer completes it with the recipient present, then hands the device over for the signature. Filling it together takes two minutes and eliminates the my-copy-says-differently dispute later.</p>"
+      }
+    ]
+  },
+  "lost-and-found-claim-form-template": {
+    "questions": [
+      {
+        "question": "What details verify a lost item claim fastest?",
+        "answer": "<p>Contents, marks, and serial numbers rather than brand names. A phone case is generic, but a phone case with a dentist appointment card inside and a scratch on the corner verifies in seconds.</p>"
+      },
+      {
+        "question": "Why ask for identifying marks separately?",
+        "answer": "<p>Because the description field alone gets filled with guesses. Separating the two makes claimants dig for proof, and staff compare the marks field against the actual item instead of a wish list.</p>"
+      },
+      {
+        "question": "Should claims allow photo uploads?",
+        "answer": "<p>Yes. A photo of the item or its twin speeds matching dramatically. The upload is optional so claimants without photos still file, but staff review photo claims first.</p>"
+      },
+      {
+        "question": "How do shipping returns work?",
+        "answer": "<p>Claimants choose pickup, hold at the desk, or shipping with a small fee. The shipping address field appears only for the ship option, so addresses arrive only where they are needed.</p>"
+      },
+      {
+        "question": "Why request ID digits for pickup?",
+        "answer": "<p>The last four digits tie the handover to the claimant without storing full ID numbers. Front desk staff verify against the claim record, which stops the friend-of-a-friend collection problem.</p>"
+      },
+      {
+        "question": "How long should unclaimed items be held?",
+        "answer": "<p>State your holding window in the intro text; 30 to 90 days is common. Timestamped claims make that timeline defensible if anyone asks, and the export documents final disposition when unclaimed items move on.</p>"
+      }
+    ]
+  },
+  "wedding-gift-registry-form-template": {
+    "questions": [
+      {
+        "question": "What should a gift registry form collect?",
+        "answer": "<p>Registry links, shipping expectations, honeymoon hold dates, and group gifting rules cover what guests actually ask. This form hands whoever manages guest communications one authoritative answer set instead of five contradictory answers from five relatives.</p>"
+      },
+      {
+        "question": "How do honeymoon hold dates work?",
+        "answer": "<p>Couples who prefer gifts after the honeymoon set a hold-until date. That date appears only when the hold option is selected, and family can quote it exactly when relatives ask where to send things.</p>"
+      },
+      {
+        "question": "Is group gifting worth offering?",
+        "answer": "<p>Yes, for big-ticket items. The form records your preference once, so every guest list maker communicates the same rule instead of some encouraging splits and others refusing them.</p>"
+      },
+      {
+        "question": "Should the registry link field be required?",
+        "answer": "<p>No. Couples often manage registries across stores or add links later. The link field stays optional and the rest of the answers still give guests what they actually need to know.</p>"
+      },
+      {
+        "question": "Can cash funds be included?",
+        "answer": "<p>Yes. The cash fund link field carries your honeymoon or home fund URL alongside any physical registries you maintain. Guests choose whatever feels comfortable, and nobody feels funneled toward a single option at the table.</p>"
+      },
+      {
+        "question": "What does the thank-you style question do?",
+        "answer": "<p>It records whether you prefer printed notes or an eco-friendly, paper-free approach to thank-yous. Guests and hosts both see the preference, and your wedding party stops guessing your style on your behalf when the notes go out.</p>"
+      }
+    ]
+  },
+  "youth-group-registration-form-template": {
+    "questions": [
+      {
+        "question": "What should youth group registration collect?",
+        "answer": "<p>Guardian contacts, an emergency contact beyond the guardians, allergy notes, pickup authorization, and grade for small group placement. This form covers all five before the first meeting night.</p>"
+      },
+      {
+        "question": "Why is pickup authorization a separate question?",
+        "answer": "<p>Because it changes by family. When a parent says someone else may pick up, a name and phone field appears and becomes required. Leaders know exactly who may leave with each student.</p>"
+      },
+      {
+        "question": "How should allergies be recorded?",
+        "answer": "<p>One free-text field per student where parents describe severity and treatment in their own words. Snack coordinators filter the weekly roster for those answers, so allergies surface exactly where the food decisions actually happen.</p>"
+      },
+      {
+        "question": "Should photo consent be part of registration?",
+        "answer": "<p>Yes, asked once at signup rather than renegotiated per event. Parents opt in or out knowingly, and the roster shows consent status next to each student all year.</p>"
+      },
+      {
+        "question": "What is the emergency contact question for?",
+        "answer": "<p>Guardians are sometimes unreachable together, say at the same event. A third contact with an independent phone number closes that gap, which is why it is required here.</p>"
+      },
+      {
+        "question": "How does the t-shirt field help?",
+        "answer": "<p>Bulk orders need sizes before the first print run. Collecting sizes at registration means one order instead of a follow-up survey, and late joiners get flagged by submission date.</p>"
+      }
+    ]
+  },
+  "board-member-nomination-form-template": {
+    "questions": [
+      {
+        "question": "What should a board nomination include?",
+        "answer": "<p>Nominee contact details, relationship to the nominator, term sought, skills, a bio or resume, and a supporting statement. This form captures the set, so governance committees compare candidates on equal footing.</p>"
+      },
+      {
+        "question": "Why ask if the nominee currently serves?",
+        "answer": "<p>Current board members need their existing role disclosed with the nomination. The current-role field appears only when they are serving, which keeps term limits and officer conflicts visible before the slate is published.</p>"
+      },
+      {
+        "question": "How do skills tags help the board?",
+        "answer": "<p>They build the skills matrix directly from nomination data instead of from memory. Committees see where finance, legal, or fundraising gaps sit, then prioritize nominees who fill those gaps rather than collecting a fifth marketing person.</p>"
+      },
+      {
+        "question": "Should resumes be attached to nominations?",
+        "answer": "<p>Yes, a single bio or resume file per nomination. Committee members read one document per candidate rather than chasing links, and the file stays attached to the nomination record.</p>"
+      },
+      {
+        "question": "Who confirms the nominee is willing?",
+        "answer": "<p>The nominations committee confirms willingness before the slate is finalized. The nominee email field exists precisely so that confirmation reaches the source directly, rather than bouncing back through an enthusiastic nominator who assumed the answer.</p>"
+      },
+      {
+        "question": "When should nominations close?",
+        "answer": "<p>Two weeks before the annual meeting is common. State the deadline in the intro block and every submission timestamps, so late nominations are a fact rather than an argument.</p>"
+      }
+    ]
+  },
+  "pilot-logbook-verification-form-template": {
+    "questions": [
+      {
+        "question": "What is a logbook verification?",
+        "answer": "<p>A second person reviews your logbook against records and confirms the hours by category. This form captures the reviewed period, the hour breakdown, and a signature, producing the artifact insurers and employers ask for.</p>"
+      },
+      {
+        "question": "Which hour categories should be verified?",
+        "answer": "<p>Total, cross-country, night, instrument, and simulator time at minimum. The form breaks each category out separately because ratings, job applications, and insurance renewals all quote specific categories, never just the grand total.</p>"
+      },
+      {
+        "question": "How are discrepancies handled?",
+        "answer": "<p>When the verifier selects yes, a details field appears and becomes required, capturing the entries and their resolution. Documented discrepancies protect the pilot, since an explained variance beats a discovered one.</p>"
+      },
+      {
+        "question": "Who can sign as the verifier?",
+        "answer": "<p>A CFII, chief pilot, or operator representative your organization authorizes for the task. The endorsement field records exactly who performed the verification.</p>"
+      },
+      {
+        "question": "How often should logbooks be verified?",
+        "answer": "<p>Annually works for most private pilots, plus a fresh verification before every insurance renewal or type rating application. The verification date field makes that cadence auditable across years without digging through paper files.</p>"
+      },
+      {
+        "question": "Does this replace the paper logbook?",
+        "answer": "<p>No. The form verifies the logbook rather than replacing it. The signed record attaches to your training file as third-party confirmation of the hours the logbook claims, which is exactly what external reviewers want to see.</p>"
+      }
+    ]
+  },
+  "wine-club-signup-form-template": {
+    "questions": [
+      {
+        "question": "How should wine club tiers be presented?",
+        "answer": "<p>With bottle counts and prices in the option text, like Cellar: 6 bottles per quarter - $165. Members compare tiers honestly, and the same text can drive a live total if you add pricing logic later.</p>"
+      },
+      {
+        "question": "Why verify birth year at signup?",
+        "answer": "<p>Alcohol fulfillment requires age documentation in every jurisdiction. Capturing the birth year on the form creates a timestamped record before the first release ships or is poured at pickup.</p>"
+      },
+      {
+        "question": "What is a taste profile used for?",
+        "answer": "<p>Allocations and substitution decisions, mostly. When a release sells through, staff substitute within the member's stated preferences instead of shipping blind, and blind substitutions are precisely where wine club churn begins.</p>"
+      },
+      {
+        "question": "How does the form separate shipping and pickup?",
+        "answer": "<p>Members pick one fulfillment path at signup. Shipping reveals an address field with the adult-signature requirement noted, while pickup reveals an authorized-person field, so each membership record matches its own logistics exactly.</p>"
+      },
+      {
+        "question": "Can pickup be delegated to someone else?",
+        "answer": "<p>Yes. The authorized pickup person field documents exactly who may claim releases, and winery staff check that name against ID at the counter. It prevents the awkward my-cousin-is-picking-it-up phone call on release day.</p>"
+      },
+      {
+        "question": "What belongs in the delivery notes field?",
+        "answer": "<p>Gate codes, heat concerns, alternate delivery locations, and sensitivities to sulfites or fining agents all belong here. In short, anything the shipping team should know before the box is packed and the label is printed.</p>"
+      }
+    ]
+  },
+  "garden-plot-application-form-template": {
+    "questions": [
+      {
+        "question": "How are garden plots usually assigned?",
+        "answer": "<p>In application order, which is why this form timestamps every submission. Coordinators work the waitlist top down, and the export shows who asked for which size and season.</p>"
+      },
+      {
+        "question": "Why price plots by size in the options?",
+        "answer": "<p>Putting the fee inside each option, like 4x8 raised bed - $25/season, means gardeners see the cost while they choose. Treasurers also reconcile payments against a consistent option set instead of chasing hand-written amounts.</p>"
+      },
+      {
+        "question": "What is an accessible height bed?",
+        "answer": "<p>A raised bed tall enough to garden from a wheelchair or without kneeling. When gardeners request one, a details field appears to capture specific needs so the build or placement actually fits.</p>"
+      },
+      {
+        "question": "Why ask about tools in the application?",
+        "answer": "<p>Shared tool inventories grow from real demand. The checklist shows which tools members will actually use, so the shed buys what gets used instead of guessing each spring.</p>"
+      },
+      {
+        "question": "What does the organic pledge commit to?",
+        "answer": "<p>That the gardener will follow the garden's organic-only practices, typically no synthetic pesticides or fertilizers. It is required at application so the rules are accepted before planting starts.</p>"
+      },
+      {
+        "question": "Should experience levels be collected?",
+        "answer": "<p>Yes, for mentorship matching rather than gatekeeping. First-year gardeners get paired with experienced neighbors on adjacent plots, which is the cheapest retention program a community garden can run and it costs nothing extra.</p>"
+      }
+    ]
+  },
+  "service-recovery-follow-up-form-template": {
+    "questions": [
+      {
+        "question": "What is a service recovery form?",
+        "answer": "<p>A structured make-good record: what went wrong, how severe it was, the credit owed, and the resolution the customer accepted. It replaces improvised apologies with a consistent, documented process.</p>"
+      },
+      {
+        "question": "How are service credits calculated?",
+        "answer": "<p>From the severity tier the customer confirms: $10 for minor, $25 for moderate, $50 for serious, plus $5 if they choose expedited 24-hour processing. The total computes live on the form itself.</p>"
+      },
+      {
+        "question": "Why publish credit tiers openly?",
+        "answer": "<p>Because visible tiers feel fair while invisible ones feel arbitrary and negotiable. Customers who can see the scale trust the number they receive, and support staff stop negotiating credit amounts case by case.</p>"
+      },
+      {
+        "question": "What does the category data reveal?",
+        "answer": "<p>Recurring failure trends, most usefully. Monthly exports show whether shipping delays or billing errors dominate your recoveries, which turns a stream of individual apologies into operational fixes aimed at the actual source.</p>"
+      },
+      {
+        "question": "Should resolution notes be required?",
+        "answer": "<p>Yes. Recording what was offered, whether a refund, redo, or replacement, protects both sides if memories differ later. The notes field makes the offer itself part of the record.</p>"
+      },
+      {
+        "question": "How does the follow-up preference work?",
+        "answer": "<p>Customers choose email, a call, or no follow-up. Respecting the choice is part of the recovery, and the preference rides with the record so nobody calls someone who asked for quiet.</p>"
+      }
+    ]
+  },
+  "snow-removal-service-agreement-form-template": {
+    "questions": [
+      {
+        "question": "What should a snow removal agreement specify?",
+        "answer": "<p>Driveway pricing tier, whether walkways and salting are included, the plow trigger depth, the season covered, and access details like gate codes. This form captures each item explicitly before winter.</p>"
+      },
+      {
+        "question": "What is a plow trigger depth?",
+        "answer": "<p>The snowfall amount that brings the crew out, such as 2 cm or 5 cm. Lower triggers mean more visits and higher prices, so stating it prevents the why-wasnt-my-driveway-done call.</p>"
+      },
+      {
+        "question": "Why collect gate codes in advance?",
+        "answer": "<p>Because crews at 5am cannot reach anyone. The gate code field appears only for gated properties, and the code rides with the agreement the dispatcher already has open.</p>"
+      },
+      {
+        "question": "How do overnight vehicles affect service?",
+        "answer": "<p>Cars parked overnight mean crews either plow around them or skip the pass. Asking directly sets expectations, and the answer documents what happened when a drift buried the sedan.</p>"
+      },
+      {
+        "question": "Should salting be part of the contract?",
+        "answer": "<p>Yes, for safety and liability, priced separately from plowing. The salting question makes the choice explicit instead of assumed, which is where disputes start.</p>"
+      },
+      {
+        "question": "When should contracts be signed?",
+        "answer": "<p>Before November 1 for full-season rates in most markets. The start date field and signed agreement timestamp both, so early signers hold their slot when the first storm hits the queue.</p>"
+      }
+    ]
+  },
+  "talent-show-entry-form-template": {
+    "questions": [
+      {
+        "question": "What does a talent show entry form collect?",
+        "answer": "<p>Act name, performers, category with entry fee, act title for the program, music, technical needs, and rehearsal preferences. This form turns handwritten slips into a run sheet the stage crew can execute.</p>"
+      },
+      {
+        "question": "How are group acts handled?",
+        "answer": "<p>When the performer count exceeds one, an all-names field appears and becomes required before submission. Programs print directly from those lists, which prevents the missing-sibling correction at the ticket table on show night.</p>"
+      },
+      {
+        "question": "How should entry fees be structured?",
+        "answer": "<p>By category, like Music $15, Dance $15, Variety $10, with the fee visible in each option. The live total shows each act what they owe, and fees collected at rehearsal need no second invoice.</p>"
+      },
+      {
+        "question": "Why ask for technical needs?",
+        "answer": "<p>Because microphones, pianos, and projectors cannot be improvised in the sixty seconds between acts. The checklist feeds the stage manager's plot directly, so sound checks and scene changes run without surprises.</p>"
+      },
+      {
+        "question": "How do backing tracks get submitted?",
+        "answer": "<p>Performers upload an MP3 directly or paste a link in the notes field. Tracks arrive attached to the act, so the DJ queue builds itself instead of from a folder of texts.</p>"
+      },
+      {
+        "question": "Should recordings be offered?",
+        "answer": "<p>As a priced add-on, yes. Families who want the recording select it for $25, and the volunteer crew knows exactly which acts to film instead of recording everything and sorting later.</p>"
+      }
+    ]
+  },
+  "furniture-assembly-service-form-template": {
+    "questions": [
+      {
+        "question": "How much does furniture assembly cost?",
+        "answer": "<p>This template prices $45 per hour plus $5 per item, with stair access and rush scheduling as clear add-ons. The live total updates as customers describe the job, so quotes stop being guesses.</p>"
+      },
+      {
+        "question": "Why ask for estimated hours?",
+        "answer": "<p>Hours are the honest unit of assembly work, and most single items take one to two. The help text guides realistic estimates, and the total shows the price consequence immediately.</p>"
+      },
+      {
+        "question": "When does the stair fee apply?",
+        "answer": "<p>When there is no elevator at the delivery location, since carrying a wardrobe to a third floor costs real time. The option states the fee, and the customer sees it before booking.</p>"
+      },
+      {
+        "question": "What does rush scheduling cost?",
+        "answer": "<p>$35 for a visit within 48 hours versus standard scheduling within a week. Rush pricing is visible on the form, so customers choose urgency with the price in front of them.</p>"
+      },
+      {
+        "question": "Should customers pick the preferred date?",
+        "answer": "<p>Yes, as a request rather than a promise. Dispatchers confirm the actual slot afterward, but arriving requests cluster usefully around certain days, and the date field makes same-day routing possible when the schedule opens.</p>"
+      },
+      {
+        "question": "What belongs in the access notes?",
+        "answer": "<p>Parking situations, elevator reservations, narrow stairwells, and whether packaging removal is wanted all belong here. Assemblers who arrive already knowing the building finish faster, and knowing the building is half the job.</p>"
+      }
+    ]
+  },
+  "recycling-pickup-request-form-template": {
+    "questions": [
+      {
+        "question": "What item categories should a pickup form list?",
+        "answer": "<p>Paper and cardboard, plastics, electronics, scrap metal, glass, and textiles cover most programs. Categories drive truck sorting at the depot, and the multi-select answers show drivers the load before they arrive at your address.</p>"
+      },
+      {
+        "question": "Why do electronics need special handling?",
+        "answer": "<p>Because e-waste follows different regulations and channels than curbside recyclables. When electronics are selected, a details field appears capturing types and counts so the right crew and bins come along.</p>"
+      },
+      {
+        "question": "How is volume estimated?",
+        "answer": "<p>In practical units: one car load, a van or SUV load, or a pickup truck or trailer. Drivers translate volumes into vehicle assignments instantly, without a site visit for a garage cleanout.</p>"
+      },
+      {
+        "question": "Are donation receipts available?",
+        "answer": "<p>Yes, for programs that operate as charities. When a receipt is requested, a name field appears so the tax document carries the right individual or organization without a follow-up email.</p>"
+      },
+      {
+        "question": "Who uses pickup request forms?",
+        "answer": "<p>Households after a garage cleanout, businesses clearing old storage, schools running e-waste drives, and community events managing waste streams. One form serves all four through the org type question, with routing to match.</p>"
+      },
+      {
+        "question": "Should pickup dates be required?",
+        "answer": "<p>Yes, as a preferred date at minimum. Programs route their trucks by date, and a required date surfaces scheduling conflicts immediately instead of through phone tag after the truck is already routed across town.</p>"
+      }
+    ]
+  },
+  "campus-tour-booking-form-template": {
+    "questions": [
+      {
+        "question": "How far ahead should campus tours be booked?",
+        "answer": "<p>Two weeks for groups over ten, and a few days for families. The intro block states your policy, and the booking timestamp shows exactly who met the deadline.</p>"
+      },
+      {
+        "question": "Why is group size a required number?",
+        "answer": "<p>Because guide-to-visitor ratios decide whether a tour informs or herds forty people past a building. Large groups trigger a logistics field automatically, so buses and extra guides arrive planned rather than discovered.</p>"
+      },
+      {
+        "question": "What does the interests checklist do?",
+        "answer": "<p>It routes each family toward the right buildings and the right student ambassadors. Engineering-inclined visitors see the labs while arts-focused groups meet the theater program, all from one checkbox set your guides read beforehand.</p>"
+      },
+      {
+        "question": "How are accessibility needs handled?",
+        "answer": "<p>Visitors choose whether accommodations are needed, and details become required when they are. Routes and interpreters get arranged before tour day instead of improvised at the front steps.</p>"
+      },
+      {
+        "question": "Should the grade or stage be asked?",
+        "answer": "<p>Yes, because an 8th grader exploring early needs a different tour than a transfer student arriving with credits. The answer shapes the conversation your student ambassador prepares and the offices the route includes.</p>"
+      },
+      {
+        "question": "What belongs in the questions field?",
+        "answer": "<p>Whatever the family wants answered on the walk: admission odds, housing life, co-op programs. Guides read submissions before meeting the group, which is how tours feel personal at scale.</p>"
+      }
+    ]
+  },
+  "utility-assistance-application-form-template": {
+    "questions": [
+      {
+        "question": "What documents does a utility assistance application need?",
+        "answer": "<p>A recent bill, income details for the household, and hardship documentation when a hardship is claimed. The supporting-documents upload appears whenever a hardship category other than none is selected.</p>"
+      },
+      {
+        "question": "Why use income bands instead of exact income?",
+        "answer": "<p>Bands make screening consistent across caseworkers and cut the documents an applicant must gather for a first pass. Exact income verification happens later in the process for households that clear the band, not at the door.</p>"
+      },
+      {
+        "question": "What counts as a hardship?",
+        "answer": "<p>Job loss, medical emergencies, fixed-income strain, and temporary setbacks are the categories most programs see. A none-of-these option stays available regardless, since an assistance form should never force anyone to invent a story.</p>"
+      },
+      {
+        "question": "Why is the verification consent required?",
+        "answer": "<p>Programs must confirm applicant details with utility providers and sometimes benefit agencies before releasing funds. The consent checkbox records that authorization once, which satisfies funder audits without mailing a second paper form.</p>"
+      },
+      {
+        "question": "How does household size affect eligibility?",
+        "answer": "<p>Income thresholds scale with household size in most assistance programs. Capturing both numbers together lets caseworkers screen against the correct table on first contact instead of following up later for the missing figure.</p>"
+      },
+      {
+        "question": "Can applicants choose the assistance type?",
+        "answer": "<p>Yes: bill payment help, the weatherization program, a payment plan, or all options at once. The all-options choice deliberately routes complex cases to senior caseworkers instead of forcing applicants to guess what they qualify for.</p>"
+      }
+    ]
+  },
+  "flu-shot-consent-form-template": {
+    "questions": [
+      {
+        "question": "Why complete flu shot consent before the appointment?",
+        "answer": "<p>Because screening done at the table slows every line and misses history that matters. Completed-in-advance forms flag egg allergies and high-risk conditions before the nurse picks up the syringe.</p>"
+      },
+      {
+        "question": "Why does the form ask about egg allergies?",
+        "answer": "<p>Some influenza vaccines are grown in eggs, and severe allergies need the egg-free alternative or monitoring. When an allergy is declared, a severity details field appears for the nurse to review.</p>"
+      },
+      {
+        "question": "How is consent handled for minors?",
+        "answer": "<p>The guardian question appears only when the patient is under 18, and the signature at the end belongs to the guardian in that case. Clinics keep one consistent consent record per patient.</p>"
+      },
+      {
+        "question": "What high-risk conditions matter for flu vaccines?",
+        "answer": "<p>Asthma, diabetes, heart disease, pregnancy, and immunocompromise lead the list, among others. The checklist captures them quickly with a single tap, and any other condition gets described in the details field that appears.</p>"
+      },
+      {
+        "question": "Is insurance information required?",
+        "answer": "<p>Members provide the ID, self-pay patients skip it, and the unsure option keeps people moving. The member ID field appears only for those using insurance, so the form stays short for everyone else.</p>"
+      },
+      {
+        "question": "What is a vaccine information statement?",
+        "answer": "<p>The CDC document explaining vaccine benefits and risks, which providers must offer before vaccination. The consent checkbox references it directly, recording that the signer reviewed the statement before signing rather than at the syringe.</p>"
+      }
+    ]
+  },
+  "translation-request-form-template": {
+    "questions": [
+      {
+        "question": "How is translation priced per page?",
+        "answer": "<p>This template uses $25 per 250-word page, with certified translation at +$40, notarization at +$15, and rush delivery at +$30. The estimate computes live as you describe the document.</p>"
+      },
+      {
+        "question": "How accurate must the word count be?",
+        "answer": "<p>Rough is fine. The form computes an estimate from your number, and the exact quote confirms after document review, which is why the upload field stays optional at this stage.</p>"
+      },
+      {
+        "question": "What is certified translation?",
+        "answer": "<p>A translation accompanied by a signed certificate of accuracy that courts, universities, and immigration authorities accept. When certified is selected, a purpose field appears so the certificate says what it must.</p>"
+      },
+      {
+        "question": "When is notarization needed?",
+        "answer": "<p>When the receiving authority requires the certificate of accuracy itself to be notarized, which some courts and foreign consulates do. The option adds $15 and is chosen explicitly rather than assumed.</p>"
+      },
+      {
+        "question": "How fast can documents be translated?",
+        "answer": "<p>Standard turnaround is five business days, with a two-day rush option for an added $30. Stating both on the form means deadline conversations happen before quoting starts, not in the middle of the project.</p>"
+      },
+      {
+        "question": "What should the document type question capture?",
+        "answer": "<p>Whether the document is a certificate, transcript, contract, medical record, marketing copy, or technical manual. Each type carries different formatting and certification expectations, and those expectations shape both the price and the turnaround.</p>"
+      }
+    ]
+  },
+  "garage-sale-permit-application-form-template": {
+    "questions": [
+      {
+        "question": "How much does a garage sale permit cost?",
+        "answer": "<p>Most cities charge a flat fee for a one-day sale and a higher fee for a two to three day sale, plus a small amount per sign permit. The template computes your total live from the days and signs you enter, so you know the amount before submitting.</p>"
+      },
+      {
+        "question": "How far in advance should I apply for a garage sale permit?",
+        "answer": "<p>Apply at least three to five business days before your first sale day. Many clerks approve by email, and rush or same-week applications often carry extra fees or get bumped to the next review cycle.</p>"
+      },
+      {
+        "question": "Do I need a separate permit for garage sale signs?",
+        "answer": "<p>In many cities, yes. Signs posted on public property, poles, or rights of way usually require a sign permit even when the sale itself is permitted. The template prices each sign permit so the application covers everything in one pass.</p>"
+      },
+      {
+        "question": "What happens if it rains on my sale day?",
+        "answer": "<p>Most permits let you designate one rain date when you apply. Choose the rain date option in the form and the date field appears, so the clerk approves both dates at once instead of reprocessing a new application.</p>"
+      },
+      {
+        "question": "How many garage sales am I allowed per year?",
+        "answer": "<p>Most ordinances cap households at two to four sales per year. Check your city code before applying; clerks enforce the cap at application time, and exceeding it can convert your sale into a business license question.</p>"
+      },
+      {
+        "question": "Can neighbors file one application for a multi-family sale?",
+        "answer": "<p>Often yes, and some cities discount joint sales. List the organizing applicant and sale address on the form, note the participating households in the notes, and confirm the shared arrangement meets your local ordinance.</p>"
+      }
+    ]
+  },
+  "pool-party-rsvp-form-template": {
+    "questions": [
+      {
+        "question": "How far in advance should guests RSVP to a pool party?",
+        "answer": "<p>Ask for responses at least one week before the party. Lifeguard coverage, towel counts, and food orders all scale with headcount, and a firm RSVP deadline gives you time to adjust all three without last-minute scrambling.</p>"
+      },
+      {
+        "question": "How do I handle guests who do not respond to the RSVP?",
+        "answer": "<p>Set a cutoff date in your invitation and send one reminder a few days before it. After the cutoff, treat non-responders as not attending for food and lifeguard math, and welcome them if they show with room to spare.</p>"
+      },
+      {
+        "question": "Should the RSVP ask about swimming ability for kids?",
+        "answer": "<p>Yes. Asking which children need a swim test or shallow-end access lets the host plan supervision instead of discovering it poolside. Pair the question with your pool rules so parents know what to expect before arriving.</p>"
+      },
+      {
+        "question": "How do I price a shared-cost pool party fairly?",
+        "answer": "<p>Charge per guest rather than per family when costs scale with bodies, not households. The template totals adults, kids, and towel rentals live, so the split stays transparent and nobody debates the math at the gate.</p>"
+      },
+      {
+        "question": "What party details belong on a pool party RSVP?",
+        "answer": "<p>Date, start and end times, pool address, what to bring, whether towels are provided or rented, food plans, and weather backup plans. The form carries these in the intro text so every guest sees the same details.</p>"
+      },
+      {
+        "question": "How many guests can a backyard pool party safely hold?",
+        "answer": "<p>Plan on one adult supervisor per four to six young swimmers, plus whatever capacity your lifeguard and insurance coverage allows. Collecting accurate RSVP counts is what makes that math possible in the first place.</p>"
+      }
+    ]
+  },
+  "sunday-school-registration-form-template": {
+    "questions": [
+      {
+        "question": "What information should a Sunday school registration collect?",
+        "answer": "<p>Student name and birth date, grade placement, guardian contacts, emergency contact, allergy and medical notes, and pickup authorization. Collecting these before the first class keeps check-in fast and teachers informed.</p>"
+      },
+      {
+        "question": "How do Sunday schools handle pickup authorization safely?",
+        "answer": "<p>Record exactly who may pick up each child and require guardian approval for anyone else. The template lets families list an authorized person up front, and leaders verify names at the door instead of guessing at dismissal time.</p>"
+      },
+      {
+        "question": "Should Sunday school registration ask about allergies?",
+        "answer": "<p>Yes, especially for snack programs. A checkbox that reveals a details field keeps the form short for most families while capturing severity and treatment notes where the snack coordinator can actually see them.</p>"
+      },
+      {
+        "question": "How early should families register for Sunday school?",
+        "answer": "<p>Open registration four to six weeks before the program year starts. Early rosters let you order materials, plan class divisions by grade, and recruit enough teachers before the first Sunday instead of after.</p>"
+      },
+      {
+        "question": "Do we need photo consent for Sunday school activities?",
+        "answer": "<p>Yes, before any photos appear in newsletters or social media. The registration includes an opt-in consent checkbox, so families choose explicitly and your records show who agreed rather than assuming.</p>"
+      },
+      {
+        "question": "How do I place students in the right Sunday school class?",
+        "answer": "<p>Ask for grade or age at registration and divide classes from the responses. The template captures both birth date and grade, so placements survive the fall promotion and visitors land in the right room on day one.</p>"
+      }
+    ]
+  },
+  "apartment-walkthrough-schedule-form-template": {
+    "questions": [
+      {
+        "question": "How do I schedule an apartment walkthrough?",
+        "answer": "<p>Pick a property, choose in-person or video, and submit your preferred date and time. The leasing team confirms within one business day with building access details, so you are not chasing confirmations by phone.</p>"
+      },
+      {
+        "question": "Are video apartment walkthroughs worth offering?",
+        "answer": "<p>Yes, especially for out-of-town renters. They pre-qualify serious applicants before travel and fill units faster. The form surfaces a video call link field only when a renter chooses the video option.</p>"
+      },
+      {
+        "question": "What questions should a walkthrough request ask?",
+        "answer": "<p>Property of interest, tour format, date and time preferences, move-in timeline, pet details, and contact information. Move-in timeline matters most: it separates browsers from renters ready to apply this month.</p>"
+      },
+      {
+        "question": "When is the best time to tour an apartment?",
+        "answer": "<p>Weekday late afternoons show you real parking and noise conditions, and mornings reveal natural light. Weekend slots book fastest, so offering a weekday option in the form widens your choices.</p>"
+      },
+      {
+        "question": "Should I disclose pets before an apartment walkthrough?",
+        "answer": "<p>Yes. Pet policies vary by building and breed, so disclosing type and weight up front saves everyone a wasted tour. The form reveals a pet details field only when you indicate you have pets.</p>"
+      },
+      {
+        "question": "How far ahead should I book a walkthrough before moving?",
+        "answer": "<p>Start touring 45 to 60 days before your target move-in date. Most availability shows 30 to 60 days out, so touring earlier than that risks falling in love with a unit that will not hold.</p>"
+      }
+    ]
+  },
+  "video-testimonial-release-form-template": {
+    "questions": [
+      {
+        "question": "Do I need a release form for video testimonials?",
+        "answer": "<p>Yes, whenever you plan to publish someone on your website, social media, or ads. A written release documents exactly where the footage may appear, what the participant agreed to, and whether they receive compensation.</p>"
+      },
+      {
+        "question": "What should a video testimonial release include?",
+        "answer": "<p>The participant name and role, recording date, usage scope, compensation, anonymity preferences, whether they get approval before publishing, and a signature. The more specific the scope, the fewer disputes later.</p>"
+      },
+      {
+        "question": "Can participants limit where their testimonial appears?",
+        "answer": "<p>Yes. The template offers website-only, website and social, or all channels including paid ads. Participants choose the scope they are comfortable with, which makes more people willing to say yes.</p>"
+      },
+      {
+        "question": "Should testimonial participants be paid?",
+        "answer": "<p>It is optional, but disclose whatever you offer. A small gift card is common and the form records it, which keeps your marketing honest and your accounting clean when the same participants appear in campaigns.</p>"
+      },
+      {
+        "question": "Do testimonial releases need signatures?",
+        "answer": "<p>A signature is what makes the release enforceable and auditable. The form captures a drawn signature with a timestamp, so every release in your export proves who agreed and when.</p>"
+      },
+      {
+        "question": "How long does a testimonial release remain valid?",
+        "answer": "<p>Many companies use releases valid for one to two years, then re-confirm. If your scope is indefinite, say so explicitly in the release text; vague scope is the most common reason legal asks for reshoots.</p>"
+      }
+    ]
+  },
+  "equipment-donation-form-template": {
+    "questions": [
+      {
+        "question": "What equipment details should a donation form capture?",
+        "answer": "<p>Equipment type, approximate count, and working condition. Condition drives routing: working items go straight to programs, repairable items go to workshop queues, and parts-only items get sorted for salvage instead of sitting unopened.</p>"
+      },
+      {
+        "question": "Do donated items need to be in working condition?",
+        "answer": "<p>Not always, but honesty matters. Programs that refurbish accept repair-needing items, while programs without repair capacity do not. Declaring condition up front saves everyone a rejected drop-off and lets the workshop plan its queue.</p>"
+      },
+      {
+        "question": "How do equipment donation pickups work?",
+        "answer": "<p>Choose pickup in the form and an address field appears for access notes like gates, floors, and parking. The organization confirms a collection window, and drivers arrive knowing exactly what they are loading.</p>"
+      },
+      {
+        "question": "Can I get a tax receipt for donated equipment?",
+        "answer": "<p>Yes, for organizations with nonprofit status, and the receipt should reflect the fair market value you document. The form records who requested it and when.</p>"
+      },
+      {
+        "question": "What happens to donated equipment after drop-off?",
+        "answer": "<p>Most organizations sort items into direct reuse, refurbishment, and salvage. Asking about the organization's process is fair; a good one answers it plainly and tells you where your donation ended up.</p>"
+      },
+      {
+        "question": "Should I wipe data before donating computers?",
+        "answer": "<p>Yes, always. Reinstall or use certified wipe tools before handing over any device, and note that you did on the form. Reputable organizations wipe again on receipt, but your own wipe protects you first.</p>"
+      }
+    ]
+  },
+  "first-time-homebuyer-workshop-registration-form-template": {
+    "questions": [
+      {
+        "question": "What is a first-time homebuyer workshop?",
+        "answer": "<p>A class covering budgets, pre-approval, mortgage options, making offers, inspections, and closing, often required for down payment assistance programs. Certificates of completion are typically issued at the end of the final session.</p>"
+      },
+      {
+        "question": "How much does a homebuyer workshop cost?",
+        "answer": "<p>Community programs commonly charge 25 to 50 dollars per individual or couple, with some free sessions funded by lenders or housing agencies. The template prices individuals and couples transparently at registration.</p>"
+      },
+      {
+        "question": "Is a homebuyer workshop certificate required for assistance programs?",
+        "answer": "<p>Many down payment assistance and first-time buyer programs require a certificate from an approved education course. Confirm your program accepts the provider before registering; certificates are issued on completion day.</p>"
+      },
+      {
+        "question": "Should both partners attend the homebuyer workshop?",
+        "answer": "<p>Yes when buying together. Most providers price couples as one registration, and both names usually need to appear on the certificate for assistance programs. The form's couple option covers both attendees.</p>"
+      },
+      {
+        "question": "What should I bring to a homebuyer workshop?",
+        "answer": "<p>A rough budget, questions about your credit, and a note pad, or the printed materials kit if you ordered one. Knowing your pre-approval status helps the instructor pitch the financing segment correctly.</p>"
+      },
+      {
+        "question": "How long is a first-time homebuyer workshop?",
+        "answer": "<p>Most run four to eight hours, either one Saturday or split across two evenings. The template offers session choices at registration so attendees pick the format that fits their schedule.</p>"
+      }
+    ]
+  },
+  "neighborhood-watch-signup-form-template": {
+    "questions": [
+      {
+        "question": "How do I start a neighborhood watch group?",
+        "answer": "<p>Talk with local law enforcement about guidelines, recruit neighbors with a signup form, and hold an organizational meeting. The form collects roles, patrol availability, and contact details so the first meeting starts with a roster.</p>"
+      },
+      {
+        "question": "What roles does a neighborhood watch need?",
+        "answer": "<p>A coordinator, block captains, patrol walkers, phone tree callers, and neighbors who only want alerts. Every role matters; the template's involvement checklist lets people choose how little or much they can give.</p>"
+      },
+      {
+        "question": "Should neighbors share security camera footage?",
+        "answer": "<p>Voluntarily, and only when asked about specific incidents. The form records who is willing and what their cameras cover, so after an incident the coordinator contacts the right doors instead of canvassing the block.</p>"
+      },
+      {
+        "question": "How often should a neighborhood watch patrol?",
+        "answer": "<p>Whatever the group can sustain, often weekly walks or a few evenings a month. Consistency beats intensity: a small patrol that shows up every Thursday builds more trust than a burst of activity after one incident.</p>"
+      },
+      {
+        "question": "What is a block captain in a neighborhood watch?",
+        "answer": "<p>The point person for a stretch of homes who forwards alerts, welcomes new neighbors, and relays concerns to the coordinator. The form lets interested neighbors raise their hand with experience attached.</p>"
+      },
+      {
+        "question": "Does a neighborhood watch replace calling the police?",
+        "answer": "<p>Never. Watch groups observe, document, and report; they do not intervene or detain. The best programs pair strong relationships with local officers and treat every emergency as a 911 call first.</p>"
+      }
+    ]
+  },
+  "parking-space-rental-agreement-form-template": {
+    "questions": [
+      {
+        "question": "Should a parking space rental be in writing?",
+        "answer": "<p>Yes, even between neighbors. A written agreement fixes the rate, term, and rules, documents the vehicle assigned to the stall, and gives both parties something concrete if the arrangement sours or a car needs towing.</p>"
+      },
+      {
+        "question": "How much does renting a parking space cost?",
+        "answer": "<p>Rates vary widely by city and stall type. Covered stalls typically command a premium over uncovered and compact stalls, and EV charging adds a monthly amount. The template computes the rate live from your choices.</p>"
+      },
+      {
+        "question": "What should a parking rental agreement include?",
+        "answer": "<p>Parties, stall location and type, rate and term, start date, vehicle make and plate, access details like gates and hours, and house rules. The template covers all of these plus a signature line.</p>"
+      },
+      {
+        "question": "Is EV charging worth adding to a parking rental?",
+        "answer": "<p>When wiring exists, yes. Charging access commands a meaningful monthly premium and widens your renter pool. The form prices it as an explicit add-on so the base rate stays attractive to everyone else.</p>"
+      },
+      {
+        "question": "Can a landlord tow a car not listed on the parking agreement?",
+        "answer": "<p>Yes, when the agreement documents the vehicle and reserves the stall exclusively. That is exactly why the form records make, model, and plate for every authorized car.</p>"
+      },
+      {
+        "question": "What rules should a parking agreement include?",
+        "answer": "<p>No storage of trailers or containers, no subletting the stall, no blocking neighbors, and clear guest parking expectations. Acknowledging the rules in writing is what keeps month-to-month arrangements friendly when disputes show up.</p>"
+      }
+    ]
+  },
+  "bake-sale-order-form-template": {
+    "questions": [
+      {
+        "question": "How do I take pre-orders for a bake sale?",
+        "answer": "<p>Share an order form with flavors, dozens, and prices, then close it a few days before the sale. Pre-orders tell you exactly what to bake, and day-of sales become pure bonus instead of guesswork.</p>"
+      },
+      {
+        "question": "How much should I charge at a bake sale?",
+        "answer": "<p>Price per dozen or per item at two to three times ingredient cost. The template prices each flavor per dozen with a live total, so customers see the math and your margin survives the grocery bill.</p>"
+      },
+      {
+        "question": "How do I handle allergy requests for bake sale orders?",
+        "answer": "<p>Collect them explicitly. A nut-free checkbox on the order routes the request straight to the bakers, and separate prep or clear labeling prevents a good intention from becoming a bad afternoon.</p>"
+      },
+      {
+        "question": "Should a bake sale offer delivery?",
+        "answer": "<p>Only when volunteers can cover it. Adding a priced delivery option widens orders from people who cannot attend, and the form reveals an address field only when delivery is selected.</p>"
+      },
+      {
+        "question": "How far ahead should bake sale orders close?",
+        "answer": "<p>One to three days before the sale. Groceries need buying, dough needs chilling, and volunteers need counts. The template's needed-by date field keeps every order anchored to a real deadline.</p>"
+      },
+      {
+        "question": "Do I need a permit or kitchen rules for a bake sale?",
+        "answer": "<p>Charity sales under cottage food laws are usually exempt, but check labeling and location rules. Selling through a school or church event often simplifies compliance.</p>"
+      }
+    ]
+  },
+  "car-show-registration-form-template": {
+    "questions": [
+      {
+        "question": "How much does it cost to register a car in a car show?",
+        "answer": "<p>Most shows charge 15 to 30 dollars per vehicle depending on class, with swap meet spaces and extra dash plaques as add-ons. The template computes your entry total live as you choose.</p>"
+      },
+      {
+        "question": "What are car show vehicle classes?",
+        "answer": "<p>Shows typically group by era, such as antique for pre-1980, classic for the eighties and nineties, and modern for 2000 onward, sometimes with make-specific classes. Picking the right class at registration keeps judging fair.</p>"
+      },
+      {
+        "question": "What is a dash plaque at a car show?",
+        "answer": "<p>The numbered card displayed on your dashboard that marks you as a registered entry and often doubles as your judging card. Extra plaques are popular souvenirs, and pre-ordering them gets the print count right.</p>"
+      },
+      {
+        "question": "When should I register for a car show?",
+        "answer": "<p>As soon as classes open, and no later than the pre-registration deadline, usually a few days before the show. Gate registration costs more and risks a full field with no space left for your class.</p>"
+      },
+      {
+        "question": "What time should I arrive at a car show?",
+        "answer": "<p>Arrive during your assigned placement window, often an early slot for larger vehicles or show centrally placed entries. The form records your arrival preference so organizers can stage the field in order.</p>"
+      },
+      {
+        "question": "Should I enter my car for judging?",
+        "answer": "<p>Only if you want the scrutiny; judging is optional at most shows. Entering costs nothing extra on this form and puts your vehicle in the running for class awards, while skipping it keeps the day casual.</p>"
+      }
+    ]
+  },
+  "cornhole-tournament-registration-form-template": {
+    "questions": [
+      {
+        "question": "How many players are on a cornhole team?",
+        "answer": "<p>Standard tournament play uses two-player teams, which is why the form collects both names on one registration. Solo players should look for a blind-draw division or ask organizers about free-agent pairing.</p>"
+      },
+      {
+        "question": "How much does it cost to enter a cornhole tournament?",
+        "answer": "<p>Charity and social events commonly charge 25 to 50 dollars per team, with competitive divisions at the higher end and team shirts as add-ons. The template computes the team total live.</p>"
+      },
+      {
+        "question": "What is the difference between competitive and social cornhole divisions?",
+        "answer": "<p>Competitive divisions enforce pitching distance and scoring rules strictly, while social divisions play for fun with relaxed enforcement and more laughter. Choosing honestly at registration keeps every bracket enjoyable for the players placed in it.</p>"
+      },
+      {
+        "question": "When do cornhole tournaments publish brackets?",
+        "answer": "<p>Most organizers publish brackets the night before or the morning of, after registration closes. The form closes registration days ahead so bracket math happens once instead of repeatedly on site.</p>"
+      },
+      {
+        "question": "Do cornhole tournaments require waivers?",
+        "answer": "<p>Yes, most events require each player to accept a waiver covering normal play risks. This form collects the acknowledgment with the registration so nobody signs clipboards at the boards.</p>"
+      },
+      {
+        "question": "What should we bring to a cornhole tournament?",
+        "answer": "<p>Water, sunscreen, and chairs if the venue lacks seating; boards and bags are provided unless the listing says otherwise. Team shirts arrive at check-in when ordered through the registration.</p>"
+      }
+    ]
+  },
+  "election-day-volunteer-signup-form-template": {
+    "questions": [
+      {
+        "question": "What do election day volunteers do?",
+        "answer": "<p>Common roles include greeting voters, monitoring lines, driving neighbors to the polls, and running setup or teardown crews. The form lets volunteers pick a role and shift so captains can fill every slot deliberately.</p>"
+      },
+      {
+        "question": "How long are election day volunteer shifts?",
+        "answer": "<p>Most organizations split the day into morning, afternoon, and evening blocks of four to five hours, with full-day volunteers covering handoffs. The template prices lunch for full-day helpers and keeps shifts realistic.</p>"
+      },
+      {
+        "question": "Can volunteers drive voters to the polls?",
+        "answer": "<p>Yes, and ride programs matter most for voters without cars or mobility limits. Drivers list their seat count in the form, so dispatch matches requests to available cars instead of guessing.</p>"
+      },
+      {
+        "question": "Do election volunteers need training?",
+        "answer": "<p>Most organizations run a short briefing before election day covering roles, rules around polling places, and what volunteers must not do. Signing up early through the form gets you into the next briefing.</p>"
+      },
+      {
+        "question": "Can I volunteer on election day if I am not affiliated with a party?",
+        "answer": "<p>Yes, many nonpartisan organizations staff poll support, rides to the polls, and voter information lines. The form works for any organization, and roles and shifts stay the same regardless of affiliation or none at all.</p>"
+      },
+      {
+        "question": "What should election day volunteers bring?",
+        "answer": "<p>Comfortable shoes, water, a phone charger, weather layers, and patience for long lines. Full-day volunteers get lunch through the form meal preference, so nobody fades right at the 4pm shift handoff.</p>"
+      }
+    ]
+  },
+  "kayak-tour-booking-form-template": {
+    "questions": [
+      {
+        "question": "How much does a kayak tour cost?",
+        "answer": "<p>Tours commonly run 45 to 95 dollars per paddler depending on length, with singles and tandems usually included and paddleboards as a small upgrade. The template computes the total from your tour and group size.</p>"
+      },
+      {
+        "question": "Do I need experience to join a kayak tour?",
+        "answer": "<p>No for calm-water tours, but honesty helps the guide. The form asks for experience level so first-timers get extra briefing time and the group is not held back or pushed beyond its comfort.</p>"
+      },
+      {
+        "question": "Can beginners use tandem kayaks?",
+        "answer": "<p>Yes, tandems are popular with first-timers because a steadier partner shares the paddling. Booking a tandem tells the outfitter to expect a pair, and a partner details field keeps the seating plan straight.</p>"
+      },
+      {
+        "question": "What should I bring on a kayak tour?",
+        "answer": "<p>Water shoes, sunscreen, a hat, a strap for glasses, and a dry bag for phones. Outfitters provide boats, paddles, and life vests; the confirmation email lists anything tour-specific.</p>"
+      },
+      {
+        "question": "Do kayak tours have weight or age limits?",
+        "answer": "<p>Yes, both. Boat weight ratings and child size policies vary by outfitter, which is why the form collects group details up front. Minors typically need a guardian signature before launch.</p>"
+      },
+      {
+        "question": "What happens if weather cancels my kayak tour?",
+        "answer": "<p>Outfitters reschedule or refund when lightning, wind, or water conditions exceed safety limits. Booking ahead through the form means the outfitter can reach you early with options instead of at the dock.</p>"
+      }
+    ]
+  },
+  "kickball-league-registration-form-template": {
+    "questions": [
+      {
+        "question": "How much does it cost to join a kickball league?",
+        "answer": "<p>Full teams typically pay a few hundred dollars per season, and free agents pay a per-person fee to be placed on a team. The template computes your entry total from how you sign up.</p>"
+      },
+      {
+        "question": "What is a free agent in rec league sports?",
+        "answer": "<p>A player signing up without a team who gets placed on a roster that needs players. The form separates free-agent signups from team entries so the league office knows how many placements to make.</p>"
+      },
+      {
+        "question": "How many players are on a kickball team?",
+        "answer": "<p>Most leagues field 10 to 11 players with a roster of 15 to 20 for coverage. Full-team registrations pay one flat fee, which is why the team captain registers once for everyone.</p>"
+      },
+      {
+        "question": "Can I request a specific game night in a kickball league?",
+        "answer": "<p>Most leagues collect preferences and honor as many as possible. The form records your preferred night, and the scheduler uses the responses to build a season nobody fights about.</p>"
+      },
+      {
+        "question": "Do kickball leagues require waivers?",
+        "answer": "<p>Yes, every player accepts a liability waiver and usually a sportsmanship policy at registration. Collecting both with signup means nobody sits out week one over missing paperwork, and the league file stays complete.</p>"
+      },
+      {
+        "question": "What should I bring to a kickball game?",
+        "answer": "<p>Athletic shoes, water, and clothes that survive sliding into home; teams provide jerseys when shirts are ordered at registration. cleats are usually banned, so check league rules before buying any.</p>"
+      }
+    ]
+  },
+  "kiteboarding-lesson-waiver-form-template": {
+    "questions": [
+      {
+        "question": "Why do kiteboarding lessons require a waiver?",
+        "answer": "<p>Kiteboarding carries real wind and water risk, and a signed waiver documents that you understood the hazards and accepted the school's safety rules. Verbal briefings protect nobody when something goes wrong.</p>"
+      },
+      {
+        "question": "Do I need to know how to swim for kiteboarding lessons?",
+        "answer": "<p>Yes, instructors require solid swimming ability because lessons happen in open water with board and kite, often out of standing depth. The form records an explicit swim attestation rather than leaving it to assumption.</p>"
+      },
+      {
+        "question": "What medical conditions should I disclose before kitesurfing?",
+        "answer": "<p>Heart conditions, seizure disorders, pregnancy, and anything affected by cold water or hard exertion. Disclosures stay confidential and let instructors adapt the lesson or advise against certain conditions before anyone is on the water.</p>"
+      },
+      {
+        "question": "Can kids take kiteboarding lessons?",
+        "answer": "<p>Many schools teach teens with guardian consent and adjusted gear, while younger children usually start with trainer kites on land. The form flags minors and requires a guardian signature before the lesson.</p>"
+      },
+      {
+        "question": "What gear does the school provide for kite lessons?",
+        "answer": "<p>Kites, boards, helmets, impact vests, and radio helmets at most schools. Your weight matters for vest and spreader-bar fit, which is why the waiver form collects it in advance rather than guessing on the beach.</p>"
+      },
+      {
+        "question": "What safety rules do kite schools enforce?",
+        "answer": "<p>Right-of-way priorities, marked no-go zones, leash use, and instructor authority over wind and water conditions. Acknowledging the rules in writing is standard practice, and students who break them end their lesson early.</p>"
+      }
+    ]
+  },
+  "knitting-class-registration-form-template": {
+    "questions": [
+      {
+        "question": "How much do knitting classes cost?",
+        "answer": "<p>Single workshops commonly run 40 to 70 dollars and multi-week series 90 to 150, with kits usually included. The template computes your class total from the track and kit options you choose.</p>"
+      },
+      {
+        "question": "What is included in a knitting class kit?",
+        "answer": "<p>Yarn, needles, a pattern, and stitch markers, ready at your seat on day one. Bring-your-own supplies usually discount the class, and premium kits upgrade the yarn.</p>"
+      },
+      {
+        "question": "Can I learn to knit in one class?",
+        "answer": "<p>You can learn cast-on and the knit stitch in a single session, but a four-week series is what turns those into a finished project. Choose the track that matches your patience, not just your calendar.</p>"
+      },
+      {
+        "question": "Do knitting classes supply materials or do I bring my own?",
+        "answer": "<p>Both options exist, and the form prices each. Kits included in the price are the default; bringing your own usually discounts the class, and shops appreciate knowing the choice before the yarn order.</p>"
+      },
+      {
+        "question": "Is knitting hard to learn for left-handed people?",
+        "answer": "<p>No, and you do not need to knit backwards. Many lefties knit the standard way, but the form's left-handed checkbox lets the instructor prepare mirror teaching for anyone who prefers it.</p>"
+      },
+      {
+        "question": "What should I look for in a beginner knitting class?",
+        "answer": "<p>Small class sizes, a project you finish, kit materials included, and an instructor who teaches both knit and purl in the first session. Experience questions at registration let the teacher pace the room correctly.</p>"
+      }
+    ]
+  },
+  "halloween-costume-contest-entry-form-template": {
+    "questions": [
+      {
+        "question": "How do you organize a costume contest?",
+        "answer": "<p>Set age divisions, collect entries before the party, give judges written descriptions with entry numbers, and score against published categories. The template handles the entry collection and pricing so organizers can focus on the show.</p>"
+      },
+      {
+        "question": "How much does it cost to enter a costume contest?",
+        "answer": "<p>Community contests commonly charge 5 to 10 dollars per entry depending on division, with spectators free or wristbanded. The template computes your entry total live from division and wristband add-ons.</p>"
+      },
+      {
+        "question": "How do group costume entries work?",
+        "answer": "<p>One registration covers the whole group and lists every member, which keeps the fee per group rather than per person. The form reveals a member list field only when Group is selected, so solo entries stay short.</p>"
+      },
+      {
+        "question": "What do costume judges look for?",
+        "answer": "<p>Craftsmanship, creativity, and how well the costume matches its category. Written descriptions matter more than people expect: judges score dozens of entries, and a description that explains the details wins ties.</p>"
+      },
+      {
+        "question": "What are common costume contest categories?",
+        "answer": "<p>Funniest, scariest, and best craftsmanship cover most events, with some shows adding best group or best in show. Picking a category at entry keeps judges scoring the same qualities across the lineup.</p>"
+      },
+      {
+        "question": "When should costume contest entries close?",
+        "answer": "<p>About an hour before judging, late enough for walk-ins but early enough to print the judge sheets. The template's export gives judges a numbered lineup instead of a shouted order at the stage.</p>"
+      }
+    ]
+  },
+  "canned-food-drive-pledge-form-template": {
+    "questions": [
+      {
+        "question": "How do I organize a canned food drive?",
+        "answer": "<p>Pick a partner pantry first, set a goal, collect pledges through a form, and schedule drop-off shifts. The pantry's high-need list should shape what you ask for; the template puts that list directly on the pledge form.</p>"
+      },
+      {
+        "question": "What food items do food banks need most?",
+        "answer": "<p>Peanut butter, cereal, canned meat and fish, pasta and rice, and baby food and formula top most high-need lists. Asking donors to pledge against that list fills shelves with items families actually take home.</p>"
+      },
+      {
+        "question": "Should food drive donors pledge or just show up?",
+        "answer": "<p>Pledges beat surprises. A pledged count tells coordinators whether the goal is reachable and when to escalate, while show-up-only drives end with either empty bins or a storage problem.</p>"
+      },
+      {
+        "question": "How do food drive volunteer shifts work?",
+        "answer": "<p>Volunteers staff collection tables, sort donations, and box items for the pantry. The form lets pledgers volunteer for a shift and pick a time, which spreads coverage instead of stacking it on drop-off day.</p>"
+      },
+      {
+        "question": "Can teams or classes pledge together?",
+        "answer": "<p>Yes, and friendly competition between classes raises totals. The form records team pledges separately from individuals, so the leaderboard math and the prize for the winning class stay simple.</p>"
+      },
+      {
+        "question": "How long should a canned food drive run?",
+        "answer": "<p>Two to four weeks works best. Shorter drives rush donors, and longer drives lose momentum. The pledged drop-by date on the form keeps everyone anchored to the same end date.</p>"
+      }
+    ]
+  },
+  "church-picnic-registration-form-template": {
+    "questions": [
+      {
+        "question": "How do I plan a church picnic?",
+        "answer": "<p>Collect headcounts per family, balance potluck categories, plan games with signups, and confirm setup help. The template does the counting for you, so food orders rest on real numbers instead of pew estimates.</p>"
+      },
+      {
+        "question": "How much food should I plan for a church picnic?",
+        "answer": "<p>Plan per person, not per family, using the headcount field. Potluck contributions usually cover sides and desserts, so organizers typically supply mains and drinks based on the total attending.</p>"
+      },
+      {
+        "question": "How do I balance potluck categories for a picnic?",
+        "answer": "<p>Ask every family to choose a dish category at registration. Responses arrive tagged by category, so you can see when desserts hit twenty and mains sit at two, and redirect before the tables tell the same story.</p>"
+      },
+      {
+        "question": "What games work well at a church picnic?",
+        "answer": "<p>Tug of war, sack races, volleyball, and bingo span ages with almost no equipment. Letting families pick games in the form tells you which stations to staff and which gear to buy.</p>"
+      },
+      {
+        "question": "Should the picnic form ask about accessibility needs?",
+        "answer": "<p>Yes. Shade, seating, and mobility needs collected up front shape the site layout, tent placement, and parking plan, and nobody has to request accommodation in front of a crowd.</p>"
+      },
+      {
+        "question": "When should church picnic registrations be collected?",
+        "answer": "<p>Two to three weeks ahead. That leaves time for the food order, potluck balancing, and volunteer follow-up, and families appreciate the reminder value of a firm RSVP date.</p>"
+      }
+    ]
+  },
+  "zoo-family-membership-form-template": {
+    "questions": [
+      {
+        "question": "How much does a zoo family membership cost?",
+        "answer": "<p>Most zoos price household tiers between 85 and 150 dollars per year by family size, with parking and guest passes as add-ons. The template computes your membership total live as you choose.</p>"
+      },
+      {
+        "question": "Is a zoo membership worth it for families?",
+        "answer": "<p>Yes, if you visit three or more times a year; admission for a family of four often exceeds the annual price on the second visit. Guest passes extend the value.</p>"
+      },
+      {
+        "question": "How many guests can I bring with a zoo membership?",
+        "answer": "<p>Guest passes are purchased as add-ons in packs of two or four. The form prices each pack, so members know exactly what visiting costs before they arrive.</p>"
+      },
+      {
+        "question": "Do zoo memberships include parking?",
+        "answer": "<p>Some tiers bundle parking and others sell it as an add-on, which is why the form prices it separately. Annual parking usually pays for itself in two visits at most urban zoos.</p>"
+      },
+      {
+        "question": "Are zoo memberships tax deductible?",
+        "answer": "<p>The portion above admission value often is, especially when purchased through a nonprofit society. Add the animal care donation and the form records it separately for a cleaner receipt.</p>"
+      },
+      {
+        "question": "What does an animal care donation fund?",
+        "answer": "<p>Enrichment, veterinary care, and habitat upgrades beyond what admission covers. Members who add donations usually receive the same receipt as the membership, recorded separately on this application so year-end giving is easy to document.</p>"
+      }
+    ]
+  },
+  "racetrack-track-day-registration-form-template": {
+    "questions": [
+      {
+        "question": "How much does a track day cost?",
+        "answer": "<p>Most car track days run 225 to 350 dollars by run group, with helmet rental and in-car instruction as add-ons. The template computes your day total live from group and gear choices.</p>"
+      },
+      {
+        "question": "What are track day run groups?",
+        "answer": "<p>Organizers split the track into experience-based groups, often color-coded green, yellow, and red, that rotate on track. Choosing honestly at registration keeps every session safe and fast for the right reasons.</p>"
+      },
+      {
+        "question": "Do I need a helmet for a track day?",
+        "answer": "<p>Yes, and it must meet the current safety rating the organizer posts, often SA2015 or newer. Rentals are usually available, and the form sizes them in advance so the trailer does not run out.</p>"
+      },
+      {
+        "question": "Do novices need an instructor at a track day?",
+        "answer": "<p>Most organizations require or strongly recommend one for first-time drivers. The form prices instruction as an add-on and novices should plan on it; the cost is small next to bodywork.</p>"
+      },
+      {
+        "question": "What is tech inspection at a track day?",
+        "answer": "<p>A check that your car meets the organizer's safety list: battery secured, no fluid leaks, adequate pad depth, and good belts. The form's attestation puts the checklist in your hands before the gate.</p>"
+      },
+      {
+        "question": "What should I bring to a track day?",
+        "answer": "<p>Torque wrench, tire gauge, water, sunscreen, snacks, and a canopy chair. Bring your own helmet if it meets the rating; the confirmation carries the full schedule and the drivers meeting time.</p>"
+      }
+    ]
+  },
+  "rv-park-reservation-form-template": {
+    "questions": [
+      {
+        "question": "How much are RV park nightly rates?",
+        "answer": "<p>Full-hookup sites commonly run 45 to 70 dollars per night by site type, with pull-through and river-row sites at the top. The template computes your nightly rate live from the site you choose.</p>"
+      },
+      {
+        "question": "What rig details does an RV park need for booking?",
+        "answer": "<p>Length including tow vehicle, slide-out count, and whether you tow a car. Hosts assign sites from these specs, and a 40-foot rig on a 30-foot site is a problem best solved before arrival, not at the gate.</p>"
+      },
+      {
+        "question": "Do RV parks charge pet fees?",
+        "answer": "<p>Many do, commonly around five dollars per pet per stay with a two-pet limit. The form reveals a pet field only when pets are declared, so the desk totals fees before you arrive.</p>"
+      },
+      {
+        "question": "What does full hookup mean at an RV park?",
+        "answer": "<p>Water, sewer, and electric at the site, which most RV travelers prefer for stays over a night or two. Site types on the form state exactly what each rate includes.</p>"
+      },
+      {
+        "question": "What is a pull-through RV site?",
+        "answer": "<p>A site you drive straight through instead of backing into, popular with big rigs and tow setups. Pull-through sites usually price above back-ins, and the form prices both transparently.</p>"
+      },
+      {
+        "question": "When should I book an RV site for summer weekends?",
+        "answer": "<p>Two to three months ahead for premium weekends, and earlier for holiday weekends. Booking through the form means the host has your rig specs before assigning sites, which prevents day-of shuffles.</p>"
+      }
+    ]
+  },
+  "egg-donor-screening-application-form-template": {
+    "questions": [
+      {
+        "question": "What is egg donor screening?",
+        "answer": "<p>The process clinics use to confirm a candidate's health, eligibility, and readiness before matching: medical and family history, lifestyle factors, physical evaluation, plus psychological and genetic screening at later stages.</p>"
+      },
+      {
+        "question": "What are the basic egg donor eligibility requirements?",
+        "answer": "<p>Most programs require ages 21 to 29, healthy weight range, non-smoker status, and no significant inherited conditions. This application records those factors so coordinators confirm eligibility before clinical time is booked.</p>"
+      },
+      {
+        "question": "How long does egg donor screening take?",
+        "answer": "<p>Four to eight weeks from application through medical and psychological evaluation. The pre-screen application is the fastest step; completing it accurately avoids delays.</p>"
+      },
+      {
+        "question": "Is egg donor health information confidential?",
+        "answer": "<p>Yes, and it should stay that way through every stage. The form notes that answers route to clinical staff only, and honest disclosure protects your health during a demanding process.</p>"
+      },
+      {
+        "question": "Can I donate eggs more than once?",
+        "answer": "<p>Many programs allow up to six documented donations, spaced according to recovery guidance between cycles. The form asks about prior cycles so coordinators can confirm your history against program limits from the start.</p>"
+      },
+      {
+        "question": "Does egg donation pay?",
+        "answer": "<p>In the US, compensation commonly ranges from five to ten thousand dollars per cycle set by the program, and it is taxable income. This form is the screening step; compensation is confirmed by the program before screening continues.</p>"
+      }
+    ]
+  },
+  "family-reunion-tshirt-order-form-template": {
+    "questions": [
+      {
+        "question": "How do I collect family reunion t-shirt sizes?",
+        "answer": "<p>Collect them per household with adult and youth sizes as separate counts. The template tallies every size live, so the print shop order matches real people instead of a guess made in a group chat.</p>"
+      },
+      {
+        "question": "How much do custom family reunion shirts cost?",
+        "answer": "<p>Screen-printed cotton shirts commonly run 12 to 20 dollars by size and quantity, with youth sizes cheaper. The template computes each household's total live, including XL and shipping add-ons.</p>"
+      },
+      {
+        "question": "When should reunion shirt orders close?",
+        "answer": "<p>Three to four weeks before the event so printing and delivery fit before the date. Late orders are the number one source of reunion shirt regret, and the form's deadline note keeps expectations set.</p>"
+      },
+      {
+        "question": "How do I handle reunion shirt payment and pickup?",
+        "answer": "<p>Pay at pickup keeps the treasurer out of the payment chain; shipping is priced as an add-on for relatives who cannot attend. Both options live on the form so every household sees the same rules.</p>"
+      },
+      {
+        "question": "Should reunion shirts offer youth sizes?",
+        "answer": "<p>Yes. Kids' cuts fit differently than small adults, and reunions skew multigenerational. The form counts youth separately so the printer quotes the right blanks and the kids' shirts actually fit.</p>"
+      },
+      {
+        "question": "What information goes on a reunion shirt order form?",
+        "answer": "<p>Household name, contact, shirt color, size counts by cut, pickup or shipping choice, and a deadline. The template covers all of it and computes the total per household automatically.</p>"
       }
     ]
   }

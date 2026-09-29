@@ -163,6 +163,58 @@ class TemplateSeeder extends Seeder
             $this->customerReferral(),
             $this->birthdayPartyBooking(),
             $this->storageUnitReservation(),
+            // 2026-09 batch 6: babysitting through translation request
+            $this->babysittingAgreement(),
+            $this->funeralServiceNotification(),
+            $this->youthLeagueRegistration(),
+            $this->lactationRoomRequest(),
+            $this->courtReporterBooking(),
+            $this->waitlistJoin(),
+            $this->internHousingRequest(),
+            $this->languageExchangeSignup(),
+            $this->keyCustodyAgreement(),
+            $this->lostAndFoundClaim(),
+            $this->weddingGiftRegistry(),
+            $this->youthGroupRegistration(),
+            $this->boardMemberNomination(),
+            $this->pilotLogbookVerification(),
+            $this->wineClubSignup(),
+            $this->gardenPlotApplication(),
+            $this->serviceRecoveryFollowUp(),
+            $this->snowRemovalServiceAgreement(),
+            $this->talentShowEntry(),
+            $this->furnitureAssemblyService(),
+            $this->recyclingPickupRequest(),
+            $this->campusTourBooking(),
+            $this->utilityAssistanceApplication(),
+            $this->fluShotConsent(),
+            $this->translationRequest(),
+            // 2026-09 batch 7: garage sale permit through knitting class
+            $this->garageSalePermitApplication(),
+            $this->poolPartyRsvp(),
+            $this->sundaySchoolRegistration(),
+            $this->apartmentWalkthroughSchedule(),
+            $this->videoTestimonialRelease(),
+            $this->equipmentDonationForm(),
+            $this->firstTimeHomebuyerWorkshopRegistration(),
+            $this->neighborhoodWatchSignup(),
+            $this->parkingSpaceRentalAgreement(),
+            $this->bakeSaleOrderForm(),
+            $this->carShowRegistration(),
+            $this->cornholeTournamentRegistration(),
+            $this->electionDayVolunteerSignup(),
+            $this->kayakTourBooking(),
+            $this->kickballLeagueRegistration(),
+            $this->kiteboardingLessonWaiver(),
+            $this->knittingClassRegistration(),
+            $this->halloweenCostumeContest(),
+            $this->cannedFoodDrive(),
+            $this->churchPicnicRegistration(),
+            $this->zooFamilyMembership(),
+            $this->racetrackTrackDay(),
+            $this->rvParkReservation(),
+            $this->eggDonationScreening(),
+            $this->familyReunionTshirt(),
         ];
     }
 
@@ -342,16 +394,16 @@ class TemplateSeeder extends Seeder
         ], $extra);
     }
 
-    private function multiSelectField(string $id, string $title, array $options, bool $required = false): array
+    private function multiSelectField(string $id, string $title, array $options, bool $required = false, array $extra = []): array
     {
-        return [
+        return array_merge([
             'id' => $id,
             'type' => 'multi_select',
             'title' => $title,
             'required' => $required,
             'help' => '',
             'options' => $options,
-        ];
+        ], $extra);
     }
 
     private function textareaField(string $id, string $title, bool $required = false, array $extra = []): array
@@ -575,7 +627,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Contact Form Template',
             'slug' => 'contact-form-template',
-            'short_description' => 'A professional contact form template to collect inquiries and messages from your website visitors.',
+            'short_description' => 'A professional contact form template to collect inquiries, questions, and messages from your website visitors with custom fields, file uploads, and automatic.',
             'description' => '<p>Our Contact Form Template provides a polished and effective way for your website visitors to get in touch with you. Whether you run a small business, a blog, or a large corporation, this template helps you capture inquiries, feedback, and support requests without friction.</p><h2>Why and when to use a contact form</h2><p>A contact form is essential for any website that values communication with its audience. It provides a structured way to receive messages, reduces spam compared to displaying raw email addresses, and ensures you capture all the necessary information to respond effectively.</p><h2>Who is this template for</h2><p>This template is perfect for business owners, freelancers, bloggers, and organizations of all sizes who want to provide a professional communication channel on their website.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms makes it easy to customize this contact form template to match your brand. You can add custom fields, set up email notifications, integrate with Slack or Discord, and embed the form on your website without writing any code.</p>',
             'types' => ['contact_forms'],
             'industries' => ['business_forms', 'customer_service_forms'],
@@ -593,7 +645,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Event Registration Template',
             'slug' => 'event-registration-template',
-            'short_description' => 'A complete event registration form template to collect attendee details and manage sign-ups smoothly.',
+            'short_description' => 'A complete event registration form template to collect attendee details, session choices, and dietary needs while managing sign-ups, payments, and capacity.',
             'description' => '<p>Our Event Registration Template makes it simple to collect attendee information for conferences, workshops, seminars, and social gatherings. Capture all the details you need to plan a successful event.</p><h2>Why and when to use an event registration form</h2><p>Whether you\'re organizing a corporate conference, a community workshop, or a private party, an event registration form helps you track attendance, collect dietary preferences, and communicate important updates to your guests.</p><h2>Who is this template for</h2><p>Event organizers, conference planners, community managers, and anyone hosting an event that requires guest registration and information collection.</p><h2>Why SharaForms is the best tool for this form</h2><p>With SharaForms, you can customize this registration template, set submission limits, send confirmation emails, and integrate with your favorite tools to streamline event management.</p>',
             'types' => ['event_registration_forms', 'registration_forms'],
             'industries' => ['business_forms', 'entertainment_forms'],
@@ -632,7 +684,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Customer Feedback Survey Template',
             'slug' => 'customer-feedback-survey-template',
-            'short_description' => 'Gather valuable customer insights with this comprehensive feedback survey template.',
+            'short_description' => 'Gather valuable customer insights with this comprehensive feedback survey template covering satisfaction scores, product ideas, support experience, and.',
             'description' => '<p>Understanding what your customers think about your products or services is crucial for growth. Our Customer Feedback Survey Template helps you collect actionable insights that drive improvement.</p><h2>Why and when to use a feedback survey</h2><p>After a purchase, service interaction, or product trial, sending a feedback survey shows you value your customers\' opinions. Use the insights to improve your offerings, identify pain points, and measure customer satisfaction.</p><h2>Who is this template for</h2><p>Business owners, product managers, customer success teams, and marketers who want to measure and improve customer satisfaction.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms offers powerful analytics integrations, customizable survey designs, and automated email notifications, making it easy to deploy and analyze customer feedback surveys.</p>',
             'types' => ['survey_templates', 'feedback_forms'],
             'industries' => ['customer_service_forms', 'business_forms'],
@@ -662,7 +714,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Job Application Form Template',
             'slug' => 'job-application-form-template',
-            'short_description' => 'A thorough job application form template to collect candidate information and resumes for your hiring process.',
+            'short_description' => 'A thorough job application form template to collect candidate information, resumes, cover letters, and portfolio links for your hiring process.',
             'description' => '<p>Streamline your recruitment process with our comprehensive Job Application Form Template. Collect resumes, cover letters, and candidate details in a structured format that makes reviewing applicants easy.</p><h2>Why and when to use a job application form</h2><p>Whether you\'re hiring for a single position or running a large recruitment drive, a standardized application form ensures you collect consistent information from all candidates, making comparison and evaluation more efficient.</p><h2>Who is this template for</h2><p>HR professionals, hiring managers, small business owners, and recruitment teams looking to streamline their applicant collection process.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms allows you to collect file uploads (resumes, portfolios), set up email notifications for new applications, and integrate with your HR tools so recruitment management stays organized.</p>',
             'types' => ['application_forms', 'employment_forms'],
             'industries' => ['human_resources_forms', 'business_forms'],
@@ -693,7 +745,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Appointment Booking Form Template',
             'slug' => 'appointment-booking-form-template',
-            'short_description' => 'Simplify appointment scheduling with this easy-to-use booking form template for service providers.',
+            'short_description' => 'Simplify appointment scheduling with this easy-to-use booking form template for service providers, salons, clinics, and consultants with calendar sync.',
             'description' => '<p>Our Appointment Booking Form Template makes it easy for clients to schedule appointments with your business. Whether you\'re a doctor, dentist, consultant, or salon owner, this template streamlines the booking process.</p><h2>Why and when to use an appointment booking form</h2><p>An online booking form reduces phone calls, prevents double-booking, and gives clients the convenience of scheduling appointments at any time. It\'s essential for any appointment-based business.</p><h2>Who is this template for</h2><p>Healthcare providers, consultants, salon owners, fitness trainers, and any service professional who manages appointments with clients.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms lets you customize this booking template, send confirmation emails, set submission limits per time slot, and integrate with your calendar tools.</p>',
             'types' => ['appointment_forms', 'booking_forms'],
             'industries' => ['healthcare_forms', 'salon_forms', 'services_forms'],
@@ -723,7 +775,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Online Order Form Template',
             'slug' => 'online-order-form-template',
-            'short_description' => 'A complete order form template for collecting customer orders and processing purchases online.',
+            'short_description' => 'A complete order form template for collecting customer orders, shipping addresses, and payment details while processing purchases online securely.',
             'description' => '<p>Our Online Order Form Template helps businesses collect customer orders efficiently. Whether you run a restaurant, retail store, or service business, this template makes order management simple.</p><h2>Why and when to use an order form</h2><p>An online order form streamlines the purchasing process, reduces errors from manual order taking, and provides customers with a convenient way to place orders from anywhere.</p><h2>Who is this template for</h2><p>Restaurant owners, retail businesses, wholesalers, and any business that needs to collect orders from customers online.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms offers calculation fields for totals, file uploads for custom requests, email notifications for new orders, and integration with payment gateways and order management tools.</p>',
             'types' => ['order_forms', 'payment_forms'],
             'industries' => ['ecommerce_forms', 'business_forms'],
@@ -748,7 +800,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Donation Form Template',
             'slug' => 'donation-form-template',
-            'short_description' => 'A heartfelt donation form template for nonprofits and charities to collect contributions online.',
+            'short_description' => 'A heartfelt donation form template for nonprofits and charities to collect contributions online with recurring gift options and tax receipts.',
             'description' => '<p>Our Donation Form Template makes it easy for nonprofits, charities, and fundraising organizations to collect donations online. With a clean, trust-inspiring design, this template helps you convert supporters into donors.</p><h2>Why and when to use a donation form</h2><p>Whether you\'re running a fundraising campaign, accepting ongoing donations, or collecting for a specific cause, an online donation form makes giving convenient and secure for your supporters.</p><h2>Who is this template for</h2><p>Nonprofit organizations, charities, churches, schools, and community groups looking to raise funds online.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms integrates with payment gateways for secure transactions, sends tax receipt emails to donors, and helps you track fundraising progress with submission data.</p>',
             'types' => ['donation_forms', 'payment_forms'],
             'industries' => ['charity_forms', 'church_forms'],
@@ -784,7 +836,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Lead Generation Form Template',
             'slug' => 'lead-generation-form-template',
-            'short_description' => 'Capture high-quality leads for your business with this optimized lead generation form template.',
+            'short_description' => 'Capture high-quality leads for your business with this optimized lead generation form template that qualifies prospects with scoring and routing.',
             'description' => '<p>Our Lead Generation Form Template is designed to help you capture potential customers\' information effectively. With strategic field placement and a conversion-focused design, this template maximizes your lead capture rates.</p><h2>Why and when to use a lead generation form</h2><p>Whether you\'re running a marketing campaign, offering a free resource, or collecting prospects for your sales team, a well-designed lead generation form is essential for growing your business.</p><h2>Who is this template for</h2><p>Marketing teams, sales professionals, business owners, and growth managers looking to build their prospect pipeline.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms offers integration with CRM tools, email marketing platforms, and Slack. You can set up instant notifications, track form views and submissions, and nurture leads automatically.</p>',
             'types' => ['lead_generation_forms', 'signup_forms'],
             'industries' => ['marketing_forms', 'business_forms', 'advertising_forms'],
@@ -810,7 +862,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Patient Intake Form Template',
             'slug' => 'patient-intake-form-template',
-            'short_description' => 'A comprehensive patient intake form template for healthcare providers to collect medical history and information.',
+            'short_description' => 'A comprehensive patient intake form template for healthcare providers to collect medical history, insurance details, medications, and consent forms.',
             'description' => '<p>Our Patient Intake Form Template helps healthcare providers collect essential patient information before appointments. From personal details to medical history, this template ensures you have all the information needed for quality care.</p><h2>Why and when to use a patient intake form</h2><p>Patient intake forms are essential for healthcare practices to collect medical history, insurance information, and consent forms before treatment. Digital forms reduce paperwork and waiting room time.</p><h2>Who is this template for</h2><p>Medical clinics, dental practices, physical therapists, chiropractors, and any healthcare provider that needs to collect patient information.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms offers HIPAA-compliant data collection, secure file uploads, and customizable medical history fields. You can integrate with practice management systems and receive instant notifications.</p>',
             'types' => ['registration_forms', 'application_forms'],
             'industries' => ['healthcare_forms', 'veterinary_service_forms'],
@@ -851,7 +903,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Real Estate Inquiry Form Template',
             'slug' => 'real-estate-inquiry-form-template',
-            'short_description' => 'A professional real estate inquiry form template for agents to capture property leads and buyer information.',
+            'short_description' => 'A professional real estate inquiry form template for agents to capture property leads, buyer preferences, budget ranges, and showing requests.',
             'description' => '<p>Our Real Estate Inquiry Form Template helps agents and agencies capture qualified leads from potential buyers and sellers. Collect property preferences, contact details, and budget information to match clients with their ideal properties.</p><h2>Why and when to use a real estate inquiry form</h2><p>Whether you\'re listing properties, hosting open houses, or running online ads, an inquiry form captures lead information in a structured way that makes follow-up easy and effective.</p><h2>Who is this template for</h2><p>Real estate agents, property managers, real estate agencies, and property developers looking to capture and qualify leads.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms integrates with CRM platforms, sends instant lead notifications, and allows you to customize fields for different property types. You can also set up automated responses to keep leads engaged.</p>',
             'types' => ['contact_forms', 'lead_generation_forms'],
             'industries' => ['real_estate_forms'],
@@ -884,7 +936,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Course Enrollment Form Template',
             'slug' => 'course-enrollment-form-template',
-            'short_description' => 'A complete course enrollment form template for educational institutions to register students.',
+            'short_description' => 'A complete course enrollment form template for educational institutions to register students, collect fees, and manage waitlists efficiently.',
             'description' => '<p>Our Course Enrollment Form Template helps educational institutions, training centers, and online course creators register students efficiently. Collect student information, course preferences, and payment details in one seamless flow.</p><h2>Why and when to use a course enrollment form</h2><p>Whether you\'re running a university, a vocational training center, or an online course platform, a digital enrollment form simplifies registration, reduces paperwork, and ensures you capture all necessary student data.</p><h2>Who is this template for</h2><p>Educational institutions, training providers, online course creators, and workshop organizers who need to enroll students.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms offers payment integration for course fees, file uploads for required documents, and automated confirmation emails. You can also set enrollment deadlines and limits.</p>',
             'types' => ['enrollment_forms', 'registration_forms'],
             'industries' => ['education_forms'],
@@ -919,7 +971,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'RSVP Form Template',
             'slug' => 'rsvp-form-template',
-            'short_description' => 'A simple and elegant RSVP form template for events, weddings, and gatherings.',
+            'short_description' => 'A simple and elegant RSVP form template for events, weddings, and gatherings with meal choices, plus-one tracking, and song requests included.',
             'description' => '<p>Our RSVP Form Template makes it easy to collect guest responses for your event. Whether you\'re planning a wedding, a corporate party, or a casual get-together, this template helps you manage your guest list effortlessly.</p><h2>Why and when to use an RSVP form</h2><p>An online RSVP form eliminates the back-and-forth of phone calls and emails. Guests can respond at their convenience, and you get instant updates on attendance numbers, dietary needs, and plus-ones.</p><h2>Who is this template for</h2><p>Event planners, wedding organizers, party hosts, and anyone planning a gathering that requires guest attendance confirmation.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms allows you to collect dietary preferences, plus-one details, and song requests. You can set submission limits, send confirmation emails, and get real-time attendance tracking.</p>',
             'types' => ['rsvp_forms', 'event_registration_forms'],
             'industries' => ['entertainment_forms'],
@@ -951,7 +1003,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'File Upload Form Template', 
             'slug' => 'file-upload-form-template', 
-            'short_description' => 'A simple file upload form template to collect documents, images, and files from your users.', 
+            'short_description' => 'A simple file upload form template to collect documents, images, and files from your users with size limits and format validation built in. and and', 
             'description' => '<p>Our File Upload Form Template makes it easy to collect documents, images, videos, and other files from your users. Whether you need design assets, tax documents, or project deliverables, this template handles it all.</p><h2>Why and when to use a file upload form</h2><p>File upload forms are essential for receiving documents, accepting portfolio submissions, collecting design assets, and gathering any file-based deliverable from clients, students, or team members.</p><h2>Who is this template for</h2><p>Designers, agencies, educators, HR teams, and any business that needs to collect files in an organized, secure way.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms lets you set file size limits, restrict accepted formats, and receive instant email notifications when files arrive. You can even integrate with Google Drive or Dropbox via webhooks.</p>', 
             'types' => ['file_upload_forms', 'application_forms'],
             'industries' => ['it_forms', 'business_forms'],
@@ -971,7 +1023,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Consent Form Template', 
             'slug' => 'consent-form-template', 
-            'short_description' => 'A clear and compliant consent form template for collecting documented permissions.', 
+            'short_description' => 'A clear and compliant consent form template for collecting documented permissions for data processing, media usage, and medical care Includes e-signat', 
             'description' => '<p>Our Consent Form Template helps you collect documented, auditable permission from participants, patients, parents, or customers. It is built to keep your organization compliant while keeping the experience friendly.</p><h2>Why and when to use a consent form</h2><p>Use a consent form whenever you need documented approval before an activity, treatment, data collection, photo use, or participation. It protects both your organization and the individual.</p><h2>Who is this template for</h2><p>Healthcare providers, photographers, event organizers, schools, researchers, and businesses that need formal consent records.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms captures a timestamped digital signature, stores submissions securely, and can send a copy of the consent to both parties automatically.</p>', 
             'types' => ['consent_forms', 'legal_forms'],
             'industries' => ['healthcare_forms', 'photography_forms'],
@@ -992,7 +1044,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Questionnaire Template', 
             'slug' => 'questionnaire-template', 
-            'short_description' => 'A versatile questionnaire template to gather structured insights from your audience.', 
+            'short_description' => 'A versatile questionnaire template to gather structured insights from your audience with branching logic, scoring, and conditional questions.', 
             'description' => '<p>Our Questionnaire Template gives you a flexible starting point for collecting structured information and opinions. Mix open questions, scales, and multiple choice to design the perfect questionnaire.</p><h2>Why and when to use a questionnaire</h2><p>Questionnaires are ideal for market research, academic studies, customer profiling, onboarding, and any situation where you need consistent, comparable answers from many people.</p><h2>Who is this template for</h2><p>Researchers, product teams, marketers, HR professionals, and educators who need structured data collection.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms makes it easy to build multi-step questionnaires, analyze responses with built-in summaries, and export results to your favorite spreadsheet tool.</p>', 
             'types' => ['questionnaire_templates', 'survey_templates'],
             'industries' => ['business_forms', 'education_forms'],
@@ -1011,7 +1063,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Abstract Submission Form Template', 
             'slug' => 'abstract-submission-form-template', 
-            'short_description' => 'A professional abstract submission form template for conferences, journals, and academic events.', 
+            'short_description' => 'A professional abstract submission form template for conferences, journals, and academic events with reviewer workflows and deadlines Includes reviewe', 
             'description' => '<p>Our Abstract Submission Form Template helps conference organizers, journals, and academic committees collect structured submissions. Capture author details, abstracts, and keywords in a consistent format.</p><h2>Why and when to use an abstract submission form</h2><p>Conferences and journals receive dozens or hundreds of abstracts. A structured submission form ensures every entry is complete, consistent, and easy to review.</p><h2>Who is this template for</h2><p>Conference organizers, journal editors, research committees, and academic program coordinators.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms lets you collect abstract files, set submission deadlines, and organize reviews through submission data. Email notifications keep authors informed at every step.</p>', 
             'types' => ['abstract_forms', 'application_forms'],
             'industries' => ['education_forms'],
@@ -1033,7 +1085,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Audit Form Template', 
             'slug' => 'audit-form-template', 
-            'short_description' => 'A structured audit form template to inspect compliance, quality, and operational standards.', 
+            'short_description' => 'A structured audit form template to inspect compliance, quality, and operational standards with scoring, evidence capture, and corrective actions.', 
             'description' => '<p>Our Audit Form Template gives auditors and compliance teams a repeatable checklist for inspecting processes, facilities, and systems. Standardize your audits and track findings with ease.</p><h2>Why and when to use an audit form</h2><p>Regular audits help organizations maintain quality, safety, and compliance. Use this template for internal audits, supplier assessments, safety inspections, and regulatory checklists.</p><h2>Who is this template for</h2><p>Compliance officers, quality managers, safety inspectors, and operations teams conducting routine audits.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms lets you build branching checklists, attach photos to findings, and export audit reports to share with stakeholders instantly.</p>', 
             'types' => ['audit_forms', 'inspection_forms'],
             'industries' => ['services_forms', 'insurance_forms'],
@@ -1057,7 +1109,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Award Nomination Form Template', 
             'slug' => 'award-nomination-form-template', 
-            'short_description' => 'An award nomination form template to collect submissions for awards, contests, and recognition programs.', 
+            'short_description' => 'An award nomination form template to collect submissions for awards, contests, and recognition programs with supporting evidence and categories.', 
             'description' => '<p>Our Award Nomination Form Template makes it simple to collect nominations for your awards, contests, and recognition programs. Gather nominee details, achievements, and supporting materials in one place.</p><h2>Why and when to use an award nomination form</h2><p>Whether you run an annual industry award, a community recognition program, or a staff appreciation contest, a nomination form keeps entries organized and complete.</p><h2>Who is this template for</h2><p>Award organizers, HR teams, event planners, media outlets, and industry associations running recognition programs.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms allows you to set nomination deadlines, collect supporting files, and review all submissions in one organized dashboard.</p>', 
             'types' => ['award_forms', 'application_forms'],
             'industries' => ['entertainment_forms', 'business_forms'],
@@ -1078,7 +1130,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Calculation Form Template', 
             'slug' => 'calculation-form-template', 
-            'short_description' => 'A calculation form template with automatic totals for quotes, estimates, and pricing calculators.', 
+            'short_description' => 'A calculation form template with automatic totals for quotes, estimates, and pricing calculators with conditional logic and formulas Includes conditio', 
             'description' => '<p>Our Calculation Form Template shows how SharaForms can automatically compute totals as users answer questions. Perfect for pricing calculators, loan estimators, and order totals.</p><h2>Why and when to use a calculation form</h2><p>Use calculation forms when you need instant results: project quotes, budget estimators, BMI calculators, or order totals. Automatic formulas save your users time and reduce errors.</p><h2>Who is this template for</h2><p>Contractors, agencies, financial advisors, and businesses that quote prices or need self-service calculators.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms includes a formula engine that computes totals in real time, with conditional logic to show or hide fields based on answers.</p>', 
             'types' => ['calculation_forms', 'quote_forms'],
             'industries' => ['services_forms', 'banking_forms'],
@@ -1110,7 +1162,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Checklist Form Template', 
             'slug' => 'checklist-form-template', 
-            'short_description' => 'A practical checklist form template for task tracking, pre-flight checks, and daily operations.', 
+            'short_description' => 'A practical checklist form template for task tracking, pre-flight checks, and daily operations with progress indicators and sign-off Includes progress', 
             'description' => '<p>Our Checklist Form Template helps teams standardize recurring tasks and verify every step is complete. Perfect for daily operations, pre-flight checks, and onboarding procedures.</p><h2>Why and when to use a checklist form</h2><p>Checklists reduce errors in repetitive tasks and give you an audit trail that work was completed. Use them for inspections, opening/closing procedures, and team handoffs.</p><h2>Who is this template for</h2><p>Operations teams, shift managers, event staff, and any team that follows repeatable procedures.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms keeps a timestamped record of every checklist, sends reminders, and can alert managers when a task is overdue.</p>', 
             'types' => ['checklist_forms', 'tracking_forms'],
             'industries' => ['business_forms', 'services_forms'],
@@ -1131,7 +1183,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Content Submission Form Template', 
             'slug' => 'content-submission-form-template', 
-            'short_description' => 'A content submission form template to accept guest posts, user-generated content, and contributions.', 
+            'short_description' => 'A content submission form template to accept guest posts, user-generated content, and contributions with moderation and approval workflows. and and', 
             'description' => '<p>Our Content Submission Form Template lets you accept guest articles, user stories, photos, and other contributions from your audience in a structured and reviewable way.</p><h2>Why and when to use a content submission form</h2><p>Blogs, magazines, and community platforms use submission forms to gather user-generated content while capturing author details and usage rights.</p><h2>Who is this template for</h2><p>Blog editors, magazine publishers, community managers, and content platforms that accept contributions.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms collects the content and files together with licensing consent, so you always have permission to publish.</p>', 
             'types' => ['content_forms'],
             'industries' => ['web_design_forms', 'marketing_forms'],
@@ -1152,7 +1204,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Employee Evaluation Form Template', 
             'slug' => 'employee-evaluation-form-template', 
-            'short_description' => 'An employee evaluation form template for performance reviews, appraisals, and feedback sessions.', 
+            'short_description' => 'An employee evaluation form template for performance reviews, appraisals, and feedback sessions with competency scoring and goal setting. and and', 
             'description' => '<p>Our Employee Evaluation Form Template standardizes performance reviews so every team member is assessed on the same criteria. Capture ratings, achievements, and development goals.</p><h2>Why and when to use an evaluation form</h2><p>Use this template for periodic performance reviews, end-of-project assessments, and annual appraisals to ensure fair, consistent feedback.</p><h2>Who is this template for</h2><p>Managers, HR teams, and team leads conducting structured performance evaluations.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms stores review history securely, supports e-signatures, and can trigger follow-up actions through integrations.</p>', 
             'types' => ['evaluation_forms', 'feedback_forms'],
             'industries' => ['human_resources_forms', 'business_forms'],
@@ -1176,7 +1228,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Inspection Form Template', 
             'slug' => 'inspection-form-template', 
-            'short_description' => 'A mobile-friendly inspection form template for property, vehicle, and equipment inspections.', 
+            'short_description' => 'A mobile-friendly inspection form template for property, vehicle, and equipment inspections with photo capture, scoring, and defect tracking.', 
             'description' => '<p>Our Inspection Form Template helps you conduct and document inspections on site. Capture condition ratings, photos, and corrective actions in a consistent format.</p><h2>Why and when to use an inspection form</h2><p>Property managers, rental agencies, and maintenance teams use inspections to document condition before and after rentals, sales, or service calls.</p><h2>Who is this template for</h2><p>Property managers, maintenance crews, vehicle fleets, and quality control teams.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms works great on phones, supports photo uploads as evidence, and keeps a complete history of every inspection.</p>', 
             'types' => ['inspection_forms'],
             'industries' => ['real_estate_forms', 'services_forms'],
@@ -1199,7 +1251,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Interview Form Template', 
             'slug' => 'interview-form-template', 
-            'short_description' => 'An interview feedback form template for recruiters to score and evaluate candidates consistently.', 
+            'short_description' => 'An interview feedback form template for recruiters to score and evaluate candidates consistently across structured criteria and competencies.', 
             'description' => '<p>Our Interview Form Template gives recruiters a structured way to evaluate candidates. Score competencies, note strengths, and record next steps after every interview.</p><h2>Why and when to use an interview form</h2><p>Structured interviews reduce bias and produce fairer hiring decisions. Use this form after every interview round to capture consistent, comparable feedback.</p><h2>Who is this template for</h2><p>Recruiters, hiring managers, and interview panels evaluating candidates.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms centralizes interview feedback, keeps records for compliance, and can route scores to your hiring pipeline via integrations.</p>', 
             'types' => ['interview_forms', 'evaluation_forms'],
             'industries' => ['human_resources_forms'],
@@ -1222,7 +1274,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Legal Intake Form Template', 
             'slug' => 'legal-intake-form-template', 
-            'short_description' => 'A confidential legal intake form template for law firms to gather case details from prospective clients.', 
+            'short_description' => 'A confidential legal intake form template for law firms to gather case details, conflicts checks, and retainer information With onboarding and health scoring.', 
             'description' => '<p>Our Legal Intake Form Template helps law firms collect initial case details from prospective clients in a professional and organized manner.</p><h2>Why and when to use a legal intake form</h2><p>Intake forms let potential clients describe their matter, upload documents, and share contact details before a consultation, saving time for both sides.</p><h2>Who is this template for</h2><p>Law firms, attorneys, and legal aid organizations that need to screen and route new inquiries.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms keeps intake submissions organized, supports secure file uploads, and can route new cases to the right team member automatically.</p>', 
             'types' => ['legal_forms', 'application_forms'],
             'industries' => ['services_forms'],
@@ -1244,7 +1296,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Membership Application Form Template', 
             'slug' => 'membership-application-form-template', 
-            'short_description' => 'A membership application form template for clubs, associations, and organizations to onboard new members.', 
+            'short_description' => 'A membership application form template for clubs, associations, and organizations to onboard new members and collect dues With onboarding and health scoring.', 
             'description' => '<p>Our Membership Application Form Template helps clubs, associations, and organizations collect applications from prospective members and manage their onboarding.</p><h2>Why and when to use a membership application form</h2><p>Membership organizations need to capture applicant details, preferences, and agreements before approval. A digital form makes the process quick and consistent.</p><h2>Who is this template for</h2><p>Professional associations, clubs, alumni networks, gyms, and community organizations.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms supports payment collection for membership fees, consent checkboxes for your bylaws, and automated approval notifications.</p>', 
             'types' => ['membership_forms', 'application_forms'],
             'industries' => ['business_forms', 'church_forms'],
@@ -1265,7 +1317,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Petition Form Template', 
             'slug' => 'petition-form-template', 
-            'short_description' => 'A petition form template to collect signatures and show support for your cause.', 
+            'short_description' => 'A petition form template to collect signatures and show support for your cause with goal tracking, sharing tools, and progress updates Includes goal t', 
             'description' => '<p>Our Petition Form Template helps you collect digital signatures and support for your cause, campaign, or community initiative.</p><h2>Why and when to use a petition form</h2><p>Petitions demonstrate public support to decision-makers. A digital petition form lets supporters sign instantly from any device and share it easily.</p><h2>Who is this template for</h2><p>Activists, community organizers, nonprofits, and advocacy groups collecting support for a cause.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms collects verified signatories with contact details, lets you export signatures, and integrates with email tools for follow-up campaigns.</p>', 
             'types' => ['petition_forms', 'signup_forms'],
             'industries' => ['business_forms', 'charity_forms'],
@@ -1285,7 +1337,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Poll Form Template',
             'slug' => 'poll-form-template',
-            'short_description' => 'A lightweight poll form template to gather quick opinions and votes from your audience.',
+            'short_description' => 'A lightweight poll form template to gather quick opinions and votes from your audience with instant results and visualization With onboarding and health scoring.',
             'description' => '<p>Our Poll Form Template is perfect for gathering quick opinions from your audience. Ask one focused question, capture the reasoning behind votes with a conditional follow-up, and collect votes instantly.</p><h2>Why and when to use a poll</h2><p>Polls are great for social media, product decisions, community voting, and gathering fast feedback on a single question. The optional follow-up field only appears once someone has voted, so every response stays quick while still giving you the "why" behind the result.</p><h2>Who is this template for</h2><p>Marketers, social media managers, product teams, and community managers running quick opinion polls.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms makes polls easy to share and embed, uses conditional logic to keep the form short, and shows instant submission summaries so you can read results as they come in.</p>',
             'types' => ['polls', 'voting_forms'],
             'industries' => ['marketing_forms', 'entertainment_forms'],
@@ -1306,7 +1358,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Quiz Form Template', 
             'slug' => 'quiz-form-template', 
-            'short_description' => 'An engaging quiz form template to test knowledge, run trivia nights, and evaluate learning.', 
+            'short_description' => 'An engaging quiz form template to test knowledge, run trivia nights, and evaluate learning with automatic scoring and feedback With onboarding and health scoring.', 
             'description' => '<p>Our Quiz Form Template helps you build engaging quizzes for education, training, trivia nights, and knowledge checks.</p><h2>Why and when to use a quiz form</h2><p>Quizzes reinforce learning, assess understanding, and add fun to events. Use them in classrooms, training programs, and team-building activities.</p><h2>Who is this template for</h2><p>Teachers, trainers, event hosts, and companies running knowledge checks or trivia games.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms supports multiple question formats, and you can analyze results to see which questions your audience found challenging.</p>', 
             'types' => ['quiz_forms', 'polls'],
             'industries' => ['education_forms', 'entertainment_forms'],
@@ -1335,7 +1387,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Quote Request Form Template', 
             'slug' => 'quote-request-form-template', 
-            'short_description' => 'A quote request form template for businesses to receive detailed pricing inquiries from prospects.', 
+            'short_description' => 'A quote request form template for businesses to receive detailed pricing inquiries from prospects with project specs and timelines Includes project sp', 
             'description' => '<p>Our Quote Request Form Template helps service providers gather the details they need to send accurate, personalized quotes.</p><h2>Why and when to use a quote request form</h2><p>Quote requests collect project scope, budget, and timelines up front, so your team can respond with relevant proposals instead of generic pricing.</p><h2>Who is this template for</h2><p>Contractors, agencies, manufacturers, and any B2B business that responds to pricing inquiries.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms routes quote requests to the right person, collects supporting documents, and can trigger a follow-up email instantly.</p>', 
             'types' => ['quote_forms', 'request_forms'],
             'industries' => ['services_forms', 'business_forms'],
@@ -1357,7 +1409,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Recommendation Form Template', 
             'slug' => 'recommendation-form-template', 
-            'short_description' => 'A recommendation request form template to gather reference letters from mentors and employers.', 
+            'short_description' => 'A recommendation request form template to gather reference letters from mentors, employers, and colleagues with automated reminders Includes automated', 
             'description' => '<p>Our Recommendation Form Template helps candidates request structured recommendations from referees and lets referees submit feedback easily.</p><h2>Why and when to use a recommendation form</h2><p>Colleges, graduate programs, and employers require recommendation letters. A structured form makes it easy for referees to respond quickly.</p><h2>Who is this template for</h2><p>Students, job seekers, program applicants, and the educators or employers who recommend them.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms lets referees upload letters, rate candidates on key competencies, and submit everything with one click.</p>', 
             'types' => ['recommendation_forms'],
             'industries' => ['education_forms', 'human_resources_forms'],
@@ -1378,7 +1430,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Incident Report Form Template', 
             'slug' => 'incident-report-form-template', 
-            'short_description' => 'An incident report form template to document accidents, safety events, and near-misses accurately.', 
+            'short_description' => 'An incident report form template to document accidents, safety events, and near-misses accurately for compliance and investigation Includes photo capt', 
             'description' => '<p>Our Incident Report Form Template helps teams document accidents, safety events, and near-misses promptly and accurately.</p><h2>Why and when to use an incident report</h2><p>Workplace incidents must be documented quickly for safety compliance, insurance, and prevention. A structured report captures all essential details consistently.</p><h2>Who is this template for</h2><p>Safety officers, HR teams, facility managers, and operations staff responsible for incident documentation.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms timestamps every submission, supports photo evidence, and alerts the right people immediately when an incident is logged.</p>', 
             'types' => ['report_forms'],
             'industries' => ['services_forms', 'insurance_forms'],
@@ -1401,7 +1453,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Reservation Form Template', 
             'slug' => 'reservation-form-template', 
-            'short_description' => 'A reservation form template for restaurants, hotels, and venues to accept bookings online.', 
+            'short_description' => 'A reservation form template for restaurants, hotels, and venues to accept bookings online with confirmation emails and table management Includes confi', 
             'description' => '<p>Our Reservation Form Template lets restaurants, hotels, and venues accept bookings online, reducing phone traffic and double-bookings.</p><h2>Why and when to use a reservation form</h2><p>Online reservations give guests the convenience of booking anytime and give staff a clean, structured record of every request.</p><h2>Who is this template for</h2><p>Restaurants, hotels, event venues, and service businesses that manage bookings.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms sends confirmation emails automatically, supports party size and special requests, and can set submission limits per day.</p>', 
             'types' => ['reservation_forms', 'booking_forms'],
             'industries' => ['ecommerce_forms', 'services_forms'],
@@ -1422,7 +1474,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Sponsorship Application Form Template', 
             'slug' => 'sponsorship-application-form-template', 
-            'short_description' => 'A sponsorship application form template to review and manage sponsorship requests efficiently.', 
+            'short_description' => 'A sponsorship application form template to review and manage sponsorship requests with tier selection, benefits, and payment tracking Includes tier se', 
             'description' => '<p>Our Sponsorship Application Form Template helps organizations review sponsorship and partnership requests in a consistent, fair way.</p><h2>Why and when to use a sponsorship application</h2><p>Companies receive many sponsorship requests. A structured application captures the event details, audience, and value proposition needed to evaluate each one.</p><h2>Who is this template for</h2><p>Marketing teams, event sponsors, and community relations departments managing sponsorship programs.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms organizes all sponsorship requests, supports budget requirements, and can route approvals to the right decision-makers.</p>', 
             'types' => ['sponsorship_forms', 'application_forms'],
             'industries' => ['marketing_forms', 'sports_forms'],
@@ -1445,7 +1497,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Subscription Form Template', 
             'slug' => 'subscription-form-template', 
-            'short_description' => 'A subscription form template to grow your email list and capture newsletter signups.', 
+            'short_description' => 'A subscription form template to grow your email list and capture newsletter signups with frequency options and interest selection Includes frequency o', 
             'description' => '<p>Our Subscription Form Template helps you grow your email list and capture newsletter signups from your website, blog, or landing pages.</p><h2>Why and when to use a subscription form</h2><p>Email marketing starts with list growth. A clean subscription form with a clear offer converts visitors into subscribers you can nurture.</p><h2>Who is this template for</h2><p>Bloggers, marketers, SaaS companies, and businesses building their email audiences.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms integrates with email marketing platforms, sends welcome emails automatically, and can be embedded anywhere on your site.</p>', 
             'types' => ['subscription_forms', 'signup_forms'],
             'industries' => ['marketing_forms', 'advertising_forms'],
@@ -1464,7 +1516,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Summer Camp Registration Form Template', 
             'slug' => 'summer-camp-registration-form-template', 
-            'short_description' => 'A summer camp registration form template for camps and youth programs to enroll campers.', 
+            'short_description' => 'A summer camp registration form template for camps and youth programs to enroll campers with medical forms and pickup authorization Includes medical f', 
             'description' => '<p>Our Summer Camp Registration Form Template helps camps and youth programs register campers, collect emergency information, and manage enrollment.</p><h2>Why and when to use a summer camp registration form</h2><p>Camps need camper details, medical information, permissions, and program preferences before each session. A digital form keeps everything organized.</p><h2>Who is this template for</h2><p>Summer camps, youth programs, sports camps, and after-school programs.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms collects emergency contacts, medical consents, and payments in one place, with confirmation emails sent automatically.</p>', 
             'types' => ['summer_camp_surveys', 'registration_forms'],
             'industries' => ['summer_camps_forms', 'education_forms'],
@@ -1497,7 +1549,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Telecommuting Agreement Form Template', 
             'slug' => 'telecommuting-agreement-form-template', 
-            'short_description' => 'A telecommuting agreement form template to formalize remote work arrangements with your team.', 
+            'short_description' => 'A telecommuting agreement form template to formalize remote work arrangements with your team and track equipment and expectations Includes equipment t', 
             'description' => '<p>Our Telecommuting Agreement Form Template helps HR teams formalize remote work arrangements, capturing work schedules, equipment needs, and expectations.</p><h2>Why and when to use a telecommuting agreement</h2><p>Remote and hybrid work benefits from clear agreements. Document schedules, communication expectations, and equipment assignments to keep everyone aligned.</p><h2>Who is this template for</h2><p>HR teams, managers, and companies implementing or formalizing remote work policies.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms captures the agreement, collects the employee signature digitally, and keeps a compliant record for your HR files.</p>', 
             'types' => ['telecommuting_forms', 'request_forms'],
             'industries' => ['it_forms', 'human_resources_forms'],
@@ -1519,7 +1571,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Asset Tracking Form Template', 
             'slug' => 'asset-tracking-form-template', 
-            'short_description' => 'An asset tracking form template to log equipment checkouts, returns, and maintenance.', 
+            'short_description' => 'An asset tracking form template to log equipment checkouts, returns, and maintenance with user accountability and due dates With onboarding and health scoring.', 
             'description' => '<p>Our Asset Tracking Form Template helps teams log equipment checkouts, returns, and maintenance so nothing gets lost or forgotten.</p><h2>Why and when to use an asset tracking form</h2><p>Laptops, tools, cameras, and vehicles need to be tracked. A checkout form records who has what, when, and in what condition.</p><h2>Who is this template for</h2><p>IT departments, warehouse teams, production crews, and anyone managing shared equipment.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms keeps a timestamped log of every transaction and can alert you when items are overdue.</p>', 
             'types' => ['tracking_forms'],
             'industries' => ['it_forms', 'business_forms'],
@@ -1541,7 +1593,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Voting Form Template',
             'slug' => 'voting-form-template',
-            'short_description' => 'A voting form template for elections, award ballots, and community decision-making.',
+            'short_description' => 'A voting form template for elections, award ballots, and community decision-making with secure voting and result tallies With onboarding and health scoring.',
             'description' => '<p>Our Voting Form Template helps you run elections, award ballots, and community decisions with a simple, structured voting flow: three positions, distinct candidate slates, and an optional write-in.</p><h2>Why and when to use a voting form</h2><p>Use voting forms for board elections, staff decisions, community polls, and award ballots where you need a clear, auditable result. Separate questions per position prevent confusion, and the write-in option keeps the ballot fair without extra forms.</p><h2>Who is this template for</h2><p>Organizations, associations, committees, and communities running structured votes.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms secures votes with authentication options, lets you limit submissions to one per person, and shows the write-in field only to voters who ask for it through conditional logic.</p>',
             'types' => ['voting_forms', 'polls'],
             'industries' => ['business_forms', 'church_forms'],
@@ -1566,7 +1618,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Wedding RSVP Form Template', 
             'slug' => 'wedding-rsvp-form-template', 
-            'short_description' => 'An elegant wedding RSVP form template to collect guest responses and dietary preferences.', 
+            'short_description' => 'An elegant wedding RSVP form template to collect guest responses, dietary preferences, meal choices, and song requests With onboarding and health scoring.', 
             'description' => '<p>Our Wedding RSVP Form Template helps couples collect guest responses, meal choices, and song requests in a beautiful, organized way.</p><h2>Why and when to use a wedding RSVP form</h2><p>Managing a guest list is easier with a digital RSVP. Guests respond instantly, and you get accurate headcounts for the venue and caterer.</p><h2>Who is this template for</h2><p>Couples planning weddings, engagement parties, bridal showers, and rehearsal dinners.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms collects meal preferences, plus-one details, and song requests, with automatic tracking of who has responded.</p>', 
             'types' => ['wedding_forms', 'rsvp_forms'],
             'industries' => ['entertainment_forms'],
@@ -1594,7 +1646,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Volunteer Signup Form Template', 
             'slug' => 'volunteer-signup-form-template', 
-            'short_description' => 'A volunteer signup form template for nonprofits and events to recruit and organize volunteers.', 
+            'short_description' => 'A volunteer signup form template for nonprofits and events to recruit and organize volunteers with skill matching and scheduling Includes skill matchi', 
             'description' => '<p>Our Volunteer Signup Form Template helps nonprofits, events, and community groups recruit volunteers and match them with the right roles.</p><h2>Why and when to use a volunteer signup form</h2><p>Organizations need to know who is available, their skills, and their availability before events. A signup form collects all of it in one place.</p><h2>Who is this template for</h2><p>Nonprofits, charities, event organizers, and community groups managing volunteers.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms collects availability, skills, and emergency contacts, and can send shift reminders to volunteers automatically.</p>', 
             'types' => ['volunteer_forms', 'registration_forms'],
             'industries' => ['charity_forms', 'animal_shelter_forms'],
@@ -1615,7 +1667,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Alumni Registration Form Template', 
             'slug' => 'alumni-registration-form-template', 
-            'short_description' => 'An alumni registration form template for schools and universities to keep graduates connected.', 
+            'short_description' => 'An alumni registration form template for schools and universities to keep graduates connected with events and updates With onboarding and health scoring.', 
             'description' => '<p>Our Alumni Registration Form Template helps schools, colleges, and universities keep their alumni network updated and engaged.</p><h2>Why and when to use an alumni registration form</h2><p>Alumni networks grow stronger with updated contact details. A registration form captures graduates’ current info, career details, and engagement preferences.</p><h2>Who is this template for</h2><p>Alumni associations, universities, schools, and community organizations.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms keeps alumni data organized, supports consent for communications, and can trigger welcome emails to new registrations.</p>', 
             'types' => ['registration_forms', 'signup_forms'],
             'industries' => ['alumni_forms', 'education_forms'],
@@ -1637,7 +1689,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Pet Adoption Application Form Template', 
             'slug' => 'pet-adoption-application-form-template', 
-            'short_description' => 'A pet adoption application form template for shelters and rescues to screen potential adopters.', 
+            'short_description' => 'A pet adoption application form template for shelters and rescues to screen potential adopters and match pets to homes With onboarding and health scoring.', 
             'description' => '<p>Our Pet Adoption Application Form Template helps animal shelters and rescues screen applicants and match pets with loving homes.</p><h2>Why and when to use a pet adoption application</h2><p>Responsible shelters verify that applicants can provide a safe, stable home. A structured application captures housing, household, and lifestyle details.</p><h2>Who is this template for</h2><p>Animal shelters, rescue organizations, and pet foster programs.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms collects all adoption criteria, supports reference contacts, and organizes applications for your review team.</p>', 
             'types' => ['application_forms', 'consent_forms'],
             'industries' => ['animal_shelter_forms', 'veterinary_service_forms'],
@@ -1662,7 +1714,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Bank Account Opening Form Template', 
             'slug' => 'bank-account-opening-form-template', 
-            'short_description' => 'A bank account opening form template for financial institutions to onboard new customers.', 
+            'short_description' => 'A bank account opening form template for financial institutions to onboard new customers with identity verification and compliance Includes identity v', 
             'description' => '<p>Our Bank Account Opening Form Template helps financial institutions collect the information needed to onboard new customers and open accounts.</p><h2>Why and when to use an account opening form</h2><p>Banks and credit unions need verified customer data, KYC details, and account preferences. A structured form speeds up onboarding and reduces errors.</p><h2>Who is this template for</h2><p>Banks, credit unions, and fintech companies onboarding customers.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms collects customer details and identity documents securely, with options to route new accounts to your back-office team.</p>', 
             'types' => ['application_forms', 'registration_forms'],
             'industries' => ['banking_forms'],
@@ -1684,7 +1736,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Insurance Claim Form Template', 
             'slug' => 'insurance-claim-form-template', 
-            'short_description' => 'An insurance claim form template for insurers and brokers to collect claim details and documents.', 
+            'short_description' => 'An insurance claim form template for insurers and brokers to collect claim details, documents, and witness information With onboarding and health scoring.', 
             'description' => '<p>Our Insurance Claim Form Template helps insurers and brokers collect claim information, incident details, and supporting documents in a structured format.</p><h2>Why and when to use a claim form</h2><p>Claims need complete, consistent information to process quickly. A structured form ensures policyholders provide all required details the first time.</p><h2>Who is this template for</h2><p>Insurance companies, brokers, and claims departments handling policyholder claims.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms collects claim details, supporting photos, and banking info, and can alert your claims team immediately.</p>', 
             'types' => ['report_forms', 'request_forms'],
             'industries' => ['insurance_forms', 'banking_forms'],
@@ -1710,7 +1762,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Photography Booking Form Template', 
             'slug' => 'photography-booking-form-template', 
-            'short_description' => 'A photography booking form template for photographers to manage session bookings and inquiries.', 
+            'short_description' => 'A photography booking form template for photographers to manage session bookings, packages, and client preferences With onboarding and health scoring.', 
             'description' => '<p>Our Photography Booking Form Template helps photographers collect session details, preferences, and client information for bookings.</p><h2>Why and when to use a photography booking form</h2><p>Photographers juggle many inquiries. A booking form captures session type, dates, and expectations so you can quote accurately and plan shoots.</p><h2>Who is this template for</h2><p>Wedding, portrait, event, and commercial photographers managing client bookings.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms collects session preferences, location details, and inspiration images, with automatic confirmation emails.</p>', 
             'types' => ['booking_forms', 'appointment_forms'],
             'industries' => ['photography_forms'],
@@ -1741,7 +1793,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'SEO Audit Request Form Template', 
             'slug' => 'seo-audit-request-form-template', 
-            'short_description' => 'An SEO audit request form template for agencies to collect website details from prospective clients.', 
+            'short_description' => 'An SEO audit request form template for agencies to collect website details from prospective clients and scope audit work With onboarding and health scoring.', 
             'description' => '<p>Our SEO Audit Request Form Template helps SEO agencies and consultants gather the website and business details they need to deliver a thorough audit.</p><h2>Why and when to use an SEO audit request</h2><p>An audit request form captures the URL, goals, and current marketing situation so your team can scope work and deliver a valuable audit.</p><h2>Who is this template for</h2><p>SEO agencies, consultants, and marketing teams offering website audits.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms collects URLs, goals, and access details, and can trigger the audit workflow automatically when a request arrives.</p>', 
             'types' => ['request_forms', 'audit_forms'],
             'industries' => ['seo_forms', 'web_design_forms'],
@@ -1762,7 +1814,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Sports Team Registration Form Template', 
             'slug' => 'sports-team-registration-form-template', 
-            'short_description' => 'A sports team registration form template for leagues and clubs to register players and teams.', 
+            'short_description' => 'A sports team registration form template for leagues and clubs to register players, collect fees, and manage rosters With onboarding and health scoring.', 
             'description' => '<p>Our Sports Team Registration Form Template helps leagues, clubs, and schools register players and teams for the season.</p><h2>Why and when to use a sports registration form</h2><p>Registrations need player details, jersey sizes, medical info, and waivers. A digital form makes the whole process fast and error-free.</p><h2>Who is this template for</h2><p>Sports leagues, clubs, schools, and recreational programs managing player registration.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms collects player details, waivers, and payments, and can enforce age groups and registration deadlines.</p>', 
             'types' => ['registration_forms', 'signup_forms'],
             'industries' => ['sports_forms', 'entertainment_forms'],
@@ -1785,9 +1837,9 @@ class TemplateSeeder extends Seeder
     private function gamingTournament(): array
     {
         return [
-            'name' => 'Gaming Tournament Registration Form Template', 
+            'name' => 'Gaming Tournament Registration', 
             'slug' => 'gaming-tournament-registration-form-template', 
-            'short_description' => 'A gaming tournament registration form template for esports events to sign up players and teams.', 
+            'short_description' => 'A gaming tournament registration form template for esports events to sign up players and teams with skill tiers and brackets With onboarding and health scoring.', 
             'description' => '<p>Our Gaming Tournament Registration Form Template helps esports organizers register players, teams, and tournament entries.</p><h2>Why and when to use a gaming tournament registration</h2><p>Tournaments need player handles, team rosters, and game preferences to seed brackets correctly. A registration form collects it all cleanly.</p><h2>Who is this template for</h2><p>Esports organizers, gaming venues, streamers, and community tournament hosts.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms collects player details, platform IDs, and consent, with automatic confirmation and match notifications.</p>', 
             'types' => ['event_registration_forms', 'registration_forms'],
             'industries' => ['gaming_forms', 'entertainment_forms'],
@@ -1818,7 +1870,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Service Request Form Template', 
             'slug' => 'service-request-form-template', 
-            'short_description' => 'A service request form template for businesses to log maintenance, support, and internal requests.', 
+            'short_description' => 'A service request form template for businesses to log maintenance, support, and internal requests with priority routing and tracking Includes priority', 
             'description' => '<p>Our Service Request Form Template helps teams log and track maintenance, support, and internal requests in a consistent way.</p><h2>Why and when to use a service request form</h2><p>Facilities, IT, and operations teams receive many requests. A structured form captures priority, category, and details so nothing slips through.</p><h2>Who is this template for</h2><p>Facilities managers, IT helpdesks, operations teams, and internal support functions.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms captures request priority and category, supports photo attachments, and can assign requests to team members automatically.</p>', 
             'types' => ['request_forms', 'tracking_forms'],
             'industries' => ['it_forms', 'services_forms'],
@@ -1840,7 +1892,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Rental Application Form Template',
             'slug' => 'rental-application-form-template',
-            'short_description' => 'A rental application form template for landlords and property managers to screen prospective tenants quickly and fairly.',
+            'short_description' => 'A rental application form template for landlords and property managers to screen prospective tenants quickly and fairly With onboarding and health scoring.',
             'description' => '<p>Our Rental Application Form Template helps landlords and property managers collect everything needed to screen prospective tenants in one place.</p><h2>Why and when to use a rental application</h2><p>Every tenancy starts with reliable information. A structured rental application captures identity, employment and income details, rental history, and screening consent so you can compare applicants on the same terms and document your decision process.</p><h2>Who is this template for</h2><p>Independent landlords, property management companies, and real estate agencies that lease apartments, houses, or commercial units.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms gives every applicant a simple link or embedded form, notifies you the moment an application arrives, accepts document uploads such as proof of income and ID, and keeps all applications organized in one dashboard.</p>',
             'types' => ['application_forms'],
             'industries' => ['real_estate_forms'],
@@ -1883,7 +1935,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Webinar Registration Form Template',
             'slug' => 'webinar-registration-form-template',
-            'short_description' => 'A webinar registration form template that captures sign-ups, session preferences, and audience questions before the event.',
+            'short_description' => 'A webinar registration form template that captures sign-ups, session preferences, and audience questions before the event With onboarding and health scoring.',
             'description' => '<p>Our Webinar Registration Form Template helps marketing teams and speakers register attendees, capture qualifying details, and collect questions ahead of the live session.</p><h2>Why and when to use a webinar registration form</h2><p>Webinars succeed on preparation. Knowing attendee count, job roles, and submitted questions lets you tailor the presentation and plan follow-up campaigns. A registration form replaces scattered email sign-ups with clean, structured data.</p><h2>Who is this template for</h2><p>Marketing teams, SaaS companies, educators, consultants, and community managers hosting online events.</p><h2>Why SharaForms is the best tool for this form</h2><p>SharaForms sends automatic confirmation emails with your join link, works with conditional logic to show different questions per session, and pushes registrations to Slack or your CRM through Zapier and webhooks.</p>',
             'types' => ['event_registration_forms', 'registration_forms'],
             'industries' => ['marketing_forms', 'business_forms'],
@@ -1918,7 +1970,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Leave Request Form Template',
             'slug' => 'leave-request-form-template',
-            'short_description' => 'A leave request form template for employees to submit PTO, sick leave, and other absence requests for manager approval.',
+            'short_description' => 'A leave request form template for employees to submit PTO, sick leave, and other absence requests for manager approval With onboarding and health scoring.',
             'description' => '<p>Our Leave Request Form Template standardizes how employees request vacation, sick days, parental leave, and other absences.</p><h2>Why and when to use a leave request form</h2><p>Ad-hoc messages get lost and create scheduling conflicts. A structured request captures leave type, dates, and coverage plans in one record, giving HR a clear audit trail and managers the context they need to approve quickly.</p><h2>Who is this template for</h2><p>HR teams, people operations, and team leads at companies of any size that track employee absences.</p><h2>Why SharaForms is the best tool for this form</h2><p>Submissions trigger instant notifications to the approving manager, responses are timestamped for compliance, and you can embed the form in your intranet so it is always one click away.</p>',
             'types' => ['request_forms', 'employment_forms'],
             'industries' => ['human_resources_forms'],
@@ -1958,7 +2010,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Expense Report Form Template',
             'slug' => 'expense-report-form-template',
-            'short_description' => 'An expense report form template for employees to submit business expenses with receipts for fast reimbursement.',
+            'short_description' => 'An expense report form template for employees to submit business expenses with receipts for fast reimbursement Includes forums, groups, and messaging.',
             'description' => '<p>Our Expense Report Form Template lets employees log business expenses, attach receipts, and route everything to finance in a consistent format.</p><h2>Why and when to use an expense report</h2><p>Manual spreadsheets slow down reimbursements and hide policy breaches. A structured report captures amount, category, purpose, and receipts per claim, letting finance approve faster and spot out-of-policy spending early.</p><h2>Who is this template for</h2><p>Finance teams, controllers, and any business that reimburses employee spending on travel, meals, software, or supplies.</p><h2>Why SharaForms is the best tool for this form</h2><p>Receipt photos can be uploaded from mobile, numeric fields feed totals into built-in calculations, and completed reports land in your finance inbox instantly with all documentation attached.</p>',
             'types' => ['report_forms', 'payment_forms'],
             'industries' => ['business_forms', 'human_resources_forms'],
@@ -1995,7 +2047,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Timesheet Form Template',
             'slug' => 'timesheet-form-template',
-            'short_description' => 'A weekly timesheet form template for teams to log hours per project and keep payroll and billing accurate.',
+            'short_description' => 'A weekly timesheet form template for teams to log hours per project and keep payroll and billing accurate With role-based access and team permissions.',
             'description' => '<p>Our Timesheet Form Template gives teams a simple weekly form to log hours worked per project, client, or task.</p><h2>Why and when to use a timesheet form</h2><p>Accurate hours drive payroll, client billing, and project costing. A weekly submission rhythm keeps records current without forcing everyone into heavyweight time-tracking software.</p><h2>Who is this template for</h2><p>Agencies, consultancies, contractors, and internal teams that bill clients or run payroll from tracked hours.</p><h2>Why SharaForms is the best tool for this form</h2><p>Numeric hour fields validate input, the week-ending date keeps submissions aligned to pay periods, and exports give payroll a clean CSV at the end of every cycle.</p>',
             'types' => ['tracking_forms'],
             'industries' => ['human_resources_forms', 'business_forms'],
@@ -2038,7 +2090,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Purchase Order Form Template',
             'slug' => 'purchase-order-form-template',
-            'short_description' => 'A purchase order form template for teams to request purchases, capture approvals, and keep procurement auditable.',
+            'short_description' => 'A purchase order form template for teams to request purchases, capture approvals, and keep procurement auditable With quote estimation and scheduling.',
             'description' => '<p>Our Purchase Order Form Template standardizes purchase requests with supplier details, line items, budget codes, and required approvals.</p><h2>Why and when to use a purchase order form</h2><p>Untracked spending causes budget overruns and duplicate orders. A PO form creates one auditable record per purchase: what is being bought, from whom, at what cost, and who approved it.</p><h2>Who is this template for</h2><p>Procurement teams, office managers, and finance departments in companies that want spend discipline without enterprise ERP overhead.</p><h2>Why SharaForms is the best tool for this form</h2><p>Requests notify procurement instantly, quantity and unit-price fields support basic calculations, and every approved order remains searchable with its full history.</p>',
             'types' => ['order_forms', 'request_forms'],
             'industries' => ['ecommerce_forms', 'business_forms'],
@@ -2081,7 +2133,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Reimbursement Claim Form Template',
             'slug' => 'reimbursement-claim-form-template',
-            'short_description' => 'A reimbursement claim form template for mileage, medical, training, and out-of-pocket claims with receipt uploads.',
+            'short_description' => 'A reimbursement claim form template for mileage, medical, training, and out-of-pocket claims with receipt uploads With price lists and tiered pricing.',
             'description' => '<p>Our Reimbursement Claim Form Template covers out-of-pocket claims such as mileage, medical costs, training fees, and client entertainment expenses.</p><h2>Why and when to use a reimbursement claim form</h2><p>When people pay first and claim back later, consistency matters. A dedicated claim form separates these costs from regular expense reports, applies the right policy limits, and speeds up payout.</p><h2>Who is this template for</h2><p>HR and finance teams handling employee reimbursements, plus nonprofits reimbursing volunteer expenses.</p><h2>Why SharaForms is the best tool for this form</h2><p>Claimants attach receipts digitally, choose a claim category up front, and receive email confirmation with a copy of their claim, cutting "did you get my request" emails to zero.</p>',
             'types' => ['payment_forms', 'request_forms'],
             'industries' => ['business_forms', 'charity_forms'],
@@ -2125,7 +2177,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'T-Shirt Order Form Template',
             'slug' => 'tshirt-order-form-template',
-            'short_description' => 'A t-shirt order form template for merch drops, team shirts, events, and fundraisers with sizes and quantities.',
+            'short_description' => 'A t-shirt order form template for merch drops, team shirts, events, and fundraisers with sizes and quantities Free to use with multi-language support.',
             'description' => '<p>Our T-Shirt Order Form Template handles apparel orders for teams, events, merch stores, and fundraisers without a storefront.</p><h2>Why and when to use a t-shirt order form</h2><p>Printing runs need exact size breakdowns and quantities before production starts. An order form collects every choice per buyer and aggregates cleanly, so you order the right inventory mix the first time.</p><h2>Who is this template for</h2><p>Sports teams, schools, event organizers, clothing brands doing limited drops, and fundraising campaigns.</p><h2>Why SharaForms is the best tool for this form</h2><p>Size and color dropdowns prevent invalid combinations, quantity fields feed order totals, and submissions can be exported to CSV for your printer with zero retyping.</p>',
             'types' => ['order_forms'],
             'industries' => ['ecommerce_forms', 'sports_forms'],
@@ -2172,7 +2224,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Catering Order Form Template',
             'slug' => 'catering-order-form-template',
-            'short_description' => 'A catering order form template for restaurants and caterers to capture event menus, headcounts, and delivery details.',
+            'short_description' => 'A catering order form template for restaurants and caterers to capture event menus, headcounts, and delivery details With onboarding and health scoring.',
             'description' => '<p>Our Catering Order Form Template helps caterers and restaurants take event food orders with menu selections, guest counts, dietary notes, and delivery logistics.</p><h2>Why and when to use a catering order form</h2><p>Catering quotes fall apart when details arrive over scattered calls. One structured order captures the date, headcount, package, and dietary restrictions up front, so quoting and kitchen prep start immediately.</p><h2>Who is this template for</h2><p>Catering companies, restaurants with corporate lunch programs, bakeries, and food trucks serving events.</p><h2>Why SharaForms is the best tool for this form</h2><p>Orders arrive with instant notifications, guests counts and package choices keep quoting consistent, and repeat customers re-order in seconds since their details are saved.</p>',
             'types' => ['order_forms', 'booking_forms'],
             'industries' => ['services_forms', 'business_forms'],
@@ -2222,7 +2274,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Liability Waiver Form Template',
             'slug' => 'liability-waiver-form-template',
-            'short_description' => 'A liability waiver form template with e-signature for gyms, events, rentals, and activities that carry physical risk.',
+            'short_description' => 'A liability waiver form template with e-signature for gyms, events, rentals, and activities that carry physical risk With onboarding and health scoring.',
             'description' => '<p>Our Liability Waiver Form Template captures signed acknowledgments of risk from participants before they take part in an activity.</p><h2>Why and when to use a liability waiver</h2><p>Any activity with physical risk deserves a documented acknowledgment: gyms and fitness classes, adventure sports, equipment rentals, volunteer events, and youth programs. Paper waivers get lost; a digital waiver creates a timestamped record with a signature every time.</p><h2>Who is this template for</h2><p>Gyms and studios, event organizers, tour and rental operators, sports leagues, and nonprofits running activities.</p><h2>Why SharaForms is the best tool for this form</h2><p>The built-in signature field captures legally styled e-consent, guardian fields support minors, and every signed waiver is stored and searchable if a question ever arises later.</p>',
             'types' => ['consent_forms'],
             'industries' => ['sports_forms', 'entertainment_forms'],
@@ -2265,7 +2317,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Photo Release Form Template',
             'slug' => 'photo-release-form-template',
-            'short_description' => 'A photo release form template with e-signature covering model consent and media usage rights.',
+            'short_description' => 'A photo release form template with e-signature covering model consent and media usage rights for photographers Includes forums, groups, and messaging.',
             'description' => '<p>Our Photo Release Form Template documents how photos or videos of a person may be used: scope, duration, and compensation, all captured with a signature.</p><h2>Why and when to use a photo release</h2><p>Publishing someone\'s image without documented permission creates legal risk. Photographers, marketers, schools, and nonprofits use releases before images appear on websites, social media, ads, or print.</p><h2>Who is this template for</h2><p>Photographers, marketing teams, agencies, schools, event organizers, and content creators.</p><h2>Why SharaForms is the best tool for this form</h2><p>Usage scope and duration are structured fields instead of free text, signatures are captured digitally, and completed releases stay attached to your project records forever.</p>',
             'types' => ['consent_forms'],
             'industries' => ['photography_forms', 'advertising_forms'],
@@ -2308,7 +2360,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Employee Onboarding Form Template',
             'slug' => 'employee-onboarding-form-template',
-            'short_description' => 'An employee onboarding form template collecting new-hire details, equipment needs, and first-week logistics.',
+            'short_description' => 'An employee onboarding form template collecting new-hire details, equipment needs, and first-week logistics With lead scoring and pipeline management.',
             'description' => '<p>Our Employee Onboarding Form Template collects everything HR and IT need before day one: personal details, equipment requests, emergency contacts, and intro blurb.</p><h2>Why and when to use an employee onboarding form</h2><p>Great first weeks are engineered. Sending one form right after offer acceptance means laptops arrive configured, accounts exist, teammates know the new face, and nothing depends on chasing details by email.</p><h2>Who is this template for</h2><p>HR teams, people operations, and IT departments preparing for new joiners.</p><h2>Why SharaForms is the best tool for this form</h2><p>Equipment choices route to IT via notifications, bio and photo feed straight into team-page templates, and submissions export cleanly into your HRIS import format.</p>',
             'types' => ['employment_forms'],
             'industries' => ['human_resources_forms'],
@@ -2345,7 +2397,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Exit Interview Form Template',
             'slug' => 'exit-interview-form-template',
-            'short_description' => 'An exit interview form template to capture honest departure feedback and reduce future attrition.',
+            'short_description' => 'An exit interview form template to capture honest departure feedback and reduce future attrition Free to use with unlimited responses and submissions.',
             'description' => '<p>Our Exit Interview Form Template gathers candid feedback from departing employees about their experience, reasons for leaving, and what the company could improve.</p><h2>Why and when to use an exit interview form</h2><p>Departing employees give the most honest feedback you will ever receive. Capturing it consistently turns individual departures into patterns you can fix: management issues, pay gaps, or growth ceilings show up across multiple exits.</p><h2>Who is this template for</h2><p>HR teams and people operations at companies that want retention driven by evidence rather than guesswork.</p><h2>Why SharaForms is the best tool for this form</h2><p>Anonymous-friendly design encourages honesty, satisfaction scales quantify sentiment over time, and exports let HR analyze themes across many exits.</p>',
             'types' => ['interview_forms', 'survey_templates'],
             'industries' => ['human_resources_forms'],
@@ -2380,7 +2432,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Self-Evaluation Form Template',
             'slug' => 'self-evaluation-form-template',
-            'short_description' => 'A self-evaluation form template for employees to reflect on achievements, challenges, and goals ahead of performance reviews.',
+            'short_description' => 'A self-evaluation form template for employees to reflect on achievements, challenges, and goals ahead of performance reviews With onboarding and health scoring.',
             'description' => '<p>Our Self-Evaluation Form Template structures employee reflection before performance reviews: achievements, challenges, skill ratings, and next-period goals.</p><h2>Why and when to use a self-evaluation form</h2><p>Reviews go better when employees arrive prepared. A written self-assessment gives managers context they would otherwise miss, surfaces wins employees remember and managers forgot, and makes the review conversation two-sided.</p><h2>Who is this template for</h2><p>People teams and managers running quarterly or annual review cycles.</p><h2>Why SharaForms is the best tool for this form</h2><p>Structured sections keep reflections comparable across the team, rating scales quantify skill confidence, and submissions pair naturally with your existing review docs.</p>',
             'types' => ['evaluation_forms'],
             'industries' => ['human_resources_forms'],
@@ -2415,7 +2467,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Scholarship Application Form Template',
             'slug' => 'scholarship-application-form-template',
-            'short_description' => 'A scholarship application form template capturing student details, essays, transcripts, and references.',
+            'short_description' => 'A scholarship application form template capturing student details, essays, transcripts, and references Free to use with unlimited forms and responses.',
             'description' => '<p>Our Scholarship Application Form Template collects applicant details, financial need statements, essays, transcripts, and referee contacts in one organized submission.</p><h2>Why and when to use a scholarship application form</h2><p>Scholarship committees compare dozens of candidates fairly only when applications arrive in the same shape. One form standardizes essays, documents, and eligibility declarations so reviewers score applicants, not formatting choices.</p><h2>Who is this template for</h2><p>Universities, foundations, employers awarding education grants, community organizations, and alumni associations.</p><h2>Why SharaForms is the best tool for this form</h2><p>File uploads accept transcripts and recommendation letters, closing dates enforce deadlines automatically, and every application lands in one dashboard instead of a chaotic inbox.</p>',
             'types' => ['application_forms'],
             'industries' => ['education_forms', 'charity_forms'],
@@ -2453,7 +2505,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Grant Application Form Template',
             'slug' => 'grant-application-form-template',
-            'short_description' => 'A grant application form template for foundations collecting project proposals, budgets, and impact plans.',
+            'short_description' => 'A grant application form template for foundations collecting project proposals, budgets, and impact plans With role-based access and team permissions.',
             'description' => '<p>Our Grant Application Form Template helps foundations and grant programs collect structured proposals: organization profile, project summary, funding request, budget, and expected impact.</p><h2>Why and when to use a grant application form</h2><p>Reviewing proposals from email attachments wastes committee time. A structured form normalizes every application to your criteria, makes side-by-side comparison possible, and keeps the full history for reporting to your own board.</p><h2>Who is this template for</h2><p>Foundations, corporate giving programs, government funds, accelerators, and any organization distributing grants.</p><h2>Why SharaForms is the best tool for this form</h2><p>Budget files attach directly to applications, numeric funding fields enable clean sorting, and closed-date scheduling enforces round deadlines without manual policing.</p>',
             'types' => ['application_forms'],
             'industries' => ['charity_forms', 'education_forms'],
@@ -2491,7 +2543,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Client Onboarding Form Template',
             'slug' => 'client-onboarding-form-template',
-            'short_description' => 'A client onboarding form template for agencies to gather brand assets, goals, and access details before kickoff.',
+            'short_description' => 'A client onboarding form template for agencies to gather brand assets, goals, and access details before kickoff With crop planning and yield tracking.',
             'description' => '<p>Our Client Onboarding Form Template collects the goals, brand materials, audience details, and preferences agencies need before project kickoff.</p><h2>Why and when to use a client onboarding form</h2><p>Kickoff calls stall when basic facts are unknown. Sending one structured form after signing turns week one from information gathering into actual work, and clients love how professional it feels.</p><h2>Who is this template for</h2><p>Marketing agencies, design studios, consultancies, freelancers, and service businesses starting new client engagements.</p><h2>Why SharaForms is the best tool for this form</h2><p>Brand asset uploads land with the rest of the brief, URL fields capture websites and social profiles cleanly, and everything arrives searchable in one place instead of scattered threads.</p>',
             'types' => ['questionnaire_templates'],
             'industries' => ['services_forms', 'marketing_forms'],
@@ -2529,7 +2581,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Project Brief Form Template',
             'slug' => 'project-brief-form-template',
-            'short_description' => 'A project brief form template for creative and web projects capturing objectives, deliverables, budgets, and deadlines.',
+            'short_description' => 'A project brief form template for creative and web projects capturing objectives, deliverables, budgets, and deadlines With onboarding and health scoring.',
             'description' => '<p>Our Project Brief Form Template turns scattered kickoff notes into one structured brief: objectives, audience, deliverables, budget range, and deadline.</p><h2>Why and when to use a project brief form</h2><p>Scope creep starts with vague briefs. Collecting the essentials in a structured form forces decisions before work begins, gives every stakeholder the same reference point, and protects margins when requests drift beyond scope.</p><h2>Who is this template for</h2><p>Web design studios, branding agencies, video producers, marketing teams briefing internal creatives, and freelancers.</p><h2>Why SharaForms is the best tool for this form</h2><p>Budget ranges stay structured for quoting, deliverable multiselects map directly to statements of work, and completed briefs export cleanly into your project management tool.</p>',
             'types' => ['questionnaire_templates', 'content_forms'],
             'industries' => ['web_design_forms', 'advertising_forms', 'marketing_forms'],
@@ -2567,7 +2619,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Bug Report Form Template',
             'slug' => 'bug-report-form-template',
-            'short_description' => 'A bug report form template that captures reproducible steps, severity, environment, and screenshots for faster fixes.',
+            'short_description' => 'A bug report form template that captures reproducible steps, severity, environment, and screenshots for faster fixes With onboarding and health scoring.',
             'description' => '<p>Our Bug Report Form Template captures everything engineers need to reproduce and fix issues: summary, steps, expected vs actual behavior, environment, and evidence.</p><h2>Why and when to use a bug report form</h2><p>"It does not work" emails cost engineering time in back-and-forth. A structured report front-loads the details that separate a ten-minute fix from a three-day investigation, and severity triage keeps critical issues at the top of the queue.</p><h2>Who is this template for</h2><p>SaaS product teams, QA departments, IT helpdesks, and open-source maintainers collecting issue reports from non-technical users.</p><h2>Why SharaForms is the best tool for this form</h2><p>Screenshots and log files attach directly to reports, severity and environment dropdowns enable instant triage, and reports can stream into Slack or your issue tracker via webhooks.</p>',
             'types' => ['report_forms', 'file_upload_forms'],
             'industries' => ['it_forms', 'business_forms'],
@@ -2604,7 +2656,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Maintenance Request Form Template',
             'slug' => 'maintenance-request-form-template',
-            'short_description' => 'A maintenance request form template for tenants to report repairs with photos, urgency, and access permissions.',
+            'short_description' => 'A maintenance request form template for tenants to report repairs with photos, urgency, and access permissions Includes forums, groups, and messaging.',
             'description' => '<p>Our Maintenance Request Form Template lets tenants report repair issues with location, category, urgency, photos, and entry permission in one submission.</p><h2>Why and when to use a maintenance request form</h2><p>Tenants text photos at midnight and details get lost. A structured request records what broke, where, how urgent it is, and whether the tenant grants entry permission, creating a documented trail that protects both landlord and tenant.</p><h2>Who is this template for</h2><p>Property managers, landlords, HOAs, facilities teams, and co-working operators maintaining physical spaces.</p><h2>Why SharaForms is the best tool for this form</h2><p>New requests notify your maintenance line instantly, photo uploads document condition before repairs, and the full history per property stays searchable for compliance and deposit disputes.</p>',
             'types' => ['request_forms'],
             'industries' => ['real_estate_forms', 'services_forms'],
@@ -2644,7 +2696,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Coaching Intake Form Template',
             'slug' => 'coaching-intake-form-template',
-            'short_description' => 'A coaching intake form template capturing client goals, context, and session preferences before the first session.',
+            'short_description' => 'A coaching intake form template capturing client goals, context, and session preferences before the first session With price lists and tiered pricing.',
             'description' => '<p>Our Coaching Intake Form Template gathers the context a coach needs before session one: goals, current situation, past coaching experience, and logistics preferences.</p><h2>Why and when to use a coaching intake form</h2><p>First sessions spent collecting basics waste paid time. An intake form sent after booking means the opening conversation starts at insight level, and goal patterns across clients become visible over time.</p><h2>Who is this template for</h2><p>Career coaches, executive and leadership coaches, life coaches, business mentors, and health coaches.</p><h2>Why SharaForms is the best tool for this form</h2><p>Responses arrive before the session automatically, confidentiality consent is captured explicitly, and every client history stays organized in one dashboard instead of email threads.</p>',
             'types' => ['questionnaire_templates'],
             'industries' => ['services_forms', 'human_resources_forms'],
@@ -2680,9 +2732,9 @@ class TemplateSeeder extends Seeder
     private function vetNewClient(): array
     {
         return [
-            'name' => 'Veterinary New Client Registration Form Template',
+            'name' => 'Veterinary New Client Registration',
             'slug' => 'veterinary-new-client-form-template',
-            'short_description' => 'A veterinary new client form template registering pets and owners with medical history and vaccination records.',
+            'short_description' => 'A veterinary new client form template registering pets and owners with medical history and vaccination records Includes forums, groups, and messaging.',
             'description' => '<p>Our Veterinary New Client Form Template registers new patients properly: owner contact details, pet profile, medical history, vaccination records, and treatment authorization.</p><h2>Why and when to use a veterinary new client form</h2><p>Front-desk clipboard registration slows appointments and loses handwriting. A digital registration arrives before the visit, so reception confirms insurance and history instead of typing it while the pet waits.</p><h2>Who is this template for</h2><p>Veterinary clinics, mobile vets, animal hospitals, and rescue organizations processing new intakes.</p><h2>Why SharaForms is the best tool for this form</h2><p>Vaccination records upload as files, species-specific profiles keep histories organized per animal, and authorization checkboxes create documented consent for treatment decisions.</p>',
             'types' => ['registration_forms'],
             'industries' => ['veterinary_service_forms'],
@@ -2722,7 +2774,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'NPS Survey Template',
             'slug' => 'nps-survey-template',
-            'short_description' => 'An NPS survey template measuring customer loyalty with the standard 0-10 recommend score and follow-up questions.',
+            'short_description' => 'An NPS survey template measuring customer loyalty with the standard 0-10 recommend score and follow-up questions With quote estimation and scheduling.',
             'description' => '<p>Our NPS Survey Template implements the classic Net Promoter Score question with the 0-10 scale, plus follow-up prompts that turn scores into actionable feedback.</p><h2>Why and when to use an NPS survey</h2><p>NPS is the fastest loyalty signal there is: one question customers always answer, one number leadership tracks quarterly. Send it after meaningful milestones such as onboarding completion, renewal, or support resolution.</p><h2>Who is this template for</h2><p>Customer success teams, product managers, founders tracking retention signals, and agencies reporting client satisfaction.</p><h2>Why SharaForms is the best tool for this form</h2><p>The 0-10 scale renders perfectly on mobile, scores export to CSV for trend analysis, and conditional logic can show different follow-ups for promoters versus detractors.</p>',
             'types' => ['survey_templates', 'feedback_forms'],
             'industries' => ['customer_service_forms', 'business_forms'],
@@ -2760,7 +2812,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Testimonial Submission Form Template',
             'slug' => 'testimonial-form-template',
-            'short_description' => 'A testimonial submission form template collecting customer quotes, ratings, photos, and publishing permission.',
+            'short_description' => 'A testimonial submission form template collecting customer quotes, ratings, photos, and publishing permission Free to use with multi-language support.',
             'description' => '<p>Our Testimonial Submission Form Template makes collecting social proof painless: customer quotes, star ratings, headshots, and explicit publishing rights in one flow.</p><h2>Why and when to use a testimonial form</h2><p>Testimonials requested over email die in draft folders. A friendly form with a rating widget and clear publishing permission lowers friction, and structured submissions drop straight into your marketing pipeline ready to publish.</p><h2>Who is this template for</h2><p>SaaS companies, agencies, course creators, service businesses, and event organizers gathering post-experience proof.</p><h2>Why SharaForms is the best tool for this form</h2><p>Ratings quantify sentiment alongside words, headshot uploads make published quotes look credible, and the permission checkbox keeps your legal basis documented.</p>',
             'types' => ['content_forms', 'feedback_forms'],
             'industries' => ['marketing_forms', 'customer_service_forms'],
@@ -2796,7 +2848,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Gym Membership Form Template',
             'slug' => 'gym-membership-form-template',
-            'short_description' => 'A gym membership form template handling sign-ups, plan selection, health declarations, and waiver acceptance.',
+            'short_description' => 'A gym membership form template handling sign-ups, plan selection, health declarations, and waiver acceptance Free to use with no credit card required.',
             'description' => '<p>Our Gym Membership Form Template covers the full sign-up flow for fitness businesses: member details, plan selection, fitness goals, emergency contacts, and waiver acceptance.</p><h2>Why and when to use a gym membership form</h2><p>Sign-ups happen at the front desk, on the sidewalk QR code, and from your website at midnight. One digital form handles all three consistently, captures the health declaration gyms need for safe programming, and gets waiver acceptance documented before the first workout.</p><h2>Who is this template for</h2><p>Gyms, CrossFit boxes, yoga and pilates studios, martial arts schools, and personal training studios.</p><h2>Why SharaForms is the best tool for this form</h2><p>Plan selection feeds your billing process, goal multiselects inform program recommendations, and pairing with our liability waiver template gives you complete risk documentation from day one.</p>',
             'types' => ['membership_forms', 'registration_forms'],
             'industries' => ['sports_forms'],
@@ -2844,7 +2896,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Field Trip Permission Slip Template',
             'slug' => 'field-trip-permission-slip-form-template',
-            'short_description' => 'A field trip permission slip template for teachers collecting parent consent, emergency contacts, and lunch plans online.',
+            'short_description' => 'A field trip permission slip template for teachers collecting parent consent, emergency contacts, and lunch plans online With onboarding and health scoring.',
             'description' => '<p>Our Field Trip Permission Slip Template replaces paper slips that get crumpled in backpacks with a digital form parents can complete in two minutes.</p><h2>Why and when to use a permission slip form</h2><p>Every off-campus trip needs documented parental consent, emergency contacts, and medical notes. Collecting them digitally means no lost slips, a clear audit trail of who has responded, and instant chaperone sign-ups from the same form.</p><h2>Who is this template for</h2><p>Classroom teachers, school administrators, homeschool co-ops, youth group leaders, and camp counselors planning any supervised outing.</p><h2>Why SharaForms is the best tool for this form</h2><p>Responses land in one exportable list, so you always know exactly which students still need consent. Conditional fields keep dietary and chaperone questions out of the way until they matter, and confirmation emails give parents a record of what they signed.</p>',
             'types' => ['consent_forms', 'registration_forms'],
             'industries' => ['education_forms'],
@@ -2887,7 +2939,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Therapy Intake Form Template',
             'slug' => 'therapy-intake-form-template',
-            'short_description' => 'A therapy intake form template for counselors and therapists collecting history, medications, and session preferences securely.',
+            'short_description' => 'A therapy intake form template for counselors and therapists collecting history, medications, and session preferences securely With onboarding and health scoring.',
             'description' => '<p>Our Therapy Intake Form Template helps private practices collect client background before the first session, so the opening hour focuses on the client instead of paperwork.</p><h2>Why and when to use a therapy intake form</h2><p>A structured intake documents presenting concerns, previous care, current medications, and contact preferences ahead of session one. Sending the form when an appointment is booked means clients reflect privately and arrive ready to talk.</p><h2>Who is this template for</h2><p>Licensed therapists, counselors, psychologists, social workers, and group practices onboarding new adult clients.</p><h2>Why SharaForms is the best tool for this form</h2><p>Submissions are stored securely within your workspace, conditional fields adapt to each client\'s history, and you control exactly which fields are required. Export intake summaries to CSV for your records system.</p>',
             'types' => ['application_forms', 'registration_forms'],
             'industries' => ['healthcare_forms'],
@@ -2928,7 +2980,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Race Registration Form Template',
             'slug' => 'race-registration-form-template',
-            'short_description' => 'A race registration form template for 5Ks, 10Ks, and fun runs with category fees, shirt add-ons, and live totals.',
+            'short_description' => 'A race registration form template for 5Ks, 10Ks, and fun runs with category fees, shirt add-ons, and live totals With quote estimation and scheduling.',
             'description' => '<p>Our Race Registration Form Template handles sign-ups for fun runs, charity 5Ks, and timed races with automatic fee totals per category.</p><h2>Why and when to use a race registration form</h2><p>Race directors juggle categories, shirt orders, and waiver signatures while entry counts climb. A single form captures all of it per runner, shows the exact amount due before submission, and exports a clean bib-assignment list.</p><h2>Who is this template for</h2><p>Race directors, running clubs, school athletics programs, charity event committees, and sponsors hosting corporate fun runs.</p><h2>Why SharaForms is the best tool for this form</h2><p>The live total updates as runners pick categories and shirts, the waiver checkbox documents every entry, and submissions export straight into your timing spreadsheet. Pair it with a QR code on your flyers for instant mobile sign-ups.</p>',
             'types' => ['event_registration_forms', 'registration_forms'],
             'industries' => ['sports_forms'],
@@ -2979,7 +3031,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Golf Tournament Registration Form Template',
             'slug' => 'golf-tournament-registration-form-template',
-            'short_description' => 'A golf tournament registration form template for outings and fundraisers with player counts, sponsorships, and dinner tickets.',
+            'short_description' => 'A golf tournament registration form template for outings and fundraisers with player counts, sponsorships, and dinner tickets With onboarding and health scoring.',
             'description' => '<p>Our Golf Tournament Registration Form Template covers charity outings, corporate scrambles, and club tournaments: players, dinner guests, hole sponsorships, and a live total.</p><h2>Why and when to use a golf tournament form</h2><p>Golf outings combine player registrations, meal counts, and sponsorship sales in one event. Collecting all three on one form gives your committee a single revenue picture and a clean catering headcount weeks before tee-off.</p><h2>Who is this template for</h2><p>Charity foundations, chambers of commerce, alumni associations, country clubs, and companies hosting client appreciation outings.</p><h2>Why SharaForms is the best tool for this form</h2><p>The total updates live as teams grow and sponsorships get added, dinner counts feed directly to the clubhouse kitchen, and exportable lists make cart assignments painless.</p>',
             'types' => ['event_registration_forms'],
             'industries' => ['sports_forms', 'charity_forms'],
@@ -3023,7 +3075,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Vendor Application Form Template',
             'slug' => 'vendor-application-form-template',
-            'short_description' => 'A vendor application form template for markets, craft fairs, and expos with booth selection, fees, and permit uploads.',
+            'short_description' => 'A vendor application form template for markets, craft fairs, and expos with booth selection, fees, and permit uploads With onboarding and health scoring.',
             'description' => '<p>Our Vendor Application Form Template helps market organizers collect vendor details, booth preferences, and fees with permits attached before acceptance letters go out.</p><h2>Why and when to use a vendor application form</h2><p>Markets, craft fairs, and expos need consistent vendor records: what they sell, how much space they need, whether they draw power or serve food. A structured application replaces email threads and makes booth mapping a ten-minute job instead of a weekend.</p><h2>Who is this template for</h2><p>Farmers market managers, craft fair committees, expo organizers, flea market operators, and school fundraising bazaars.</p><h2>Why SharaForms is the best tool for this form</h2><p>The live booth fee updates as vendors pick sizes and power, food vendors are prompted for health permits automatically, and accepted vendors can be exported straight into your layout spreadsheet.</p>',
             'types' => ['application_forms'],
             'industries' => ['business_forms', 'ecommerce_forms'],
@@ -3082,7 +3134,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Work Order Form Template',
             'slug' => 'work-order-form-template',
-            'short_description' => 'A work order form template for maintenance teams capturing job details, priority levels, and cost estimates.',
+            'short_description' => 'A work order form template for maintenance teams capturing job details, priority levels, and cost estimates With lead scoring and pipeline management.',
             'description' => '<p>Our Work Order Form Template standardizes how maintenance requests become dispatchable jobs with priorities, labor estimates, and parts costs in one record.</p><h2>Why and when to use a work order form</h2><p>Facilities and property teams turn reported issues into scheduled work. A proper work order captures the location, category, urgency, and estimated cost up front so dispatch decisions take seconds and monthly cost reporting writes itself.</p><h2>Who is this template for</h2><p>Property managers, facilities teams, maintenance departments, contractors, and internal service desks.</p><h2>Why SharaForms is the best tool for this form</h2><p>Emergency jobs surface an after-hours contact automatically, the estimate block computes labor plus parts live, and completed orders export to CSV for invoice reconciliation.</p>',
             'types' => ['request_forms'],
             'industries' => ['services_forms', 'business_forms'],
@@ -3132,7 +3184,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Warranty Claim Form Template',
             'slug' => 'warranty-claim-form-template',
-            'short_description' => 'A warranty claim form template for manufacturers and retailers collecting product issues, proof of purchase, and photos.',
+            'short_description' => 'A warranty claim form template for manufacturers and retailers collecting product issues, proof of purchase, and photos With onboarding and health scoring.',
             'description' => '<p>Our Warranty Claim Form Template collects everything a service team needs to validate coverage: product identifiers, purchase channel details, issue descriptions, and photo evidence.</p><h2>Why and when to use a warranty claim form</h2><p>Warranty claims stall when key facts arrive piecemeal: missing serial numbers, no proof of purchase, blurry photos. One structured claim form gets complete cases into your queue the first time, cutting resolution time and repeat emails.</p><h2>Who is this template for</h2><p>Product manufacturers, appliance brands, electronics retailers, furniture makers, and authorized service centers.</p><h2>Why SharaForms is the best tool for this form</h2><p>Purchase-channel logic asks for order numbers or store locations only when relevant, photo uploads attach directly to each claim, and every case exports with its full evidence trail.</p>',
             'types' => ['request_forms'],
             'industries' => ['ecommerce_forms', 'business_forms'],
@@ -3173,7 +3225,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Return & Exchange Form Template',
             'slug' => 'return-exchange-form-template',
-            'short_description' => 'A return and exchange form template for online stores handling refunds, replacements, and damage claims cleanly.',
+            'short_description' => 'A return and exchange form template for online stores handling refunds, replacements, and damage claims cleanly With crop planning and yield tracking.',
             'description' => '<p>Our Return & Exchange Form Template gives customers a self-serve way to start refunds or swaps while capturing the reason codes your operations team needs.</p><h2>Why and when to use a return form</h2><p>Returns handled over email create back-and-forth and inconsistent data. A structured form collects the order number, reason, and condition up front; exchanges surface replacement fields automatically, and damaged items prompt for photo evidence that protects fulfillment reviews.</p><h2>Who is this template for</h2><p>Ecommerce stores, boutiques with physical products, footwear and apparel brands, and subscription box companies.</p><h2>Why SharaForms is the best tool for this form</h2><p>Reason-code reporting shows why products come back, exchange details route straight to picking lists, and photo uploads settle damage disputes quickly and fairly.</p>',
             'types' => ['order_forms', 'request_forms'],
             'industries' => ['ecommerce_forms'],
@@ -3214,7 +3266,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Facility Rental Request Form Template',
             'slug' => 'facility-rental-request-form-template',
-            'short_description' => 'A facility rental request form template for halls, gyms, and venues with hourly rates, add-ons, and instant estimates.',
+            'short_description' => 'A facility rental request form template for halls, gyms, and venues with hourly rates, add-ons, and instant estimates With onboarding and health scoring.',
             'description' => '<p>Our Facility Rental Request Form Template handles community halls, church spaces, school gymnasiums, and event pavilions: space choice, hours, setup help, and equipment needs with a live price estimate.</p><h2>Why and when to use a facility rental request form</h2><p>Rental inquiries arrive with half the details needed to quote. A request form captures the space, duration, headcount, and special needs together, so your coordinator confirms availability and sends one complete answer instead of four follow-up emails.</p><h2>Who is this template for</h2><p>Community centers, churches renting halls, schools renting gymnasiums, event venues, and municipal facilities departments.</p><h2>Why SharaForms is the best tool for this form</h2><p>The estimate updates live by space and hours, AV and kitchen needs trigger detail questions automatically, and alcohol-service answers collect insurance uploads before approval.</p>',
             'types' => ['reservation_forms', 'request_forms'],
             'industries' => ['business_forms', 'church_forms', 'education_forms'],
@@ -3281,7 +3333,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Parking Permit Application Form Template',
             'slug' => 'parking-permit-application-form-template',
-            'short_description' => 'A parking permit application form template for campuses, offices, and apartments with vehicle details and permit fees.',
+            'short_description' => 'A parking permit application form template for campuses, offices, and apartments with vehicle details and permit fees With onboarding and health scoring.',
             'description' => '<p>Our Parking Permit Application Form Template collects applicant details, vehicle information, and lot preferences with the correct fee calculated per permit type.</p><h2>Why and when to use a parking permit form</h2><p>Campuses, office parks, and residential buildings issue permits every semester or lease cycle. A digital application replaces windshield-sticker paperwork with searchable records, catches second vehicles automatically, and totals fees before the office ever opens the submission.</p><h2>Who is this template for</h2><p>University transportation offices, commercial property managers, HOAs, apartment complexes, and municipal parking authorities.</p><h2>Why SharaForms is the best tool for this form</h2><p>Second-vehicle and accessible-placard fields appear only when needed, the fee block computes by permit duration live, and approvals export straight to your gate-system import.</p>',
             'types' => ['application_forms'],
             'industries' => ['business_forms', 'education_forms'],
@@ -3339,7 +3391,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Internship Application Form Template',
             'slug' => 'internship-application-form-template',
-            'short_description' => 'An internship application form template collecting student details, availability, resumes, and credit arrangements.',
+            'short_description' => 'An internship application form template collecting student details, availability, resumes, and credit arrangements With onboarding and health scoring.',
             'description' => '<p>Our Internship Application Form Template helps companies run internship intakes that capture academic status, availability, and resumes consistently across every applicant.</p><h2>Why and when to use an internship application form</h2><p>Internship programs juggle students from multiple schools with different credit requirements and availability windows. One structured application keeps candidates comparable, flags credit-bearing placements early, and gets resumes attached to the right opening from the start.</p><h2>Who is this template for</h2><p>HR teams running seasonal internships, startups hiring first interns, university partnership programs, and nonprofits hosting service-learning placements.</p><h2>Why SharaForms is the best tool for this form</h2><p>Credit-seeking applicants are prompted for school documentation automatically, resume uploads stay organized per posting, and exportable shortlists make interview scheduling quick.</p>',
             'types' => ['employment_forms', 'application_forms'],
             'industries' => ['human_resources_forms', 'education_forms'],
@@ -3379,7 +3431,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Student Registration Form Template',
             'slug' => 'student-registration-form-template',
-            'short_description' => 'A student registration form template for schools collecting guardian contacts, grade placement, transport, and health notes.',
+            'short_description' => 'A student registration form template for schools collecting guardian contacts, grade placement, transport, and health notes With onboarding and health scoring.',
             'description' => '<p>Our Student Registration Form Template covers K-12 enrollment: student details, guardian contacts, previous school records, transport needs, and health notes in one clean submission.</p><h2>Why and when to use a student registration form</h2><p>School offices process registration bursts every spring and mid-year as families move. A structured form means complete records the first time: guardians know which documents to bring, transport sees bus-stop demand early, and health notes reach nurses before day one.</p><h2>Who is this template for</h2><p>K-12 public and private schools, charter networks, international schools, and school districts running centralized enrollment.</p><h2>Why SharaForms is the best tool for this form</h2><p>Transfer students trigger previous-school questions automatically, bus-riders pick their stop during registration, and sibling detection helps place families in one car line instead of two.</p>',
             'types' => ['registration_forms', 'enrollment_forms'],
             'industries' => ['education_forms'],
@@ -3437,7 +3489,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Preschool Waitlist Form Template',
             'slug' => 'preschool-waitlist-form-template',
-            'short_description' => 'A preschool waitlist form template for childcare centers capturing child details, schedule preferences, and tour requests.',
+            'short_description' => 'A preschool waitlist form template for childcare centers capturing child details, schedule preferences, and tour requests With onboarding and health scoring.',
             'description' => '<p>Our Preschool Waitlist Form Template helps childcare centers build an organized waitlist with child ages, schedule preferences, and tour requests instead of scattered emails.</p><h2>Why and when to use a preschool waitlist form</h2><p>Childcare spots fill fast and families plan months ahead. An ordered waitlist with birthdates, desired start terms, and schedule needs lets directors offer openings fairly, forecast room utilization, and call the right family the moment a spot appears.</p><h2>Who is this template for</h2><p>Preschools, daycare centers, Montessori schools, nursery programs, and church-affiliated early learning centers.</p><h2>Why SharaForms is the best tool for this form</h2><p>Sibling priority is captured at sign-up, tour requests flow into one list your staff can schedule from, and the list exports by age group so openings match the right children instantly.</p>',
             'types' => ['signup_forms', 'registration_forms'],
             'industries' => ['education_forms'],
@@ -3486,7 +3538,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Parent-Teacher Conference Form Template',
             'slug' => 'parent-teacher-conference-form-template',
-            'short_description' => 'A parent-teacher conference signup template for booking time slots, choosing formats, and focusing discussion topics.',
+            'short_description' => 'A parent-teacher conference signup template for booking time slots, choosing formats, and focusing discussion topics With onboarding and health scoring.',
             'description' => '<p>Our Parent-Teacher Conference Form Template lets parents book their own slot, choose in-person or video, and flag topics ahead of time so teachers walk in prepared.</p><h2>Why and when to use a conference signup form</h2><p>Conference nights collapse into chaos when slots are assigned by paper or reply-all email. Self-serve booking spreads families evenly across slots, video-call requests surface before the night of, and pre-flagged topics turn fifteen minutes into real conversation.</p><h2>Who is this template for</h2><p>Classroom teachers, grade-level teams, school administrators organizing conference nights, and private tutors holding parent check-ins.</p><h2>Why SharaForms is the best tool for this form</h2><p>Families pick their own slots without phone tag, video attendees see joining instructions appear automatically, and topic selections give teachers a head start on every meeting.</p>',
             'types' => ['appointment_forms', 'booking_forms'],
             'industries' => ['education_forms'],
@@ -3534,7 +3586,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Tutoring Request Form Template',
             'slug' => 'tutoring-request-form-template',
-            'short_description' => 'A tutoring request form template matching students with subjects and schedules while estimating monthly session costs.',
+            'short_description' => 'A tutoring request form template matching students with subjects and schedules while estimating monthly session costs With onboarding and health scoring.',
             'description' => '<p>Our Tutoring Request Form Template captures student level, subject needs, session frequency, and format preferences, then shows families a monthly estimate before they commit.</p><h2>Why and when to use a tutoring request form</h2><p>Tutoring inquiries mix grade levels, subjects, budgets, and schedules. A structured request routes each student to the right tutor, books realistic session counts up front, and sets billing expectations with a transparent estimate instead of awkward price conversations later.</p><h2>Who is this template for</h2><p>Independent tutors, tutoring centers, test-prep companies, school homework clubs, and libraries coordinating volunteer tutoring.</p><h2>Why SharaForms is the best tool for this form</h2><p>Subject-based rates calculate monthly totals live, online clients get platform questions automatically, and goal fields make first sessions productive from minute one.</p>',
             'types' => ['request_forms', 'booking_forms'],
             'industries' => ['education_forms'],
@@ -3587,7 +3639,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Newsletter Signup Form Template',
             'slug' => 'newsletter-signup-form-template',
-            'short_description' => 'A newsletter signup form template with interest selection, frequency choice, and consent built in for compliant list growth.',
+            'short_description' => 'A newsletter signup form template with interest selection, frequency choice, and consent built in for compliant list growth With onboarding and health scoring.',
             'description' => '<p>Our Newsletter Signup Form Template grows your email list properly: interest tagging, frequency control, and clear consent language that keeps subscribers engaged instead of unsubscribed.</p><h2>Why and when to use a newsletter signup form</h2><p>A bare email box collects addresses but not intent. Asking what topics people care about and how often they want to hear from you segments your list at the source, which means higher open rates, fewer spam complaints, and content you can actually personalize.</p><h2>Who is this template for</h2><p>Content creators, small businesses, nonprofits, community organizations, and product teams building owned audiences.</p><h2>Why SharaForms is the best tool for this form</h2><p>Interest selections tag subscribers for your email tool via integrations, the referral field shows which channels actually grow your list, and submissions sync to Zapier, webhooks, or Google Sheets automatically.</p>',
             'types' => ['signup_forms'],
             'industries' => ['marketing_forms', 'business_forms'],
@@ -3627,7 +3679,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Demo Request Form Template',
             'slug' => 'demo-request-form-template',
-            'short_description' => 'A demo request form template qualifying B2B leads with company size, current tools, and preferred demo formats.',
+            'short_description' => 'A demo request form template qualifying B2B leads with company size, current tools, and preferred demo formats Includes forums, groups, and messaging.',
             'description' => '<p>Our Demo Request Form Template turns "book a demo" pages into qualified pipeline: company context, current tooling, and the problem to solve arrive before sales even says hello.</p><h2>Why and when to use a demo request form</h2><p>Demos burn selling hours. A qualifying form means reps walk in knowing company size, incumbent tools, and pain points, so the first call starts at value instead of discovery. Requests without budget signals can route to self-serve resources automatically.</p><h2>Who is this template for</h2><p>SaaS companies, B2B service providers, software vendors, and any team whose revenue starts with a product walkthrough.</p><h2>Why SharaForms is the best tool for this form</h2><p>Responses push to Slack, HubSpot-class CRMs, or webhooks instantly, custom-solution answers get captured cleanly, and view-versus-submit analytics reveal friction on your highest-intent page.</p>',
             'types' => ['lead_generation_forms', 'request_forms'],
             'industries' => ['business_forms', 'marketing_forms'],
@@ -3674,7 +3726,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Affiliate Program Application Form Template',
             'slug' => 'affiliate-program-application-form-template',
-            'short_description' => 'An affiliate program application form template vetting creators by platform, audience size, and promotion style.',
+            'short_description' => 'An affiliate program application form template vetting creators by platform, audience size, and promotion style With crop planning and yield tracking.',
             'description' => '<p>Our Affiliate Program Application Form Template screens partner applicants by channel, audience size, and promotion methods so your program grows with creators who actually fit.</p><h2>Why and when to use an affiliate application form</h2><p>Open affiliate programs attract spam applications. A structured vetting form filters by audience fit before approval, keeps commission terms acknowledged in writing, and gives you a searchable roster of who promotes what, where.</p><h2>Who is this template for</h2><p>Ecommerce brands running referral commissions, SaaS partner programs, course creators, and influencer marketing teams.</p><h2>Why SharaForms is the best tool for this form</h2><p>Platform questions adapt to each applicant\'s primary channel, audience-size data sorts your pipeline instantly, and accepted partners flow into your CRM through webhooks or Zapier.</p>',
             'types' => ['application_forms', 'signup_forms'],
             'industries' => ['marketing_forms', 'advertising_forms'],
@@ -3721,7 +3773,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Podcast Guest Application Form Template',
             'slug' => 'podcast-guest-application-form-template',
-            'short_description' => 'A podcast guest application form template screening pitches by expertise, availability, and recording setup.',
+            'short_description' => 'A podcast guest application form template screening pitches by expertise, availability, and recording setup With lead scoring and pipeline management.',
             'description' => '<p>Our Podcast Guest Application Form Template collects pitches the way hosts actually evaluate them: sharp talking points, proof of past appearances, real availability, and audio setup.</p><h2>Why and when to use a podcast guest form</h2><p>Guest pitches flood host inboxes with walls of text and no signal. A structured application makes candidates comparable at a glance, filters out phone-only audio before scheduling, and builds an episode bank of vetted topics you can record from whenever your calendar opens.</p><h2>Who is this template for</h2><p>Podcast hosts and producers, interview shows, webinar series organizers, and virtual summit coordinators booking speakers.</p><h2>Why SharaForms is the best tool for this form</h2><p>Talking points arrive structured instead of rambling, availability multiselects speed up scheduling across time zones, and sample links let you hear guests before committing studio time.</p>',
             'types' => ['application_forms', 'interview_forms'],
             'industries' => ['entertainment_forms', 'marketing_forms'],
@@ -3757,7 +3809,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Speaker Proposal Form Template',
             'slug' => 'speaker-proposal-form-template',
-            'short_description' => 'A speaker proposal form template for conferences and events collecting session pitches, formats, and AV needs.',
+            'short_description' => 'A speaker proposal form template for conferences and events collecting session pitches, formats, and AV needs Free to use with multi-language support.',
             'description' => '<p>Our Speaker Proposal Form Template standardizes call-for-speakers submissions so program committees compare sessions fairly and build balanced agendas fast.</p><h2>Why and when to use a speaker proposal form</h2><p>Reviewing talks from scattered emails means reformatting everything yourself. A uniform proposal captures the session title, format, track, summary, and AV requirements identically for every submitter, which turns agenda planning from archaeology into a checklist.</p><h2>Who is this template for</h2><p>Conference organizers, meetup groups, industry associations, corporate learning teams, and school career-day coordinators.</p><h2>Why SharaForms is the best tool for this form</h2><p>Panel proposals automatically request co-presenter details, AV multiselects feed your venue tech sheet directly, and every submission exports into a review spreadsheet with scoring columns ready.</p>',
             'types' => ['abstract_forms', 'application_forms'],
             'industries' => ['business_forms', 'education_forms'],
@@ -3804,7 +3856,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Complaint Form Template',
             'slug' => 'complaint-form-template',
-            'short_description' => 'A complaint form template capturing formal grievances with categories, incident details, and requested resolutions.',
+            'short_description' => 'A complaint form template capturing formal grievances with categories, incident details, and requested resolutions With onboarding and health scoring.',
             'description' => '<p>Our Complaint Form Template gives customers and employees a clear, documented path to raise formal issues with all the facts your resolution team needs attached.</p><h2>Why and when to use a complaint form</h2><p>Formal complaints need more than a feedback box: dates, transaction references, prior contact history, and what outcome the complainant actually wants. Capturing these consistently protects your organization, speeds resolution, and creates the audit trail regulators or dispute processes may ask for.</p><h2>Who is this template for</h2><p>Customer service leaders, property managers, healthcare administrators, utilities, schools, and HR departments with formal grievance procedures.</p><h2>Why SharaForms is the best tool for this form</h2><p>Purchase references surface only when relevant, requested outcomes route cases to the right team, and every complaint exports timestamped for compliance reporting.</p>',
             'types' => ['feedback_forms'],
             'industries' => ['customer_service_forms', 'business_forms'],
@@ -3853,7 +3905,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Suggestion Box Form Template',
             'slug' => 'suggestion-box-form-template',
-            'short_description' => 'A suggestion box form template with anonymous submissions, categorization, and follow-up contact options.',
+            'short_description' => 'A suggestion box form template with anonymous submissions, categorization, and follow-up contact options Free to use with team collaboration features.',
             'description' => '<p>Our Suggestion Box Form Template invites honest ideas by making anonymity a first-class choice, then routes categorized suggestions to whoever can act on them.</p><h2>Why and when to use a suggestion box form</h2><p>The best improvement ideas come from people closest to the problem, but only if speaking up feels safe. An anonymous-capable suggestion form surfaces issues leadership never hears otherwise, while optional contact details open the door to follow-up conversations.</p><h2>Who is this template for</h2><p>HR and people-operations teams, company leadership, schools, municipalities, libraries, and customer experience teams collecting product ideas.</p><h2>Why SharaForms is the best tool for this form</h2><p>Contact fields appear only for non-anonymous submitters, category tagging routes each idea to the right owner, and recurring themes become obvious when suggestions are exported and sorted.</p>',
             'types' => ['feedback_forms'],
             'industries' => ['business_forms', 'human_resources_forms'],
@@ -3889,7 +3941,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Equipment Checkout Form Template',
             'slug' => 'equipment-checkout-form-template',
-            'short_description' => 'An equipment checkout form template for IT, media, and facilities tracking loans with rates, dates, and accountability.',
+            'short_description' => 'An equipment checkout form template for IT, media, and facilities tracking loans with rates, dates, and accountability With onboarding and health scoring.',
             'description' => '<p>Our Equipment Checkout Form Template tracks who borrowed what, for how long, and what it costs, replacing the whiteboard-and-honor-system approach to shared gear.</p><h2>Why and when to use an equipment checkout form</h2><p>Laptops, cameras, projectors, and recorders disappear when checkout is informal. A logged form creates accountability per loan, computes expected charges for billing departments, and gives you a searchable history when gear comes back damaged or not at all.</p><h2>Who is this template for</h2><p>IT departments, school media centers, university AV desks, makerspaces, production studios, and equipment rental counters.</p><h2>Why SharaForms is the best tool for this form</h2><p>Daily rates calculate expected charges live, accessory selections travel with each loan, and orientation acknowledgments document that every borrower was trained before walking out the door.</p>',
             'types' => ['request_forms'],
             'industries' => ['it_forms', 'education_forms', 'business_forms'],
@@ -3942,7 +3994,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Medication Refill Request Form Template',
             'slug' => 'medication-refill-request-form-template',
-            'short_description' => 'A medication refill request form template for pharmacies and clinics handling renewals, deliveries, and pharmacy transfers.',
+            'short_description' => 'A medication refill request form template for pharmacies and clinics handling renewals, deliveries, and pharmacy transfers With onboarding and health scoring.',
             'description' => '<p>Our Medication Refill Request Form Template streamlines renewal requests with prescription details, pickup preferences, and delivery routing so staff process refills in one pass.</p><h2>Why and when to use a medication refill form</h2><p>Phone-in refills interrupt workflow and invite transcription errors. A structured request captures medication, dosage, prescriber, and delivery choice exactly once; transfer requests collect the outside pharmacy details automatically, and delivery orders gather addresses without a second call.</p><h2>Who is this template for</h2><p>Pharmacies, clinic dispensing desks, veterinary practices with pharmacies, long-term-care facilities, and mail-order programs.</p><h2>Why SharaForms is the best tool for this form</h2><p>Delivery requests reveal address fields on their own, pharmacy-transfer questions capture where prescriptions currently live, and instant notifications mean no request waits in a voicemail inbox.</p>',
             'types' => ['request_forms'],
             'industries' => ['healthcare_forms'],
@@ -3987,7 +4039,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Meal Train Signup Form Template',
             'slug' => 'meal-train-signup-form-template',
-            'short_description' => 'A meal train signup form template coordinating home-cooked support with dates, dishes, dietary capabilities, and drop-off windows.',
+            'short_description' => 'A meal train signup form template coordinating home-cooked support with dates, dishes, dietary capabilities, and drop-off windows Includes dietary cap',
             'description' => '<p>Our Meal Train Signup Form Template organizes meal support for new parents, neighbors in recovery, or families in hard seasons: one dish per person, no double-booked nights.</p><h2>Why and when to use a meal train signup form</h2><p>Meal trains fail on coordination, not generosity. A signup form locks one volunteer per date, records what dish they plan so nobody eats lasagna four nights straight, and captures kitchen capabilities plus container logistics before cooking day.</p><h2>Who is this template for</h2><p>Church communities, neighborhood groups, workplaces supporting colleagues, friends organizing postpartum care, and mutual-aid networks.</p><h2>Why SharaForms is the best tool for this form</h2><p>Date conflicts are visible at a glance in submissions, allergen-free capabilities get flagged for the family, and reminder notifications keep every cook on schedule.</p>',
             'types' => ['volunteer_forms', 'signup_forms'],
             'industries' => ['charity_forms', 'church_forms'],
@@ -4028,7 +4080,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Conference Registration Form Template',
             'slug' => 'conference-registration-form-template',
-            'short_description' => 'A conference registration form template with early-bird pricing, workshop add-ons, and invoicing for teams.',
+            'short_description' => 'A conference registration form template with early-bird pricing, workshop add-ons, and invoicing for teams Includes SMS notifications and mobile apps.',
             'description' => '<p>Our Conference Registration Form Template handles multi-tier pricing, workshop passes, dietary logistics, and invoice billing in one clean flow.</p><h2>Why and when to use a conference registration form</h2><p>Conferences stack pricing tiers, add-on passes, and headcount deadlines on top of ordinary attendee details. A structured registration captures every commercial choice per attendee, feeds accurate catering counts, and gives finance a clean list of who still owes what.</p><h2>Who is this template for</h2><p>Conference organizers, industry associations, corporate event teams, and universities running symposiums or annual meetings.</p><h2>Why SharaForms is the best tool for this form</h2><p>The total recalculates live as tiers and workshops are chosen, dietary answers trigger detail fields automatically, and invoice requests collect billing contacts without slowing card-paying attendees down.</p>',
             'types' => ['event_registration_forms', 'registration_forms'],
             'industries' => ['business_forms', 'education_forms'],
@@ -4083,7 +4135,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Reunion Registration Form Template',
             'slug' => 'reunion-registration-form-template',
-            'short_description' => 'A reunion registration form template for family and class reunions with per-person fees, shirts, and potluck dishes.',
+            'short_description' => 'A reunion registration form template for family and class reunions with per-person fees, shirts, and potluck dishes With onboarding and health scoring.',
             'description' => '<p>Our Reunion Registration Form Template handles family reunions and class homecomings: headcounts, commemorative shirts, dish sign-ups, and shared memories in one submission.</p><h2>Why and when to use a reunion registration form</h2><p>Reunion committees plan food, space, and keepsakes against fuzzy headcounts collected over group texts. One form locks real numbers: who is coming, what they are bringing, and how much the committee has raised before booking anything final.</p><h2>Who is this template for</h2><p>Family reunion committees, class reunion planners, military unit homecomings, and company anniversary events.</p><h2>Why SharaForms is the best tool for this form</h2><p>Totals update as families register multiple members, shirt orders roll up automatically for one print run, and the memory field turns submissions into ready-made reunion slideshow material.</p>',
             'types' => ['event_registration_forms', 'rsvp_forms'],
             'industries' => ['alumni_forms', 'entertainment_forms'],
@@ -4136,7 +4188,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'VBS Registration Form Template',
             'slug' => 'vacation-bible-school-registration-form-template',
-            'short_description' => 'A VBS registration form template for churches collecting child details, allergies, shirt sizes, and pickup authorization.',
+            'short_description' => 'A VBS registration form template for churches collecting child details, allergies, shirt sizes, and pickup authorization With onboarding and health scoring.',
             'description' => '<p>Our VBS Registration Form Template streamlines summer Bible school sign-ups with child details, allergy tracking, t-shirt sizes, and secure pickup authorization.</p><h2>Why and when to use a VBS registration form</h2><p>Vacation Bible School weeks juggle dozens of children, volunteer rosters, snack allergies, and checkout safety. Digital registrations give directors complete rosters early, so group assignments, supply orders, and name tags happen before day one instead of during drop-off chaos.</p><h2>Who is this template for</h2><p>Churches running vacation Bible school, summer ministry programs, kids camps, and midweek children\'s clubs with seasonal enrollment.</p><h2>Why SharaForms is the best tool for this form</h2><p>Allergy alerts surface on every relevant record, shirt sizes roll up into one order sheet, and pickup passwords keep check-out secure without laminated claim tickets. Export rosters by age group for station assignments.</p>',
             'types' => ['registration_forms', 'enrollment_forms'],
             'industries' => ['church_forms', 'charity_forms'],
@@ -4182,7 +4234,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Cake Order Form Template',
             'slug' => 'cake-order-form-template',
-            'short_description' => 'A cake order form template for bakeries capturing sizes, flavors, inscriptions, delivery dates, and live totals.',
+            'short_description' => 'A cake order form template for bakeries capturing sizes, flavors, inscriptions, delivery dates, and live totals With crop planning and yield tracking.',
             'description' => '<p>Our Cake Order Form Template captures custom cake orders completely: size, flavor, filling, inscription, and delivery details with an automatic price total.</p><h2>Why and when to use a cake order form</h2><p>Custom cakes die by phone tag: flavors misheard, dates forgotten, prices guessed. A structured order records every specification against a timestamp, bakers confirm once instead of five times, and customers see honest totals before they commit.</p><h2>Who is this template for</h2><p>Home bakeries, cake studios, bakery counters, and pastry chefs taking celebration, wedding, and office party orders.</p><h2>Why SharaForms is the best tool for this form</h2><p>Premium flavors and fillings adjust the total live, delivery orders collect addresses and dates automatically, and inscription text arrives exactly as the customer typed it, not as a phone message was remembered.</p>',
             'types' => ['order_forms'],
             'industries' => ['ecommerce_forms', 'services_forms'],
@@ -4241,7 +4293,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Yearbook Order Form Template',
             'slug' => 'yearbook-order-form-template',
-            'short_description' => 'A yearbook order form template for schools selling copies, personalization, and parent dedication ads with live totals.',
+            'short_description' => 'A yearbook order form template for schools selling copies, personalization, and parent dedication ads with live totals With onboarding and health scoring.',
             'description' => '<p>Our Yearbook Order Form Template handles the spring sales push: copies, cover personalization, and parent dedication ads calculated into one clear total per family.</p><h2>Why and when to use a yearbook order form</h2><p>Yearbook coordinators reconcile paper order envelopes, ad submissions, and cash across hundreds of students. One digital order captures copies, personalization choices, and dedication messages together, and exports tell the printer exactly what to produce.</p><h2>Who is this template for</h2><p>Elementary through high school yearbook advisors, PTA fundraising committees, and student publications teams.</p><h2>Why SharaForms is the best tool for this form</h2><p>Dedication ads reveal message fields automatically, personalization fees calculate without envelope math, and CSV exports sort cleanly by teacher for distribution day.</p>',
             'types' => ['order_forms'],
             'industries' => ['education_forms'],
@@ -4293,7 +4345,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Overtime Request Form Template',
             'slug' => 'overtime-request-form-template',
-            'short_description' => 'An overtime request form template capturing hours, rates, time-and-a-half pay projections, and supervisor approvals.',
+            'short_description' => 'An overtime request form template capturing hours, rates, time-and-a-half pay projections, and supervisor approvals With onboarding and health scoring.',
             'description' => '<p>Our Overtime Request Form Template standardizes pre-approval for extra hours with automatic pay projections and a documented approval trail.</p><h2>Why and when to use an overtime request form</h2><p>Unplanned overtime wrecks labor budgets and invites compliance questions. A pre-approval form makes expected hours, projected cost, and supervisor sign-off explicit before hours are worked, protecting both payroll accuracy and employees.</p><h2>Who is this template for</h2><p>Operations managers, retail and restaurant supervisors, warehouse leads, manufacturing shift managers, and HR teams enforcing overtime policy.</p><h2>Why SharaForms is the best tool for this form</h2><p>Pay projections compute at time-and-a-half automatically, reason codes reveal context only when needed, and approvals export into payroll review with timestamps intact.</p>',
             'types' => ['request_forms', 'employment_forms'],
             'industries' => ['human_resources_forms', 'business_forms'],
@@ -4346,7 +4398,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Travel Authorization Form Template',
             'slug' => 'travel-authorization-form-template',
-            'short_description' => 'A travel authorization form template estimating airfare, hotel, and per diem costs for pre-trip approvals.',
+            'short_description' => 'A travel authorization form template estimating airfare, hotel, and per diem costs for pre-trip approvals With role-based access and team permissions.',
             'description' => '<p>Our Travel Authorization Form Template captures business trip details with automatic cost estimates covering airfare, hotel nights, and per diem allowances.</p><h2>Why and when to use a travel authorization form</h2><p>Trips booked before approval create expense disputes and budget surprises. An authorization form forces the estimate conversation early: finance sees projected spend by category, international trips surface passport requirements, and personal-car mileage gets captured where it belongs.</p><h2>Who is this template for</h2><p>Finance and operations teams, field service businesses, nonprofits with grant-funded travel rules, and any organization requiring pre-trip approvals.</p><h2>Why SharaForms is the best tool for this form</h2><p>Total estimates compute live from nights and per-diem days, international destinations prompt passport validity questions, and approved authorizations export straight into expense-policy files.</p>',
             'types' => ['request_forms', 'employment_forms'],
             'industries' => ['human_resources_forms', 'business_forms'],
@@ -4404,7 +4456,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Art Commission Request Form Template',
             'slug' => 'art-commission-request-form-template',
-            'short_description' => 'An art commission request form template for artists quoting styles, character counts, backgrounds, and usage rights.',
+            'short_description' => 'An art commission request form template for artists quoting styles, character counts, backgrounds, and usage rights With onboarding and health scoring.',
             'description' => '<p>Our Art Commission Request Form Template quotes custom artwork professionally: style tiers, extra characters, backgrounds, rush fees, and commercial licensing in one live estimate.</p><h2>Why and when to use an art commission form</h2><p>Commission inquiries scatter across DMs with vague asks like "how much for something like your last post?" A quote form converts interest into concrete specs, prices scope honestly before work starts, and documents usage rights that protect both artist and client.</p><h2>Who is this template for</h2><p>Freelance illustrators, portrait artists, concept artists, furry and fandom artists, tattoo designers, and small studios taking commission queues.</p><h2>Why SharaForms is the best tool for this form</h2><p>Every add-on adjusts the estimate visibly so clients self-select affordable scopes, reference uploads attach directly to the request, and commercial-license answers document rights conversations in writing.</p>',
             'types' => ['request_forms', 'quote_forms'],
             'industries' => ['services_forms', 'entertainment_forms'],
@@ -4459,7 +4511,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Training Evaluation Form Template',
             'slug' => 'training-evaluation-form-template',
-            'short_description' => 'A training evaluation form template scoring sessions on clarity, relevance, pace, and materials with instant tallies.',
+            'short_description' => 'A training evaluation form template scoring sessions on clarity, relevance, pace, and materials with instant tallies With onboarding and health scoring.',
             'description' => '<p>Our Training Evaluation Form Template collects session feedback the way L&D teams actually use it: four scored dimensions, a computed score tally, and open comments routed to trainers.</p><h2>Why and when to use a training evaluation form</h2><p>Training programs improve only when feedback is specific enough to act on. Scoring clarity, relevance, pace, and materials separately pinpoints whether a weak session needs better content or better delivery, while computed tallies make cohorts comparable quarter over quarter.</p><h2>Who is this template for</h2><p>Corporate L&D teams, HR training coordinators, workshop facilitators, conference session organizers, and internal trainers.</p><h2>Why SharaForms is the best tool for this form</h2><p>Scores compute instantly for same-day debriefs, low ratings trigger follow-up questions automatically, and exports feed your LMS reporting without manual tallying.</p>',
             'types' => ['evaluation_forms', 'survey_templates'],
             'industries' => ['education_forms', 'business_forms'],
@@ -4504,7 +4556,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Transcript Request Form Template',
             'slug' => 'transcript-request-form-template',
-            'short_description' => 'A transcript request form template for schools handling delivery methods, rush processing, and third-party releases.',
+            'short_description' => 'A transcript request form template for schools handling delivery methods, rush processing, and third-party releases With onboarding and health scoring.',
             'description' => '<p>Our Transcript Request Form Template handles alumni and student record requests with delivery routing, processing-speed pricing, and release authorization built in.</p><h2>Why and when to use a transcript request form</h2><p>Records offices juggle phone requests with missing graduation years and unclear destinations. A structured form captures identity details, exact delivery targets, and consent once; electronic copies go out same-day while mail requests collect addresses automatically.</p><h2>Who is this template for</h2><p>High school registrar offices, university records departments, trade schools, and districts centralizing former-student requests.</p><h2>Why SharaForms is the best tool for this form</h2><p>Delivery choices reveal exactly the fields each method needs, rush pricing sets expectations before submission, and every request carries a documented release consent for compliance.</p>',
             'types' => ['request_forms'],
             'industries' => ['education_forms'],
@@ -4552,7 +4604,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Direct Deposit Form Template',
             'slug' => 'direct-deposit-form-template',
-            'short_description' => 'A direct deposit form template for HR enrolling employees with account types, split deposits, and void-check uploads.',
+            'short_description' => 'A direct deposit form template for HR enrolling employees with account types, split deposits, and void-check uploads With onboarding and health scoring.',
             'description' => '<p>Our Direct Deposit Form Template handles payroll enrollment cleanly: full or split deposits, percentage or fixed allocations, and void-check documentation in one secure submission.</p><h2>Why and when to use a direct deposit form</h2><td>Paper deposit slips get misread, and one transposed digit means a missed payday. A structured digital form validates format expectations up front, documents employee authorization, and gives payroll one consistent record per change.</p></td><h2>Who is this template for</h2><p>HR and payroll teams at companies of any size, staffing agencies onboarding workers quickly, and nonprofits modernizing paper processes.</p><h2>Why SharaForms is the best tool for this form</h2><p>Split-deposit choices reveal allocation fields only when relevant, void-check uploads attach to the authorization record, and submissions timestamp every change for audit trails.</p>',
             'types' => ['employment_forms', 'request_forms'],
             'industries' => ['human_resources_forms', 'banking_forms'],
@@ -4612,7 +4664,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Purchase Requisition Form Template',
             'slug' => 'purchase-requisition-form-template',
-            'short_description' => 'A purchase requisition form template for internal approvals capturing items, costs, vendors, and urgent justifications.',
+            'short_description' => 'A purchase requisition form template for internal approvals capturing items, costs, vendors, and urgent justifications With onboarding and health scoring.',
             'description' => '<p>Our Purchase Requisition Form Template standardizes internal buying requests with live line totals, vendor validation, and approval-ready justifications.</p><h2>Why and when to use a purchase requisition form</h2><p>Purchase orders start as informal requests that finance reconstructs later. A requisition form captures what, how many, from whom, and why before money moves: approvers see computed totals instantly, urgent buys carry written justification, and new vendors get onboarded deliberately instead of accidentally.</p><h2>Who is this template for</h2><p>Procurement teams, office managers, department heads controlling budgets, schools and nonprofits with spending policies, and any organization requiring purchase pre-approval.</p><h2>Why SharaForms is the best tool for this form</h2><p>Totals compute from quantity times unit cost without spreadsheet round-trips, urgent requests explain themselves, and approved requisitions export into your PO process in order.</p>',
             'types' => ['request_forms', 'order_forms'],
             'industries' => ['business_forms'],
@@ -4667,7 +4719,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'IT Support Ticket Form Template',
             'slug' => 'it-support-ticket-form-template',
-            'short_description' => 'An IT support ticket form template triaging issues by category, urgency, device, and business impact.',
+            'short_description' => 'An IT support ticket form template triaging issues by category, urgency, device, and business impact Built for healthcare, education, and legal teams.',
             'description' => '<p>Our IT Support Ticket Form Template turns "the internet is broken" Slack messages into structured tickets with categories, urgency, impact statements, and diagnostics attached.</p><h2>Why and when to use an IT support ticket form</h2><p>Support chaos comes from unstructured requests arriving through five channels at once. A ticket form forces the facts that matter: what category, which device, how urgent, who is blocked. High-impact issues surface business-impact descriptions automatically so triage prioritizes correctly.</p><h2>Who is this template for</h2><p>Internal IT departments, MSPs taking client tickets, school technology desks, and shared-services teams tracking request volume.</p><h2>Why SharaForms is the best tool for this form</h2><p>Critical issues arrive with impact context attached, screenshots travel with the first message instead of the third, and ticket volume by category reveals where training beats troubleshooting.</p>',
             'types' => ['request_forms', 'report_forms'],
             'industries' => ['it_forms', 'business_forms'],
@@ -4721,7 +4773,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Credit Application Form Template',
             'slug' => 'credit-application-form-template',
-            'short_description' => 'A business credit application form template for trade accounts capturing structure, references, limits, and terms.',
+            'short_description' => 'A business credit application form template for trade accounts capturing structure, references, limits, and terms With price lists and tiered pricing.',
             'description' => '<p>Our Credit Application Form Template vets B2B customers for net-terms accounts with structure details, trade references, and requested limits in one documented application.</p><h2>Why and when to use a credit application form</h2><p>Extending trade credit on trust alone ends in collections. A structured application captures the facts credit managers weigh: legal structure, years trading, bank and trade references, and requested exposure, so approval decisions are consistent and defensible.</p><h2>Who is this template for</h2><p>Wholesalers and distributors, manufacturers with dealer networks, commercial service providers, and equipment suppliers offering net-30 or net-60 terms.</p><h2>Why SharaForms is the best tool for this form</h2><p>Sole proprietors are prompted for personal guarantees automatically, reference details arrive structured for checking, and approved accounts export into AR systems without rekeying.</p>',
             'types' => ['application_forms', 'request_forms'],
             'industries' => ['banking_forms', 'business_forms'],
@@ -4767,9 +4819,9 @@ class TemplateSeeder extends Seeder
     private function wholesaleAccountApplication(): array
     {
         return [
-            'name' => 'Wholesale Account Application Form Template',
+            'name' => 'Wholesale Account Application',
             'slug' => 'wholesale-account-application-form-template',
-            'short_description' => 'A wholesale account application form template verifying retailers with resale certificates and volume estimates.',
+            'short_description' => 'A wholesale account application form template verifying retailers with resale certificates and volume estimates With crop planning and yield tracking.',
             'description' => '<p>Our Wholesale Account Application Form Template screens retail partners properly: storefront type, resale documentation, product categories, and volume expectations before pricing is unlocked.</p><h2>Why and when to use a wholesale application form</h2><p>Opening wholesale to anyone with an email invites discount-code resellers who wreck brand positioning. A verification-first application collects resale certificates up front, confirms legitimate retail channels, and sets minimum-order and MAP expectations in writing from day one.</p><h2>Who is this template for</h2><p>Consumer brands opening wholesale lines, makers scaling beyond direct sales, food and beverage producers, and boutique brands protecting retail relationships.</p><h2>Why SharaForms is the best tool for this form</h2><p>Online sellers are asked for store URLs automatically, resale certificates attach directly to each application, and category interests help your sales team match new stockists to the right line sheet.</p>',
             'types' => ['application_forms', 'signup_forms'],
             'industries' => ['ecommerce_forms', 'business_forms'],
@@ -4822,7 +4874,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Insurance Quote Request Form Template',
             'slug' => 'insurance-quote-request-form-template',
-            'short_description' => 'An insurance quote request form template routing auto, home, renters, life, and business inquiries with coverage details.',
+            'short_description' => 'An insurance quote request form template routing auto, home, renters, life, and business inquiries with coverage details With onboarding and health scoring.',
             'description' => '<p>Our Insurance Quote Request Form Template routes prospect inquiries by coverage type and collects exactly the details each quote needs, so agents respond with numbers instead of questionnaires.</p><h2>Why and when to use an insurance quote request form</h2><p>Quote requests stall when agents call back to collect basics: vehicle year, home age, coverage amounts. A structured request gathers coverage-specific details at first contact through conditional fields, letting prepared agents deliver indicative quotes on the first response.</p><h2>Who is this template for</h2><p>Independent insurance agencies, brokerage teams, captive agents running local landing pages, and MGAs collecting submission pipelines.</p><h2>Why SharaForms is the best tool for this form</h2><p>Coverage selection reveals only relevant questions, renewal dates flag prospects shopping soon, and instant notifications mean fast follow-up while quote intent is hot.</p>',
             'types' => ['quote_forms', 'lead_generation_forms'],
             'industries' => ['insurance_forms'],
@@ -4875,7 +4927,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Tax Preparation Client Intake Form Template',
             'slug' => 'tax-preparation-client-intake-form-template',
-            'short_description' => 'A tax preparation intake form template for accountants collecting filing status, income sources, and document readiness.',
+            'short_description' => 'A tax preparation intake form template for accountants collecting filing status, income sources, and document readiness With onboarding and health scoring.',
             'description' => '<p>Our Tax Preparation Client Intake Form Template organizes season workload before it starts: filing status, income types, dependents, and special situations captured per client.</p><h2>Why and when to use a tax client intake form</h2><p>Tax season collapses when engagement letters meet missing information. An intake form identifies complexity early: self-employment income triggers business questions, rentals and investments surface before appointments, so preparers schedule realistic time slots instead of discovering K-1s mid-meeting.</p><h2>Who is this template for</h2><p>CPA firms, enrolled agents, tax prep franchises, bookkeepers expanding into tax filing, and virtual tax practices.</p><h2>Why SharaForms is the best tool for this form</h2><p>Income-type selections reveal relevant follow-ups automatically, appointment preferences route scheduling immediately, and completed intakes become the engagement checklist your staff works from.</p>',
             'types' => ['questionnaire_templates', 'application_forms'],
             'industries' => ['banking_forms', 'business_forms'],
@@ -4925,7 +4977,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Tattoo Consent Form Template',
             'slug' => 'tattoo-consent-form-template',
-            'short_description' => 'A tattoo consent form template covering age verification, guardian consent for minors, allergies, and aftercare acknowledgment.',
+            'short_description' => 'A tattoo consent form template covering age verification, guardian consent for minors, allergies, and aftercare acknowledgment With onboarding and health scoring.',
             'description' => '<p>Our Tattoo Consent Form Template documents informed consent before the needle touches skin: identity, age, health disclosures, placement approval, and aftercare responsibility.</p><h2>Why and when to use a tattoo consent form</h2><p>Studios need documented consent for every session, and minors require guardian involvement that must be provable later. A digital consent form creates timestamped records per client and session, protecting artists with clear health disclosures and aftercare acknowledgments.</p><h2>Who is this template for</h2><p>Tattoo studios, guest artists at conventions, apprentices taking supervised work, and piercing studios wanting consistent consent records.</p><h2>Why SharaForms is the best tool for this form</h2><p>Minors trigger mandatory guardian fields automatically, allergy disclosures sit beside design notes for the artist, and portfolio-permission choices are captured explicitly instead of assumed.</p>',
             'types' => ['consent_forms'],
             'industries' => ['salon_forms', 'services_forms'],
@@ -4969,7 +5021,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Prayer Request Form Template',
             'slug' => 'prayer-request-form-template',
-            'short_description' => 'A prayer request form template handling sensitive submissions with privacy controls, categories, and follow-up options.',
+            'short_description' => 'A prayer request form template handling sensitive submissions with privacy controls, categories, and follow-up options With onboarding and health scoring.',
             'description' => '<p>Our Prayer Request Form Template gives congregations a dignified channel for requests: category tagging, granular sharing permissions, and optional follow-up contact.</p><h2>Why and when to use a prayer request form</h2><p>Prayer requests carry deeply personal details that deserve deliberate handling. A structured form lets people choose exactly who sees their request: team only, congregation, or private. Follow-up preferences ensure care happens without awkward public exposure of private struggles.</p><h2>Who is this template for</h2><p>Churches, campus ministries, hospital chaplaincies, prayer chains, and small groups coordinating care for members.</p><h2>Why SharaForms is the best tool for this form</h2><p>Sharing permissions travel with each request so nothing gets read aloud by mistake, follow-up requests collect contact preferences automatically, and pastoral teams see new needs the moment they are submitted.</p>',
             'types' => ['request_forms'],
             'industries' => ['church_forms', 'charity_forms'],
@@ -5016,7 +5068,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Open House Sign-In Sheet Template',
             'slug' => 'open-house-sign-in-form-template',
-            'short_description' => 'An open house sign-in sheet template for listing agents capturing buyer contacts, agent status, and financing readiness.',
+            'short_description' => 'An open house sign-in sheet template for listing agents capturing buyer contacts, agent status, and financing readiness With onboarding and health scoring.',
             'description' => '<p>Our Open House Sign-In Sheet Template replaces the clipboard with a QR-code form that captures qualified buyer context: representation status, financing stage, and genuine interest level.</p><h2>Why and when to use an open house sign-in form</h2><p>Paper sign-in sheets produce illegible names and zero qualification context. A digital sign-in captures clean contact details plus the signals agents actually work with: do they have an agent, are they financed, how soon are they buying. Follow-ups start Sunday evening instead of never.</p><h2>Who is this template for</h2><p>Listings agents running open houses, brokerages standardizing lead capture, new-build sales offices, and FSBO sellers wanting professional intake.</p><h2>Why SharaForms is the best tool for this form</h2><p>Buyer-agent status routes co-broke communication correctly, financing answers separate ready buyers from browsers, and every sign-in lands in your CRM-ready export before you lock the door.</p>',
             'types' => ['signup_forms', 'lead_generation_forms'],
             'industries' => ['real_estate_forms'],
@@ -5065,7 +5117,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'HOA Architectural Request Form Template',
             'slug' => 'hoa-architectural-request-form-template',
-            'short_description' => 'An HOA architectural review request form template capturing project specs, contractor insurance, and ARC compliance.',
+            'short_description' => 'An HOA architectural review request form template capturing project specs, contractor insurance, and ARC compliance With onboarding and health scoring.',
             'description' => '<p>Our HOA Architectural Request Form Template standardizes improvement applications: project specs, materials, timelines, and contractor documentation reviewed against community guidelines.</p><h2>Why and when to use an HOA architectural request form</h2><p>Architectural review committees drown in inconsistent applications missing key details like paint codes or contractor licensing. A structured request captures everything guidelines require up front, so reviews complete in one cycle and approvals create enforceable records.</p><h2>Who is this template for</h2><p>HOA boards and architectural review committees, property management companies, condominium associations, and planned-community administrators.</p><h2>Why SharaForms is the best tool for this form</h2><p>Licensed-contractor projects surface insurance-upload requirements automatically, material descriptions arrive with specifics committees need, and approved requests become searchable precedent for future applications.</p>',
             'types' => ['request_forms', 'application_forms'],
             'industries' => ['real_estate_forms', 'business_forms'],
@@ -5105,7 +5157,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Guest Post Pitch Form Template',
             'slug' => 'guest-post-pitch-form-template',
-            'short_description' => 'A guest post pitch form template screening article submissions by topic fit, samples, and audience reach.',
+            'short_description' => 'A guest post pitch form template screening article submissions by topic fit, samples, and audience reach Free to use with team collaboration features.',
             'description' => '<p>Our Guest Post Pitch Form Template screens content contributions consistently: proposed titles, outlines, writing samples, and audience reach, so editors evaluate pitches instead of chasing details.</p><h2>Why and when to use a guest post pitch form</h2><p>"Can I write for you?" emails bury the two facts editors need: what will you write, and can you actually write? A structured pitch captures the proposed angle, proof of past work, and author reach together, making accept/reject decisions fast and fair.</p><h2>Who is this template for</h2><p>Blogs accepting contributors, industry publications, SaaS content teams scaling thought leadership, and newsletter operators trading guest issues.</p><h2>Why SharaForms is the best tool for this form</h2><p>Pitches arrive pre-structured against your editorial criteria, sample links let quality speak before calls, and originality acknowledgments protect your domain from AI-spam submissions.</p>',
             'types' => ['content_forms', 'application_forms'],
             'industries' => ['marketing_forms', 'seo_forms'],
@@ -5140,9 +5192,9 @@ class TemplateSeeder extends Seeder
     private function employeeOfTheMonthNomination(): array
     {
         return [
-            'name' => 'Employee of the Month Nomination Form Template',
+            'name' => 'Employee of the Month Nomination',
             'slug' => 'employee-of-the-month-nomination-form-template',
-            'short_description' => 'An employee of the month nomination form template with categories, specific achievements, and anonymous options.',
+            'short_description' => 'An employee of the month nomination form template with categories, specific achievements, and anonymous options With crop planning and yield tracking.',
             'description' => '<p>Our Employee of the Month Nomination Form Template turns vague praise into award-worthy evidence: category-tagged nominations with specific achievements peers can cite.</p><h2>Why and when to use an employee nomination form</h2><p>Recognition programs fade when nominations feel like homework. A focused form lowers friction: pick a colleague, choose a category, describe one specific moment they shined. Anonymous options surface recognition for colleagues who might hesitate to self-advocate.</p><h2>Who is this template for</h2><p>HR teams running recognition programs, managers building team morale rituals, schools honoring staff members, and frontline operations celebrating shift excellence.</p><h2>Why SharaForms is the best tool for this form</h2><p>Nominations arrive categorized for committee review, achievement descriptions give award announcements real stories, and anonymous submissions keep the door open for every voice.</p>',
             'types' => ['award_forms', 'employment_forms'],
             'industries' => ['human_resources_forms', 'business_forms'],
@@ -5189,7 +5241,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Potluck Signup Sheet Template',
             'slug' => 'potluck-signup-sheet-form-template',
-            'short_description' => 'A potluck signup sheet template balancing dish categories, dietary tags, servings, and kitchen logistics.',
+            'short_description' => 'A potluck signup sheet template balancing dish categories, dietary tags, servings, and kitchen logistics Free to use with team collaboration features.',
             'description' => '<p>Our Potluck Signup Sheet Template coordinates group meals without the spreadsheet chaos: dish categories balance automatically visible, servings count toward headcounts, and dietary tags keep every eater safe.</p><h2>Why and when to use a potluck signup sheet</h2><td>Office potlucks end up as nine desserts and no main course because nobody saw the list. Category-aware signups show what is covered and what is missing, serving counts feed table math, and allergen tags prevent the awkward discovery mid-bite.</p></td><h2>Who is this template for</h2><p>Workplace social committees, church community meals, classroom party parents, club gatherings, and neighborhood associations.</p><h2>Why SharaForms is the best tool for this form</h2><p>Dietary tags roll into one shopping-safe summary, reheating answers tell organizers whether the office kitchen needs booking, and exports become the day-of serving table plan.</p>',
             'types' => ['signup_forms', 'volunteer_forms'],
             'industries' => ['business_forms', 'church_forms'],
@@ -5237,7 +5289,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Animal Foster Application Form Template',
             'slug' => 'foster-animal-application-form-template',
-            'short_description' => 'An animal foster application form template for shelters vetting homes by pets, residence, hours alone, and experience.',
+            'short_description' => 'An animal foster application form template for shelters vetting homes by pets, residence, hours alone, and experience With onboarding and health scoring.',
             'description' => '<p>Our Animal Foster Application Form Template helps shelters place animals into vetted foster homes faster: household readiness, existing pets, landlord permissions, and daily availability captured per applicant.</p><h2>Why and when to use a foster application form</h2><p>Foster programs live and die on placement speed matched with placement safety. A structured application surfaces deal-breakers early: unvaccinated resident pets, landlords who never approved, or households gone ten hours daily. Volunteers screen applications instead of playing phone tag.</p><h2>Who is this template for</h2><p>Animal shelters and rescues, breed-specific foster networks, municipal shelter volunteer programs, and TNR cat colonies placing barn cats.</p><h2>Why SharaForms is the best tool for this form</h2><p>Renters document landlord approval before home visits, current-pet details flag introduction risks, and approved fosters export into your placement tracker with complete household profiles.</p>',
             'types' => ['application_forms', 'volunteer_forms'],
             'industries' => ['animal_shelter_forms'],
@@ -5283,9 +5335,9 @@ class TemplateSeeder extends Seeder
     private function moveInMoveOutInspection(): array
     {
         return [
-            'name' => 'Move-In / Move-Out Inspection Form Template',
+            'name' => 'Move-In / Move-Out Inspection',
             'slug' => 'move-in-move-out-inspection-form-template',
-            'short_description' => 'A move-in move-out inspection form template for landlords documenting property condition, damage, and deposit deductions.',
+            'short_description' => 'A move-in move-out inspection form template for landlords documenting property condition, damage, and deposit deductions With onboarding and health scoring.',
             'description' => '<p>Our Move-In Move-Out Inspection Form Template walks properties room by room, documenting condition with photos and computing deposit deductions transparently.</p><h2>Why and when to use a move-out inspection form</h2><p>Deposit disputes start when condition records are memory instead of evidence. A structured walkthrough captures each room\'s state with timestamps and photos at both ends of a tenancy, making every deduction explainable and every fair return fast.</p><h2>Who is this template for</h2><p>Landlords and property managers, apartment complexes, student housing offices, vacation rental hosts, and tenants protecting their own deposits.</p><h2>Why SharaForms is the best tool for this form</h2><p>Damaged items trigger descriptions and photo uploads automatically, deduction totals compute from documented costs rather than gut feeling, and completed inspections export into tenant files permanently.</p>',
             'types' => ['inspection_forms', 'checklist_forms'],
             'industries' => ['real_estate_forms', 'business_forms'],
@@ -5344,7 +5396,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Minor Travel Consent Form Template',
             'slug' => 'minor-travel-consent-form-template',
-            'short_description' => 'A child travel consent form template documenting parental permission, accompanying adults, and itinerary for border officials.',
+            'short_description' => 'A child travel consent form template documenting parental permission, accompanying adults, and itinerary for border officials With onboarding and health scoring.',
             'description' => '<p>Our Minor Travel Consent Form Template documents permission when a child travels without one or both parents: accompanying adults, itinerary, contactability, and notarization-ready details.</p><h2>Why and when to use a travel consent form</h2><p>Airlines and border officials increasingly require written parental consent for children traveling alone, with one parent, or with groups. A signed consent letter prevents heartbreaking departure-gate refusals and gives guardians the documentation carriers actually ask for.</p><h2>Who is this template for</h2><p>Parents arranging solo travel for children, grandparents taking grandchildren abroad, school trip coordinators, sports teams traveling to tournaments, and exchange program organizers.</p><h2>Why SharaForms is the best tool for this form</h2><p>The absent-parent section captures their explicit consent separately, trip itineraries stay attached to the authorization, and completed forms print cleanly for notarization where destinations require stamped originals.</p>',
             'types' => ['consent_forms', 'legal_forms'],
             'industries' => ['business_forms'],
@@ -5390,7 +5442,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Vaccination Consent Form Template',
             'slug' => 'vaccination-consent-form-template',
-            'short_description' => 'A vaccination consent form template for clinics and school programs covering eligibility, reactions history, and guardian approval.',
+            'short_description' => 'A vaccination consent form template for clinics and school programs covering eligibility, reactions history, and guardian approval Includes eligibilit',
             'description' => '<p>Our Vaccination Consent Form Template documents informed consent for flu clinics, school immunization programs, and workplace health drives: eligibility screening, reaction history, and guardian approval for minors.</p><h2>Why and when to use a vaccination consent form</h2><p>No vaccination should happen without documented informed consent. Structured forms screen contraindications consistently, capture previous adverse reactions that alter clinical decisions, and give school clinics the guardian authority they legally need before any injection.</p><h2>Who is this template for</h2><p>Public health clinics, school-based immunization programs, workplace flu-shot drives, pharmacies offering walk-in vaccines, and travel medicine practices.</p><h2>Why SharaForms is the best tool for this form</h2><p>Minor patients trigger mandatory guardian sections automatically, adverse-reaction histories surface before administration, and batch exports give clinic coordinators exact dose counts to order.</p>',
             'types' => ['consent_forms'],
             'industries' => ['healthcare_forms', 'education_forms'],
@@ -5440,7 +5492,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Resignation Notice Form Template',
             'slug' => 'resignation-notice-form-template',
-            'short_description' => 'A resignation notice form template standardizing departures with last-day dates, reason categories, and handover plans.',
+            'short_description' => 'A resignation notice form template standardizing departures with last-day dates, reason categories, and handover plans With onboarding and health scoring.',
             'description' => '<p>Our Resignation Notice Form Template turns resignations into orderly departures: formal notice dates, last working days, structured reasons, and knowledge-transfer commitments in one record.</p><h2>Why and when to use a resignation form</h2><p>Resignations handled by hallway conversation leave HR reconstructing facts later. A notice form fixes the official last day, documents the stated reason while feelings are known, and triggers handover planning before knowledge walks out the door.</p><h2>Who is this template for</h2><p>HR departments, managers receiving notices, small businesses without formal HR staff, and employees wanting clean professional documentation of their departure.</p><h2>Why SharaForms is the best tool for this form</h2><p>Notice periods validate automatically against submission dates, reason categories feed honest retention analytics, and exit workflows (IT, payroll, equipment) get triggered from one timestamped record.</p>',
             'types' => ['employment_forms', 'report_forms'],
             'industries' => ['human_resources_forms'],
@@ -5487,7 +5539,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Offer Acceptance Form Template',
             'slug' => 'offer-acceptance-form-template',
-            'short_description' => 'An offer acceptance form template confirming employment terms, start dates, and document submissions for new hires.',
+            'short_description' => 'An offer acceptance form template confirming employment terms, start dates, and document submissions for new hires With onboarding and health scoring.',
             'description' => '<p>Our Offer Acceptance Form Template closes hiring loops cleanly: candidates accept or negotiate terms formally, confirm start dates, and learn exactly which documents bring them to day one.</p><h2>Why and when to use an offer acceptance form</h2><p>Verbal acceptances evaporate; counteroffers arrive by email threads nobody can audit. A formal acceptance form documents agreement to role, compensation band, and start date simultaneously, while declining candidates surface real objections recruiting teams can learn from.</p><h2>Who is this template for</h2><p>Recruiting teams and HR departments, small businesses extending first offers, staffing agencies confirming placements, and contractors formalizing engagements.</p><h2>Why SharaForms is the best tool for this form</h2><p>Negotiation requests reveal what specifically needs discussing, declines capture reasons for pipeline analytics, and accepted offers flow straight into onboarding checklists with confirmed start dates attached.</p>',
             'types' => ['employment_forms'],
             'industries' => ['human_resources_forms'],
@@ -5550,7 +5602,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Reference Check Form Template',
             'slug' => 'reference-check-form-template',
-            'short_description' => 'A reference check form template structuring referee feedback on candidates: performance, reliability, and rehire answers.',
+            'short_description' => 'A reference check form template structuring referee feedback on candidates: performance, reliability, and rehire answers With onboarding and health scoring.',
             'description' => '<p>Our Reference Check Form Template turns reference calls into comparable data: structured questions about performance, strengths, working relationships, and the rehire question that reveals everything.</p><h2>Why and when to use a reference check form</h2><p>Unstructured reference calls produce anecdotes, not evidence. Asking every referee the same scored questions makes candidates genuinely comparable, protects hiring decisions with documented diligence, and catches hesitation patterns a friendly chat would miss.</p><h2>Who is this template for</h2><p>Hiring managers and recruiters, HR teams standardizing due diligence, small businesses making their first key hires, and volunteer organizations screening trust positions.</p><h2>Why SharaForms is the best tool for this form</h2><p>Referees complete forms on their own schedule instead of phone tag, hesitant rehire answers pair automatically with explanation fields, and completed checks attach cleanly to candidate files.</p>',
             'types' => ['interview_forms', 'evaluation_forms'],
             'industries' => ['human_resources_forms'],
@@ -5599,7 +5651,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Shift Swap Request Form Template',
             'slug' => 'shift-swap-form-template',
-            'short_description' => 'A shift swap request form template for hourly teams coordinating schedule changes with coverage confirmation.',
+            'short_description' => 'A shift swap request form template for hourly teams coordinating schedule changes with coverage confirmation Free to use with no credit card required.',
             'description' => '<p>Our Shift Swap Request Form Template brings order to schedule changes: who swaps with whom, which shifts, why, and whether both parties plus supervision have agreed.</p><h2>Why and when to use a shift swap form</h2><p>Schedule chaos breeds no-shows. Group-chat swap deals collapse when one party forgets, leaving managers short-staffed mid-shift. A logged request documents mutual agreement before the rota changes, protecting coverage math and everyone\'s paychecks.</p><h2>Who is this template for</h2><p>Retail managers, restaurant supervisors, warehouse leads, hospital ward coordinators, call centers, and any team running rotating schedules.</p><h2>Why SharaForms is the best tool for this form</h2><p>Both parties confirm within one submission, skill-mismatch notes surface before approval rather than during shifts, and approved swaps export straight into your scheduling tool.</p>',
             'types' => ['request_forms', 'employment_forms'],
             'industries' => ['human_resources_forms', 'services_forms'],
@@ -5644,7 +5696,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Job Requisition Form Template',
             'slug' => 'job-requisition-form-template',
-            'short_description' => 'A job requisition form template for managers requesting headcount with role scope, salary bands, and budget sign-off.',
+            'short_description' => 'A job requisition form template for managers requesting headcount with role scope, salary bands, and budget sign-off With onboarding and health scoring.',
             'description' => '<p>Our Job Requisition Form Template standardizes how hiring starts: managers justify headcount, define role scope, declare salary bands, and secure budget acknowledgment before recruiting spends a dollar.</p><h2>Why and when to use a job requisition form</h2><p>Hiring without a paper trail creates phantom budgets and mis-scoped roles. A requisition forces the business case into writing: why the role exists, what success looks like, what it costs, and whose budget absorbs it, before job ads go live.</p><h2>Who is this template for</h2><p>HR and talent acquisition teams, department heads requesting growth, finance partners approving spend, and startups formalizing their first structured hires.</p><h2>Why SharaForms is the best tool for this form</h2><p>Replacement versus new-role logic asks different follow-up questions, salary bands arrive declared upfront, and approved requisitions become the sourcing checklist recruiters work from.</p>',
             'types' => ['request_forms', 'employment_forms'],
             'industries' => ['human_resources_forms', 'business_forms'],
@@ -5695,7 +5747,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Address Change Form Template',
             'slug' => 'address-change-form-template',
-            'short_description' => 'An address change form template updating customer, member, or patient records with verification and effective dates.',
+            'short_description' => 'An address change form template updating customer, member, or patient records with verification and effective dates With onboarding and health scoring.',
             'description' => '<p>Our Address Change Form Template keeps records current: identity verification, old and new addresses side by side, effective dates, and mail-forwarding preferences in one auditable update.</p><h2>Why and when to use an address change form</h2><td>Misdelivered statements, failed deliveries, and compliance letters bouncing create cost and risk alike. A structured change process verifies identity before editing master records, captures effective dates precisely, and leaves an audit trail regulators and auditors appreciate.</p></td><h2>Who is this template for</h2><p>Banks and credit unions, insurers, healthcare practices, membership organizations, schools, subscription businesses, and any organization mailing anything important.</p><h2>Why SharaForms is the best tool for this form</h2><p>Identity fields match against existing records before updates apply, effective dates prevent retroactive confusion, and every change exports timestamped into your records history.</p>',
             'types' => ['request_forms'],
             'industries' => ['business_forms'],
@@ -5736,7 +5788,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Callback Request Form Template',
             'slug' => 'callback-request-form-template',
-            'short_description' => 'A callback request form template capturing phone-back requests with topics, time windows, and priority routing.',
+            'short_description' => 'A callback request form template capturing phone-back requests with topics, time windows, and priority routing Includes forums, groups, and messaging.',
             'description' => '<p>Our Callback Request Form Template captures call-me-back requests properly: contact details, topic context, preferred windows, and urgency, so your team returns calls prepared instead of blind.</p><h2>Why and when to use a callback form</h2><p>Nobody enjoys hold music. A callback form converts frustrated phone traffic into structured queue entries with context attached: agents see the topic before dialing, customers choose when their phone rings, and nobody loses a sale to an abandoned hold line.</p><h2>Who is this template for</h2><p>Sales teams handling inbound interest, support desks deflecting hold queues, clinics booking advisory calls, financial advisors, and any business whose phones overflow at peak times.</p><h2>Why SharaForms is the best tool for this form</h2><p>Topic selection routes calls to the right team instantly, time-window choices respect customer schedules, and urgent flags surface genuinely pressing calls at the top of every queue.</p>',
             'types' => ['contact_forms', 'request_forms'],
             'industries' => ['business_forms', 'services_forms', 'customer_service_forms'],
@@ -5778,7 +5830,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Public Records Request Form Template',
             'slug' => 'public-records-request-form-template',
-            'short_description' => 'A public records request form template for agencies handling FOIA-style requests with scope, format, and fee details.',
+            'short_description' => 'A public records request form template for agencies handling FOIA-style requests with scope, format, and fee details With onboarding and health scoring.',
             'description' => '<p>Our Public Records Request Form Template structures freedom-of-information style requests: precise record descriptions, format preferences, fee waiver considerations, and response tracking that keeps agencies compliant.</p><h2>Why and when to use a public records request form</h2><p>Vague requests stall in legal review while statutory clocks run. Structured intake captures exactly which records, which date ranges, and which format, letting staff locate documents instead of interrogating requesters, and creating the response-timestamp trail compliance requires.</p><h2>Who is this template for</h2><p>Government agencies and municipalities, school districts, police departments with disclosure units, universities, and journalists or citizens filing requests.</p><h2>Why SharaForms is the best tool for this form</h2><p>Fee-waiver claims reveal supporting justification automatically, format choices set production expectations upfront, and timestamped submissions prove statutory-clock start dates definitively.</p>',
             'types' => ['request_forms', 'legal_forms'],
             'industries' => ['business_forms'],
@@ -5825,7 +5877,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Order Status Inquiry Form Template',
             'slug' => 'order-status-inquiry-form-template',
-            'short_description' => 'An order status inquiry form template deflating where-is-my-order tickets with structured lookup details.',
+            'short_description' => 'An order status inquiry form template deflating where-is-my-order tickets with structured lookup details Free to use with team collaboration features.',
             'description' => '<p>Our Order Status Inquiry Form Template captures where-is-my-order questions completely: order numbers, purchase dates, issue categories, and desired outcomes, so support resolves in one touch.</p><h2>Why and when to use an order status form</h2><p>WISMO tickets dominate e-commerce support volume, and most arrive missing the two facts needed to answer them. Structured inquiry forms collect order numbers and issue types together, letting agents (or automations) respond same-hour instead of trading three emails first.</p><h2>Who is this template for</h2><p>E-commerce support teams, fulfillment operations during peak seasons, subscription box companies, and marketplaces coordinating third-party sellers.</p><h2>Why SharaForms is the best tool for this form</h2><p>Issue categories route each case correctly, damaged-item answers trigger photo requests automatically, and resolution-preference fields tell you what actually closes the ticket happily.</p>',
             'types' => ['tracking_forms', 'request_forms'],
             'industries' => ['ecommerce_forms', 'customer_service_forms'],
@@ -5874,7 +5926,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Warranty Registration Form Template',
             'slug' => 'warranty-registration-form-template',
-            'short_description' => 'A product registration form template activating warranties with purchase proof, model details, and owner contacts.',
+            'short_description' => 'A product registration form template activating warranties with purchase proof, model details, and owner contacts With price lists and tiered pricing.',
             'description' => '<p>Our Warranty Registration Form Template activates product coverage at purchase: model and serial capture, purchase-channel logic, owner contacts, and marketing opt-ins kept honestly separate.</p><h2>Why and when to use a product registration form</h2><p>Registered products mean faster warranty service, recall reachability, and honest ownership data. Customers registering at purchase skip receipt-hunting later; manufacturers gain accurate install bases for safety communications and accessory demand planning.</p><h2>Who is this template for</h2><p>Appliance and electronics brands, power-tool manufacturers, furniture makers, bicycle and sporting-goods companies, and any product carrying a written warranty.</p><h2>Why SharaForms is the best tool for this form</h2><p>Purchase-channel questions adapt automatically between online orders and store receipts, serial numbers validate ownership instantly at claim time, and safety recalls reach registered owners first.</p>',
             'types' => ['registration_forms', 'request_forms'],
             'industries' => ['ecommerce_forms', 'business_forms'],
@@ -5918,7 +5970,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Supplier Registration Form Template',
             'slug' => 'supplier-registration-form-template',
-            'short_description' => 'A supplier registration form template onboarding vendors with compliance docs, capabilities, and payment details.',
+            'short_description' => 'A supplier registration form template onboarding vendors with compliance docs, capabilities, and payment details With quote estimation and scheduling.',
             'description' => '<p>Our Supplier Registration Form Template onboards procurement vendors properly: company profiles, capability declarations, compliance documents, and banking details collected once, verified centrally, and reusable across every future engagement.</p><h2>Why and when to use a supplier registration form</h2><p>Procurement without vendor master data drowns in scattered spreadsheets. A structured registration collects tax documentation, insurance certificates, and capability statements together, so compliance checks happen once at onboarding instead of frantically during every new purchase.</p><h2>Who is this template for</h2><p>Procurement teams, construction main contractors managing subcontractor lists, hospitality groups onboarding suppliers across properties, and public-sector organizations with vendor compliance duties.</p><h2>Why SharaForms is the best tool for this form</h2><p>Diversity-certification uploads appear only for qualifying suppliers, insurance expiry dates surface before coverage lapses, and approved vendors export into ERP-ready vendor master files.</p>',
             'types' => ['application_forms'],
             'industries' => ['business_forms', 'banking_forms'],
@@ -5970,7 +6022,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'School Absence Report Form Template',
             'slug' => 'school-absence-report-form-template',
-            'short_description' => 'A school absence report form template for parents notifying same-day absences with reasons and doctor-note uploads.',
+            'short_description' => 'A school absence report form template for parents notifying same-day absences with reasons and doctor-note uploads With onboarding and health scoring.',
             'description' => '<p>Our School Absence Report Form Template digitizes morning attendance calls: same-day absence notifications, reason categories, expected durations, and automatic doctor-note requests for extended absences.</p><h2>Why and when to use a school absence report form</h2><p>Morning phone queues jam exactly when offices verify attendance. An absence form timestamps every notification, categorizes reasons for truancy reporting, and automatically demands doctor notes once absences cross policy thresholds, keeping records audit-ready without office staff chasing calls.</p><h2>Who is this template for</h2><p>School front offices, district attendance administrators, private schools without attendance software, preschools, and summer programs tracking daily check-ins.</p><h2>Why SharaForms is the best tool for this form</h2><p>Absences beyond three consecutive days trigger doctor-documentation requirements automatically, reason data feeds state reporting formats directly, and every submission carries a verifiable timestamp parents cannot backdate.</p>',
             'types' => ['report_forms'],
             'industries' => ['education_forms'],
@@ -6021,7 +6073,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Dental New Patient Form Template',
             'slug' => 'dental-new-patient-form-template',
-            'short_description' => 'A dental new patient form template capturing dental history, insurance, anxieties, and medical flags before first visits.',
+            'short_description' => 'A dental new patient form template capturing dental history, insurance, anxieties, and medical flags before first visits With onboarding and health scoring.',
             'description' => '<p>Our Dental New Patient Form Template prepares practices for first appointments: dental history, current concerns, insurance details, medical flags, and anxiety levels that shape gentler care.</p><h2>Why and when to use a dental patient intake form</h2><p>First visits run late when histories arrive on clipboards mid-waiting-room. Digital intake collects dental histories and insurance verification details ahead of time, surfaces medical conditions dentists must know, and reveals anxious patients who deserve a different welcome.</p><h2>Who is this template for</h2><p>Dental practices, orthodontists, pediatric dentists, dental hygienist studios, and multi-chair clinics standardizing intake across locations.</p><h2>Why SharaForms is the best tool for this form</h2><p>Insurance details arrive ready for eligibility checks, medical-flag answers alert clinicians before treatment planning, and anxiety self-reports let teams schedule first-timers with extra care slots.</p>',
             'types' => ['registration_forms'],
             'industries' => ['healthcare_forms'],
@@ -6083,7 +6135,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Charity Auction Donation Form Template',
             'slug' => 'charity-auction-donation-form-template',
-            'short_description' => 'A charity auction donation form template collecting item pledges, valuations, logistics, and donor recognition choices.',
+            'short_description' => 'A charity auction donation form template collecting item pledges, valuations, logistics, and donor recognition choices With onboarding and health scoring.',
             'description' => '<p>Our Charity Auction Donation Form Template organizes silent and live auction contributions: item descriptions, valuations, pickup logistics, and recognition preferences that make gala catalogs build themselves.</p><h2>Why and when to use an auction donation form</h2><p>Gala committees chase auction items through email until catalogs print incomplete. A pledge form captures each donation with its estimated value, photos, display description, and delivery plan together, turning catalog assembly into an export instead of an archaeology project.</p><h2>Who is this template for</h2><p>Gala and fundraiser committees, school PTAs running silent auctions, charity foundations, animal shelters hosting benefit events, and chambers of commerce organizing community auctions.</p><h2>Why SharaForms is the best tool for this form</h2><p>Valuations feed receipt letters donors need for tax season, anonymous-bidding preferences get documented explicitly, and item exports sort into live versus silent lots instantly.</p>',
             'types' => ['donation_forms'],
             'industries' => ['charity_forms', 'business_forms'],
@@ -6127,7 +6179,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Donation Pickup Request Form Template',
             'slug' => 'donation-pickup-request-form-template',
-            'short_description' => 'A donation pickup request form template scheduling thrift collections with item lists, photos, and access details.',
+            'short_description' => 'A donation pickup request form template scheduling thrift collections with item lists, photos, and access details With price lists and tiered pricing.',
             'description' => '<p>Our Donation Pickup Request Form Template schedules charitable collections efficiently: item inventories, photo verification, access instructions, and preferred windows so trucks route full, not hopeful.</p><h2>Why and when to use a donation pickup form</h2><p>Pickup trucks arriving to nothing but trash cost charities real money. Structured requests with item lists and photos let dispatchers accept only genuine donations, group stops geographically, and arrive knowing whether a piano or a pillowcase awaits.</p><h2>Who is this template for</h2><p>Thrift store operators, furniture banks, clothing collection charities, animal shelter resale shops, and reuse nonprofits running scheduled collection routes.</p><h2>Why SharaForms is the best tool for this form</h2><p>Photo uploads verify donations before trucks roll, stair-and-access answers prevent two-person jobs arriving solo, and accepted pickups export into route-planning order automatically.</p>',
             'types' => ['request_forms', 'donation_forms'],
             'industries' => ['charity_forms'],
@@ -6178,7 +6230,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Event Feedback Survey Template',
             'slug' => 'event-feedback-survey-form-template',
-            'short_description' => 'An event feedback survey template scoring sessions, venue, and value with computed experience scores.',
+            'short_description' => 'An event feedback survey template scoring sessions, venue, and value with computed experience scores Built for healthcare, education, and legal teams.',
             'description' => '<p>Our Event Feedback Survey Template converts attendee experiences into planning data: scored dimensions with computed totals, session highlights, and honest improvement input collected while memories are fresh.</p><h2>Why and when to use an event feedback form</h2><p>Post-event debriefs run on vibes unless attendees speak quantitatively. Scoring overall experience, venue, and value separately shows organizers exactly what next year\'s budget should fix first, while open comments capture the color behind the numbers.</p><h2>Who is this template for</h2><p>Conference organizers, festival committees, corporate event planners, community event teams, and venues measuring recurring programming success.</p><h2>Why SharaForms is the best tool for this form</h2><p>Scores compute into shareable experience indexes instantly, disappointed attendees explain what went wrong through automatic follow-ups, and exports compare events year over year on identical measures.</p>',
             'types' => ['survey_templates', 'feedback_forms'],
             'industries' => ['entertainment_forms', 'business_forms'],
@@ -6235,7 +6287,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Employee Engagement Survey Template',
             'slug' => 'employee-engagement-survey-template',
-            'short_description' => 'An employee engagement survey template measuring belonging, growth, recognition, and support with computed indexes.',
+            'short_description' => 'An employee engagement survey template measuring belonging, growth, recognition, and support with computed indexes With onboarding and health scoring.',
             'description' => '<p>Our Employee Engagement Survey Template measures what actually drives retention: five scored engagement dimensions, anonymity respected structurally, and improvement areas routed straight to leadership.</p><h2>Why and when to use an engagement survey</h2><p>Exit interviews arrive too late to save anyone. Quarterly pulse measurement across purpose, growth, recognition, support, and belonging surfaces disengagement while intervention is still possible, and trend lines prove which fixes actually moved the needle.</p><h2>Who is this template for</h2><p>HR and people-operations teams, leadership running culture initiatives, managers measuring team health after reorganizations, and companies preparing retention budgets.</p><h2>Why SharaForms is the best tool for this form</h2><p>Computed engagement indexes make quarters comparable at a glance, low-scoring dimensions trigger targeted follow-up questions, and anonymous submissions still produce exportable aggregate trends.</p>',
             'types' => ['survey_templates', 'feedback_forms'],
             'industries' => ['human_resources_forms'],
@@ -6284,7 +6336,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Course Evaluation Form Template',
             'slug' => 'course-evaluation-form-template',
-            'short_description' => 'A course evaluation form template collecting student feedback on instruction, workload, materials, and outcomes.',
+            'short_description' => 'A course evaluation form template collecting student feedback on instruction, workload, materials, and outcomes With crop planning and yield tracking.',
             'description' => '<p>Our Course Evaluation Form Template captures end-of-term student feedback that instructors can act on: teaching effectiveness, workload realism, material usefulness, and outcome confidence, all structured for department comparison.</p><h2>Why and when to use a course evaluation form</h2><p>End-of-term evaluations shape teaching careers and course design alike, yet paper forms yield scribbles nobody analyzes. Digital evaluation standardizes questions across sections, separates instructor feedback from curriculum feedback, and gives departments comparable data per course code.</p><h2>Who is this template for</h2><p>Universities and colleges, training academies, online course creators closing cohorts, bootcamps reporting outcomes, and continuing-education programs.</p><h2>Why SharaForms is the best tool for this form</h2><p>Low ratings trigger constructive-comment prompts automatically, workload complaints separate from teaching complaints, and section-by-section exports reveal where course design versus delivery needs attention.</p>',
             'types' => ['evaluation_forms', 'survey_templates'],
             'industries' => ['education_forms'],
@@ -6326,7 +6378,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Photo Contest Entry Form Template',
             'slug' => 'photo-contest-entry-form-template',
-            'short_description' => 'A photo contest entry form template handling submissions, categories, releases, and guardian consent for minors.',
+            'short_description' => 'A photo contest entry form template handling submissions, categories, releases, and guardian consent for minors With crop planning and yield tracking.',
             'description' => '<p>Our Photo Contest Entry Form Template runs competitions cleanly: categorized submissions with high-resolution uploads, model releases, originality declarations, and guardian consent handled automatically for young entrants.</p><h2>Why and when to use a photo contest form</h2><p>Contests collapse under email attachments, missing releases, and unanswerable "how old are you" threads. A structured entry collects the image, its category, consent documentation, and contact details together, keeping judging fair and legal exposure zero.</p><h2>Who is this template for</h2><p>Marketing teams running UGC campaigns, tourism boards promoting destinations, camera clubs, schools hosting art competitions, and brands celebrating customer communities.</p><h2>Why SharaForms is the best tool for this form</h2><p>Under-18 entries trigger mandatory guardian fields automatically, model-release checkboxes document people-photography permissions, and submission exports hand judges consistent formats instead of forty different attachment types.</p>',
             'types' => ['content_forms', 'file_upload_forms'],
             'industries' => ['marketing_forms', 'entertainment_forms'],
@@ -6369,7 +6421,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Customer Referral Form Template',
             'slug' => 'customer-referral-form-template',
-            'short_description' => 'A customer referral form template capturing word-of-mouth leads with reward selection and consent from both sides.',
+            'short_description' => 'A customer referral form template capturing word-of-mouth leads with reward selection and consent from both sides With price lists and tiered pricing.',
             'description' => '<p>Our Customer Referral Form Template turns happy customers into a channel: referred-friend details, referrer rewards, and dual consent captured so outreach feels like a favor, not a cold call.</p><h2>Why and when to use a referral form</h2><p>Referred customers convert better and churn less, yet most programs run on forgotten hallway promises. A structured referral captures both parties\' details plus reward preferences in one submission, letting sales open warm conversations with context instead of awkward cold intros.</p><h2>Who is this template for</h2><p>B2B sales teams with referral incentives, local service businesses living on word of mouth, financial advisors, real estate agents, and SaaS products rewarding advocacy.</p><h2>Why SharaForms is the best tool for this form</h2><p>Reward choices match incentives to what customers actually value, friend-consent fields keep outreach compliant and welcomed, and successful referrals track back to referrers for payout accuracy.</p>',
             'types' => ['lead_generation_forms', 'signup_forms'],
             'industries' => ['marketing_forms', 'business_forms'],
@@ -6408,7 +6460,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Birthday Party Booking Form Template',
             'slug' => 'birthday-party-booking-form-template',
-            'short_description' => 'A birthday party booking form template for venues handling packages, extra guests, themes, and live totals.',
+            'short_description' => 'A birthday party booking form template for venues handling packages, extra guests, themes, and live totals Includes SMS notifications and mobile apps.',
             'description' => '<p>Our Birthday Party Booking Form Template handles venue party packages completely: package selection with live pricing, guest counts beyond included numbers, theme choices, allergy alerts, and deposit acknowledgment.</p><h2>Why and when to use a birthday party booking form</h2><p>Venue parties juggle packages, headcounts, food allergies, and setup preferences across excited, distracted parents. A structured booking captures everything in one pass, shows honest totals before commitment, and hands staff a complete run sheet for party day.</p><h2>Who is this template for</h2><p>Kids\' entertainment venues, trampoline parks, bowling alleys, play centers, museums hosting parties, and restaurants with party rooms.</p><h2>Why SharaForms is the best tool for this form</h2><p>Extra-guest fees calculate visibly against package inclusions, allergy details reach kitchen staff automatically, and themed-setup answers land on the decorating team\'s prep list without phone tag.</p>',
             'types' => ['booking_forms', 'reservation_forms'],
             'industries' => ['entertainment_forms', 'services_forms'],
@@ -6472,7 +6524,7 @@ class TemplateSeeder extends Seeder
         return [
             'name' => 'Storage Unit Reservation Form Template',
             'slug' => 'storage-unit-reservation-form-template',
-            'short_description' => 'A storage unit reservation form template sizing units, pricing climate control and insurance, and reserving move-in dates.',
+            'short_description' => 'A storage unit reservation form template sizing units, pricing climate control and insurance, and reserving move-in dates With onboarding and health scoring.',
             'description' => '<p>Our Storage Unit Reservation Form Template converts browsers into reserved tenants: unit sizing guidance, transparent monthly rates with climate and insurance options, and move-in scheduling with access-plan selection.</p><h2>Why and when to use a storage reservation form</h2><p>Storage customers compare three facilities by price per square foot and book whichever answers fastest. A reservation form quotes honestly by unit size, adds climate and insurance options transparently, and locks the move-in date before competitors call back.</p><h2>Who is this template for</h2><p>Self-storage facilities, mobile storage container companies, wine and document storage specialists, and property managers adding tenant storage options.</p><h2>Why SharaForms is the best tool for this form</h2><p>Monthly rates compute from unit selections with add-ons visible, vehicle-access needs surface for drive-up planning, and reservations export into gate-access systems with start dates attached.</p>',
             'types' => ['reservation_forms', 'booking_forms'],
             'industries' => ['business_forms', 'real_estate_forms'],
@@ -6522,6 +6574,2504 @@ class TemplateSeeder extends Seeder
                         'IF({unit_size_su}="5x5 (closet: boxes, small furniture) - $45/mo",45,IF({unit_size_su}="5x10 (walk-in: studio apartment) - $65/mo",65,IF({unit_size_su}="10x10 (bedroom: one-bedroom flat) - $95/mo",95,150)))'
                             . '+IF({climate_controlled_su}="Climate controlled (+$25)",25,0)'
                             . '+IF({insurance_plan}="Facility plan (+$12/mo)",12,0)'
+                    ),
+                ],
+            ]),
+        ];
+    }
+
+    private function babysittingAgreement(): array
+    {
+        return [
+            'name' => 'Babysitting Agreement Form Template',
+            'slug' => 'babysitting-agreement-form-template',
+            'short_description' => 'A babysitting agreement form template capturing hourly rates, house rules, allergy and medication details, and emergency instructions in one shareable record.',
+            'description' => '<p>Our Babysitting Agreement Form Template puts every sitting in writing: agreed rates, house rules, bedtime routines, and medication instructions that parents and sitters both sign off on.</p><h2>Why and when to use a babysitting agreement form</h2><p>Misremembered instructions cause most sitting disputes. A written agreement settles the rate before the doorbell rings, documents allergies and medications precisely, and gives a new sitter one reference instead of a hurried hallway briefing.</p><h2>Who is this template for</h2><p>Parents hiring new sitters, babysitting co-ops, agencies placing caregivers, and grandparents who want routines on paper.</p><h2>Why SharaForms is the best tool for this form</h2><p>Medication instructions appear only when needed, signatures timestamp the agreement, and the finished record exports to PDF so every caregiver holds the same instructions.</p>',
+            'types' => ['consent_forms'],
+            'industries' => ['business_forms'],
+            'structure' => $this->structure('Babysitting Agreement', [
+                $this->nfText('intro', '<h2>Babysitting Agreement</h2><p>Fill this out together before the first sitting. Both sides keep a copy, and updates take one minute.</p>'),
+                $this->textField('parent_name_bs', 'Parent / Guardian Name', true),
+                $this->phoneField('phone_bs', 'Best Phone During the Sitting', true),
+                $this->emailField('email_bs', 'Email', true),
+                $this->textField('home_address_bs', 'Home Address', true),
+                $this->textareaField('children_ages_bs', 'Children (names and ages)', true),
+                $this->textField('agreed_rate_bs', 'Agreed Hourly Rate ($)', true),
+                $this->dateField('start_date_bs', 'Agreement Start Date', true),
+                $this->selectField('medication_needed', 'Any medication during sittings?', [
+                    ['value' => 'meds_yes', 'text' => 'Yes'],
+                    ['value' => 'meds_no', 'text' => 'No'],
+                ], true),
+                $this->textareaField('medication_instructions', 'Medication Instructions (dose, timing, storage)', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('medication_needed', 'select', 'equals', 'Yes')], 'and', true),
+                ]),
+                $this->textareaField('allergy_notes_bs', 'Allergies and Foods to Avoid'),
+                $this->textareaField('house_rules_bs', 'House Rules (screens, bedtime, outdoor play)'),
+                $this->textField('emergency_contact_bs', 'Backup Emergency Contact (name and phone)', true),
+                ['id' => 'signature_bs', 'type' => 'signature', 'title' => 'Parent Signature', 'required' => true, 'help' => ''],
+            ], '#f59e0b'),
+        ];
+    }
+
+    private function funeralServiceNotification(): array
+    {
+        return [
+            'name' => 'Funeral Service Notification Form Template',
+            'slug' => 'funeral-service-notification-form-template',
+            'short_description' => 'A funeral service notification form template letting families share service details and collect attendance plans with care With onboarding and health scoring.',
+            'description' => '<p>Our Funeral Service Notification Form Template helps families share service details once instead of fielding dozens of calls: dates, locations, attendance plans, and seating or donation preferences in one gentle form.</p><h2>Why and when to use a funeral service notification form</h2><p>Grieving families should not spend the hardest week coordinating logistics by phone. One notification form collects attendance counts for the venue, flags relatives who need a call, and records donation preferences without anyone repeating painful details.</p><h2>Who is this template for</h2><p>Funeral homes, celebrants, places of worship coordinating services, and families organizing memorials themselves.</p><h2>Why SharaForms is the best tool for this form</h2><p>Attendance counts surface only from confirmed guests, undecided respondents can request a personal call, and every response carries a timestamp so seating plans stay current.</p>',
+            'types' => ['rsvp_forms', 'event_registration_forms'],
+            'industries' => ['charity_forms', 'church_forms'],
+            'structure' => $this->structure('Service Attendance Notification', [
+                $this->nfText('intro', '<h2>Service Details and Attendance</h2><p>Please share your plans with the family by the RSVP date. Every response is private to the family and funeral home.</p>'),
+                $this->textField('family_contact_fs', 'Family Contact Name', true),
+                $this->emailField('email_fs', 'Your Email', true),
+                $this->phoneField('phone_fs', 'Your Phone'),
+                $this->selectField('relationship_fs', 'Relationship to the Family', [
+                    ['value' => 'immediate_fs', 'text' => 'Immediate family'],
+                    ['value' => 'extended_fs', 'text' => 'Extended family'],
+                    ['value' => 'friend_fs', 'text' => 'Friend'],
+                    ['value' => 'colleague_fs', 'text' => 'Colleague'],
+                    ['value' => 'community_fs', 'text' => 'Community member'],
+                ], true),
+                $this->selectField('attending_fs', 'Will you attend the service?', [
+                    ['value' => 'attend_yes', 'text' => 'Yes, I will attend'],
+                    ['value' => 'attend_no', 'text' => 'No, but thinking of the family'],
+                    ['value' => 'attend_undecided', 'text' => 'Not sure yet'],
+                ], true),
+                $this->numberField('attending_count_fs', 'Total Seats Needed (including you)', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('attending_fs', 'select', 'equals', 'Yes, I will attend')], 'and', true),
+                ]),
+                $this->checkboxField('need_call_fs', 'Please have someone call me about the arrangements', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('attending_fs', 'select', 'equals', 'Not sure yet')]),
+                ]),
+                $this->textField('seating_accommodations', 'Seating or Accessibility Accommodations'),
+                $this->selectField('donation_preference_fs', 'Flowers or Donations', [
+                    ['value' => 'flowers_fs', 'text' => 'Flowers welcome'],
+                    ['value' => 'charity_fs', 'text' => 'Family charity preferred'],
+                    ['value' => 'both_fs', 'text' => 'Flowers or charity, either is welcome'],
+                ], true),
+                $this->textareaField('message_fs', 'A Message for the Family'),
+            ], '#64748b'),
+        ];
+    }
+
+    private function youthLeagueRegistration(): array
+    {
+        return [
+            'name' => 'Youth League Registration Form Template',
+            'slug' => 'youth-league-registration-form-template',
+            'short_description' => 'A youth league registration form template with division pricing, sibling discounts, jersey add-ons, and guardian waivers With onboarding and health scoring.',
+            'description' => '<p>Our Youth League Registration Form Template prices each division transparently, applies sibling and volunteer discounts automatically, and captures the guardian consents leagues need before the first practice.</p><h2>Why and when to use a youth league registration form</h2><p>Paper registration nights produce arithmetic errors and missing waivers. A structured form shows each family their total before they commit, rewards volunteers with an automatic discount, and collects photo permissions and medical notes once instead of at the concession stand.</p><h2>Who is this template for</h2><p>Community soccer and baseball leagues, basketball programs, swim clubs, and any volunteer-run youth sports organization.</p><h2>Why SharaForms is the best tool for this form</h2><p>Season totals compute live from division, siblings, and volunteer status, jersey name lists appear only when extra jerseys are ordered, and signed waivers attach to every registration record.</p>',
+            'types' => ['registration_forms', 'consent_forms'],
+            'industries' => ['sports_forms'],
+            'structure' => $this->structure('Youth League Registration', [
+                $this->nfText('intro', '<h2>Register for the Season</h2><p>Totals below update as you choose. Sibling discounts apply automatically, and volunteer families save $10 per player.</p>'),
+                $this->textField('player_name_yl', 'Player Name', true),
+                $this->dateField('player_dob_yl', 'Player Date of Birth', true),
+                $this->textField('guardian_name_yl', 'Parent / Guardian Name', true),
+                $this->phoneField('guardian_phone_yl', 'Guardian Phone', true),
+                $this->emailField('email_yl', 'Guardian Email', true),
+                $this->selectField('league_division', 'League Division', [
+                    ['value' => 'u6_yl', 'text' => 'U6 Clinic (Saturdays, 9am) - $85'],
+                    ['value' => 'u8_yl', 'text' => 'U8 Juniors (Saturdays, 10am) - $105'],
+                    ['value' => 'u10_yl', 'text' => 'U10 Travel (Tue & Thu) - $145'],
+                    ['value' => 'u12_yl', 'text' => 'U12 Rec (Wednesday evenings) - $125'],
+                ], true),
+                $this->numberField('siblings_on_roster', 'Siblings Already Registered This Season', false, ['help' => 'Each sibling saves $10']),
+                $this->selectField('jersey_size_yl', 'Jersey Size', [
+                    ['value' => 'j_youth_s', 'text' => 'Youth S'],
+                    ['value' => 'j_youth_m', 'text' => 'Youth M'],
+                    ['value' => 'j_youth_l', 'text' => 'Youth L'],
+                    ['value' => 'j_adult_s', 'text' => 'Adult S'],
+                    ['value' => 'j_adult_m', 'text' => 'Adult M'],
+                    ['value' => 'j_adult_l', 'text' => 'Adult L'],
+                ], true),
+                $this->numberField('extra_jerseys', 'Extra Jerseys ($18 each)'),
+                $this->textField('jersey_names', 'Names for Extra Jerseys', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('extra_jerseys', 'number', 'greater_than', 0)], 'and', true),
+                ]),
+                $this->selectField('volunteer_referee', 'Can Your Family Volunteer This Season?', [
+                    ['value' => 'vol_yes', 'text' => 'Yes, I can referee or keep score'],
+                    ['value' => 'vol_no', 'text' => 'No, not this season'],
+                ], true),
+                $this->textareaField('medical_conditions_yl', 'Allergies or Medical Notes'),
+                $this->checkboxField('photo_permission_yl', 'I allow season photos of my player in league communications'),
+                $this->checkboxField('waiver_acknowledged_yl', 'I sign the league liability waiver on behalf of my player', true),
+                $this->totalBlock('parent_total_display', 'cv_parent_total', 'Estimated Season Total', '$0'),
+            ], '#16a34a', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_parent_total',
+                        'Estimated Season Total',
+                        'IF({league_division}="U6 Clinic (Saturdays, 9am) - $85",85,IF({league_division}="U8 Juniors (Saturdays, 10am) - $105",105,IF({league_division}="U10 Travel (Tue & Thu) - $145",145,125)))'
+                            . '-MAX(0,IFBLANK({siblings_on_roster},0))*10'
+                            . '-IF({volunteer_referee}="Yes, I can referee or keep score",10,0)'
+                            . '+IFBLANK({extra_jerseys},0)*18'
+                    ),
+                ],
+            ]),
+        ];
+    }
+
+    private function lactationRoomRequest(): array
+    {
+        return [
+            'name' => 'Lactation Room Request Form Template',
+            'slug' => 'lactation-room-request-form-template',
+            'short_description' => 'A lactation room request form template helping HR set up private, equipped spaces with location, equipment, and scheduling choices for staff.',
+            'description' => '<p>Our Lactation Room Request Form Template helps HR and facilities set up compliant, comfortable lactation spaces: location preferences, equipment checklists, badge access, and scheduling needs in one request.</p><h2>Why and when to use a lactation room request form</h2><p>Returning parents deserve a proper room, not a storage closet with a chair. A structured request captures exactly what the space needs, documents shared-room agreements, and gives facilities one complete checklist instead of a chain of forwarded emails.</p><h2>Who is this template for</h2><p>HR teams, office managers, facilities departments, hospitals, and schools meeting pumping-break obligations.</p><h2>Why SharaForms is the best tool for this form</h2><p>Shared-room partners are documented when relevant, equipment lists arrive ready for procurement, and every request timestamps the conversation so setup deadlines stay accountable.</p>',
+            'types' => ['request_forms'],
+            'industries' => ['human_resources_forms', 'business_forms'],
+            'structure' => $this->structure('Lactation Room Request', [
+                $this->nfText('intro', '<h2>Request a Lactation Space</h2><p>Requests are confidential and go directly to HR and Facilities. Setup typically completes within five business days.</p>'),
+                $this->textField('employee_name_lr', 'Your Name', true),
+                $this->textField('department_lr', 'Department / Team', true),
+                $this->emailField('email_lr', 'Work Email', true),
+                $this->dateField('due_date_lr', 'Expected Need-From Date'),
+                $this->selectField('preferred_location_lr', 'Preferred Location', [
+                    ['value' => 'near_desk', 'text' => 'Near my desk'],
+                    ['value' => 'same_floor', 'text' => 'Same floor'],
+                    ['value' => 'anywhere_quiet', 'text' => 'Anywhere quiet works'],
+                ], true),
+                $this->selectField('room_sharing_lr', 'Is a Shared Lactation Room Acceptable?', [
+                    ['value' => 'share_yes', 'text' => 'Yes, a shared room works'],
+                    ['value' => 'share_no', 'text' => 'No, I need a private room'],
+                ], true),
+                $this->textField('shared_room_partner', 'Scheduling Partner (if sharing)', false, [
+                    'hidden' => true,
+                    'help' => 'Name of anyone you have already agreed to share with',
+                    'logic' => $this->revealLogic([$this->logicCondition('room_sharing_lr', 'select', 'equals', 'Yes, a shared room works')], 'and', true),
+                ]),
+                $this->multiSelectField('equipment_lr', 'Equipment Needs', [
+                    ['value' => 'fridge', 'text' => 'Refrigerator access'],
+                    ['value' => 'seating', 'text' => 'Comfortable seating'],
+                    ['value' => 'lockable', 'text' => 'Lockable storage'],
+                    ['value' => 'outlet', 'text' => 'Power outlet at the chair'],
+                    ['value' => 'screen', 'text' => 'Privacy screen or partition'],
+                ]),
+                $this->textField('schedule_lr', 'Typical Times You Will Need the Room'),
+                $this->selectField('badge_access_lr', 'Do You Need Badge Access to the Space?', [
+                    ['value' => 'badge_yes', 'text' => 'Yes, please arrange access'],
+                    ['value' => 'badge_no', 'text' => 'No, the space is open to me'],
+                ], true),
+                $this->textareaField('notes_lr', 'Anything Else Facilities Should Know?'),
+            ], '#db2777'),
+        ];
+    }
+
+    private function courtReporterBooking(): array
+    {
+        return [
+            'name' => 'Court Reporter Booking Form Template',
+            'slug' => 'court-reporter-booking-form-template',
+            'short_description' => 'A court reporter booking form template for firms scheduling depositions with transcript, realtime, and video options plus exhibit handling notes.',
+            'description' => '<p>Our Court Reporter Booking Form Template lets firms schedule depositions and examinations with case details, transcript formats, realtime feeds, and video conference links captured up front.</p><h2>Why and when to use a court reporter booking form</h2><p>Booking by phone leaves transcript specs and exhibit counts unwritten. A structured request fixes the proceeding type, date block, and delivery format before the reporter accepts, so confirmations and invoicing never stall on missing details.</p><h2>Who is this template for</h2><p>Law firms, independent court reporting agencies, insurance claim departments, and arbitration providers.</p><h2>Why SharaForms is the best tool for this form</h2><p>Video conference platforms appear only when remote proceedings are selected, exhibit uploads attach directly to the booking, and every confirmation emails the attorney with the full spec.</p>',
+            'types' => ['booking_forms'],
+            'industries' => ['services_forms', 'business_forms'],
+            'structure' => $this->structure('Court Reporter Booking', [
+                $this->nfText('intro', '<h2>Book a Reporter</h2><p>Submit at least 48 hours ahead when possible. You receive a reporter confirmation with rates attached.</p>'),
+                $this->textField('firm_name_cr', 'Law Firm / Company Name', true),
+                $this->emailField('attorney_email_cr', 'Booking Attorney Email', true),
+                $this->phoneField('phone_cr', 'Booking Phone', true),
+                $this->textField('case_name_cr', 'Case Name / Caption', true),
+                $this->textField('case_number_cr', 'Case Number'),
+                $this->selectField('proceeding_type_cr', 'Proceeding Type', [
+                    ['value' => 'depo_cr', 'text' => 'Deposition'],
+                    ['value' => 'euo_cr', 'text' => 'Examination under oath'],
+                    ['value' => 'arb_cr', 'text' => 'Arbitration hearing'],
+                    ['value' => 'court_cr', 'text' => 'Court proceeding'],
+                    ['value' => 'statement_cr', 'text' => 'Recorded statement'],
+                ], true),
+                $this->dateField('proceeding_date_cr', 'Proceeding Date', true),
+                $this->selectField('time_block_cr', 'Time Block', [
+                    ['value' => 'am_cr', 'text' => 'Morning (9am start)'],
+                    ['value' => 'pm_cr', 'text' => 'Afternoon (1pm start)'],
+                    ['value' => 'full_cr', 'text' => 'Full day'],
+                ], true),
+                $this->textField('location_cr', 'Location / Office Address', true),
+                $this->numberField('attendee_count_cr', 'Expected Attendees'),
+                $this->selectField('video_conference_cr', 'Will This Proceeding Be Remote?', [
+                    ['value' => 'remote_yes', 'text' => 'Yes, by video conference'],
+                    ['value' => 'remote_no', 'text' => 'No, in person'],
+                ], true),
+                $this->urlField('platform_link_cr', 'Video Conference Link', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('video_conference_cr', 'select', 'equals', 'Yes, by video conference')], 'and', true),
+                ]),
+                $this->selectField('transcript_type_cr', 'Transcript Format', [
+                    ['value' => 'std_cr', 'text' => 'Standard delivery (included)'],
+                    ['value' => 'cert_cr', 'text' => 'Certified copy (+$25)'],
+                    ['value' => 'exp_cr', 'text' => 'Expedited next-day (+$75)'],
+                ], true),
+                ['id' => 'exhibit_upload', 'type' => 'files', 'title' => 'Exhibits or Pre-Marked Documents', 'required' => false, 'help' => 'PDF preferred', 'max_file_size' => 10, 'max_number_of_files' => 5],
+                $this->textareaField('notes_cr', 'Special Requests (interpreters, videographer, rough draft)'),
+            ], '#1d4ed8'),
+        ];
+    }
+
+    private function waitlistJoin(): array
+    {
+        return [
+            'name' => 'Waitlist Join Form Template',
+            'slug' => 'waitlist-join-form-template',
+            'short_description' => 'A waitlist join form template capturing interest level, contact preferences, and referral details for future openings, cohorts, and programs.',
+            'description' => '<p>Our Waitlist Join Form Template keeps future customers warm: interest level, contact preferences, referral sources, and the exact product or plan each person is waiting for.</p><h2>Why and when to use a waitlist join form</h2><p>When demand outstrips supply, an email thread is not a pipeline. A waitlist form segments who wants what, captures the channel that brought them, and lets you text or email the right people the moment a spot opens.</p><h2>Who is this template for</h2><p>Product launches, restaurants with limited seatings, clinics with closed panels, class-based studios, and sold-out services of every kind.</p><h2>Why SharaForms is the best tool for this form</h2><p>Phone numbers surface only from people who asked for texts, team-plan interest is flagged for sales follow-up, and the referral field shows which channels fill your list fastest.</p>',
+            'types' => ['signup_forms', 'lead_generation_forms'],
+            'industries' => ['business_forms', 'ecommerce_forms'],
+            'structure' => $this->structure('Join the Waitlist', [
+                $this->nfText('intro', '<h2>Join the Waitlist</h2><p>We fill openings in join order and tell you the moment a spot opens. No spam, ever.</p>'),
+                $this->textField('full_name_wl', 'Full Name', true),
+                $this->emailField('email_wl', 'Email', true),
+                $this->selectField('notify_by_wl', 'How Should We Notify You?', [
+                    ['value' => 'notify_email', 'text' => 'Email me'],
+                    ['value' => 'notify_text', 'text' => 'Text me'],
+                ], true),
+                $this->phoneField('phone_wl', 'Mobile Number', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('notify_by_wl', 'select', 'equals', 'Text me')], 'and', true),
+                ]),
+                $this->selectField('interest_wl', 'What Are You Waiting For?', [
+                    ['value' => 'std_plan', 'text' => 'Standard plan'],
+                    ['value' => 'team_plan', 'text' => 'Team plan'],
+                    ['value' => 'ent_plan', 'text' => 'Enterprise plan'],
+                    ['value' => 'not_sure', 'text' => 'Not sure yet'],
+                ], true),
+                $this->selectField('urgency_wl', 'Join Timing', [
+                    ['value' => 'join_now', 'text' => 'Ready to join at the next opening'],
+                    ['value' => 'join_soon', 'text' => 'Within the next month or two'],
+                    ['value' => 'join_flex', 'text' => 'Flexible, just keep me posted'],
+                ], true),
+                $this->textField('referral_source_wl', 'How Did You Hear About Us?'),
+                $this->textareaField('notes_wl', 'Anything We Should Know?'),
+            ], '#0ea5e9'),
+        ];
+    }
+
+    private function internHousingRequest(): array
+    {
+        return [
+            'name' => 'Intern Housing Request Form Template',
+            'slug' => 'intern-housing-request-form-template',
+            'short_description' => 'An intern housing request form template matching budgets, dates, and housing types for seasonal program placements and university partner programs.',
+            'description' => '<p>Our Intern Housing Request Form Template matches seasonal hires with placements fast: budgets, date ranges, housing types, roommate preferences, and commute constraints in one submission.</p><h2>Why and when to use an intern housing request form</h2><p>Coordinating a dozen intern arrivals over email produces double-booked rooms and last-minute scrambles. One form per intern gives program coordinators a sortable list of budgets, dates, and constraints, so matching happens once instead of weekly.</p><h2>Who is this template for</h2><p>Summer internship programs, university housing offices, corporate relocation coordinators, and ski or resort seasonal employers.</p><h2>Why SharaForms is the best tool for this form</h2><p>Homestay meal preferences surface only when homestays are chosen, roommate preferences arrive before matching season, and export-ready responses drop straight into your placement spreadsheet.</p>',
+            'types' => ['request_forms', 'application_forms'],
+            'industries' => ['human_resources_forms', 'business_forms'],
+            'structure' => $this->structure('Intern Housing Request', [
+                $this->nfText('intro', '<h2>Housing Request</h2><p>Submit before the matching deadline. Coordinates confirm two weeks before your start date.</p>'),
+                $this->textField('intern_name_ih', 'Full Name', true),
+                $this->emailField('email_ih', 'Email', true),
+                $this->textField('university_ih', 'University / Program', true),
+                $this->dateField('start_date_ih', 'Internship Start Date', true),
+                $this->dateField('end_date_ih', 'Internship End Date', true),
+                $this->numberField('budget_ih', 'Monthly Housing Budget ($)', true),
+                $this->selectField('housing_type_ih', 'Housing Type', [
+                    ['value' => 'shared_apt', 'text' => 'Shared apartment'],
+                    ['value' => 'studio_ih', 'text' => 'Studio'],
+                    ['value' => 'homestay', 'text' => 'Homestay with a local family'],
+                    ['value' => 'no_pref_ih', 'text' => 'No preference'],
+                ], true),
+                $this->selectField('homestay_meals_ih', 'Homestay Meal Preference', [
+                    ['value' => 'meals_in', 'text' => 'Meals included preferred'],
+                    ['value' => 'room_only', 'text' => 'Room only is fine'],
+                ], false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('housing_type_ih', 'select', 'equals', 'Homestay with a local family')], 'and', true),
+                ]),
+                $this->selectField('roommate_ok_ih', 'Roommate Matching', [
+                    ['value' => 'rm_yes', 'text' => 'Yes, match me with a roommate'],
+                    ['value' => 'rm_no', 'text' => 'No, I prefer my own place'],
+                ], true),
+                $this->textareaField('roommate_preferences_ih', 'Roommate Preferences (habits, schedule, lifestyle)', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('roommate_ok_ih', 'select', 'equals', 'Yes, match me with a roommate')]),
+                ]),
+                $this->selectField('commute_ih', 'Preferred Commute', [
+                    ['value' => 'transit_ih', 'text' => 'Public transit'],
+                    ['value' => 'car_ih', 'text' => 'Car'],
+                    ['value' => 'bike_ih', 'text' => 'Bike'],
+                    ['value' => 'walk_ih', 'text' => 'Walk'],
+                ], true),
+                $this->selectField('pets_ih', 'Pet Considerations', [
+                    ['value' => 'no_pets', 'text' => 'No pets needed'],
+                    ['value' => 'cat_ok', 'text' => 'Cat-friendly housing'],
+                    ['value' => 'dog_ok', 'text' => 'Dog-friendly housing'],
+                ], true),
+                $this->textareaField('notes_ih', 'Anything Else the Coordinator Should Know?'),
+            ], '#7c3aed'),
+        ];
+    }
+
+    private function languageExchangeSignup(): array
+    {
+        return [
+            'name' => 'Language Exchange Signup Form Template',
+            'slug' => 'language-exchange-signup-form-template',
+            'short_description' => 'A language exchange signup form template pairing members by native language, proficiency level, goals, and meeting preferences for conversation groups.',
+            'description' => '<p>Our Language Exchange Signup Form Template pairs partners who actually meet: native and target languages, proficiency levels, goals, availability, and online or in-person preferences.</p><h2>Why and when to use a language exchange signup form</h2><p>Most exchanges fail on logistics, not motivation. A structured signup captures the timezone and availability details that make or break a pairing, so coordinators match partners who can actually meet instead of trading contacts blind.</p><h2>Who is this template for</h2><p>University language departments, community centers, libraries, conversation clubs, and online learning communities.</p><h2>Why SharaForms is the best tool for this form</h2><p>Timezone details surface only from online-only members, availability windows arrive in a consistent format, and goal tags make matching a filter rather than a guessing game.</p>',
+            'types' => ['signup_forms', 'membership_forms'],
+            'industries' => ['education_forms'],
+            'structure' => $this->structure('Language Exchange Signup', [
+                $this->nfText('intro', '<h2>Find Your Language Partner</h2><p>Fill this out once and we match you within a week of each new pairing cycle.</p>'),
+                $this->textField('full_name_le', 'Full Name', true),
+                $this->emailField('email_le', 'Email', true),
+                $this->selectField('native_language_le', 'Your Native Language', [
+                    ['value' => 'nat_en', 'text' => 'English'],
+                    ['value' => 'nat_es', 'text' => 'Spanish'],
+                    ['value' => 'nat_fr', 'text' => 'French'],
+                    ['value' => 'nat_de', 'text' => 'German'],
+                    ['value' => 'nat_zh', 'text' => 'Mandarin'],
+                    ['value' => 'nat_other', 'text' => 'Other'],
+                ], true),
+                $this->selectField('target_language_le', 'Language You Are Learning', [
+                    ['value' => 'tgt_en', 'text' => 'English'],
+                    ['value' => 'tgt_es', 'text' => 'Spanish'],
+                    ['value' => 'tgt_fr', 'text' => 'French'],
+                    ['value' => 'tgt_de', 'text' => 'German'],
+                    ['value' => 'tgt_zh', 'text' => 'Mandarin'],
+                    ['value' => 'tgt_other', 'text' => 'Other'],
+                ], true),
+                $this->selectField('level_le', 'Current Level', [
+                    ['value' => 'beginner', 'text' => 'Beginner'],
+                    ['value' => 'intermediate', 'text' => 'Intermediate'],
+                    ['value' => 'advanced', 'text' => 'Advanced'],
+                ], true),
+                $this->multiSelectField('goals_le', 'Your Goals', [
+                    ['value' => 'conversation', 'text' => 'Conversation practice'],
+                    ['value' => 'grammar', 'text' => 'Grammar help'],
+                    ['value' => 'business_vocab', 'text' => 'Business vocabulary'],
+                    ['value' => 'exam_prep', 'text' => 'Exam preparation'],
+                ]),
+                $this->selectField('meeting_le', 'Meeting Preference', [
+                    ['value' => 'in_person', 'text' => 'In person'],
+                    ['value' => 'online_only', 'text' => 'Online only'],
+                    ['value' => 'either_ok', 'text' => 'Either works'],
+                ], true),
+                $this->textField('timezone_le', 'Your Timezone (for online sessions)', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('meeting_le', 'select', 'equals', 'Online only')], 'and', true),
+                ]),
+                $this->multiSelectField('availability_le', 'Availability Windows', [
+                    ['value' => 'wkday_am', 'text' => 'Weekday mornings'],
+                    ['value' => 'wkday_pm', 'text' => 'Weekday evenings'],
+                    ['value' => 'wknd_am', 'text' => 'Weekend mornings'],
+                    ['value' => 'wknd_pm', 'text' => 'Weekend evenings'],
+                ], true),
+                $this->textField('city_le', 'City (for in-person matches)'),
+                $this->textareaField('partner_notes_le', 'What Kind of Partner Are You Looking For?'),
+            ], '#0d9488'),
+        ];
+    }
+
+    private function keyCustodyAgreement(): array
+    {
+        return [
+            'name' => 'Key Custody Agreement Form Template',
+            'slug' => 'key-custody-agreement-form-template',
+            'short_description' => 'A key custody agreement form template documenting issued keys, return dates, and acknowledgment signatures per recipient With onboarding and health scoring.',
+            'description' => '<p>Our Key Custody Agreement Form Template documents every key handed out: property, key type, purpose, return date, and a signed acknowledgment that protects both issuer and recipient.</p><h2>Why and when to use a key custody agreement form</h2><p>Lost keys surface as arguments unless custody was written down. A signed record per key fixes the return date, documents any copies made, and makes rekeying conversations factual instead of awkward.</p><h2>Who is this template for</h2><p>Landlords and property managers, offices issuing building keys, contractors on long jobs, vacation rental hosts, and community facilities.</p><h2>Why SharaForms is the best tool for this form</h2><p>Copy details surface only when copies were made, signatures timestamp each agreement, and the export gives auditors a complete key-issuance log.</p>',
+            'types' => ['legal_forms', 'consent_forms'],
+            'industries' => ['real_estate_forms', 'business_forms'],
+            'structure' => $this->structure('Key Custody Agreement', [
+                $this->nfText('intro', '<h2>Key Custody Record</h2><p>One form per key recipient. The signed record is stored by the issuer and counts as acknowledgment of the terms below.</p>'),
+                $this->textField('issuer_name_kc', 'Issued By (name and organization)', true),
+                $this->textField('recipient_name_kc', 'Key Recipient Name', true),
+                $this->phoneField('recipient_phone_kc', 'Recipient Phone'),
+                $this->textField('property_address_kc', 'Property / Access Address', true),
+                $this->numberField('key_count_kc', 'Number of Keys Issued', true),
+                $this->selectField('key_type_kc', 'Key Type', [
+                    ['value' => 'front_kc', 'text' => 'Front door'],
+                    ['value' => 'mail_kc', 'text' => 'Mailbox'],
+                    ['value' => 'garage_kc', 'text' => 'Garage or parking'],
+                    ['value' => 'common_kc', 'text' => 'Building common areas'],
+                    ['value' => 'master_kc', 'text' => 'Master set'],
+                ], true),
+                $this->selectField('purpose_kc', 'Purpose of Access', [
+                    ['value' => 'tenant_kc', 'text' => 'Tenant'],
+                    ['value' => 'contractor_kc', 'text' => 'Contractor'],
+                    ['value' => 'housekeeper_kc', 'text' => 'Housekeeper / cleaning'],
+                    ['value' => 'family_kc', 'text' => 'Family member'],
+                    ['value' => 'neighbor_kc', 'text' => 'Neighbor / emergency contact'],
+                ], true),
+                $this->dateField('return_date_kc', 'Agreed Return Date', true),
+                $this->selectField('copies_made_kc', 'Have Copies Been Made?', [
+                    ['value' => 'copies_yes', 'text' => 'Yes'],
+                    ['value' => 'copies_no', 'text' => 'No'],
+                ], true),
+                $this->textareaField('copy_details_kc', 'Copy Details (who holds them, how many)', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('copies_made_kc', 'select', 'equals', 'Yes')], 'and', true),
+                ]),
+                $this->dateField('date_issued_kc', 'Date Issued', true),
+                $this->checkboxField('lock_change_kc', 'I understand locks may be rekeyed if keys are not returned by the agreed date'),
+                ['id' => 'signature_kc', 'type' => 'signature', 'title' => 'Recipient Signature', 'required' => true, 'help' => ''],
+            ], '#b45309'),
+        ];
+    }
+
+    private function lostAndFoundClaim(): array
+    {
+        return [
+            'name' => 'Lost and Found Claim Form Template',
+            'slug' => 'lost-and-found-claim-form-template',
+            'short_description' => 'A lost and found claim form template verifying ownership with item descriptions, photos, and delivery preferences for campuses, venues, and transit offices.',
+            'description' => '<p>Our Lost and Found Claim Form Template verifies ownership politely: item descriptions, identifying marks, location and date lost, photo proof, and delivery preferences for returned items.</p><h2>Why and when to use a lost and found claim form</h2><p>A shoebox of unclaimed items and a phone full of vague texts helps nobody. A claim form records exactly what each claimant says they lost, so staff match items to claims once, hand over to the right person, and stop re-litigating who dropped what.</p><h2>Who is this template for</h2><p>Hotels, event venues, transit systems, gyms and pools, schools, convention centers, and any front desk with a lost-property bin.</p><h2>Why SharaForms is the best tool for this form</h2><p>Photos attach to each claim for one-glance matching, shipping addresses surface only for mailed returns, and every claim timestamps automatically so disputes about who asked first end immediately.</p>',
+            'types' => ['request_forms'],
+            'industries' => ['customer_service_forms'],
+            'structure' => $this->structure('Lost and Found Claim', [
+                $this->nfText('intro', '<h2>Claim a Lost Item</h2><p>Describe your item in as much detail as you can. We match claims against found items daily and respond within one business day.</p>'),
+                $this->textField('claimant_name_lf', 'Your Name', true),
+                $this->emailField('email_lf', 'Email', true),
+                $this->phoneField('phone_lf', 'Phone', true),
+                $this->selectField('location_lf', 'Where Did You Lose It?', [
+                    ['value' => 'lobby_lf', 'text' => 'Lobby'],
+                    ['value' => 'pool_lf', 'text' => 'Pool area'],
+                    ['value' => 'gym_lf', 'text' => 'Gym'],
+                    ['value' => 'parking_lf', 'text' => 'Parking garage'],
+                    ['value' => 'hall_lf', 'text' => 'Event hall'],
+                    ['value' => 'other_lf', 'text' => 'Other'],
+                ], true),
+                $this->textField('other_location_lf', 'Describe the Location', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('location_lf', 'select', 'equals', 'Other')], 'and', true),
+                ]),
+                $this->dateField('date_lost_lf', 'Date Lost (best estimate)', true),
+                $this->textareaField('item_description_lf', 'Item Description', true),
+                $this->textareaField('identifying_marks_lf', 'Identifying Marks, Contents, or Serial Numbers', true),
+                $this->numberField('estimated_value_lf', 'Estimated Value ($)'),
+                ['id' => 'photo_upload', 'type' => 'files', 'title' => 'Photo of the Item (if you have one)', 'required' => false, 'help' => 'A photo speeds up verification', 'max_file_size' => 10, 'max_number_of_files' => 3],
+                $this->selectField('delivery_lf', 'How Should We Return It?', [
+                    ['value' => 'pickup_lf', 'text' => 'Pick up in person'],
+                    ['value' => 'ship_lf', 'text' => 'Ship to me (+$5 shipping)'],
+                    ['value' => 'hold_lf', 'text' => 'Hold at front desk'],
+                ], true),
+                $this->textareaField('shipping_address_lf', 'Shipping Address', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('delivery_lf', 'select', 'equals', 'Ship to me (+$5 shipping)')], 'and', true),
+                ]),
+                $this->textField('id_last4_lf', 'Last 4 Digits of Your ID (for pickup verification)'),
+            ], '#ca8a04'),
+        ];
+    }
+
+    private function weddingGiftRegistry(): array
+    {
+        return [
+            'name' => 'Wedding Gift Registry Form Template',
+            'slug' => 'wedding-gift-registry-form-template',
+            'short_description' => 'A wedding gift registry form template collecting registry links, shipping choices, and honeymoon hold dates for engaged couples and planners.',
+            'description' => '<p>Our Wedding Gift Registry Form Template gathers every registry detail in one place: store links, shipping choices, honeymoon hold dates, group gifting preferences, and thank-you note styles.</p><h2>Why and when to use a wedding gift registry form</h2><p>Registry details live in five places and guests guess wrong. One form hands your hosts, wedding website, and family spokesperson the exact shipping rules and links, so gifts arrive where you will actually be.</p><h2>Who is this template for</h2><p>Engaged couples, wedding planners, maid-of-honor organizers, and couples managing registries across multiple stores.</p><h2>Why SharaForms is the best tool for this form</h2><p>Honeymoon hold dates surface only for hold-and-ship-later choices, group gifting preferences reach every guest list maker, and updates take one edit instead of fifty messages.</p>',
+            'types' => ['wedding_forms', 'content_forms'],
+            'industries' => ['ecommerce_forms'],
+            'structure' => $this->structure('Wedding Gift Registry Details', [
+                $this->nfText('intro', '<h2>Registry Details</h2><p>Fill this in once and share the confirmation with whoever manages your wedding website or guest communications.</p>'),
+                $this->textField('couple_names_wr', 'Couple Names', true),
+                $this->dateField('wedding_date_wr', 'Wedding Date'),
+                $this->urlField('registry_links_wr', 'Registry Link(s)'),
+                $this->selectField('ship_choice_wr', 'How Should Gifts Be Handled?', [
+                    ['value' => 'ship_now', 'text' => 'Ship gifts as they arrive'],
+                    ['value' => 'hold_later', 'text' => 'Hold gifts until after the honeymoon'],
+                ], true),
+                $this->textareaField('ship_address_wr', 'Shipping Address (if shipping as they arrive)', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('ship_choice_wr', 'select', 'equals', 'Ship gifts as they arrive')], 'and', true),
+                ]),
+                $this->dateField('hold_date_wr', 'Hold-Until Date (if holding for the honeymoon)', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('ship_choice_wr', 'select', 'equals', 'Hold gifts until after the honeymoon')], 'and', true),
+                ]),
+                $this->selectField('group_gifting_wr', 'Group Gifting', [
+                    ['value' => 'group_yes', 'text' => 'Yes, allow group gifting on big items'],
+                    ['value' => 'group_no', 'text' => 'No, single purchases only'],
+                ], true),
+                $this->urlField('cash_fund_wr', 'Cash Fund or Honeymoon Fund Link'),
+                $this->selectField('thank_you_wr', 'Thank-You Note Style', [
+                    ['value' => 'standard_ty', 'text' => 'Standard printed notes'],
+                    ['value' => 'eco_ty', 'text' => 'Eco-friendly, no paper'],
+                ], true),
+                $this->textareaField('registry_notes_wr', 'Notes for Guests (color schemes, duplicates welcome, etc.)'),
+            ], '#be185d'),
+        ];
+    }
+
+    private function youthGroupRegistration(): array
+    {
+        return [
+            'name' => 'Youth Group Registration Form Template',
+            'slug' => 'youth-group-registration-form-template',
+            'short_description' => 'A youth group registration form template with guardian details, pickup authorization, and small group preferences for youth ministries and clubs.',
+            'description' => '<p>Our Youth Group Registration Form Template collects guardian contacts, emergency information, pickup authorizations, and small group preferences so leaders can focus on students instead of paperwork.</p><h2>Why and when to use a youth group registration form</h2><p>The first night of youth group should not be a clipboard marathon. Registrations completed at home give leaders emergency contacts before doors open, document who may pick up each student, and record allergies where the snack coordinator actually sees them.</p><h2>Who is this template for</h2><p>Churches, mosques, temples, community centers, after-school clubs, and any organization running weekly youth programs.</p><h2>Why SharaForms is the best tool for this form</h2><p>Pickup authorizations surface only for families who need them, rosters export with guardian phones attached, and registration counts per grade plan your small groups for you.</p>',
+            'types' => ['registration_forms'],
+            'industries' => ['church_forms', 'education_forms'],
+            'structure' => $this->structure('Youth Group Registration', [
+                $this->nfText('intro', '<h2>Register for Youth Group</h2><p>One form per student. Leaders carry emergency details to every event once you submit.</p>'),
+                $this->textField('youth_name_yg', 'Student Name', true),
+                $this->selectField('youth_grade_yg', 'Grade Level', [
+                    ['value' => 'yg_elem', 'text' => 'Elementary'],
+                    ['value' => 'yg_middle', 'text' => 'Middle school'],
+                    ['value' => 'yg_high', 'text' => 'High school'],
+                ], true),
+                $this->textField('guardian_name_yg', 'Parent / Guardian Name', true),
+                $this->phoneField('guardian_phone_yg', 'Guardian Phone', true),
+                $this->emailField('email_yg', 'Guardian Email', true),
+                $this->textField('emergency_contact_yg', 'Emergency Contact (name and phone)', true),
+                $this->textareaField('allergies_yg', 'Allergies or Medical Notes'),
+                $this->selectField('first_time_yg', 'First Year in the Group?', [
+                    ['value' => 'yg_yes', 'text' => 'Yes, first year'],
+                    ['value' => 'yg_no', 'text' => 'No, returning'],
+                ], true),
+                $this->selectField('small_group_yg', 'Small Group Preference', [
+                    ['value' => 'sg_grade', 'text' => 'Same grade as my student'],
+                    ['value' => 'sg_sibling', 'text' => 'Group with their sibling'],
+                    ['value' => 'sg_any', 'text' => 'No preference'],
+                ], true),
+                $this->selectField('pickup_change_yg', 'Pickup Authorization', [
+                    ['value' => 'guardians_only', 'text' => 'Only listed guardians may pick up'],
+                    ['value' => 'someone_else', 'text' => 'Someone else may pick up sometimes'],
+                ], true),
+                $this->textField('authorized_pickup_yg', 'Authorized Pickup Person (name and phone)', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('pickup_change_yg', 'select', 'equals', 'Someone else may pick up sometimes')], 'and', true),
+                ]),
+                $this->checkboxField('photo_consent_yg', 'I consent to photos of my student in group communications'),
+                $this->selectField('tshirt_size_yg', 'T-Shirt Size', [
+                    ['value' => 't_youth', 'text' => 'Youth'],
+                    ['value' => 't_small', 'text' => 'Small'],
+                    ['value' => 't_medium', 'text' => 'Medium'],
+                    ['value' => 't_large', 'text' => 'Large'],
+                    ['value' => 't_xl', 'text' => 'XL'],
+                ]),
+            ], '#7c2d12'),
+        ];
+    }
+
+    private function boardMemberNomination(): array
+    {
+        return [
+            'name' => 'Board Member Nomination Form Template',
+            'slug' => 'board-member-nomination-form-template',
+            'short_description' => 'A board member nomination form template capturing nominee skills, board experience, term preferences, and supporting statements for governance committees.',
+            'description' => '<p>Our Board Member Nomination Form Template standardizes nominations: nominee skills, term preferences, supporting statements, and current-role disclosures that governance committees need before the slate is finalized.</p><h2>Why and when to use a board member nomination form</h2><p>Nominations gathered by hallway conversation skew toward whoever speaks loudest. A structured form gives every nominee the same questions, documents the skills matrix the board is missing, and surfaces conflicts like current roles before the vote.</p><h2>Who is this template for</h2><p>Nonprofit boards, condo and HOA associations, professional societies, credit unions, and co-op boards running annual elections.</p><h2>Why SharaForms is the best tool for this form</h2><p>Current board roles are disclosed only when relevant, resumes attach to each nomination, and the skills export builds your governance matrix without a spreadsheet marathon.</p>',
+            'types' => ['award_forms', 'application_forms'],
+            'industries' => ['charity_forms', 'business_forms'],
+            'structure' => $this->structure('Board Member Nomination', [
+                $this->nfText('intro', '<h2>Nominate a Board Member</h2><p>Nominations close two weeks before the annual meeting. Nominees confirm willingness before the slate is published.</p>'),
+                $this->textField('nominator_name_bn', 'Nominator Name', true),
+                $this->emailField('nominator_email_bn', 'Nominator Email', true),
+                $this->textField('nominee_name_bn', 'Nominee Name', true),
+                $this->textField('nominee_title_bn', 'Nominee Title / Organization'),
+                $this->emailField('nominee_email_bn', 'Nominee Email'),
+                $this->selectField('relationship_bn', 'Your Relationship to the Nominee', [
+                    ['value' => 'rel_colleague', 'text' => 'Colleague'],
+                    ['value' => 'rel_partner', 'text' => 'Community partner'],
+                    ['value' => 'rel_member', 'text' => 'Fellow member'],
+                    ['value' => 'rel_mentee', 'text' => 'Mentee'],
+                    ['value' => 'rel_other', 'text' => 'Other'],
+                ], true),
+                $this->selectField('board_term_bn', 'Term Being Nominated For', [
+                    ['value' => 'term_one', 'text' => 'One year'],
+                    ['value' => 'term_two', 'text' => 'Two years'],
+                    ['value' => 'term_three', 'text' => 'Three years'],
+                ], true),
+                $this->multiSelectField('skills_bn', 'Skills the Nominee Brings', [
+                    ['value' => 'finance_bn', 'text' => 'Finance'],
+                    ['value' => 'legal_bn', 'text' => 'Legal'],
+                    ['value' => 'fundraising_bn', 'text' => 'Fundraising'],
+                    ['value' => 'marketing_bn', 'text' => 'Marketing'],
+                    ['value' => 'operations_bn', 'text' => 'Operations'],
+                    ['value' => 'tech_bn', 'text' => 'Technology'],
+                ]),
+                ['id' => 'resume_upload', 'type' => 'files', 'title' => 'Resume or Bio', 'required' => false, 'help' => 'PDF or DOC', 'max_file_size' => 10, 'max_number_of_files' => 1],
+                $this->selectField('currently_serving_bn', 'Is the Nominee Currently on This Board?', [
+                    ['value' => 'serving_yes', 'text' => 'Yes'],
+                    ['value' => 'serving_no', 'text' => 'No'],
+                ], true),
+                $this->textField('current_role_bn', 'Current Board Role', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('currently_serving_bn', 'select', 'equals', 'Yes')], 'and', true),
+                ]),
+                $this->textareaField('statement_bn', 'Supporting Statement', true),
+            ], '#4338ca'),
+        ];
+    }
+
+    private function pilotLogbookVerification(): array
+    {
+        return [
+            'name' => 'Pilot Logbook Verification Form Template',
+            'slug' => 'pilot-logbook-verification-form-template',
+            'short_description' => 'A pilot logbook verification form template confirming flight hours by category with discrepancy documentation for flight schools and examiners.',
+            'description' => '<p>Our Pilot Logbook Verification Form Template confirms logged hours by category: total, cross-country, night, instrument, and simulator time, with a signed discrepancy record for audit compliance.</p><h2>Why and when to use a pilot logbook verification form</h2><p>Insurance renewals, type ratings, and job applications all ask for verified hours. A structured verification fixes the exact period reviewed, breaks hours out by category, and documents any discrepancies found before they surface during a ramp check.</p><h2>Who is this template for</h2><p>Flight schools, charter operators, flying clubs, corporate flight departments, and insurers renewing pilot policies.</p><h2>Why SharaForms is the best tool for this form</h2><p>Discrepancy details surface only when discrepancies exist, instructor endorsements attach to the record, and signed verifications export into audit files with timestamps intact.</p>',
+            'types' => ['audit_forms', 'tracking_forms'],
+            'industries' => ['business_forms'],
+            'structure' => $this->structure('Pilot Logbook Verification', [
+                $this->nfText('intro', '<h2>Logbook Verification</h2><p>The reviewing instructor or operator completes this alongside the physical or digital logbook. Keep the signed record with your training file.</p>'),
+                $this->textField('pilot_name_pl', 'Pilot Name', true),
+                $this->textField('certificate_pl', 'Certificate Number', true),
+                $this->dateField('period_start_pl', 'Review Period Start', true),
+                $this->dateField('period_end_pl', 'Review Period End', true),
+                $this->numberField('total_hours_pl', 'Total Hours Verified', true),
+                $this->numberField('xc_hours_pl', 'Cross-Country Hours'),
+                $this->numberField('night_hours_pl', 'Night Hours'),
+                $this->numberField('instrument_hours_pl', 'Instrument Hours (actual + simulated)'),
+                $this->numberField('sim_hours_pl', 'Simulator / FTD Hours'),
+                $this->selectField('discrepancies_pl', 'Any Discrepancies Found?', [
+                    ['value' => 'disc_yes', 'text' => 'Yes'],
+                    ['value' => 'disc_no', 'text' => 'No'],
+                ], true),
+                $this->textareaField('discrepancy_details_pl', 'Discrepancy Details (entries, dates, resolution)', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('discrepancies_pl', 'select', 'equals', 'Yes')], 'and', true),
+                ]),
+                $this->textField('instructor_endorsement_pl', 'Reviewing Instructor / Verifier Name', true),
+                $this->dateField('verify_date_pl', 'Verification Date', true),
+                ['id' => 'verify_signature_pl', 'type' => 'signature', 'title' => 'Verifier Signature', 'required' => true, 'help' => ''],
+            ], '#334155'),
+        ];
+    }
+
+    private function wineClubSignup(): array
+    {
+        return [
+            'name' => 'Wine Club Signup Form Template',
+            'slug' => 'wine-club-signup-form-template',
+            'short_description' => 'A wine club signup form template with tiered shipments, taste profiles, and age verification built in for wineries, tasting rooms, and clubs.',
+            'description' => '<p>Our Wine Club Signup Form Template enrolls members cleanly: club tiers with transparent pricing, taste profiles, shipping or pickup fulfillment, and the birth-year verification alcohol sales require.</p><h2>Why and when to use a wine club signup form</h2><p>Wine clubs lose members at signup, not at renewal, when the form asks for details twice or ships where nobody receives it. A structured signup fixes the tier, captures the taste profile that drives allocations, and documents age verification before the first shipment leaves.</p><h2>Who is this template for</h2><p>Wineries, urban tasting rooms, bottle shops with allocation lists, distilleries, and breweries running mug or bottle clubs.</p><h2>Why SharaForms is the best tool for this form</h2><p>Shipping addresses surface only for shipped releases, pickup authorization stays documented for in-person claims, and every signup records the compliance details your state requires.</p>',
+            'types' => ['membership_forms', 'subscription_forms'],
+            'industries' => ['ecommerce_forms'],
+            'structure' => $this->structure('Wine Club Signup', [
+                $this->nfText('intro', '<h2>Join Our Wine Club</h2><p>Members receive quarterly releases with club pricing and first access to limited bottlings. You must be 21 or older to join.</p>'),
+                $this->textField('member_name_wc', 'Full Name', true),
+                $this->emailField('email_wc', 'Email', true),
+                $this->phoneField('phone_wc', 'Phone'),
+                $this->numberField('birth_year_wc', 'Birth Year (age verification)', true, ['help' => 'You must be 21 or older to join']),
+                $this->selectField('club_tier_wc', 'Club Tier', [
+                    ['value' => 'explorer', 'text' => 'Explorer: 3 bottles per quarter - $90'],
+                    ['value' => 'cellar', 'text' => 'Cellar: 6 bottles per quarter - $165'],
+                    ['value' => 'collector', 'text' => 'Collector: 12 bottles per quarter - $300'],
+                ], true),
+                $this->multiSelectField('taste_prefs', 'Your Taste Preferences', [
+                    ['value' => 'bold_reds', 'text' => 'Bold reds'],
+                    ['value' => 'crisp_whites', 'text' => 'Crisp whites'],
+                    ['value' => 'sparkling', 'text' => 'Sparkling'],
+                    ['value' => 'rose', 'text' => 'Rosé'],
+                    ['value' => 'dessert', 'text' => 'Dessert wines'],
+                ]),
+                $this->selectField('fulfillment_wc', 'Fulfillment Preference', [
+                    ['value' => 'wc_ship', 'text' => 'Ship each release'],
+                    ['value' => 'wc_pickup', 'text' => 'Pick up at the winery'],
+                ], true),
+                $this->textareaField('ship_address_wc', 'Shipping Address', false, [
+                    'hidden' => true,
+                    'help' => 'An adult signature is required on delivery',
+                    'logic' => $this->revealLogic([$this->logicCondition('fulfillment_wc', 'select', 'equals', 'Ship each release')], 'and', true),
+                ]),
+                $this->textField('pickup_person_wc', 'Authorized Pickup Person', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('fulfillment_wc', 'select', 'equals', 'Pick up at the winery')]),
+                ]),
+                $this->textareaField('notes_wc', 'Allergies, Delivery Notes, or Special Requests'),
+            ], '#9f1239'),
+        ];
+    }
+
+    private function gardenPlotApplication(): array
+    {
+        return [
+            'name' => 'Garden Plot Application Form Template',
+            'slug' => 'garden-plot-application-form-template',
+            'short_description' => 'A garden plot application form template assigning plots by size, season length, and accessibility needs for community garden programs and allotments.',
+            'description' => '<p>Our Garden Plot Application Form Template assigns community garden plots fairly: size and price choices, experience levels, tool and water needs, accessibility requests, and the organic pledge every gardener signs.</p><h2>Why and when to use a garden plot application form</h2><p>Waitlists managed on paper assign the same corner plot twice and lose accessible-height requests entirely. A structured application records who wants what size, who needs a raised bed, and who committed to the organic rules before keys are cut.</p><h2>Who is this template for</h2><p>Community gardens, school gardens, church gardens, housing cooperatives, and municipal parks departments.</p><h2>Why SharaForms is the best tool for this form</h2><p>Accessibility needs surface only when a raised bed is requested, tool inventories build themselves from applications, and plot assignments export with contact details attached.</p>',
+            'types' => ['application_forms'],
+            'industries' => ['charity_forms', 'education_forms'],
+            'structure' => $this->structure('Community Garden Plot Application', [
+                $this->nfText('intro', '<h2>Apply for a Plot</h2><p>Plots are assigned in application order each season. Water access and shared tools are included in every plot fee.</p>'),
+                $this->textField('applicant_name_gp', 'Full Name', true),
+                $this->emailField('email_gp', 'Email', true),
+                $this->phoneField('phone_gp', 'Phone'),
+                $this->selectField('plot_size_gp', 'Plot Size', [
+                    ['value' => 'gp_4x8', 'text' => '4x8 raised bed - $25/season'],
+                    ['value' => 'gp_4x16', 'text' => '4x16 in-ground plot - $40/season'],
+                    ['value' => 'gp_8x16', 'text' => '8x16 in-ground plot - $60/season'],
+                ], true),
+                $this->selectField('experience_gp', 'Gardening Experience', [
+                    ['value' => 'first_year', 'text' => 'First year gardening'],
+                    ['value' => 'some_exp', 'text' => 'A few seasons'],
+                    ['value' => 'experienced', 'text' => 'Experienced'],
+                ], true),
+                $this->selectField('raised_bed_gp', 'Bed Height Preference', [
+                    ['value' => 'gp_standard', 'text' => 'Standard bed height'],
+                    ['value' => 'gp_accessible', 'text' => 'Accessible height bed (+$10)'],
+                ], true),
+                $this->textField('accessibility_notes_gp', 'Accessibility Needs Details', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('raised_bed_gp', 'select', 'equals', 'Accessible height bed (+$10)')], 'and', true),
+                ]),
+                $this->multiSelectField('tools_needed', 'Shared Tools You Will Use', [
+                    ['value' => 'shovel', 'text' => 'Shovels and spades'],
+                    ['value' => 'hand_tools', 'text' => 'Hand tools'],
+                    ['value' => 'wheelbarrow', 'text' => 'Wheelbarrow'],
+                    ['value' => 'hose', 'text' => 'Hoses and watering wands'],
+                ]),
+                $this->textareaField('planting_plan_gp', 'What Do You Plan to Grow?', true),
+                $this->selectField('season_gp', 'Season', [
+                    ['value' => 'spring_gp', 'text' => 'Spring'],
+                    ['value' => 'summer_gp', 'text' => 'Summer'],
+                    ['value' => 'fall_gp', 'text' => 'Fall'],
+                    ['value' => 'full_year', 'text' => 'Full year'],
+                ], true),
+                $this->checkboxField('organic_pledge_gp', 'I pledge to follow the garden\'s organic-only practices', true),
+            ], '#15803d'),
+        ];
+    }
+
+    private function serviceRecoveryFollowUp(): array
+    {
+        return [
+            'name' => 'Service Recovery Follow-Up Form Template',
+            'slug' => 'service-recovery-follow-up-form-template',
+            'short_description' => 'A service recovery follow-up form template that calculates service credits, documents resolutions, and tracks follow-up outcomes for support teams.',
+            'description' => '<p>Our Service Recovery Follow-Up Form Template standardizes apology follow-ups: issue categories, severity-based credits computed automatically, resolution notes, and the follow-up preference each customer chooses.</p><h2>Why and when to use a service recovery form</h2><p>Ad-hoc apology credits breed inconsistency: two customers with the same failure get wildly different make-goods. A structured recovery form prices severity tiers transparently, documents what went wrong for trend tracking, and records the resolution the customer actually accepted.</p><h2>Who is this template for</h2><p>Customer experience teams, restaurants, hotels, e-commerce support desks, and service businesses that make things right on the record.</p><h2>Why SharaForms is the best tool for this form</h2><p>Credits compute from severity with no manager math, expedited handling is priced clearly, and recovery trends emerge monthly from the category data you already collected.</p>',
+            'types' => ['feedback_forms'],
+            'industries' => ['customer_service_forms', 'business_forms'],
+            'structure' => $this->structure('Service Recovery Follow-Up', [
+                $this->nfText('intro', '<h2>Make It Right</h2><p>We are sorry your experience fell short. This form documents your issue and the service credit we owe you.</p>'),
+                $this->textField('customer_name_sr', 'Your Name', true),
+                $this->textField('order_number_sr', 'Order / Ticket Number', true),
+                $this->emailField('email_sr', 'Email', true),
+                $this->dateField('issue_date_sr', 'Date of the Issue'),
+                $this->selectField('issue_category_sr', 'What Went Wrong?', [
+                    ['value' => 'shipping_delay', 'text' => 'Shipping delay'],
+                    ['value' => 'damaged_item', 'text' => 'Damaged item'],
+                    ['value' => 'billing_error', 'text' => 'Billing error'],
+                    ['value' => 'staff_exp', 'text' => 'Staff experience'],
+                    ['value' => 'other_sr', 'text' => 'Other'],
+                ], true),
+                $this->textareaField('other_details_sr', 'Please Describe the Issue', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('issue_category_sr', 'select', 'equals', 'Other')], 'and', true),
+                ]),
+                $this->selectField('severity_sr', 'How Serious Was It?', [
+                    ['value' => 'sev_minor', 'text' => 'Minor: it worked out - $10 credit'],
+                    ['value' => 'sev_moderate', 'text' => 'Moderate: real inconvenience - $25 credit'],
+                    ['value' => 'sev_serious', 'text' => 'Serious: we lost your trust - $50 credit'],
+                ], true),
+                $this->selectField('expedite_sr', 'Credit Processing Speed', [
+                    ['value' => 'std_processing', 'text' => 'Standard processing (3-5 days)'],
+                    ['value' => 'exp_processing', 'text' => 'Expedite it (+$5, 24 hours)'],
+                ], true),
+                $this->textareaField('resolution_notes_sr', 'What Resolution Did We Offer?', true),
+                $this->selectField('follow_up_pref_sr', 'How Should We Follow Up?', [
+                    ['value' => 'fu_email', 'text' => 'Email me'],
+                    ['value' => 'fu_call', 'text' => 'Call me'],
+                    ['value' => 'fu_none', 'text' => 'No follow-up needed'],
+                ], true),
+                $this->textareaField('feedback_sr', 'Anything Else We Should Know?'),
+                $this->totalBlock('recovery_total_display', 'cv_recovery_total', 'Your Service Credit', '$0'),
+            ], '#dc2626', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_recovery_total',
+                        'Service Credit',
+                        'IF({severity_sr}="Minor: it worked out - $10 credit",10,IF({severity_sr}="Moderate: real inconvenience - $25 credit",25,50))'
+                            . '+IF({expedite_sr}="Expedite it (+$5, 24 hours)",5,0)'
+                    ),
+                ],
+            ]),
+        ];
+    }
+
+    private function snowRemovalServiceAgreement(): array
+    {
+        return [
+            'name' => 'Snow Removal Service Agreement',
+            'slug' => 'snow-removal-service-agreement-form-template',
+            'short_description' => 'A snow removal service agreement form template with driveway pricing tiers, salting options, and access details for winter contractors and homeowners.',
+            'description' => '<p>Our Snow Removal Service Agreement Form Template locks in winter contracts before the first storm: driveway pricing tiers, salting options, trigger depths, gate codes, and the signed agreement both sides keep.</p><h2>Why and when to use a snow removal service agreement form</h2><p>Seasonal contracts negotiated by text always miss one detail: who salts, at what depth plowing triggers, and how the crew gets through the gate. A structured agreement fixes price and terms before November, so neither side renegotiates during a storm.</p><h2>Who is this template for</h2><p>Residential snow removal companies, landscaping firms adding winter revenue, HOAs managing contractor access, and commercial property managers.</p><h2>Why SharaForms is the best tool for this form</h2><p>Gate codes surface only for gated properties, salting and walkway choices price themselves clearly, and signed agreements timestamp before the season starts.</p>',
+            'types' => ['consent_forms', 'request_forms'],
+            'industries' => ['services_forms'],
+            'structure' => $this->structure('Snow Removal Service Agreement', [
+                $this->nfText('intro', '<h2>Winter Service Agreement</h2><p>Sign before November 1 for the full season rate. Crews clear your property each time snowfall passes your chosen trigger depth.</p>'),
+                $this->textField('homeowner_name_snow', 'Your Name', true),
+                $this->textField('property_address_snow', 'Service Address', true),
+                $this->phoneField('phone_snow', 'Phone', true),
+                $this->emailField('email_snow', 'Email', true),
+                $this->selectField('driveway_snow', 'Driveway Type', [
+                    ['value' => 'single_snow', 'text' => 'Single driveway'],
+                    ['value' => 'double_snow', 'text' => 'Double driveway'],
+                    ['value' => 'circular_snow', 'text' => 'Circular or long drive'],
+                ], true),
+                $this->selectField('walkways_snow', 'Walkways and Steps', [
+                    ['value' => 'walk_inc', 'text' => 'Include walkways and steps'],
+                    ['value' => 'drive_only', 'text' => 'Driveway only'],
+                ], true),
+                $this->selectField('salting_snow', 'Salting', [
+                    ['value' => 'salt_inc', 'text' => 'Include salting'],
+                    ['value' => 'no_salt', 'text' => 'No salting needed'],
+                ], true),
+                $this->selectField('trigger_depth_snow', 'Plow Trigger Depth', [
+                    ['value' => 'depth_2', 'text' => 'After 2 cm of snowfall'],
+                    ['value' => 'depth_5', 'text' => 'After 5 cm of snowfall'],
+                    ['value' => 'depth_overnight', 'text' => 'Overnight accumulation only'],
+                ], true),
+                $this->selectField('gated_property_snow', 'Is the Property Gated?', [
+                    ['value' => 'gated_yes', 'text' => 'Yes'],
+                    ['value' => 'gated_no', 'text' => 'No'],
+                ], true),
+                $this->textField('gate_code_snow', 'Gate Code or Access Instructions', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('gated_property_snow', 'select', 'equals', 'Yes')], 'and', true),
+                ]),
+                $this->selectField('vehicle_snow', 'Overnight Vehicles', [
+                    ['value' => 'cars_overnight', 'text' => 'Cars may be in the driveway overnight'],
+                    ['value' => 'clear_overnight', 'text' => 'Driveway is clear overnight'],
+                ], true),
+                $this->selectField('season_snow', 'Season Covered', [
+                    ['value' => 'nov_apr', 'text' => 'November to April'],
+                    ['value' => 'dec_mar', 'text' => 'December to March'],
+                ], true),
+                $this->dateField('start_date_snow', 'Service Start Date', true),
+                $this->checkboxField('agreement_snow', 'I agree to the season terms, pricing tier for my driveway, and storm-event timing', true),
+                ['id' => 'signature_snow', 'type' => 'signature', 'title' => 'Your Signature', 'required' => true, 'help' => ''],
+            ], '#0369a1'),
+        ];
+    }
+
+    private function talentShowEntry(): array
+    {
+        return [
+            'name' => 'Talent Show Entry Form Template',
+            'slug' => 'talent-show-entry-form-template',
+            'short_description' => 'A talent show entry form template with category fees, group reveals, tech needs, and optional recording add-ons for event organizers and schools.',
+            'description' => '<p>Our Talent Show Entry Form Template organizes entries the stage crew can run: category fees, act titles, group member reveals, music uploads, technical needs, and optional performance recordings.</p><h2>Why and when to use a talent show entry form</h2><p>Talent nights collapse under handwritten entry slips: two acts named the same thing, a band with seven members nobody counted, and a singer whose backing track never arrived. A structured entry fixes names, sizes, and tech needs before the dress rehearsal.</p><h2>Who is this template for</h2><p>Schools, PTAs, church groups, summer camps, community theaters, and any organizer running a staged performance night.</p><h2>Why SharaForms is the best tool for this form</h2><p>Group member lists surface only for multi-performer acts, music files attach directly to entries, and the tech-needs export becomes the stage manager\'s run sheet.</p>',
+            'types' => ['registration_forms', 'event_registration_forms'],
+            'industries' => ['education_forms'],
+            'structure' => $this->structure('Talent Show Entry', [
+                $this->nfText('intro', '<h2>Enter the Show</h2><p>Entries close one week before the performance. Entry fees are collected at rehearsal, not at signup.</p>'),
+                $this->textField('act_name_ts', 'Act or Group Name', true),
+                $this->textField('lead_performer_ts', 'Lead Performer Name', true),
+                $this->textField('school_ts', 'School / Organization'),
+                $this->selectField('grade_ts', 'Grade / Division', [
+                    ['value' => 'g_k5', 'text' => 'K-5'],
+                    ['value' => 'g_68', 'text' => '6-8'],
+                    ['value' => 'g_912', 'text' => '9-12'],
+                    ['value' => 'g_community', 'text' => 'Community'],
+                ], true),
+                $this->selectField('act_category_ts', 'Act Category', [
+                    ['value' => 'cat_music', 'text' => 'Music & Vocal - $15'],
+                    ['value' => 'cat_dance', 'text' => 'Dance - $15'],
+                    ['value' => 'cat_variety', 'text' => 'Variety & Comedy - $10'],
+                ], true),
+                $this->textField('act_title_ts', 'Act Title (as it should appear in the program)', true),
+                $this->numberField('performers_count_ts', 'Number of Performers', true),
+                $this->textareaField('member_names_ts', 'All Performer Names', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('performers_count_ts', 'number', 'greater_than', 1)], 'and', true),
+                ]),
+                $this->selectField('track_recording_ts', 'Want a Recording of Your Act?', [
+                    ['value' => 'track_no', 'text' => 'No recording needed'],
+                    ['value' => 'track_yes', 'text' => 'Yes, add the recording (+$25)'],
+                ], true),
+                ['id' => 'music_upload', 'type' => 'files', 'title' => 'Backing Track Upload (MP3)', 'required' => false, 'help' => 'Or paste a link in the notes below', 'max_file_size' => 10, 'max_number_of_files' => 1],
+                $this->multiSelectField('tech_needs_ts', 'Technical Needs', [
+                    ['value' => 'mic_ts', 'text' => 'Microphone'],
+                    ['value' => 'piano_ts', 'text' => 'Piano or keyboard'],
+                    ['value' => 'projector_ts', 'text' => 'Projector'],
+                    ['value' => 'spotlight_ts', 'text' => 'Spotlight'],
+                    ['value' => 'chairs_ts', 'text' => 'Chairs or props on stage'],
+                ]),
+                $this->textareaField('props_ts', 'Props or Staging Notes'),
+                $this->selectField('rehearsal_slot_ts', 'Rehearsal Slot Preference', [
+                    ['value' => 'thu_4', 'text' => 'Thursday 4pm'],
+                    ['value' => 'fri_4', 'text' => 'Friday 4pm'],
+                    ['value' => 'no_rehearsal', 'text' => 'No rehearsal needed'],
+                ], true),
+                $this->totalBlock('entry_total_display', 'cv_entry_total', 'Entry Total', '$0'),
+            ], '#a21caf', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_entry_total',
+                        'Entry Total',
+                        'IF({act_category_ts}="Music & Vocal - $15",15,IF({act_category_ts}="Dance - $15",15,10))'
+                            . '+IF({track_recording_ts}="Yes, add the recording (+$25)",25,0)'
+                    ),
+                ],
+            ]),
+        ];
+    }
+
+    private function furnitureAssemblyService(): array
+    {
+        return [
+            'name' => 'Furniture Assembly Service Form Template',
+            'slug' => 'furniture-assembly-service-form-template',
+            'short_description' => 'A furniture assembly service form template estimating hours, stair and elevator fees, and rush scheduling into live totals for assembly crews.',
+            'description' => '<p>Our Furniture Assembly Service Form Template quotes assembly jobs accurately: item types and counts, estimated hours, stair fees, rush scheduling, and a live total customers see before they book.</p><h2>Why and when to use a furniture assembly service form</h2><p>Assembly quotes guessed over the phone lead to disputed invoices. A structured booking prices the hours each job realistically takes, adds stair and rush fees transparently, and shows the total before the assembler knocks on the door.</p><h2>Who is this template for</h2><p>Handyman services, furniture stores delivering assembly, moving companies adding assembly lines, and independent assemblers.</p><h2>Why SharaForms is the best tool for this form</h2><p>Totals compute live from hours, items, and access details, rush scheduling prices itself, and every booking arrives with the access notes your crew needs.</p>',
+            'types' => ['booking_forms'],
+            'industries' => ['services_forms'],
+            'structure' => $this->structure('Furniture Assembly Booking', [
+                $this->nfText('intro', '<h2>Book Assembly Service</h2><p>Estimates use $45 per hour plus $5 per item. Your total updates as you fill this out.</p>'),
+                $this->textField('customer_name_fa', 'Your Name', true),
+                $this->phoneField('phone_fa', 'Phone', true),
+                $this->emailField('email_fa', 'Email', true),
+                $this->selectField('item_type_fa', 'Item Type', [
+                    ['value' => 'bed_frame', 'text' => 'Bed frame'],
+                    ['value' => 'wardrobe', 'text' => 'Wardrobe or armoire'],
+                    ['value' => 'dresser', 'text' => 'Dresser'],
+                    ['value' => 'desk_item', 'text' => 'Desk'],
+                    ['value' => 'dining_set', 'text' => 'Dining set'],
+                    ['value' => 'other_furniture', 'text' => 'Other furniture'],
+                ], true),
+                $this->numberField('item_count_fa', 'Number of Items', true),
+                $this->numberField('estimated_hours_fa', 'Estimated Hours', true, ['help' => 'Most single items take 1-2 hours']),
+                $this->selectField('stairs_fa', 'Access at Your Place', [
+                    ['value' => 'ground_access', 'text' => 'Ground floor or elevator access'],
+                    ['value' => 'stairs_access', 'text' => 'Stairs (no elevator) - +$10'],
+                ], true),
+                $this->selectField('service_speed_fa', 'Scheduling Speed', [
+                    ['value' => 'std_schedule', 'text' => 'Standard scheduling (within a week)'],
+                    ['value' => 'rush_schedule', 'text' => 'Rush scheduling (within 48 hours) - +$35'],
+                ], true),
+                $this->dateField('preferred_date_fa', 'Preferred Date'),
+                $this->textareaField('disassembly_notes_fa', 'Anything to Disassemble or Remove First?', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('item_type_fa', 'select', 'does_not_equal', 'Bed frame')]),
+                ]),
+                $this->textareaField('notes_fa', 'Access Notes, Parking, or Item Details'),
+                $this->totalBlock('assembly_total_display', 'cv_assembly_total', 'Estimated Assembly Total', '$0'),
+            ], '#78350f', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_assembly_total',
+                        'Estimated Assembly Total',
+                        'IFBLANK({estimated_hours_fa},1)*45+IFBLANK({item_count_fa},1)*5'
+                            . '+IF({stairs_fa}="Stairs (no elevator) - +$10",10,0)'
+                            . '+IF({service_speed_fa}="Rush scheduling (within 48 hours) - +$35",35,0)'
+                    ),
+                ],
+            ]),
+        ];
+    }
+
+    private function recyclingPickupRequest(): array
+    {
+        return [
+            'name' => 'Recycling Pickup Request Form Template',
+            'slug' => 'recycling-pickup-request-form-template',
+            'short_description' => 'A recycling pickup request form template capturing item categories, volumes, and electronics handling details for municipal programs and haulers.',
+            'description' => '<p>Our Recycling Pickup Request Form Template organizes pickups for households and organizations: item categories, volume estimates, electronics handling, and donation receipts for tax records.</p><h2>Why and when to use a recycling pickup request form</h2><p>Pickup drivers arrive to find a mattress, ten bags of shredded paper, and a tube TV nobody warned them about. A structured request lists what is actually being recycled, flags electronics that need special handling, and issues donation receipts without a second email.</p><h2>Who is this template for</h2><p>Community recycling nonprofits, municipal programs, office cleanout services, school e-waste drives, and charity reuse centers.</p><h2>Why SharaForms is the best tool for this form</h2><p>Electronics details surface only when electronics are selected, receipt names are captured for tax-compliant donations, and volumes arrive sorted before the truck rolls.</p>',
+            'types' => ['request_forms'],
+            'industries' => ['charity_forms'],
+            'structure' => $this->structure('Recycling Pickup Request', [
+                $this->nfText('intro', '<h2>Schedule a Pickup</h2><p>Pickups run Tuesdays and Saturdays. Electronics are accepted at no charge and recycled responsibly.</p>'),
+                $this->textField('contact_name_rp', 'Contact Name', true),
+                $this->emailField('email_rp', 'Email', true),
+                $this->phoneField('phone_rp', 'Phone'),
+                $this->selectField('org_type_rp', 'Who Is This Pickup For?', [
+                    ['value' => 'household_rp', 'text' => 'Household'],
+                    ['value' => 'business_rp', 'text' => 'Business'],
+                    ['value' => 'school_rp', 'text' => 'School'],
+                    ['value' => 'event_rp', 'text' => 'Community event'],
+                ], true),
+                $this->textField('pickup_address_rp', 'Pickup Address', true),
+                $this->multiSelectField('item_types_rp', 'What Are We Picking Up?', [
+                    ['value' => 'paper_rp', 'text' => 'Paper and cardboard'],
+                    ['value' => 'plastics_rp', 'text' => 'Plastics 1-2'],
+                    ['value' => 'electronics_rp', 'text' => 'Electronics (TVs, computers, cables)'],
+                    ['value' => 'metal_rp', 'text' => 'Scrap metal'],
+                    ['value' => 'glass_rp', 'text' => 'Glass'],
+                    ['value' => 'textiles_rp', 'text' => 'Textiles and clothing'],
+                ], true),
+                $this->textareaField('electronics_details_rp', 'Electronics Details (types, approximate count)', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('item_types_rp', 'multi_select', 'contains', 'Electronics (TVs, computers, cables)')], 'and', true),
+                ]),
+                $this->selectField('volume_rp', 'Estimated Volume', [
+                    ['value' => 'car_load', 'text' => 'One car load'],
+                    ['value' => 'van_load', 'text' => 'Van or SUV load'],
+                    ['value' => 'truck_load', 'text' => 'Pickup truck or trailer'],
+                ], true),
+                $this->dateField('preferred_date_rp', 'Preferred Pickup Date', true),
+                $this->selectField('receipt_rp', 'Donation Receipt', [
+                    ['value' => 'no_receipt', 'text' => 'No receipt needed'],
+                    ['value' => 'yes_receipt', 'text' => 'Yes, email a donation receipt'],
+                ], true),
+                $this->textField('receipt_name_rp', 'Receipt Name (individual or organization)', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('receipt_rp', 'select', 'equals', 'Yes, email a donation receipt')], 'and', true),
+                ]),
+                $this->textareaField('notes_rp', 'Gate Codes, Parking, or Item Notes'),
+            ], '#4d7c0f'),
+        ];
+    }
+
+    private function campusTourBooking(): array
+    {
+        return [
+            'name' => 'Campus Tour Booking Form Template',
+            'slug' => 'campus-tour-booking-form-template',
+            'short_description' => 'A campus tour booking form template for admissions teams managing group sizes, academic interests, and accessibility needs across multiple visit dates.',
+            'description' => '<p>Our Campus Tour Booking Form Template schedules visits that run on time: tour dates, group sizes, academic interests, accessibility accommodations, and the large-group logistics your guides need in advance.</p><h2>Why and when to use a campus tour booking form</h2><p>Admissions tours break when a school bus of forty arrives for a two-guide walking route. A structured booking shows group size before the day, flags accessibility needs early, and lets guides prep the buildings each family actually wants to see.</p><h2>Who is this template for</h2><p>University admissions offices, private schools, community colleges, and camp or program visit coordinators.</p><h2>Why SharaForms is the best tool for this form</h2><p>Large-group logistics surface automatically past ten visitors, accessibility accommodations arrive before the route is set, and interest tags route families to the right student ambassadors.</p>',
+            'types' => ['booking_forms'],
+            'industries' => ['education_forms'],
+            'structure' => $this->structure('Book a Campus Tour', [
+                $this->nfText('intro', '<h2>Campus Tour Booking</h2><p>Tours run weekdays at 10am and 2pm, Saturdays at 11am. Groups over 10 should book at least two weeks ahead.</p>'),
+                $this->textField('visitor_name_ct', 'Your Name', true),
+                $this->emailField('email_ct', 'Email', true),
+                $this->phoneField('phone_ct', 'Phone'),
+                $this->textField('student_name_ct', 'Prospective Student Name'),
+                $this->selectField('student_grade_ct', 'Current Grade / Stage', [
+                    ['value' => 'g8_ct', 'text' => '8th grade'],
+                    ['value' => 'g9_ct', 'text' => '9th grade'],
+                    ['value' => 'g10_ct', 'text' => '10th grade'],
+                    ['value' => 'g11_ct', 'text' => '11th grade'],
+                    ['value' => 'g12_ct', 'text' => '12th grade'],
+                    ['value' => 'transfer_ct', 'text' => 'Transfer student'],
+                ], true),
+                $this->dateField('tour_date_ct', 'Preferred Tour Date', true),
+                $this->numberField('group_size_ct', 'Group Size (including you)', true),
+                $this->selectField('group_type_ct', 'Group Type', [
+                    ['value' => 'family_ct', 'text' => 'Single family'],
+                    ['value' => 'school_group', 'text' => 'School group'],
+                    ['value' => 'community_ct', 'text' => 'Community organization'],
+                ], true),
+                $this->multiSelectField('interests_ct', 'What Do You Want to See?', [
+                    ['value' => 'eng_labs', 'text' => 'Engineering labs'],
+                    ['value' => 'arts_ct', 'text' => 'Arts programs'],
+                    ['value' => 'athletics_ct', 'text' => 'Athletics facilities'],
+                    ['value' => 'dorms_ct', 'text' => 'Residence halls'],
+                    ['value' => 'aid_ct', 'text' => 'Financial aid office'],
+                ]),
+                $this->selectField('accessibility_ct', 'Accessibility Accommodations', [
+                    ['value' => 'access_no', 'text' => 'No accessibility needs'],
+                    ['value' => 'access_yes', 'text' => 'Yes, accommodations needed'],
+                ], true),
+                $this->textareaField('accessibility_details_ct', 'Accommodation Details (mobility, interpreting, seating)', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('accessibility_ct', 'select', 'equals', 'Yes, accommodations needed')], 'and', true),
+                ]),
+                $this->textField('group_logistics_ct', 'Bus or Arrival Logistics (groups over 10)', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('group_size_ct', 'number', 'greater_than', 10)]),
+                ]),
+                $this->textareaField('questions_ct', 'Questions for Your Tour Guide'),
+            ], '#1e40af'),
+        ];
+    }
+
+    private function utilityAssistanceApplication(): array
+    {
+        return [
+            'name' => 'Utility Assistance Application',
+            'slug' => 'utility-assistance-application-form-template',
+            'short_description' => 'A utility assistance application form template documenting hardship, household size, and required program consents for energy aid offices and caseworkers.',
+            'description' => '<p>Our Utility Assistance Application Form Template screens applicants for utility relief programs: household size, income bands, hardship types, and the supporting documents and consents each program requires.</p><h2>Why and when to use a utility assistance application form</h2><p>Assistance programs lose applicants to paperwork, not to eligibility. A structured application captures the household and income details caseworkers need, requests hardship documentation only when a hardship is claimed, and records program consents for funders.</p><h2>Who is this template for</h2><p>Community action agencies, churches and charities with assistance funds, tribal assistance programs, and municipal relief offices.</p><h2>Why SharaForms is the best tool for this form</h2><p>Hardship documents surface only when a hardship is claimed, income bands keep screening consistent across caseworkers, and consent records satisfy funder audits without extra files.</p>',
+            'types' => ['application_forms', 'request_forms'],
+            'industries' => ['banking_forms', 'charity_forms'],
+            'structure' => $this->structure('Utility Assistance Application', [
+                $this->nfText('intro', '<h2>Apply for Utility Assistance</h2><p>Applications are reviewed in the order received. You will need your most recent bill and income details for this household.</p>'),
+                $this->textField('applicant_name_ua', 'Full Name', true),
+                $this->emailField('email_ua', 'Email', true),
+                $this->phoneField('phone_ua', 'Phone', true),
+                $this->textField('service_address_ua', 'Service Address', true),
+                $this->selectField('provider_ua', 'Utility Provider', [
+                    ['value' => 'electric_ua', 'text' => 'Electric'],
+                    ['value' => 'gas_ua', 'text' => 'Gas'],
+                    ['value' => 'water_ua', 'text' => 'Water'],
+                    ['value' => 'combined_ua', 'text' => 'Combined utilities'],
+                ], true),
+                $this->textField('account_number_ua', 'Account Number (on your bill)'),
+                $this->numberField('monthly_bill_ua', 'Average Monthly Bill ($)', true),
+                $this->numberField('household_size_ua', 'People in the Household', true),
+                $this->selectField('income_ua', 'Monthly Household Income', [
+                    ['value' => 'inc_2000', 'text' => 'Under $2,000/month'],
+                    ['value' => 'inc_4000', 'text' => '$2,000 to $3,999/month'],
+                    ['value' => 'inc_6000', 'text' => '$4,000 to $5,999/month'],
+                    ['value' => 'inc_above', 'text' => '$6,000 or more/month'],
+                ], true),
+                $this->selectField('hardship_ua', 'What Caused the Current Hardship?', [
+                    ['value' => 'job_loss', 'text' => 'Job loss'],
+                    ['value' => 'medical_hard', 'text' => 'Medical emergency'],
+                    ['value' => 'fixed_income', 'text' => 'Fixed income'],
+                    ['value' => 'temp_setback', 'text' => 'Temporary setback'],
+                    ['value' => 'none_hard', 'text' => 'None of these right now'],
+                ], true),
+                ['id' => 'hardship_docs', 'type' => 'files', 'title' => 'Supporting Documents', 'required' => false, 'help' => 'Termination letters, medical bills, or benefit letters', 'max_file_size' => 10, 'max_number_of_files' => 4,
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('hardship_ua', 'select', 'does_not_equal', 'None of these right now')]),
+                ],
+                $this->selectField('assistance_type_ua', 'Assistance Needed', [
+                    ['value' => 'bill_help', 'text' => 'Bill payment help'],
+                    ['value' => 'weatherization', 'text' => 'Weatherization program'],
+                    ['value' => 'payment_plan', 'text' => 'Payment plan'],
+                    ['value' => 'all_options', 'text' => 'All options, please advise'],
+                ], true),
+                $this->checkboxField('consent_ua', 'I consent to verification of the information provided and authorize contact with my utility provider', true),
+                $this->textareaField('notes_ua', 'Anything Else the Caseworker Should Know?'),
+            ], '#0f766e'),
+        ];
+    }
+
+    private function fluShotConsent(): array
+    {
+        return [
+            'name' => 'Flu Shot Consent Form Template',
+            'slug' => 'flu-shot-consent-form-template',
+            'short_description' => 'A flu shot consent form template screening allergies, high-risk conditions, and guardian details so clinics can run vaccination events safely.',
+            'description' => '<p>Our Flu Shot Consent Form Template screens before the needle: egg allergies, high-risk conditions, guardian consent for minors, insurance capture, and appointment preferences that keep clinic lines moving.</p><h2>Why and when to use a flu shot consent form</h2><p>Consent screens filled out at the check-in table slow every line and miss allergies that matter. A completed-in-advance form flags egg allergies and high-risk conditions before the appointment, gathers guardian consent for minors, and documents the signature clinics file.</p><h2>Who is this template for</h2><p>Pharmacies, workplace health clinics, school vaccine days, community health fairs, and medical practices running seasonal flu programs.</p><h2>Why SharaForms is the best tool for this form</h2><p>Guardian details surface only for minors, allergy specifics appear only when an allergy is declared, and signed consents export straight into clinic records.</p>',
+            'types' => ['consent_forms', 'appointment_forms'],
+            'industries' => ['healthcare_forms'],
+            'structure' => $this->structure('Flu Shot Consent', [
+                $this->nfText('intro', '<h2>Flu Shot Consent and Screening</h2><p>Complete this before your appointment. Screening answers help the nurse confirm the vaccine is right for you.</p>'),
+                $this->textField('patient_name_flu', 'Patient Name', true),
+                $this->dateField('dob_flu', 'Date of Birth', true),
+                $this->selectField('minor_flu', 'Is the Patient a Minor?', [
+                    ['value' => 'adult_flu', 'text' => 'No, 18 or older'],
+                    ['value' => 'minor_yes', 'text' => 'Yes, under 18'],
+                ], true),
+                $this->textField('guardian_name_flu', 'Parent / Guardian Name and Consent', false, [
+                    'hidden' => true,
+                    'help' => 'The guardian completing this form provides consent by signing below',
+                    'logic' => $this->revealLogic([$this->logicCondition('minor_flu', 'select', 'equals', 'Yes, under 18')], 'and', true),
+                ]),
+                $this->selectField('insurance_flu', 'Insurance', [
+                    ['value' => 'insured_flu', 'text' => 'Yes, using insurance'],
+                    ['value' => 'selfpay_flu', 'text' => 'No, self-pay'],
+                    ['value' => 'unsure_flu', 'text' => 'Not sure'],
+                ], true),
+                $this->textField('insurance_id_flu', 'Insurance Member ID', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('insurance_flu', 'select', 'equals', 'Yes, using insurance')]),
+                ]),
+                $this->multiSelectField('conditions_flu', 'High-Risk Conditions (check any that apply)', [
+                    ['value' => 'asthma', 'text' => 'Asthma'],
+                    ['value' => 'diabetes', 'text' => 'Diabetes'],
+                    ['value' => 'heart_disease', 'text' => 'Heart disease'],
+                    ['value' => 'pregnant', 'text' => 'Pregnant'],
+                    ['value' => 'immunocompromised', 'text' => 'Immunocompromised'],
+                    ['value' => 'other_cond', 'text' => 'Other condition (describe below)'],
+                    ['value' => 'none_cond', 'text' => 'None of these'],
+                ]),
+                $this->textareaField('condition_details_flu', 'Describe the Condition', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('conditions_flu', 'multi_select', 'contains', 'Other condition (describe below)')], 'and', true),
+                ]),
+                $this->selectField('egg_allergy_flu', 'Egg Allergy', [
+                    ['value' => 'egg_no', 'text' => 'No egg allergy'],
+                    ['value' => 'egg_yes', 'text' => 'Yes, egg allergy'],
+                ], true),
+                $this->textareaField('egg_details_flu', 'Allergy Details (severity, last reaction)', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('egg_allergy_flu', 'select', 'equals', 'Yes, egg allergy')], 'and', true),
+                ]),
+                $this->selectField('appointment_flu', 'Appointment Preference', [
+                    ['value' => 'wkday_am', 'text' => 'Weekday morning'],
+                    ['value' => 'wkday_pm', 'text' => 'Weekday afternoon'],
+                    ['value' => 'sat_clinic', 'text' => 'Saturday clinic'],
+                    ['value' => 'walkin_flu', 'text' => 'Walk-in'],
+                ], true),
+                $this->selectField('previous_shot_flu', 'Previous Flu Shots', [
+                    ['value' => 'this_year', 'text' => 'Had one this year'],
+                    ['value' => 'last_year', 'text' => 'Had one last year'],
+                    ['value' => 'first_time', 'text' => 'First flu shot'],
+                ], true),
+                $this->checkboxField('consent_flu', 'I consent to the seasonal influenza vaccination after reviewing the vaccine information statement', true),
+                ['id' => 'signature_flu', 'type' => 'signature', 'title' => 'Patient or Guardian Signature', 'required' => true, 'help' => ''],
+            ], '#0891b2'),
+        ];
+    }
+
+    private function translationRequest(): array
+    {
+        return [
+            'name' => 'Translation Request Form Template',
+            'slug' => 'translation-request-form-template',
+            'short_description' => 'A translation request form template estimating cost per page with certified, notarized, and rush options for document services and agencies.',
+            'description' => '<p>Our Translation Request Form Template prices document translation transparently: language pairs, document types, word counts, certified and notarized options, and a live estimate before anyone commits.</p><h2>Why and when to use a translation request form</h2><p>Translation quotes stall when word counts arrive as attachments and certification needs surface mid-project. A structured request fixes the language pair, certification purpose, and deadline up front, so agencies quote in minutes and clients know the price before uploading anything.</p><h2>Who is this template for</h2><p>Translation agencies, freelance translators, immigration law offices, universities admitting international students, and hospitals serving multilingual patients.</p><h2>Why SharaForms is the best tool for this form</h2><p>Estimates compute from word counts with per-page pricing, certification purposes surface only for certified work, and document uploads attach to the original request for exact quoting.</p>',
+            'types' => ['request_forms', 'content_forms'],
+            'industries' => ['education_forms', 'business_forms'],
+            'structure' => $this->structure('Translation Request', [
+                $this->nfText('intro', '<h2>Request a Translation</h2><p>Estimates use $25 per page (250 words per page). Exact quotes confirm after document review; rough word counts are fine.</p>'),
+                $this->textField('requester_name_tr', 'Your Name', true),
+                $this->emailField('email_tr', 'Email', true),
+                $this->textField('organization_tr', 'Organization (if applicable)'),
+                $this->selectField('source_lang_tr', 'Source Language', [
+                    ['value' => 'src_en', 'text' => 'English'],
+                    ['value' => 'src_es', 'text' => 'Spanish'],
+                    ['value' => 'src_fr', 'text' => 'French'],
+                    ['value' => 'src_de', 'text' => 'German'],
+                    ['value' => 'src_zh', 'text' => 'Mandarin'],
+                    ['value' => 'src_ar', 'text' => 'Arabic'],
+                    ['value' => 'src_other', 'text' => 'Other'],
+                ], true),
+                $this->selectField('target_lang_tr', 'Target Language', [
+                    ['value' => 'tgt_en', 'text' => 'English'],
+                    ['value' => 'tgt_es', 'text' => 'Spanish'],
+                    ['value' => 'tgt_fr', 'text' => 'French'],
+                    ['value' => 'tgt_de', 'text' => 'German'],
+                    ['value' => 'tgt_zh', 'text' => 'Mandarin'],
+                    ['value' => 'tgt_ar', 'text' => 'Arabic'],
+                    ['value' => 'tgt_other', 'text' => 'Other'],
+                ], true),
+                $this->selectField('doc_type_tr', 'Document Type', [
+                    ['value' => 'certificate_tr', 'text' => 'Birth / marriage certificate'],
+                    ['value' => 'transcript_tr', 'text' => 'Academic transcript'],
+                    ['value' => 'legal_contract', 'text' => 'Legal contract'],
+                    ['value' => 'medical_rec', 'text' => 'Medical record'],
+                    ['value' => 'marketing_tr', 'text' => 'Marketing copy'],
+                    ['value' => 'technical_tr', 'text' => 'Technical manual'],
+                ], true),
+                $this->numberField('word_count_tr', 'Approximate Word Count', true, ['help' => 'Rough counts are fine; we confirm after review']),
+                $this->selectField('service_level_tr', 'Service Level', [
+                    ['value' => 'std_trans', 'text' => 'Standard translation - $25/page'],
+                    ['value' => 'cert_trans', 'text' => 'Certified translation (for official use) - +$40'],
+                ], true),
+                $this->textField('cert_purpose_tr', 'What Is the Certification For?', false, [
+                    'hidden' => true,
+                    'help' => 'Immigration, university admission, court, etc.',
+                    'logic' => $this->revealLogic([$this->logicCondition('service_level_tr', 'select', 'equals', 'Certified translation (for official use) - +$40')], 'and', true),
+                ]),
+                $this->selectField('rush_tr', 'Turnaround', [
+                    ['value' => 'std_turn', 'text' => 'Standard (5 business days)'],
+                    ['value' => 'rush_turn', 'text' => 'Rush delivery (2 business days) - +$30'],
+                ], true),
+                $this->selectField('notarization_tr', 'Notarization', [
+                    ['value' => 'no_notary', 'text' => 'No notarization'],
+                    ['value' => 'yes_notary', 'text' => 'Yes, add notarization (+$15)'],
+                ], true),
+                ['id' => 'document_upload', 'type' => 'files', 'title' => 'Document Upload (optional at this stage)', 'required' => false, 'help' => 'PDF, DOC, or clear photos', 'max_file_size' => 10, 'max_number_of_files' => 3],
+                $this->textareaField('notes_tr', 'Formatting, Layout, or Deadline Notes'),
+                $this->totalBlock('translation_total_display', 'cv_translation_estimate', 'Estimated Translation Cost', '$0'),
+            ], '#5b21b6', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_translation_estimate',
+                        'Estimated Translation Cost',
+                        'IFBLANK({word_count_tr},0)/250*25'
+                            . '+IF({service_level_tr}="Certified translation (for official use) - +$40",40,0)'
+                            . '+IF({rush_tr}="Rush delivery (2 business days) - +$30",30,0)'
+                            .                        '+IF({notarization_tr}="Yes, add notarization (+$15)",15,0)'
+                    ),
+                ],
+            ]),
+        ];
+    }
+
+    // 2026-09 batch 7: garage sale permit through kayak rental
+
+    private function garageSalePermitApplication(): array
+    {
+        return [
+            'name' => 'Garage Sale Permit Application',
+            'slug' => 'garage-sale-permit-application-form-template',
+            'short_description' => 'A garage sale permit application form template computing city permit fees from sale days, sign counts, and multi-family participation rules.',
+            'description' => '<p>Our Garage Sale Permit Application Form Template turns a city permit request into two minutes: sale dates, day counts, sign permits, and rain dates priced transparently before you hit submit.</p><h2>Why and when to use a garage sale permit application form</h2><p>Clerks reject paper applications for missing dates and uncounted signs. A structured application fixes the sale window, prices each extra sign permit, and records the rain date so approvals happen on the first pass instead of the third phone call.</p><h2>Who is this template for</h2><p>City clerk offices, homeowners associations, neighborhood groups coordinating sale weekends, and anyone running a multi-family sale.</p><h2>Why SharaForms is the best tool for this form</h2><p>The permit total updates as you add days or signs, the rain date appears only when you want one, and approvals export straight into the clerk office records.</p>',
+            'types' => ['request_forms', 'application_forms'],
+            'industries' => ['business_forms'],
+            'structure' => $this->structure('Garage Sale Permit Application', [
+                $this->nfText('intro', '<h2>Apply for a Garage Sale Permit</h2><p>Fees below update as you choose. Permits are approved by email within two business days.</p>'),
+                $this->textField('applicant_name_gs', 'Applicant Name', true),
+                $this->phoneField('phone_gs', 'Phone', true),
+                $this->emailField('email_gs', 'Email', true),
+                $this->textField('sale_address_gs', 'Sale Address', true),
+                $this->dateField('sale_start_gs', 'First Sale Day', true),
+                $this->selectField('sale_days_gs', 'How Many Sale Days?', [
+                    ['value' => 'one_day_gs', 'text' => 'One day - $10'],
+                    ['value' => 'two_days_gs', 'text' => 'Two to three days - $20'],
+                ], true),
+                $this->dateField('sale_end_gs', 'Last Sale Day', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('sale_days_gs', 'select', 'equals', 'Two to three days - $20')], 'and', true),
+                ]),
+                $this->numberField('sign_count_gs', 'City Sign Permits Needed ($5 each)'),
+                $this->checkboxField('rain_date_gs', 'I want to designate a rain date'),
+                $this->dateField('rain_date_pick_gs', 'Rain Date', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('rain_date_gs', 'checkbox', 'is_checked')]),
+                ]),
+                $this->checkboxField('rules_ack_gs', 'I will follow city rules on hours, signage placement, and removal'),
+                $this->totalBlock('permit_total_display', 'cv_permit_total', 'Permit Total', '$0'),
+            ], '#0f766e', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_permit_total',
+                        'Permit Total',
+                        'IF({sale_days_gs}="Two to three days - $20",20,10)+IFBLANK({sign_count_gs},0)*5'
+                    ),
+                ],
+            ]),
+        ];
+    }
+
+    private function poolPartyRsvp(): array
+    {
+        return [
+            'name' => 'Pool Party RSVP Form Template',
+            'slug' => 'pool-party-rsvp-form-template',
+            'short_description' => 'A pool party RSVP form template counting adults, kids, and towel rentals with a live per-guest total for hosts planning food, drinks, and supplies.',
+            'description' => '<p>Our Pool Party RSVP Form Template settles headcounts before the cooler is packed: adults, kids, towel rentals, and swim-test notes in one quick form with a live cost total for hosts who chip in.</p><h2>Why and when to use a pool party RSVP form</h2><p>Lifeguards, snacks, and towels all scale with headcount, and group texts never settle it. A structured RSVP gives the host real numbers for food and lifeguard coverage, flags which kids need a swim check, and keeps guests without pool gear from showing up empty-handed.</p><h2>Who is this template for</h2><p>Homeowners with backyard pools, apartment complexes, swim clubs, summer camps, and family reunions with pool time.</p><h2>Why SharaForms is the best tool for this form</h2><p>Guest totals compute live so shared costs stay fair, swim-test requests surface only when kids are coming, and allergy notes land where the snack table can see them.</p>',
+            'types' => ['rsvp_forms'],
+            'industries' => ['entertainment_forms', 'sports_forms'],
+            'structure' => $this->structure('Pool Party RSVP', [
+                $this->nfText('intro', '<h2>Pool Party RSVP</h2><p>Respond by the Friday before. Guest pricing covers lifeguard hours, towels, and snacks.</p>'),
+                $this->textField('guest_name_pp', 'Your Name', true),
+                $this->emailField('email_pp', 'Email', true),
+                $this->selectField('attending_pp', 'Will You Attend?', [
+                    ['value' => 'pp_yes', 'text' => 'Yes, count us in'],
+                    ['value' => 'pp_no', 'text' => 'Sorry, we cannot make it'],
+                ], true),
+                $this->numberField('adults_pp', 'Adults Attending ($10 each)', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('attending_pp', 'select', 'equals', 'Yes, count us in')], 'and', true),
+                ]),
+                $this->numberField('kids_pp', 'Kids Attending ($6 each)', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('attending_pp', 'select', 'equals', 'Yes, count us in')], 'and', true),
+                ]),
+                $this->selectField('swim_check_pp', 'Do Any Kids Need the Shallow-End Swim Test?', [
+                    ['value' => 'swim_yes', 'text' => 'Yes, please test them'],
+                    ['value' => 'swim_no', 'text' => 'No, all swimmers are checked off'],
+                ]),
+                $this->numberField('towel_rentals_pp', 'Towel Rentals ($2 each)'),
+                $this->textareaField('allergy_notes_pp', 'Allergies or Dietary Notes'),
+                $this->textField('pool_contact_pp', 'Best Phone on Party Day'),
+                $this->totalBlock('pool_total_display', 'cv_pool_total', 'Guest Total', '$0'),
+            ], '#0891b2', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_pool_total',
+                        'Guest Total',
+                        'IFBLANK({adults_pp},0)*10+IFBLANK({kids_pp},0)*6+IFBLANK({towel_rentals_pp},0)*2'
+                    ),
+                ],
+            ]),
+        ];
+    }
+
+    private function sundaySchoolRegistration(): array
+    {
+        return [
+            'name' => 'Sunday School Registration Form Template',
+            'slug' => 'sunday-school-registration-form-template',
+            'short_description' => 'A Sunday school registration form template capturing grades, allergies, pickup authorization, and class placements for church programs and volunteers.',
+            'description' => '<p>Our Sunday School Registration Form Template collects everything teachers need before the first Sunday: grade placements, allergies, pickup authorizations, and guardian contacts in one tidy record per student.</p><h2>Why and when to use a Sunday school registration form</h2><p>First-morning clipboards slow check-in and lose allergy notes. Registrations completed at home give teachers rosters with emergency contacts attached, document exactly who may pick up each child, and put snack allergies in front of the right volunteer every week.</p><h2>Who is this template for</h2><p>Churches, mosques, temples, synagogues, and any congregation running weekly children classes.</p><h2>Why SharaForms is the best tool for this form</h2><p>Allergy details appear only when families report them, pickup authorizations stay documented instead of assumed, and rosters export with guardian phones ready for the snack schedule.</p>',
+            'types' => ['registration_forms'],
+            'industries' => ['church_forms', 'education_forms'],
+            'structure' => $this->structure('Sunday School Registration', [
+                $this->nfText('intro', '<h2>Register for Sunday School</h2><p>One form per student. Teachers carry emergency details to class every week once you submit.</p>'),
+                $this->textField('student_name_ss', 'Student Name', true),
+                $this->dateField('student_dob_ss', 'Date of Birth', true),
+                $this->selectField('grade_ss', 'Grade This Fall', [
+                    ['value' => 'ss_pre', 'text' => 'Pre-K'],
+                    ['value' => 'ss_k2', 'text' => 'Kindergarten to 2nd'],
+                    ['value' => 'ss_35', 'text' => '3rd to 5th'],
+                    ['value' => 'ss_ms', 'text' => 'Middle school'],
+                ], true),
+                $this->textField('guardian_name_ss', 'Parent / Guardian Name', true),
+                $this->phoneField('guardian_phone_ss', 'Guardian Phone', true),
+                $this->emailField('email_ss', 'Guardian Email', true),
+                $this->textField('emergency_contact_ss', 'Emergency Contact (name and phone)', true),
+                $this->checkboxField('allergies_ss', 'My child has allergies or medical needs'),
+                $this->textareaField('allergy_details_ss', 'Allergy and Medical Details', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('allergies_ss', 'checkbox', 'is_checked')], 'and', true),
+                ]),
+                $this->selectField('pickup_ss', 'Pickup Authorization', [
+                    ['value' => 'ss_guardians', 'text' => 'Only listed guardians may pick up'],
+                    ['value' => 'ss_other', 'text' => 'Someone else may pick up sometimes'],
+                ], true),
+                $this->textField('authorized_pickup_ss', 'Authorized Pickup Person (name and phone)', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('pickup_ss', 'select', 'equals', 'Someone else may pick up sometimes')], 'and', true),
+                ]),
+                $this->checkboxField('photo_consent_ss', 'I consent to photos of my child in class communications'),
+                $this->selectField('first_year_ss', 'First Year With Us?', [
+                    ['value' => 'ss_new', 'text' => 'Yes, first year'],
+                    ['value' => 'ss_return', 'text' => 'No, returning'],
+                ], true),
+            ], '#a16207'),
+        ];
+    }
+
+    private function apartmentWalkthroughSchedule(): array
+    {
+        return [
+            'name' => 'Apartment Walkthrough Schedule Form Template',
+            'slug' => 'apartment-walkthrough-schedule-form-template',
+            'short_description' => 'An apartment walkthrough schedule form template booking in-person or video tours, comparing units, and capturing move-in timeline questions for renters.',
+            'description' => '<p>Our Apartment Walkthrough Schedule Form Template books tours without the phone tag: property choice, in-person or video options, preferred dates, move-in timelines, and pet details that leasing agents need before doors open.</p><h2>Why and when to use an apartment walkthrough schedule form</h2><p>Tour requests scattered across voicemail and DMs double-book units and lose serious renters. A scheduling form confirms the unit and time in one pass, separates browsers from 30-day movers, and surfaces pet and qualification questions while the agent still has the file open.</p><h2>Who is this template for</h2><p>Leasing offices, individual landlords, property managers, and relocation teams showing multiple units.</p><h2>Why SharaForms is the best tool for this form</h2><p>Video call links appear only for remote tours, urgent movers get pre-qualification questions, and pet details arrive before the walkthrough instead of at the lease signing.</p>',
+            'types' => ['booking_forms'],
+            'industries' => ['real_estate_forms'],
+            'structure' => $this->structure('Apartment Walkthrough Scheduling', [
+                $this->nfText('intro', '<h2>Schedule a Walkthrough</h2><p>Confirmations arrive within one business day with building access details.</p>'),
+                $this->textField('renter_name_aw', 'Full Name', true),
+                $this->emailField('email_aw', 'Email', true),
+                $this->phoneField('phone_aw', 'Phone', true),
+                $this->selectField('property_aw', 'Property of Interest', [
+                    ['value' => 'maple_aw', 'text' => 'Maple Court, 1 and 2 bedroom'],
+                    ['value' => 'harbor_aw', 'text' => 'Harbor View, studios'],
+                    ['value' => 'oak_aw', 'text' => 'Oak Street Lofts'],
+                    ['value' => 'any_aw', 'text' => 'Open to any availability'],
+                ], true),
+                $this->selectField('tour_type_aw', 'Tour Type', [
+                    ['value' => 'aw_in_person', 'text' => 'In person'],
+                    ['value' => 'aw_video', 'text' => 'Video call walkthrough'],
+                ], true),
+                $this->urlField('video_link_aw', 'Your Video Call Link', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('tour_type_aw', 'select', 'equals', 'Video call walkthrough')], 'and', true),
+                ]),
+                $this->dateField('preferred_date_aw', 'Preferred Date', true),
+                $this->selectField('time_slot_aw', 'Preferred Time', [
+                    ['value' => 'slot_am', 'text' => 'Morning'],
+                    ['value' => 'slot_pm', 'text' => 'Afternoon'],
+                    ['value' => 'slot_eve', 'text' => 'Early evening'],
+                ], true),
+                $this->selectField('move_in_aw', 'Move-In Timeline', [
+                    ['value' => 'aw_30', 'text' => 'Within 30 days'],
+                    ['value' => 'aw_60', 'text' => 'Within 60 days'],
+                    ['value' => 'aw_browse', 'text' => 'Just browsing for now'],
+                ], true),
+                $this->textField('pre_qual_aw', 'Lender or Employer Pre-Qualification Note', false, [
+                    'hidden' => true,
+                    'help' => 'Landlord references, employer, or pre-approval status',
+                    'logic' => $this->revealLogic([$this->logicCondition('move_in_aw', 'select', 'equals', 'Within 30 days')], 'and', true),
+                ]),
+                $this->checkboxField('pets_aw', 'I have pets'),
+                $this->textareaField('pet_details_aw', 'Pet Details (type, weight, count)', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('pets_aw', 'checkbox', 'is_checked')], 'and', true),
+                ]),
+            ], '#4f46e5'),
+        ];
+    }
+
+    private function videoTestimonialRelease(): array
+    {
+        return [
+            'name' => 'Video Testimonial Release Form Template',
+            'slug' => 'video-testimonial-release-form-template',
+            'short_description' => 'A video testimonial release form template defining usage rights, platforms, and approval preferences per participant for marketing and video teams.',
+            'description' => '<p>Our Video Testimonial Release Form Template puts usage rights in writing before cameras roll: platforms, compensation, anonymity choices, and approval preferences that keep marketing and legal on the same page.</p><h2>Why and when to use a video testimonial release form</h2><p>Testimonials filmed on goodwill stall in legal review when usage rights were never written down. A release form fixes the exact platforms, documents compensation, records whether the participant wants approval before publishing, and protects both sides if the relationship ends.</p><h2>Who is this template for</h2><p>Marketing teams, agencies, course creators, software companies, and nonprofits filming customer or member stories.</p><h2>Why SharaForms is the best tool for this form</h2><p>Social handles surface only when participants opt in, approval requests are recorded per person, and signed releases export as one audit-ready packet per campaign.</p>',
+            'types' => ['consent_forms'],
+            'industries' => ['marketing_forms'],
+            'structure' => $this->structure('Video Testimonial Release', [
+                $this->nfText('intro', '<h2>Testimonial Release</h2><p>This release covers the recording we make together today. Read the scope options carefully and choose what you are comfortable with.</p>'),
+                $this->textField('participant_name_vt', 'Full Name', true),
+                $this->emailField('email_vt', 'Email', true),
+                $this->textField('company_vt', 'Company or Role to Credit', true),
+                $this->dateField('record_date_vt', 'Recording Date', true),
+                $this->selectField('usage_scope_vt', 'Usage Scope', [
+                    ['value' => 'site_vt', 'text' => 'Website only'],
+                    ['value' => 'social_vt', 'text' => 'Website and social media'],
+                    ['value' => 'all_vt', 'text' => 'All marketing channels including paid ads'],
+                ], true),
+                $this->checkboxField('handles_opt_vt', 'You may tag my social media accounts'),
+                $this->textField('social_handles_vt', 'Social Media Handles', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('handles_opt_vt', 'checkbox', 'is_checked')]),
+                ]),
+                $this->selectField('compensation_vt', 'Compensation', [
+                    ['value' => 'none_vt', 'text' => 'None, happy to share my story'],
+                    ['value' => 'gift_vt', 'text' => 'Gift card ($25)'],
+                ], true),
+                $this->selectField('approval_vt', 'Pre-Publication Approval', [
+                    ['value' => 'appr_yes', 'text' => 'Yes, send me the final cut first'],
+                    ['value' => 'appr_no', 'text' => 'No approval needed'],
+                ], true),
+                $this->textareaField('restrictions_vt', 'Topics or Footage to Avoid'),
+                ['id' => 'signature_vt', 'type' => 'signature', 'title' => 'Participant Signature', 'required' => true, 'help' => ''],
+            ], '#c026d3'),
+        ];
+    }
+
+    private function equipmentDonationForm(): array
+    {
+        return [
+            'name' => 'Equipment Donation Form Template',
+            'slug' => 'equipment-donation-form-template',
+            'short_description' => 'An equipment donation form template capturing item details, condition, pickup logistics, and tax receipt requests for schools and nonprofits.',
+            'description' => '<p>Our Equipment Donation Form Template routes gear to the right program without the email chain: item types, counts, working condition, pickup logistics, and tax receipt requests in one submission.</p><h2>Why and when to use an equipment donation form</h2><p>Donated equipment helps nobody while it sits in a garage waiting on logistics. A donation form captures what the item is and whether it works, so repair programs can plan, pickup drivers get addresses and access notes up front, and tax receipts are issued to the people who actually asked for them.</p><h2>Who is this template for</h2><p>Schools, makerspaces, sports clubs, charities refurbishing electronics, and hospital equipment reuse programs.</p><h2>Why SharaForms is the best tool for this form</h2><p>Pickup addresses surface only for donors who need collection, repair needs route to the right workshop, and tax receipt requests are tracked instead of guessed.</p>',
+            'types' => ['donation_forms'],
+            'industries' => ['charity_forms', 'education_forms'],
+            'structure' => $this->structure('Equipment Donation', [
+                $this->nfText('intro', '<h2>Donate Equipment</h2><p>Fill this out and our team confirms whether we can accept the items within three business days.</p>'),
+                $this->textField('donor_name_ed', 'Donor Name', true),
+                $this->emailField('email_ed', 'Email', true),
+                $this->phoneField('phone_ed', 'Phone', true),
+                $this->selectField('item_type_ed', 'Equipment Type', [
+                    ['value' => 'computers_ed', 'text' => 'Computers and monitors'],
+                    ['value' => 'sports_ed', 'text' => 'Sports gear'],
+                    ['value' => 'music_ed', 'text' => 'Musical instruments'],
+                    ['value' => 'medical_ed', 'text' => 'Medical equipment'],
+                    ['value' => 'other_ed', 'text' => 'Other'],
+                ], true),
+                $this->textField('other_item_ed', 'Describe the Equipment', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('item_type_ed', 'select', 'equals', 'Other')], 'and', true),
+                ]),
+                $this->numberField('item_count_ed', 'Approximate Item Count', true),
+                $this->selectField('condition_ed', 'Condition', [
+                    ['value' => 'working_ed', 'text' => 'Fully working'],
+                    ['value' => 'repair_ed', 'text' => 'Needs repair'],
+                    ['value' => 'parts_ed', 'text' => 'Parts only'],
+                ], true),
+                $this->selectField('handoff_ed', 'Drop Off or Pickup?', [
+                    ['value' => 'dropoff_ed', 'text' => 'I will drop off'],
+                    ['value' => 'pickup_ed', 'text' => 'Please pick up'],
+                ], true),
+                $this->textareaField('pickup_address_ed', 'Pickup Address and Access Notes', false, [
+                    'hidden' => true,
+                    'help' => 'Gate codes, floor, elevator, parking',
+                    'logic' => $this->revealLogic([$this->logicCondition('handoff_ed', 'select', 'equals', 'Please pick up')], 'and', true),
+                ]),
+                $this->checkboxField('tax_receipt_ed', 'I would like a tax receipt'),
+                $this->textareaField('notes_ed', 'Anything Else About the Items?'),
+            ], '#059669'),
+        ];
+    }
+
+    private function firstTimeHomebuyerWorkshopRegistration(): array
+    {
+        return [
+            'name' => 'Homebuyer Workshop Registration',
+            'slug' => 'first-time-homebuyer-workshop-registration-form-template',
+            'short_description' => 'A first-time homebuyer workshop registration form template with individual and couple pricing, session choices, and materials kits for housing agencies.',
+            'description' => '<p>Our First-Time Homebuyer Workshop Registration Form Template handles enrollment end to end: individual or couple pricing, printed materials kits, session choices, and lender status that helps instructors tailor the class.</p><h2>Why and when to use a first-time homebuyer workshop registration form</h2><p>Workshops funded by lenders or housing agencies need clean rosters and receipts. A registration form prices individuals and couples transparently, counts material kits for the print shop, and tells instructors how many attendees are pre-approved so the financing segment lands at the right depth.</p><h2>Who is this template for</h2><p>Housing counseling agencies, credit unions, lenders running community programs, and real estate teams hosting buyer education nights.</p><h2>Why SharaForms is the best tool for this form</h2><p>Totals compute live across pricing tiers and kits, lender status shapes the teaching plan without awkward raised hands, and confirmations carry session details automatically.</p>',
+            'types' => ['event_registration_forms'],
+            'industries' => ['real_estate_forms'],
+            'structure' => $this->structure('Homebuyer Workshop Registration', [
+                $this->nfText('intro', '<h2>Register for the Workshop</h2><p>Saturday sessions run 9am to 1pm. Certificates of completion are issued at the end.</p>'),
+                $this->textField('attendee_name_fhw', 'Attendee Name', true),
+                $this->emailField('email_fhw', 'Email', true),
+                $this->phoneField('phone_fhw', 'Phone', true),
+                $this->selectField('attendance_fhw', 'Attendance Type', [
+                    ['value' => 'ind_fhw', 'text' => 'Individual - $25'],
+                    ['value' => 'couple_fhw', 'text' => 'Couple - $40'],
+                ], true),
+                $this->selectField('materials_kit', 'Materials Kit', [
+                    ['value' => 'digital_fhw', 'text' => 'Digital workbook (included)'],
+                    ['value' => 'printed_fhw', 'text' => 'Add printed kit - +$15'],
+                ], true),
+                $this->selectField('session_fhw', 'Session Choice', [
+                    ['value' => 'sat_fhw', 'text' => 'Saturday, 9am to 1pm'],
+                    ['value' => 'eve_fhw', 'text' => 'Two Tuesday evenings'],
+                ], true),
+                $this->selectField('lender_status_fhw', 'Where Are You in the Process?', [
+                    ['value' => 'start_fhw', 'text' => 'Just starting to explore'],
+                    ['value' => 'shop_fhw', 'text' => 'Shopping for a lender'],
+                    ['value' => 'approved_fhw', 'text' => 'Already pre-approved'],
+                ], true),
+                $this->checkboxField('first_home_fhw', 'This will be my first home purchase'),
+                $this->textField('lender_name_fhw', 'Lender Name and Loan Officer', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('lender_status_fhw', 'select', 'equals', 'Already pre-approved')], 'and', true),
+                ]),
+                $this->textField('budget_timeline_fhw', 'Target Budget and Move Timeline', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('lender_status_fhw', 'select', 'equals', 'Shopping for a lender')], 'and', true),
+                ]),
+                $this->textareaField('goals_fhw', 'What Do You Want to Learn Most?'),
+                $this->totalBlock('workshop_total_display', 'cv_workshop_total', 'Registration Total', '$0'),
+            ], '#1d4ed8', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_workshop_total',
+                        'Registration Total',
+                        'IF({attendance_fhw}="Couple - $40",40,25)+IF({materials_kit}="Add printed kit - +$15",15,0)'
+                    ),
+                ],
+            ]),
+        ];
+    }
+
+    private function neighborhoodWatchSignup(): array
+    {
+        return [
+            'name' => 'Neighborhood Watch Signup Form Template',
+            'slug' => 'neighborhood-watch-signup-form-template',
+            'short_description' => 'A neighborhood watch signup form template organizing patrol windows, phone tree roles, and camera sharing for block captains and coordinators.',
+            'description' => '<p>Our Neighborhood Watch Signup Form Template turns concerned neighbors into an organized roster: patrol windows, phone tree roles, camera sharing, and block captain interest recorded where the coordinator can actually use them.</p><h2>Why and when to use a neighborhood watch signup form</h2><p>Watch groups fall apart when participation lives in a group chat nobody sorts. A signup form shows who can patrol which evenings, who forwards alerts, and whose cameras cover the corner, so the coordinator builds a real schedule instead of begging for volunteers after every incident.</p><h2>Who is this template for</h2><p>Homeowner associations, block clubs, apartment communities, and rural road associations starting or refreshing a watch program.</p><h2>Why SharaForms is the best tool for this form</h2><p>Camera details surface only from neighbors who share access, captain candidates identify themselves with experience attached, and the roster exports with phones ready for the phone tree.</p>',
+            'types' => ['signup_forms'],
+            'industries' => ['business_forms'],
+            'structure' => $this->structure('Neighborhood Watch Signup', [
+                $this->nfText('intro', '<h2>Join the Watch</h2><p>Every role helps, even receiving alerts only. The coordinator shares the patrol schedule monthly.</p>'),
+                $this->textField('neighbor_name_nw', 'Full Name', true),
+                $this->textField('address_nw', 'Street Address', true),
+                $this->emailField('email_nw', 'Email', true),
+                $this->phoneField('phone_nw', 'Mobile Phone', true),
+                $this->multiSelectField('involvement_nw', 'How Can You Help?', [
+                    ['value' => 'patrol_nw', 'text' => 'Patrol walks'],
+                    ['value' => 'phone_nw', 'text' => 'Phone tree calls'],
+                    ['value' => 'host_nw', 'text' => 'Host meetings'],
+                    ['value' => 'alerts_nw', 'text' => 'Receive alerts only'],
+                ]),
+                $this->selectField('patrol_window_nw', 'Preferred Patrol Window', [
+                    ['value' => 'evening_nw', 'text' => 'Weekday evenings'],
+                    ['value' => 'late_nw', 'text' => 'Late night'],
+                    ['value' => 'weekend_nw', 'text' => 'Weekends'],
+                    ['value' => 'none_nw', 'text' => 'Not patrolling'],
+                ], true),
+                $this->selectField('camera_share_nw', 'Will You Share Camera Footage When Asked?', [
+                    ['value' => 'cam_yes', 'text' => 'Yes, my cameras cover the street'],
+                    ['value' => 'cam_no', 'text' => 'No cameras or prefer not'],
+                ], true),
+                $this->textField('camera_details_nw', 'Camera Coverage Details', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('camera_share_nw', 'select', 'equals', 'Yes, my cameras cover the street')]),
+                ]),
+                $this->checkboxField('captain_interest_nw', 'I am interested in serving as block captain'),
+                $this->textareaField('captain_experience_nw', 'Relevant Experience for the Captain Role', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('captain_interest_nw', 'checkbox', 'is_checked')], 'and', true),
+                ]),
+                $this->textField('emergency_contact_nw', 'Backup Contact (name and phone)'),
+            ], '#334155'),
+        ];
+    }
+
+    private function parkingSpaceRentalAgreement(): array
+    {
+        return [
+            'name' => 'Parking Space Rental Agreement',
+            'slug' => 'parking-space-rental-agreement-form-template',
+            'short_description' => 'A parking space rental agreement form template pricing covered, uncovered, and EV stalls with signed terms and vehicle details for landlords.',
+            'description' => '<p>Our Parking Space Rental Agreement Form Template puts the space in writing: stall type and rate, EV charging, term, vehicle details, and house rules, closed out with a renter signature.</p><h2>Why and when to use a parking space rental agreement form</h2><p>Handshake parking deals end in towed cars and unpaid months. A signed agreement fixes the rate by stall type, documents who may charge and when, records the vehicle so the right car gets the right spot, and makes enforcement a document instead of an argument.</p><h2>Who is this template for</h2><p>Apartment buildings, downtown lot owners, churches renting Sunday-adjacent spaces, and homeowners renting driveways near stadiums.</p><h2>Why SharaForms is the best tool for this form</h2><p>Monthly rates compute live from stall type and EV options, signatures timestamp the agreement, and every rental exports with vehicle and contact details attached.</p>',
+            'types' => ['legal_forms', 'consent_forms'],
+            'industries' => ['real_estate_forms'],
+            'structure' => $this->structure('Parking Space Rental Agreement', [
+                $this->nfText('intro', '<h2>Parking Rental Agreement</h2><p>Complete this together before the first month begins. Both parties keep the signed record.</p>'),
+                $this->textField('owner_name_ps', 'Space Owner Name', true),
+                $this->phoneField('owner_phone_ps', 'Owner Phone', true),
+                $this->textField('renter_name_ps', 'Renter Name', true),
+                $this->phoneField('renter_phone_ps', 'Renter Phone', true),
+                $this->textField('space_location_ps', 'Space Address and Stall Number', true),
+                $this->selectField('space_type_ps', 'Stall Type', [
+                    ['value' => 'covered_ps', 'text' => 'Covered stall - $150/month'],
+                    ['value' => 'uncovered_ps', 'text' => 'Uncovered stall - $100/month'],
+                    ['value' => 'compact_ps', 'text' => 'Compact stall - $85/month'],
+                ], true),
+                $this->selectField('ev_charging_ps', 'EV Charging', [
+                    ['value' => 'ev_no_ps', 'text' => 'No charging needed'],
+                    ['value' => 'ev_yes_ps', 'text' => 'Yes, EV charging - +$30/month'],
+                ], true),
+                $this->dateField('start_date_ps', 'Start Date', true),
+                $this->selectField('term_ps', 'Rental Term', [
+                    ['value' => 'month_ps', 'text' => 'Month to month'],
+                    ['value' => 'six_ps', 'text' => 'Six months'],
+                    ['value' => 'twelve_ps', 'text' => 'Twelve months'],
+                ], true),
+                $this->textField('vehicle_ps', 'Vehicle Make, Model, and Plate', true),
+                $this->textareaField('ev_details_ps', 'EV Charger Details and Usage Windows', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('ev_charging_ps', 'select', 'equals', 'Yes, EV charging - +$30/month')], 'and', true),
+                ]),
+                $this->textareaField('access_notes_ps', 'Access Details (gate codes, fobs, hours)'),
+                $this->checkboxField('rules_ack_ps', 'I accept the rules: no storage, no subletting, no blocking'),
+                $this->totalBlock('space_rate_display', 'cv_space_rate', 'Monthly Rate', '$0'),
+                ['id' => 'signature_ps', 'type' => 'signature', 'title' => 'Renter Signature', 'required' => true, 'help' => ''],
+            ], '#7c2d12', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_space_rate',
+                        'Monthly Rate',
+                        'IF({space_type_ps}="Covered stall - $150/month",150,IF({space_type_ps}="Uncovered stall - $100/month",100,85))+IF({ev_charging_ps}="Yes, EV charging - +$30/month",30,0)'
+                    ),
+                ],
+            ]),
+        ];
+    }
+
+    private function bakeSaleOrderForm(): array
+    {
+        return [
+            'name' => 'Bake Sale Order Form Template',
+            'slug' => 'bake-sale-order-form-template',
+            'short_description' => 'A bake sale order form template tallying dozens by flavor with pickup or delivery options, allergy notes, and a live total so organizers bake the right amount.',
+            'description' => '<p>Our Bake Sale Order Form Template takes pre-orders that actually stick: flavor dozens priced per dozen, pickup or delivery, nut-free flags, and a live total that keeps the till honest before sale day.</p><h2>Why and when to use a bake sale order form</h2><p>Bakers overbake when orders live in comment threads and underbake when they vanish. A pre-order form totals dozens by flavor the night before, flags nut allergies where the mixing bowl is, and separates pickup from delivery so nobody waits on a cake that was never coming.</p><h2>Who is this template for</h2><p>PTA and PTO fundraisers, church bake sales, scout troops, team fundraisers, and cottage bakers taking weekend orders.</p><h2>Why SharaForms is the best tool for this form</h2><p>Totals compute live per dozen and delivery, nut allergy notes reach the bakers directly, and order counts export so shopping lists write themselves.</p>',
+            'types' => ['order_forms'],
+            'industries' => ['charity_forms'],
+            'structure' => $this->structure('Bake Sale Pre-Order', [
+                $this->nfText('intro', '<h2>Bake Sale Pre-Orders</h2><p>Orders close Thursday night for Saturday pickup. Every dollar supports the spring field trip.</p>'),
+                $this->textField('customer_name_bs', 'Your Name', true),
+                $this->emailField('email_bs', 'Email', true),
+                $this->phoneField('phone_bs', 'Phone', true),
+                $this->selectField('flavor_bs', 'Flavor', [
+                    ['value' => 'classic_bs', 'text' => 'Classic chocolate chip - $12/dozen'],
+                    ['value' => 'double_bs', 'text' => 'Double chocolate - $15/dozen'],
+                    ['value' => 'assorted_bs', 'text' => 'Assorted dozen - $18/dozen'],
+                ], true),
+                $this->numberField('dozens_bs', 'How Many Dozen?', true),
+                $this->selectField('delivery_bs', 'Pickup or Delivery?', [
+                    ['value' => 'pickup_bs', 'text' => 'Pick up Saturday'],
+                    ['value' => 'deliver_bs', 'text' => 'Local delivery - +$8'],
+                ], true),
+                $this->textareaField('delivery_address_bs', 'Delivery Address', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('delivery_bs', 'select', 'equals', 'Local delivery - +$8')], 'and', true),
+                ]),
+                $this->checkboxField('nut_free_bs', 'Please keep my order nut-free'),
+                $this->dateField('needed_by_bs', 'Needed By Date'),
+                $this->textareaField('notes_bs', 'Notes for the Bakers'),
+                $this->totalBlock('bake_total_display', 'cv_bake_total', 'Order Total', '$0'),
+            ], '#be123c', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_bake_total',
+                        'Order Total',
+                        'IFBLANK({dozens_bs},0)*IF({flavor_bs}="Double chocolate - $15/dozen",15,IF({flavor_bs}="Assorted dozen - $18/dozen",18,12))+IF({delivery_bs}="Local delivery - +$8",8,0)'
+                    ),
+                ],
+            ]),
+        ];
+    }
+
+    private function carShowRegistration(): array
+    {
+        return [
+            'name' => 'Car Show Registration Form Template',
+            'slug' => 'car-show-registration-form-template',
+            'short_description' => 'A car show registration form template pricing vehicle classes, dash plaques, and swap meet spaces per entry with a live total for organizers.',
+            'description' => '<p>Our Car Show Registration Form Template gets classics on the field with zero gate chaos: vehicle details, class pricing, extra dash plaques, swap meet spaces, and judging opt-ins in one form.</p><h2>Why and when to use a car show registration form</h2><p>Gate-day registrations create lines and unsold plaques. Pre-registration fixes the class list, counts dash plaques for the printer, and reserves swap meet spaces before the map is drawn, so show morning is about cars instead of clipboards.</p><h2>Who is this template for</h2><p>Car clubs, downtown associations, fairgrounds, charity shows, and dealerships hosting weekend meets.</p><h2>Why SharaForms is the best tool for this form</h2><p>Entry totals compute live by class and add-ons, plaque counts export for the printer, and the roster carries every vehicle and contact for field placement.</p>',
+            'types' => ['registration_forms'],
+            'industries' => ['entertainment_forms'],
+            'structure' => $this->structure('Car Show Registration', [
+                $this->nfText('intro', '<h2>Register Your Vehicle</h2><p>Pre-registration closes the Wednesday before the show. Gate registration is $5 extra if space remains.</p>'),
+                $this->textField('owner_name_cs', 'Owner Name', true),
+                $this->emailField('email_cs', 'Email', true),
+                $this->phoneField('phone_cs', 'Phone', true),
+                $this->numberField('vehicle_year_cs', 'Vehicle Year', true),
+                $this->textField('vehicle_make_cs', 'Make and Model', true),
+                $this->selectField('vehicle_class_cs', 'Show Class', [
+                    ['value' => 'antique_cs', 'text' => 'Antique (pre-1980) - $20'],
+                    ['value' => 'classic_cs', 'text' => 'Classic (1980 to 1999) - $25'],
+                    ['value' => 'modern_cs', 'text' => 'Modern (2000+) - $15'],
+                ], true),
+                $this->selectField('swap_meet_cs', 'Swap Meet Space?', [
+                    ['value' => 'swap_no', 'text' => 'No thanks'],
+                    ['value' => 'swap_yes', 'text' => 'Yes, add swap meet space - +$10'],
+                ], true),
+                $this->numberField('extra_plaques_cs', 'Additional Dash Plaques ($5 each)'),
+                $this->textField('swap_booth_cs', 'Swap Meet Table and Setup Needs', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('swap_meet_cs', 'select', 'equals', 'Yes, add swap meet space - +$10')], 'and', true),
+                ]),
+                $this->checkboxField('judging_cs', 'Enter my vehicle for judging'),
+                $this->textField('judging_notes_cs', 'Judging Category and Modifications', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('judging_cs', 'checkbox', 'is_checked')], 'and', true),
+                ]),
+                $this->selectField('arrival_cs', 'Field Arrival Time', [
+                    ['value' => 'arr_early', 'text' => '7am early placement'],
+                    ['value' => 'arr_std', 'text' => '8am standard'],
+                ], true),
+                $this->textareaField('notes_cs', 'Anything the Organizers Should Know?'),
+                $this->totalBlock('show_total_display', 'cv_show_total', 'Entry Total', '$0'),
+            ], '#b45309', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_show_total',
+                        'Entry Total',
+                        'IF({vehicle_class_cs}="Classic (1980 to 1999) - $25",25,IF({vehicle_class_cs}="Modern (2000+) - $15",15,20))'
+                            . '+IFBLANK({extra_plaques_cs},0)*5'
+                            . '+IF({swap_meet_cs}="Yes, add swap meet space - +$10",10,0)'
+                    ),
+                ],
+            ]),
+        ];
+    }
+
+    private function cornholeTournamentRegistration(): array
+    {
+        return [
+            'name' => 'Cornhole Tournament Registration',
+            'slug' => 'cornhole-tournament-registration-form-template',
+            'short_description' => 'A cornhole tournament registration form template with team pricing, shirt add-ons, and division preferences that keep brackets balanced on tournament day.',
+            'description' => '<p>Our Cornhole Tournament Registration Form Template locks in teams before the brackets are drawn: two-player rosters, competitive or social divisions, team shirts, and waiver signatures in one submission.</p><h2>Why and when to use a cornhole tournament registration form</h2><p>Day-of signups wreck bracket math and leave shirt orders short. A registration form counts teams per division the week before, sizes shirts from real orders, and files waivers per player, so tournament morning starts on time with a bracket that actually balances.</p><h2>Who is this template for</h2><p>Breweries, fraternal halls, church festivals, charity fundraisers, and rec leagues running bag tournaments.</p><h2>Why SharaForms is the best tool for this form</h2><p>Team totals compute live by division and add-ons, shirt counts export by size, and signed waivers attach to every roster for the insurance file.</p>',
+            'types' => ['registration_forms'],
+            'industries' => ['sports_forms'],
+            'structure' => $this->structure('Cornhole Tournament Registration', [
+                $this->nfText('intro', '<h2>Enter Your Team</h2><p>Two players per team. Brackets publish Friday night; first toss is Saturday noon.</p>'),
+                $this->textField('team_name_ct', 'Team Name', true),
+                $this->textField('player1_ct', 'Player 1 Name', true),
+                $this->textField('player2_ct', 'Player 2 Name', true),
+                $this->emailField('email_ct', 'Contact Email', true),
+                $this->phoneField('phone_ct', 'Contact Phone', true),
+                $this->selectField('division_ct', 'Division', [
+                    ['value' => 'comp_ct', 'text' => 'Competitive - $40 per team'],
+                    ['value' => 'social_ct', 'text' => 'Social (just for fun) - $25 per team'],
+                ], true),
+                $this->selectField('t_shirt_ct', 'Team Shirts', [
+                    ['value' => 'shirt_no', 'text' => 'No thanks'],
+                    ['value' => 'shirt_yes', 'text' => 'Yes, add team shirts - +$20'],
+                ], true),
+                $this->textField('shirt_sizes_ct', 'Shirt Sizes (one per player)', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('t_shirt_ct', 'select', 'equals', 'Yes, add team shirts - +$20')], 'and', true),
+                ]),
+                $this->selectField('bracket_pref_ct', 'Bracket Preference', [
+                    ['value' => 'upper_ct', 'text' => 'Upper bracket'],
+                    ['value' => 'lower_ct', 'text' => 'Lower bracket'],
+                    ['value' => 'either_ct', 'text' => 'Either works'],
+                ], true),
+                $this->checkboxField('waiver_ct', 'Both players accept the event waiver and hold harmless terms', true),
+                $this->textareaField('notes_ct', 'Notes for the Organizers'),
+                $this->totalBlock('cornhole_total_display', 'cv_team_total', 'Team Entry Total', '$0'),
+            ], '#15803d', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_team_total',
+                        'Team Entry Total',
+                        'IF({division_ct}="Social (just for fun) - $25 per team",25,40)+IF({t_shirt_ct}="Yes, add team shirts - +$20",20,0)'
+                    ),
+                ],
+            ]),
+        ];
+    }
+
+    private function electionDayVolunteerSignup(): array
+    {
+        return [
+            'name' => 'Election Day Volunteer Signup',
+            'slug' => 'election-day-volunteer-signup-form-template',
+            'short_description' => 'An election day volunteer signup form template assigning poll roles, shifts, ride drivers, and language help by precinct With onboarding and health scoring.',
+            'description' => '<p>Our Election Day Volunteer Signup Form Template fills poll support shifts without the spreadsheet: roles, shift blocks, ride drivers, language helpers, and lunch preferences organized by precinct.</p><h2>Why and when to use an election day volunteer signup form</h2><p>Election mornings fail when volunteer details live in texts. A signup form assigns roles before poll opening, confirms which drivers have seats for ride requests, sizes the lunch order from full-day volunteers, and leaves captains with a roster they can text at 6am.</p><h2>Who is this template for</h2><p>Precinct captains, campaign field offices, civic leagues, and nonpartisan poll-watcher organizations.</p><h2>Why SharaForms is the best tool for this form</h2><p>Driver seat counts surface only from ride drivers, lunch choices appear only for full-day shifts, and language skills export so every precinct covers its community.</p>',
+            'types' => ['volunteer_forms', 'signup_forms'],
+            'industries' => ['business_forms'],
+            'structure' => $this->structure('Election Day Volunteer Signup', [
+                $this->nfText('intro', '<h2>Volunteer on Election Day</h2><p>Poll support shifts run in three blocks. Choose one, or take the full day and we cover lunch.</p>'),
+                $this->textField('volunteer_name_ev', 'Full Name', true),
+                $this->emailField('email_ev', 'Email', true),
+                $this->phoneField('phone_ev', 'Mobile Phone', true),
+                $this->textField('precinct_ev', 'Precinct or Polling Place', true),
+                $this->selectField('role_ev', 'Preferred Role', [
+                    ['value' => 'greeter_ev', 'text' => 'Greeter'],
+                    ['value' => 'monitor_ev', 'text' => 'Line monitor'],
+                    ['value' => 'driver_ev', 'text' => 'Ride driver'],
+                    ['value' => 'setup_ev', 'text' => 'Setup and teardown crew'],
+                ], true),
+                $this->numberField('driver_seats_ev', 'Seats Available in Your Car', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('role_ev', 'select', 'equals', 'Ride driver')], 'and', true),
+                ]),
+                $this->selectField('shift_ev', 'Shift Preference', [
+                    ['value' => 'am_ev', 'text' => 'Morning (6am to 11am)'],
+                    ['value' => 'pm_ev', 'text' => 'Afternoon (11am to 4pm)'],
+                    ['value' => 'eve_ev', 'text' => 'Evening (4pm to close)'],
+                    ['value' => 'full_ev', 'text' => 'Full day'],
+                ], true),
+                $this->selectField('lunch_pref_ev', 'Lunch Preference (full day only)', [
+                    ['value' => 'sandwich_ev', 'text' => 'Sandwich'],
+                    ['value' => 'salad_ev', 'text' => 'Salad'],
+                    ['value' => 'veg_ev', 'text' => 'Vegetarian'],
+                ], false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('shift_ev', 'select', 'equals', 'Full day')], 'and', true),
+                ]),
+                $this->multiSelectField('languages_ev', 'Languages You Can Help In', [
+                    ['value' => 'lang_en', 'text' => 'English'],
+                    ['value' => 'lang_es', 'text' => 'Spanish'],
+                    ['value' => 'lang_vi', 'text' => 'Vietnamese'],
+                    ['value' => 'lang_other', 'text' => 'Other'],
+                ]),
+                $this->checkboxField('own_car_ev', 'I have a car available for rides'),
+                $this->textareaField('notes_ev', 'Anything the Coordinator Should Know?'),
+            ], '#0f766e'),
+        ];
+    }
+
+    private function kayakTourBooking(): array
+    {
+        return [
+            'name' => 'Kayak Tour Booking Form Template',
+            'slug' => 'kayak-tour-booking-form-template',
+            'short_description' => 'A kayak tour booking form template pricing singles, tandems, and private tours with skill and swim attestations for outfitters, guides, and rental programs.',
+            'description' => '<p>Our Kayak Tour Booking Form Template gets paddlers on the water with the right boats: single or tandem kayaks, tour choices, skill attestations, and the swim-ability and weight questions guides need before launch.</p><h2>Why and when to use a kayak tour booking form</h2><p>Walk-up bookings strand tandem paddlers without partners and put first-timers in current they cannot handle. A booking form fixes boat counts per tour, collects skill and swim attestations before the safety briefing, and documents minors weight limits for the insurance file.</p><h2>Who is this template for</h2><p>Outfitters and liveries, state park concessionaires, resort activity desks, and guide services running seasonal water tours.</p><h2>Why SharaForms is the best tool for this form</h2><p>Tour totals compute live from boat types and add-ons, tandem partner details surface only when tandems are booked, and minor paddlers are flagged for guardian signatures before launch.</p>',
+            'types' => ['booking_forms', 'registration_forms'],
+            'industries' => ['entertainment_forms', 'sports_forms'],
+            'structure' => $this->structure('Kayak Tour Booking', [
+                $this->nfText('intro', '<h2>Book a Kayak Tour</h2><p>Tours launch on time; arrive 30 minutes early for fitting and the safety briefing.</p>'),
+                $this->textField('paddler_name_kt', 'Booking Contact Name', true),
+                $this->emailField('email_kt', 'Email', true),
+                $this->phoneField('phone_kt', 'Phone', true),
+                $this->selectField('tour_kt', 'Tour Choice', [
+                    ['value' => 'sunset_kt', 'text' => 'Sunset paddle (2 hours) - $45'],
+                    ['value' => 'cove_kt', 'text' => 'Cove and wildlife tour (3 hours) - $65'],
+                    ['value' => 'full_kt', 'text' => 'Full-day river run - $95'],
+                ], true),
+                $this->selectField('boat_type_kt', 'Boat Type', [
+                    ['value' => 'single_kt', 'text' => 'Single kayak - $0 (included)'],
+                    ['value' => 'tandem_kt', 'text' => 'Tandem kayak - $0 (included)'],
+                    ['value' => 'sup_kt', 'text' => 'Stand-up paddleboard - +$10'],
+                ], true),
+                $this->numberField('paddler_count_kt', 'How Many Paddlers?', true),
+                $this->selectField('skill_level_kt', 'Paddling Experience', [
+                    ['value' => 'first_kt', 'text' => 'First time'],
+                    ['value' => 'some_kt', 'text' => 'A few trips'],
+                    ['value' => 'strong_kt', 'text' => 'Experienced'],
+                ], true),
+                $this->checkboxField('swim_attest_kt', 'Everyone in my group can swim 50 yards'),
+                $this->checkboxField('minor_paddlers_kt', 'My group includes paddlers under 18'),
+                $this->textField('minor_guardian_kt', 'Guardian Name for Minor Paddlers', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('minor_paddlers_kt', 'checkbox', 'is_checked')], 'and', true),
+                ]),
+                $this->textareaField('dietary_kt', 'Allergies or Health Notes for the Guide'),
+                $this->totalBlock('kayak_total_display', 'cv_tour_total', 'Tour Total', '$0'),
+            ], '#0e7490', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_tour_total',
+                        'Tour Total',
+                        'IFBLANK({paddler_count_kt},0)*IF({tour_kt}="Cove and wildlife tour (3 hours) - $65",65,IF({tour_kt}="Full-day river run - $95",95,45))'
+                            . '+IF({boat_type_kt}="Stand-up paddleboard - +$10",10,0)'
+                    ),
+                ],
+            ]),
+        ];
+    }
+
+    private function kickballLeagueRegistration(): array
+    {
+        return [
+            'name' => 'Kickball League Registration Form Template',
+            'slug' => 'kickball-league-registration-form-template',
+            'short_description' => 'A kickball league registration form template pricing team and free-agent spots with shirt sizes, waivers, and practice preferences for rec leagues.',
+            'description' => '<p>Our Kickball League Registration Form Template fills rosters before week one: team entries, free-agent placements, shirt sizes, preferred game nights, and the waiver every player signs once.</p><h2>Why and when to use a kickball league registration form</h2><p>Rec leagues live or die on week-one chaos. A registration form separates full teams from free agents needing placement, sizes shirts from real orders, and collects game-night preferences so the scheduler publishes a season nobody fights about.</p><h2>Who is this template for</h2><p>Rec sports leagues, breweries sponsoring teams, corporate recreation programs, parks departments, and social clubs.</p><h2>Why SharaForms is the best tool for this form</h2><p>Free-agent positions surface only for solo signups, team totals compute live with shirt add-ons, and signed waivers attach to every roster for the league file.</p>',
+            'types' => ['registration_forms'],
+            'industries' => ['sports_forms'],
+            'structure' => $this->structure('Kickball League Registration', [
+                $this->nfText('intro', '<h2>Register for the Season</h2><p>Eight weekly games plus playoffs. Teams get a standings link the week before opening night.</p>'),
+                $this->selectField('entry_type_kr', 'How Are You Signing Up?', [
+                    ['value' => 'team_kr', 'text' => 'Full team - $350'],
+                    ['value' => 'agent_kr', 'text' => 'Free agent - $45'],
+                ], true),
+                $this->emailField('email_kr', 'Email', true),
+                $this->phoneField('phone_kr', 'Phone', true),
+                $this->textField('team_name_kr', 'Team Name', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('entry_type_kr', 'select', 'equals', 'Full team - $350')], 'and', true),
+                ]),
+                $this->textField('player_name_kr', 'Your Name', true),
+                $this->selectField('position_kr', 'Preferred Position', [
+                    ['value' => 'infield_kr', 'text' => 'Infield'],
+                    ['value' => 'outfield_kr', 'text' => 'Outfield'],
+                    ['value' => 'pitcher_kr', 'text' => 'Pitcher / catcher'],
+                    ['value' => 'anywhere_kr', 'text' => 'Anywhere'],
+                ]),
+                $this->selectField('game_night_kr', 'Preferred Game Night', [
+                    ['value' => 'kr_mon', 'text' => 'Monday'],
+                    ['value' => 'kr_wed', 'text' => 'Wednesday'],
+                    ['value' => 'kr_thu', 'text' => 'Thursday'],
+                ], true),
+                $this->selectField('shirt_size_kr', 'Shirt Size', [
+                    ['value' => 'kr_s', 'text' => 'Small'],
+                    ['value' => 'kr_m', 'text' => 'Medium'],
+                    ['value' => 'kr_l', 'text' => 'Large'],
+                    ['value' => 'kr_xl', 'text' => 'XL'],
+                    ['value' => 'kr_2xl', 'text' => '2XL'],
+                ], true),
+                $this->checkboxField('waiver_kr', 'I accept the league waiver and sportsmanship policy', true),
+                $this->textareaField('notes_kr', 'Notes for the League Office'),
+                $this->totalBlock('kickball_total_display', 'cv_entry_total', 'Entry Total', '$0'),
+            ], '#65a30d', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_entry_total',
+                        'Entry Total',
+                        'IF({entry_type_kr}="Full team - $350",350,45)'
+                    ),
+                ],
+            ]),
+        ];
+    }
+
+    private function kiteboardingLessonWaiver(): array
+    {
+        return [
+            'name' => 'Kiteboarding Lesson Waiver Form Template',
+            'slug' => 'kiteboarding-lesson-waiver-form-template',
+            'short_description' => 'A kiteboarding lesson waiver form template recording swim attestations, medical disclosures, and guardian signatures for lesson providers and schools.',
+            'description' => '<p>Our Kiteboarding Lesson Waiver Form Template documents the risk acknowledgment board sports insurance requires: swim attestations, medical disclosures, gear fit details, and a signed waiver per student before the kite goes up.</p><h2>Why and when to use a kiteboarding lesson waiver form</h2><p>Board sports carry real risk, and verbal waivers protect nobody. A signed waiver fixes the student identity, records swim ability and medical conditions for the instructor, and documents gear fit so the school can prove due diligence if something goes wrong.</p><h2>Who is this template for</h2><p>Kite and windsurf schools, surf academies, wing-foil instructors, and beach rental operators teaching board sports.</p><h2>Why SharaForms is the best tool for this form</h2><p>Medical details surface only when students disclose conditions, guardian signatures are required for minors before lessons start, and signed waivers export for the school insurance file.</p>',
+            'types' => ['consent_forms', 'registration_forms'],
+            'industries' => ['sports_forms'],
+            'structure' => $this->structure('Kiteboarding Lesson Waiver', [
+                $this->nfText('intro', '<h2>Lesson Waiver and Student Details</h2><p>Complete before your first lesson. Students under 18 need a guardian signature.</p>'),
+                $this->textField('student_name_kb', 'Student Name', true),
+                $this->dateField('dob_kb', 'Date of Birth', true),
+                $this->emailField('email_kb', 'Email', true),
+                $this->phoneField('phone_kb', 'Phone', true),
+                $this->selectField('experience_kb', 'Board Sports Experience', [
+                    ['value' => 'kb_none', 'text' => 'None, complete beginner'],
+                    ['value' => 'kb_some', 'text' => 'Some board or kite experience'],
+                    ['value' => 'kb_experienced', 'text' => 'Experienced rider'],
+                ], true),
+                $this->checkboxField('swim_kb', 'I can swim 200 yards and tread water for 10 minutes', true),
+                $this->checkboxField('medical_kb', 'I have a medical condition my instructor should know about'),
+                $this->textareaField('medical_details_kb', 'Medical Details (heart, seizure, pregnancy, medications)', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('medical_kb', 'checkbox', 'is_checked')], 'and', true),
+                ]),
+                $this->numberField('weight_kb', 'Weight (lbs, for harness and vest fit)', true),
+                $this->selectField('minor_kb', 'Is the Student Under 18?', [
+                    ['value' => 'kb_yes', 'text' => 'Yes'],
+                    ['value' => 'kb_no', 'text' => 'No'],
+                ], true),
+                $this->textField('guardian_name_kb', 'Guardian Name', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('minor_kb', 'select', 'equals', 'Yes')], 'and', true),
+                ]),
+                ['id' => 'signature_kb', 'type' => 'signature', 'title' => 'Student or Guardian Signature', 'required' => true, 'help' => ''],
+                $this->checkboxField('safety_ack_kb', 'I accept the school safety rules and right-of-way policy', true),
+            ], '#0284c7'),
+        ];
+    }
+
+    private function knittingClassRegistration(): array
+    {
+        return [
+            'name' => 'Knitting Class Registration Form Template',
+            'slug' => 'knitting-class-registration-form-template',
+            'short_description' => 'A knitting class registration form template pricing series and workshops with kit, yarn, and skill-level preferences for yarn shops and guilds.',
+            'description' => '<p>Our Knitting Class Registration Form Template fills classes without the sign-up sheet: series versus single workshops, beginner or advanced tracks, kit color choices, and the experience details instructors actually use to plan.</p><h2>Why and when to use a knitting class registration form</h2><p>Yarn shops overbuy kit supplies when registrations arrive by DM and undersell advanced tracks when beginners fill them by accident. A registration form prices series and workshops separately, collects kit color choices before the yarn order goes in, and sorts experience so the instructor pitches each class right.</p><h2>Who is this template for</h2><p>Yarn shops, craft studios, community centers, library makerspaces, and independent instructors running multi-week series.</p><h2>Why SharaForms is the best tool for this form</h2><p>Totals compute live by track and kits, color choices arrive before the yarn order, and experience notes let the instructor plan cast-on day instead of sorting it live.</p>',
+            'types' => ['registration_forms'],
+            'industries' => ['education_forms'],
+            'structure' => $this->structure('Knitting Class Registration', [
+                $this->nfText('intro', '<h2>Register for Class</h2><p>Series run four weeks; workshops meet once. Kits are ready at your seat on day one.</p>'),
+                $this->textField('student_name_kn', 'Your Name', true),
+                $this->emailField('email_kn', 'Email', true),
+                $this->phoneField('phone_kn', 'Phone', true),
+                $this->selectField('track_kn', 'Class Track', [
+                    ['value' => 'beginner_kn', 'text' => 'Beginner series (4 weeks) - $95'],
+                    ['value' => 'advanced_kn', 'text' => 'Advanced workshop (single session) - $55'],
+                ], true),
+                $this->selectField('kit_kn', 'Materials Kit', [
+                    ['value' => 'kit_incl', 'text' => 'Kit included in class price'],
+                    ['value' => 'own_supplies', 'text' => 'Bringing my own supplies - -$20'],
+                    ['value' => 'yarn_upgrade', 'text' => 'Upgrade to premium yarn - +$25'],
+      ], true),
+                $this->selectField('kit_color_kn', 'Kit Color Choice', [
+                    ['value' => 'heather_kn', 'text' => 'Heather gray'],
+                    ['value' => 'indigo_kn', 'text' => 'Indigo'],
+                    ['value' => 'moss_kn', 'text' => 'Moss'],
+                    ['value' => 'natural_kn', 'text' => 'Natural'],
+                ], false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('kit_kn', 'select', 'equals', 'Kit included in class price')]),
+                ]),
+                $this->selectField('experience_kn', 'Knitting Experience', [
+                    ['value' => 'kn_none', 'text' => 'Never knit before'],
+                    ['value' => 'kn_basics', 'text' => 'Know knit and purl'],
+                    ['value' => 'kn_comfortable', 'text' => 'Comfortable reading patterns'],
+                ], true),
+                $this->checkboxField('left_handed_kn', 'I knit left-handed (mirror teaching helps)'),
+                $this->checkboxField('accessibility_kn', 'I have accessibility needs for seating or lighting'),
+                $this->textareaField('goals_kn', 'What Do You Want to Make?'),
+                $this->totalBlock('knitting_total_display', 'cv_class_total', 'Class Total', '$0'),
+            ], '#9d174d', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_class_total',
+                        'Class Total',
+                        'IF({track_kn}="Beginner series (4 weeks) - $95",95,55)'
+                            . '+IF({kit_kn}="Upgrade to premium yarn - +$25",25,0)'
+                            . '-IF({kit_kn}="Bringing my own supplies - -$20",20,0)'
+                    ),
+                ],
+            ]),
+        ];
+    }
+
+    private function halloweenCostumeContest(): array
+    {
+        return [
+            'name' => 'Halloween Costume Contest Entry',
+            'slug' => 'halloween-costume-contest-entry-form-template',
+            'short_description' => 'A halloween costume contest entry form template pricing age divisions and capturing costume descriptions and prop notes for judges and announcers.',
+            'description' => '<p>Our Halloween Costume Contest Entry Form Template organizes entries before the party starts: age divisions, group entries, costume descriptions judges can actually read, and a live entry total for ticketed events.</p><h2>Why and when to use a halloween costume contest entry form</h2><p>Judging from a noisy stage lineup is how the best costume loses to whoever shouted loudest. A structured entry form fixes divisions before the party, hands judges written descriptions with entry numbers, and counts group entries so the scoreboard never guesses.</p><h2>Who is this template for</h2><p>Bars and restaurants, schools and PTAs, office parties, neighborhood associations, and comic conventions running costume contests.</p><h2>Why SharaForms is the best tool for this form</h2><p>Entry totals compute live per division and add-ons, group member lists surface only for group entries, and judges receive an export with entry numbers instead of a scribbled lineup.</p>',
+            'types' => ['registration_forms', 'event_registration_forms'],
+            'industries' => ['entertainment_forms'],
+            'structure' => $this->structure('Costume Contest Entry', [
+                $this->nfText('intro', '<h2>Enter the Costume Contest</h2><p>Entries close one hour before judging. Groups enter once and list every member.</p>'),
+                $this->textField('contestant_name_hc', 'Contestant or Group Name', true),
+                $this->emailField('email_hc', 'Email', true),
+                $this->selectField('division_hc', 'Age Division', [
+                    ['value' => 'kids_hc', 'text' => 'Kids 12 and under - $5'],
+                    ['value' => 'teens_hc', 'text' => 'Teens 13 to 17 - $5'],
+                    ['value' => 'adults_hc', 'text' => 'Adults 18+ - $10'],
+                ], true),
+                $this->selectField('entry_kind_hc', 'Solo or Group Entry?', [
+                    ['value' => 'solo_hc', 'text' => 'Solo'],
+                    ['value' => 'group_hc', 'text' => 'Group'],
+                ], true),
+                $this->textareaField('group_members_hc', 'Group Member Names (one per line)', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('entry_kind_hc', 'select', 'equals', 'Group')], 'and', true),
+                ]),
+                $this->textareaField('costume_desc_hc', 'Costume Description for the Judges', true, ['help' => 'Characters, craftsmanship details, and what took the longest']),
+                $this->selectField('category_hc', 'Judging Category', [
+                    ['value' => 'funny_hc', 'text' => 'Funniest'],
+                    ['value' => 'scary_hc', 'text' => 'Scariest'],
+                    ['value' => 'craft_hc', 'text' => 'Best craftsmanship'],
+                ], true),
+                $this->numberField('guest_count_hc', 'Additional Spectator Wristbands ($3 each)'),
+                $this->totalBlock('contest_total_display', 'cv_entry_total_hc', 'Entry Total', '$0'),
+            ], '#9333ea', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_entry_total_hc',
+                        'Entry Total',
+                        'IF({division_hc}="Adults 18+ - $10",10,5)+IFBLANK({guest_count_hc},0)*3'
+                    ),
+                ],
+            ]),
+        ];
+    }
+
+    private function cannedFoodDrive(): array
+    {
+        return [
+            'name' => 'Canned Food Drive Pledge Form Template',
+            'slug' => 'canned-food-drive-pledge-form-template',
+            'short_description' => 'A canned food drive pledge form template tracking donors, pledged items, and volunteer drop-off shifts so coordinators can plan collection routes.',
+            'description' => '<p>Our Canned Food Drive Pledge Form Template keeps the tally honest: donor contacts, pledged item counts, high-need item checklists, and volunteer drop-off shifts, all in one form the drive coordinator can actually total.</p><h2>Why and when to use a canned food drive pledge form</h2><p>Pledges made in hallway conversations never reach the bin. A pledge form records who committed what, tells donors which high-need items the pantry actually wants, and books the collection shifts so the drive ends with full shelves instead of a corner of forgotten cans.</p><h2>Who is this template for</h2><p>Schools and PTAs, workplaces, scout troops, churches, and neighborhood associations running holiday or year-round food drives.</p><h2>Why SharaForms is the best tool for this form</h2><p>High-need preferences route the right items to the right shelves, drop-off shift choices fill the calendar evenly, and pledged counts export into a running goal tracker.</p>',
+            'types' => ['donation_forms', 'signup_forms'],
+            'industries' => ['charity_forms', 'education_forms'],
+            'structure' => $this->structure('Food Drive Pledge', [
+                $this->nfText('intro', '<h2>Pledge to the Food Drive</h2><p>Pledge what you can: every can counts. Drop-off shifts are optional, and helpers get first pick of snack duty.</p>'),
+                $this->textField('donor_name_cf', 'Your Name', true),
+                $this->emailField('email_cf', 'Email', true),
+                $this->selectField('donor_group_cf', 'I Am Pledging As', [
+                    ['value' => 'individual_cf', 'text' => 'An individual or family'],
+                    ['value' => 'team_cf', 'text' => 'A team, class, or department'],
+                ], true),
+                $this->textField('team_name_cf', 'Team, Class, or Department Name', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('donor_group_cf', 'select', 'equals', 'A team, class, or department')], 'and', true),
+                ]),
+                $this->numberField('item_pledge_cf', 'How Many Items Will You Bring?', true),
+                $this->multiSelectField('preferred_items_cf', 'High-Need Items You Can Bring', [
+                    ['value' => 'peanut_cf', 'text' => 'Peanut butter'],
+                    ['value' => 'cereal_cf', 'text' => 'Cereal and oats'],
+                    ['value' => 'canned_meat_cf', 'text' => 'Canned meat and fish'],
+                    ['value' => 'pasta_cf', 'text' => 'Pasta and rice'],
+                    ['value' => 'baby_cf', 'text' => 'Baby food and formula'],
+                ]),
+                $this->checkboxField('volunteer_shift_cf', 'I can help staff a drop-off shift'),
+                $this->selectField('shift_choice_cf', 'Preferred Drop-Off Shift', [
+                    ['value' => 'mon_cf', 'text' => 'Monday morning'],
+                    ['value' => 'wed_cf', 'text' => 'Wednesday afternoon'],
+                    ['value' => 'sat_cf', 'text' => 'Saturday morning'],
+                ], false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('volunteer_shift_cf', 'checkbox', 'is_checked')], 'and', true),
+                ]),
+                $this->dateField('dropoff_by_cf', 'Pledged Drop-By Date'),
+                $this->textareaField('notes_cf', 'Notes for the Drive Coordinator'),
+            ], '#d97706'),
+        ];
+    }
+
+    private function churchPicnicRegistration(): array
+    {
+        return [
+            'name' => 'Church Picnic Registration Form Template',
+            'slug' => 'church-picnic-registration-form-template',
+            'short_description' => 'A church picnic registration form template counting family headcounts, potluck dish categories, and game signups so planners buy enough food once.',
+            'description' => '<p>Our Church Picnic Registration Form Template plans the whole afternoon: family headcounts, potluck dish categories, game signups, and shade or seating needs, so organizers buy enough food once instead of twice.</p><h2>Why and when to use a church picnic registration form</h2><p>Picnics run on estimates, and estimates made from pews are always wrong. A registration form counts mouths per family, balances potluck categories before the tables fill with forty desserts, and signs up volunteers for games and setup while there is still time to plan.</p><h2>Who is this template for</h2><p>Churches, temples, and mosques; also fits any congregation-style community: neighborhood associations, cultural societies, and family reunions with church-picnic structure.</p><h2>Why SharaForms is the best tool for this form</h2><p>Potluck categories balance themselves as responses arrive, game rosters fill without a sign-up sheet, and headcounts export straight into the food order.</p>',
+            'types' => ['rsvp_forms', 'event_registration_forms'],
+            'industries' => ['church_forms'],
+            'structure' => $this->structure('Church Picnic Registration', [
+                $this->nfText('intro', '<h2>Picnic Registration</h2><p>One form per family. We use headcounts for food and seating, so please be accurate.</p>'),
+                $this->textField('family_name_cp', 'Family Name', true),
+                $this->emailField('email_cp', 'Email', true),
+                $this->phoneField('phone_cp', 'Phone', true),
+                $this->numberField('headcount_cp', 'Total Attending (all ages)', true),
+                $this->numberField('kids_count_cp', 'How Many Are Kids 12 and Under?'),
+                $this->selectField('dish_cp', 'Potluck Dish You Will Bring', [
+                    ['value' => 'main_cp', 'text' => 'Main dish'],
+                    ['value' => 'side_cp', 'text' => 'Side or salad'],
+                    ['value' => 'dessert_cp', 'text' => 'Dessert'],
+                    ['value' => 'drink_cp', 'text' => 'Drinks or ice'],
+                    ['value' => 'no_dish_cp', 'text' => 'Cannot bring a dish this time'],
+                ], true),
+                $this->textField('dish_details_cp', 'What Dish? (helps avoid duplicates)', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([
+                        $this->logicCondition('dish_cp', 'select', 'does_not_equal', 'Cannot bring a dish this time'),
+                    ], 'and', true),
+                ]),
+                $this->multiSelectField('games_cp', 'Games Your Family Wants to Play', [
+                    ['value' => 'tug_cp', 'text' => 'Tug of war'],
+                    ['value' => 'sack_cp', 'text' => 'Sack races'],
+                    ['value' => 'volley_cp', 'text' => 'Volleyball'],
+                    ['value' => 'bingo_cp', 'text' => 'Bingo'],
+                ]),
+                $this->textareaField('setup_role_cp', 'Setup or Teardown Role You Can Take', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('help_setup_cp', 'checkbox', 'is_checked')], 'and', true),
+                ]),
+                $this->textareaField('seating_needs_cp', 'Shade, Seating, or Accessibility Needs'),
+            ], '#4d7c0f'),
+        ];
+    }
+
+    private function zooFamilyMembership(): array
+    {
+        return [
+            'name' => 'Zoo Family Membership Form Template',
+            'slug' => 'zoo-family-membership-form-template',
+            'short_description' => 'A zoo family membership form template pricing household tiers with add-ons for parking, guest passes, and animal care donations for visitors.',
+            'description' => '<p>Our Zoo Family Membership Form Template sells memberships the way zoos actually price them: household tiers by family size, parking passes, guest passes, and care-program donations, with a live total and tax-deductible receipt fields.</p><h2>Why and when to use a zoo family membership form</h2><p>Membership desks lose sales to line math: which tier fits this family, how many guest passes, does parking come with it. A structured form prices every combination live, collects the birth dates some zoos require for child cards, and records the donation add-ons that fund animal care.</p><h2>Who is this template for</h2><p>Zoos, aquariums, botanical gardens, children museums, and nature centers selling household memberships.</p><h2>Why SharaForms is the best tool for this form</h2><p>Totals compute live across tiers and add-ons, child birth dates arrive with the application, and care-program donations are recorded for tax receipts.</p>',
+            'types' => ['membership_forms', 'registration_forms'],
+            'industries' => ['entertainment_forms', 'education_forms'],
+            'structure' => $this->structure('Family Membership Application', [
+                $this->nfText('intro', '<h2>Join as a Family Member</h2><p>Memberships run 12 months from purchase. Totals update as you choose add-ons.</p>'),
+                $this->textField('primary_member_zf', 'Primary Member Name', true),
+                $this->emailField('email_zf', 'Email', true),
+                $this->phoneField('phone_zf', 'Phone', true),
+                $this->selectField('household_tier_zf', 'Household Size', [
+                    ['value' => 'pair_zf', 'text' => 'Two adults - $85/year'],
+                    ['value' => 'one_adult_kids', 'text' => 'One adult plus kids - $95/year'],
+                    ['value' => 'full_zf', 'text' => 'Two adults plus kids - $125/year'],
+                ], true),
+                $this->numberField('child_count_zf', 'Children on the Membership (17 and under)', false, ['help' => 'List birth dates below where asked at the desk']),
+                $this->selectField('parking_zf', 'Parking Pass', [
+                    ['value' => 'park_no', 'text' => 'No thanks'],
+                    ['value' => 'park_yes', 'text' => 'Add annual parking - +$40'],
+                ], true),
+                $this->selectField('guest_passes_zf', 'Guest Passes', [
+                    ['value' => 'gp_none', 'text' => 'None'],
+                    ['value' => 'gp_two', 'text' => 'Two guest passes - +$25'],
+                    ['value' => 'gp_four', 'text' => 'Four guest passes - +$45'],
+                ], true),
+                $this->selectField('care_donation_zf', 'Add an Animal Care Donation?', [
+                    ['value' => 'cd_none', 'text' => 'Not today'],
+                    ['value' => 'cd_10', 'text' => '$10'],
+                    ['value' => 'cd_25', 'text' => '$25'],
+                ], true),
+                $this->checkboxField('newsletter_zf', 'Send me member event invitations and newsletter'),
+                $this->textareaField('child_birthdates_zf', 'Birth Dates for Children on the Membership', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('household_tier_zf', 'select', 'does_not_equal', 'Two adults - $85/year')], 'and', true),
+                ]),
+                $this->textField('donation_receipt_zf', 'Donation Receipt Name and Mailing Address', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('care_donation_zf', 'select', 'does_not_equal', 'Not today')], 'and', true),
+                ]),
+                $this->textareaField('notes_zf', 'Notes for the Membership Desk'),
+                $this->totalBlock('membership_total_display', 'cv_membership_total', 'Membership Total', '$0'),
+            ], '#0d9488', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_membership_total',
+                        'Membership Total',
+                        'IF({household_tier_zf}="Two adults plus kids - $125/year",125,IF({household_tier_zf}="One adult plus kids - $95/year",95,85))'
+                            . '+IF({parking_zf}="Add annual parking - +$40",40,0)'
+                            . '+IF({guest_passes_zf}="Two guest passes - +$25",25,IF({guest_passes_zf}="Four guest passes - +$45",45,0))'
+                            . '+IF({care_donation_zf}="$10",10,IF({care_donation_zf}="$25",25,0))'
+                    ),
+                ],
+            ]),
+        ];
+    }
+
+    private function racetrackTrackDay(): array
+    {
+        return [
+            'name' => 'Racetrack Track Day Registration',
+            'slug' => 'racetrack-track-day-registration-form-template',
+            'short_description' => 'A racetrack track day registration form template pricing run groups with helmet rentals, instructor add-ons, and vehicle specs for drivers and teams.',
+            'description' => '<p>Our Racetrack Track Day Registration Form Template gets drivers on circuit safely: run groups by experience, helmet and suit rentals, in-car instructors, and the license and tech-inspection attestations organizers need before the gate opens.</p><h2>Why and when to use a racetrack track day registration form</h2><p>Track days mix 200-mph veterans with first-timers, and a bad grid grouping ends the day early. A registration form sorts drivers into run groups by experience, prices instruction and gear rentals before arrival, and documents the safety acknowledgments the insurance certificate requires.</p><h2>Who is this template for</h2><p>Track day organizers, car clubs, racing schools, and karting facilities running open lapping days.</p><h2>Why SharaForms is the best tool for this form</h2><p>Run groups self-sort by declared experience, helmet sizes arrive before the trailer opens, and instructor add-ons are counted before the schedule is built.</p>',
+            'types' => ['registration_forms', 'booking_forms'],
+            'industries' => ['sports_forms', 'entertainment_forms'],
+            'structure' => $this->structure('Track Day Registration', [
+                $this->nfText('intro', '<h2>Register for Track Day</h2><p>Gates open 7am, drivers meeting at 8am sharp. Run groups rotate every 20 minutes.</p>'),
+                $this->textField('driver_name_rt', 'Driver Name', true),
+                $this->emailField('email_rt', 'Email', true),
+                $this->phoneField('phone_rt', 'Phone (for day-of schedule texts)', true),
+                $this->textField('vehicle_rt', 'Vehicle Make, Model, and Year', true),
+                $this->selectField('experience_rt', 'Track Experience', [
+                    ['value' => 'novice_rt', 'text' => 'Novice (first to third track day) - Green group'],
+                    ['value' => 'intermediate_rt', 'text' => 'Intermediate - Yellow group'],
+                    ['value' => 'advanced_rt', 'text' => 'Advanced - Red group'],
+                ], true),
+                $this->dateField('track_date_rt', 'Track Date', true),
+                $this->selectField('helmet_rental_rt', 'Helmet Rental', [
+                    ['value' => 'helmet_own', 'text' => 'Bringing my own (SA2015 or newer)'],
+                    ['value' => 'helmet_rent', 'text' => 'Rent a helmet - +$40'],
+                ], true),
+                $this->selectField('helmet_size_rt', 'Helmet Size', [
+                    ['value' => 'hs_s', 'text' => 'S'],
+                    ['value' => 'hs_m', 'text' => 'M'],
+                    ['value' => 'hs_l', 'text' => 'L'],
+                    ['value' => 'hs_xl', 'text' => 'XL'],
+                ], false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('helmet_rental_rt', 'select', 'equals', 'Rent a helmet - +$40')], 'and', true),
+                ]),
+                $this->selectField('instructor_rt', 'In-Car Instructor', [
+                    ['value' => 'inst_no', 'text' => 'No instructor needed'],
+                    ['value' => 'inst_yes', 'text' => 'Add instructor (novice required) - +$120'],
+                ], true),
+                $this->checkboxField('tech_rt', 'My car passes the posted tech inspection list (battery, fluid, pads, belts)', true),
+                $this->checkboxField('license_rt', 'I hold a valid drivers license and accept the track rules and waiver', true),
+                $this->totalBlock('track_total_display', 'cv_day_total', 'Day Total', '$0'),
+            ], '#b91c1c', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_day_total',
+                        'Day Total',
+                        'IF({experience_rt}="Intermediate - Yellow group",275,IF({experience_rt}="Advanced - Red group",275,225))'
+                            . '+IF({helmet_rental_rt}="Rent a helmet - +$40",40,0)'
+                            . '+IF({instructor_rt}="Add instructor (novice required) - +$120",120,0)'
+                    ),
+                ],
+            ]),
+        ];
+    }
+
+    private function rvParkReservation(): array
+    {
+        return [
+            'name' => 'RV Park Reservation Form Template',
+            'slug' => 'rv-park-reservation-form-template',
+            'short_description' => 'An RV park reservation form template pricing site types with rig specs, hookup needs, and pet declarations for campground hosts and resorts.',
+            'description' => '<p>Our RV Park Reservation Form Template books sites that actually fit the rig: site types with nightly rates, rig length and slide-out counts, hookup needs, pet declarations, and arrival windows that keep the hosting smooth.</p><h2>Why and when to use an RV park reservation form</h2><p>Reservations taken by phone strand 40-foot rigs on sites built for trailers half that length. A reservation form captures the rig specs parks need for site assignment, prices premium hookups transparently, and records pets and arrival windows so the evening goes smoothly for everyone.</p><h2>Who is this template for</h2><p>RV parks and campgrounds, resorts with RV sites, county and state park concessionaires, and private landowners renting sites.</p><h2>Why SharaForms is the best tool for this form</h2><p>Nightly totals compute live by site type and add-ons, pet fees appear only when pets are declared, and rig specs reach the host before the site is assigned.</p>',
+            'types' => ['reservation_forms', 'booking_forms'],
+            'industries' => ['entertainment_forms'],
+            'structure' => $this->structure('RV Site Reservation', [
+                $this->nfText('intro', '<h2>Reserve Your Site</h2><p>Rig specs help us assign a site that fits. Check-in is 1pm; quiet hours start at 10pm.</p>'),
+                $this->textField('guest_name_rv', 'Reservation Name', true),
+                $this->emailField('email_rv', 'Email', true),
+                $this->phoneField('phone_rv', 'Phone', true),
+                $this->selectField('site_type_rv', 'Site Type', [
+                    ['value' => 'backin_rv', 'text' => 'Back-in site, full hookup - $45/night'],
+                    ['value' => 'pull_rv', 'text' => 'Pull-through site, full hookup - $55/night'],
+                    ['value' => 'prime_rv', 'text' => 'Premium pull-through, river row - $70/night'],
+                ], true),
+                $this->dateField('arrival_rv', 'Arrival Date', true),
+                $this->dateField('departure_rv', 'Departure Date', true),
+                $this->numberField('rig_length_rv', 'Rig Length (feet, including tow vehicle if applicable)', true),
+                $this->numberField('slides_rv', 'Number of Slide-Outs'),
+                $this->checkboxField('pets_rv', 'We are bringing pets (max two, leashed)'),
+                $this->numberField('pet_fee_rv', 'Pet Fee (per pet, per stay)', false, [
+                    'hidden' => true,
+                    'help' => 'Enter the number of pets; $5 per pet is added at the desk',
+                    'logic' => $this->revealLogic([$this->logicCondition('pets_rv', 'checkbox', 'is_checked')], 'and', true),
+                ]),
+                $this->selectField('arrival_window_rv', 'Expected Arrival Window', [
+                    ['value' => 'early_rv', 'text' => 'Early afternoon (1pm to 4pm)'],
+                    ['value' => 'evening_rv', 'text' => 'Evening (4pm to 8pm)'],
+                    ['value' => 'late_rv', 'text' => 'Late (after 8pm)'],
+                ], true),
+                $this->checkboxField('tow_rv', 'We are towing a vehicle or bringing a toad'),
+                $this->textareaField('notes_rv', 'Notes for the Host (awning side, leveling, special requests)'),
+                $this->totalBlock('rv_rate_display', 'cv_nightly_rate', 'Nightly Rate', '$0'),
+            ], '#0f766e', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_nightly_rate',
+                        'Nightly Rate',
+                        'IF({site_type_rv}="Premium pull-through, river row - $70/night",70,IF({site_type_rv}="Pull-through site, full hookup - $55/night",55,45))'
+                    ),
+                ],
+            ]),
+        ];
+    }
+
+    private function eggDonationScreening(): array
+    {
+        return [
+            'name' => 'Egg Donor Screening Application',
+            'slug' => 'egg-donor-screening-application-form-template',
+            'short_description' => 'An egg donor screening application form template collecting health history, eligibility attestations, and consent to screening With onboarding and health scoring.',
+            'description' => '<p>Our Egg Donor Screening Application Form Template pre-screens candidates with dignity: health and lifestyle history, eligibility attestations, family medical background, and explicit consent to the screening steps that follow.</p><h2>Why and when to use an egg donor screening application form</h2><p>Fertility clinics lose weeks to applications that miss basic eligibility. A structured pre-screen captures age, health, and lifestyle factors clinics screen on first, records explicit consent to each screening stage, and routes only eligible candidates into the coordinator calendar.</p><h2>Who is this template for</h2><p>Fertility clinics, egg donation agencies, and egg banks running candidate pre-screening before clinical evaluation.</p><h2>Why SharaForms is the best tool for this form</h2><p>Eligibility flags surface before clinical time is booked, confidential health answers route only to clinical staff, and every application carries explicit stage-by-stage consent.</p>',
+            'types' => ['application_forms', 'consent_forms'],
+            'industries' => ['healthcare_forms'],
+            'structure' => $this->structure('Egg Donor Screening Application', [
+                $this->nfText('intro', '<h2>Donor Screening Application</h2><p>Answers are confidential and reviewed by clinical staff only. The first step is eligibility; detailed screening follows only if we move forward together.</p>'),
+                $this->textField('candidate_name_eg', 'Full Legal Name', true),
+                $this->emailField('email_eg', 'Email', true),
+                $this->phoneField('phone_eg', 'Phone', true),
+                $this->dateField('dob_eg', 'Date of Birth', true),
+                $this->selectField('age_band_eg', 'Confirm Your Age Range', [
+                    ['value' => 'eg_21_29', 'text' => '21 to 29'],
+                    ['value' => 'eg_other', 'text' => 'Outside that range'],
+                ], true),
+                $this->selectField('height_weight_eg', 'Height and Weight (for clinical review)', [
+                    ['value' => 'eg_provide', 'text' => 'I will provide below'],
+                ], true),
+                $this->textField('height_eg', 'Height', true),
+                $this->numberField('weight_eg', 'Weight (lbs)', true),
+                $this->checkboxField('non_smoker_eg', 'I have not used tobacco or nicotine products in the past 12 months'),
+                $this->checkboxField('health_conditions_eg', 'I have significant ongoing medical conditions'),
+                $this->textareaField('conditions_details_eg', 'Condition Details', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('health_conditions_eg', 'checkbox', 'is_checked')], 'and', true),
+                ]),
+                $this->textareaField('family_history_eg', 'Family Medical History (parents and grandparents, major conditions)'),
+                $this->selectField('prior_donation_eg', 'Have You Donated Before?', [
+                    ['value' => 'eg_no', 'text' => 'No, this would be my first time'],
+                    ['value' => 'eg_yes', 'text' => 'Yes'],
+                ], true),
+                $this->numberField('prior_count_eg', 'How Many Prior Donation Cycles?', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('prior_donation_eg', 'select', 'equals', 'Yes')], 'and', true),
+                ]),
+                $this->checkboxField('screening_consent_eg', 'I consent to medical, psychological, and genetic screening as part of this application', true),
+                $this->textareaField('questions_eg', 'Questions for the Donor Team'),
+            ], '#be185d'),
+        ];
+    }
+
+    private function familyReunionTshirt(): array
+    {
+        return [
+            'name' => 'Family Reunion T-Shirt Order',
+            'slug' => 'family-reunion-tshirt-order-form-template',
+            'short_description' => 'A family reunion t-shirt order form template tallying sizes by household with youth cuts, color choices, and a live total for the group order.',
+            'description' => '<p>Our Family Reunion T-Shirt Order Form Template settles shirt chaos before the reunion: sizes by household, youth cuts, colors, and a live order total that keeps the family treasurer sane.</p><h2>Why and when to use a family reunion t-shirt order form</h2><p>Every reunion has the cousin who orders five shirts by text and the aunt who pays in exact change at the park. A pre-order form totals sizes by household, separates youth from adult cuts before the printer quotes, and gives the organizer one export instead of forty message threads.</p><h2>Who is this template for</h2><p>Family reunion organizers, reunion committees, class reunions, military family groups, and any clan shirts tradition.</p><h2>Why SharaForms is the best tool for this form</h2><p>Size tallies export ready for the print shop, totals compute live per household, and pickup arrangements are recorded instead of improvised at the pavilion.</p>',
+            'types' => ['order_forms'],
+            'industries' => ['ecommerce_forms'],
+            'structure' => $this->structure('Reunion T-Shirt Order', [
+                $this->nfText('intro', '<h2>Reunion Shirt Pre-Order</h2><p>Orders close three weeks before the reunion so the printer delivers on time. Pay at pickup unless we say otherwise.</p>'),
+                $this->textField('household_name_fr', 'Household Name', true),
+                $this->textField('contact_name_fr', 'Contact Name', true),
+                $this->emailField('email_fr', 'Email', true),
+                $this->phoneField('phone_fr', 'Phone', true),
+                $this->selectField('shirt_color_fr', 'Shirt Color', [
+                    ['value' => 'forest_fr', 'text' => 'Forest green'],
+                    ['value' => 'navy_fr', 'text' => 'Navy'],
+                    ['value' => 'sand_fr', 'text' => 'Sand'],
+                ], true),
+                $this->numberField('adult_s_fr', 'Adult Small'),
+                $this->numberField('adult_m_fr', 'Adult Medium'),
+                $this->numberField('adult_l_fr', 'Adult Large'),
+                $this->numberField('adult_xl_fr', 'Adult XL ($2 extra each)'),
+                $this->numberField('youth_fr', 'Youth Sizes ($12 each)'),
+                $this->selectField('pickup_fr', 'Shirt Pickup', [
+                    ['value' => 'reunion_fr', 'text' => 'At the reunion'],
+                    ['value' => 'ship_fr', 'text' => 'Ship to me - +$6'],
+                ], true),
+                $this->textareaField('ship_address_fr', 'Shipping Address', false, [
+                    'hidden' => true,
+                    'logic' => $this->revealLogic([$this->logicCondition('pickup_fr', 'select', 'equals', 'Ship to me - +$6')], 'and', true),
+                ]),
+                $this->totalBlock('shirt_total_display', 'cv_shirt_total', 'Order Total', '$0'),
+            ], '#166534', [
+                'computed_variables' => [
+                    $this->computedVariable(
+                        'cv_shirt_total',
+                        'Order Total',
+                        '(IFBLANK({adult_s_fr},0)+IFBLANK({adult_m_fr},0)+IFBLANK({adult_l_fr},0))*18'
+                            . '+IFBLANK({adult_xl_fr},0)*20'
+                            . '+IFBLANK({youth_fr},0)*12'
+                            . '+IF({pickup_fr}="Ship to me - +$6",6,0)'
                     ),
                 ],
             ]),

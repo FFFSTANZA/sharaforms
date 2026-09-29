@@ -48,6 +48,7 @@ const GUIDE_TEMPLATE_LINKS = {
   'add-calculations-to-a-form': [
     { slug: 'expense-report-form-template', label: 'Expense report' },
     { slug: 'quiz-form-template', label: 'Scored quiz' },
+    { slug: 'calculation-form-template', label: 'Calculation form' },
   ],
   'self-grading-quiz': [
     { slug: 'quiz-form-template', label: 'Quiz' },
@@ -55,10 +56,12 @@ const GUIDE_TEMPLATE_LINKS = {
   'lead-qualification-scoring-form': [
     { slug: 'lead-generation-form-template', label: 'Lead generation' },
     { slug: 'contact-form-template', label: 'Contact form' },
+    { slug: 'real-estate-inquiry-form-template', label: 'Real estate inquiry' },
   ],
   'conditional-logic-examples': [
     { slug: 'event-registration-template', label: 'Event registration' },
     { slug: 'customer-feedback-survey-template', label: 'Customer feedback survey' },
+    { slug: 'inspection-form-template', label: 'Inspection form' },
   ],
   'hidden-form-fields-source-tracking': [
     { slug: 'lead-generation-form-template', label: 'Lead generation' },
@@ -124,12 +127,14 @@ const GUIDE_TEMPLATE_LINKS = {
     { slug: 'online-order-form-template', label: 'Order form' },
     { slug: 'purchase-order-form-template', label: 'Purchase order' },
     { slug: 'quote-request-form-template', label: 'Quote request' },
+    { slug: 'storage-unit-reservation-form-template', label: 'Storage unit reservation' },
   ],
   'hr-forms-for-small-business': [
     { slug: 'job-application-form-template', label: 'Job application' },
     { slug: 'offer-acceptance-form-template', label: 'Offer acceptance' },
     { slug: 'timesheet-form-template', label: 'Timesheet' },
     { slug: 'leave-request-form-template', label: 'Leave request' },
+    { slug: 'address-change-form-template', label: 'Address change' },
   ],
   'teacher-forms-toolkit': [
     { slug: 'field-trip-permission-slip-form-template', label: 'Field trip permission slip' },
@@ -149,11 +154,14 @@ const GUIDE_TEMPLATE_LINKS = {
     { slug: 'event-registration-template', label: 'Event registration' },
     { slug: 'conference-registration-form-template', label: 'Conference registration' },
     { slug: 'webinar-registration-form-template', label: 'Webinar registration' },
+    { slug: 'student-registration-form-template', label: 'Student registration' },
+    { slug: 'reunion-registration-form-template', label: 'Reunion registration' },
   ],
   'how-to-create-an-order-form': [
     { slug: 'online-order-form-template', label: 'Online order form' },
     { slug: 'tshirt-order-form-template', label: 'T-shirt order form' },
     { slug: 'cake-order-form-template', label: 'Cake order form' },
+    { slug: 'catering-order-form-template', label: 'Catering order form' },
   ],
   'migrate-from-google-forms': [
     { slug: 'contact-form-template', label: 'Contact form' },
@@ -184,6 +192,8 @@ const GUIDE_TEMPLATE_LINKS = {
   'anonymous-surveys': [
     { slug: 'employee-engagement-survey-template', label: 'Engagement pulse survey' },
     { slug: 'suggestion-box-form-template', label: 'Suggestion box' },
+    { slug: 'customer-feedback-survey-template', label: 'Customer feedback survey' },
+    { slug: 'nps-survey-template', label: 'NPS survey' },
   ],
   'how-to-increase-form-completion-rates': [
     { slug: 'newsletter-signup-form-template', label: 'Newsletter signup' },
@@ -200,6 +210,8 @@ const GUIDE_TEMPLATE_LINKS = {
     { slug: 'vacation-bible-school-registration-form-template', label: 'VBS registration' },
     { slug: 'membership-application-form-template', label: 'Member registration' },
     { slug: 'facility-rental-request-form-template', label: 'Facility use request' },
+    { slug: 'volunteer-signup-form-template', label: 'Volunteer signup' },
+    { slug: 'donation-form-template', label: 'Donation form' },
   ],
   'nonprofit-forms-toolkit': [
     { slug: 'donation-form-template', label: 'Donation form' },
@@ -242,4 +254,26 @@ const GUIDE_TEMPLATE_LINKS = {
 
 export function getGuideTemplateLinks(slug) {
   return GUIDE_TEMPLATE_LINKS[slug] || []
+}
+
+// Inverse of GUIDE_TEMPLATE_LINKS: which guides feature a given template.
+// Template detail pages render these as a "Related guides" strip so the
+// guide <-> template links flow in both directions (and guide pages with
+// few inbound links pick up equity from indexed template pages).
+const TEMPLATE_GUIDE_SLUGS = (() => {
+  const map = new Map()
+  for (const [guideSlug, links] of Object.entries(GUIDE_TEMPLATE_LINKS)) {
+    for (const link of links) {
+      if (!map.has(link.slug)) map.set(link.slug, [])
+      map.get(link.slug).push(guideSlug)
+    }
+  }
+  return map
+})()
+
+export function getGuidesForTemplate(templateSlug, limit = 4) {
+  return (TEMPLATE_GUIDE_SLUGS.get(templateSlug) || [])
+    .map((slug) => getGuideBySlug(slug))
+    .filter(Boolean)
+    .slice(0, limit)
 }

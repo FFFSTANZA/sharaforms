@@ -270,6 +270,47 @@
       </section>
 
       <section
+        v-if="relatedGuides.length > 0"
+        class="py-12 bg-neutral-50 border-t border-neutral-200 sm:py-16"
+      >
+        <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+          <div class="flex items-center justify-between">
+            <h4
+              class="text-xl font-bold tracking-tight text-neutral-900 sm:text-2xl"
+            >
+              Related guides
+            </h4>
+            <UButton
+              to="/guides"
+              color="white"
+              size="sm"
+              trailing-icon="i-lucide-arrow-right"
+              label="All guides"
+            />
+          </div>
+
+          <div class="grid grid-cols-1 gap-5 mt-8 sm:grid-cols-2 lg:grid-cols-4">
+            <NuxtLink
+              v-for="guide in relatedGuides"
+              :key="guide.slug"
+              :to="`/guides/${guide.slug}`"
+              class="group flex h-full flex-col rounded-xl border border-neutral-200 bg-white p-5 transition-colors hover:border-pink-300"
+            >
+              <span class="text-[11px] font-semibold uppercase tracking-wider text-pink-600">
+                {{ guide.category }}
+              </span>
+              <h5 class="mt-2 text-base font-semibold leading-snug text-neutral-900 group-hover:text-pink-700 transition-colors">
+                {{ guide.title }}
+              </h5>
+              <p class="mt-1.5 text-sm leading-6 text-neutral-600 line-clamp-2">
+                {{ guide.description }}
+              </p>
+            </NuxtLink>
+          </div>
+        </div>
+      </section>
+
+      <section
         v-if="templateTypes.length > 0 || templateIndustries.length > 0"
         class="py-12 bg-neutral-50 sm:py-16 border-t border-neutral-200"
       >
@@ -386,6 +427,7 @@ import TrackClick from "~/components/global/TrackClick.vue"
 import { handleDarkMode, useDarkMode } from "~/lib/forms/public-page.js"
 import { resolveSchemaUrl, stripHtml, useSchemaBaseUrl } from '~/composables/useSchemaSeo'
 import { useTemplateMeta } from '~/composables/data/useTemplateMeta'
+import { getGuidesForTemplate } from '~/data/guides/index'
 import detailContent from '~/data/forms/templates/detail-content.json'
 
 defineRouteRules({
@@ -455,6 +497,12 @@ const relatedTemplates = computed(() => {  if (!template.value?.related_template
     (t) => relatedSlugs.has(t.slug) && t.slug !== template.value.slug,
   )
 })
+
+// Guides that feature this template (inverse of GUIDE_TEMPLATE_LINKS) —
+// rendered as a link strip so indexed template pages pass equity to guide pages.
+const relatedGuides = computed(() =>
+  template.value ? getGuidesForTemplate(template.value.slug) : [],
+)
 
 const showFormTemplateModal = ref(false)
 const { data: user } = useAuth().user()
